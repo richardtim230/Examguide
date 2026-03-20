@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Data Management | ExamGuard School Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --accent: #3b82f6;
+      --accent-light: #dbeafe;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --muted: #6b7280;
+      --text-main: #0b2a44;
+      --text-light: #7a90b3;
+      --bg-light: #f8faff;
+      --bg-lighter: #f0f4ff;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --shadow-sm: 0 4px 12px rgba(11, 42, 60, 0.04);
+      --shadow-md: 0 8px 20px rgba(11, 42, 60, 0.08);
+      --shadow-lg: 0 12px 32px rgba(59, 130, 246, 0.12);
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #f8faff 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* LAYOUT */
+    .app-wrapper {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      grid-column: 1;
+      grid-row: 1 / 4;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: var(--sidebar-width);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 24px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 224, 102, 0.3);
+    }
+
+    .sidebar-brand {
+      flex: 1;
+    }
+
+    .sidebar-brand h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #ffe066;
+      font-weight: 800;
+    }
+
+    .sidebar-brand p {
+      margin: 2px 0 0 0;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.12s;
+      border: 2px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffe066;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 224, 102, 0.2);
+      color: #ffe066;
+      border-color: rgba(255, 224, 102, 0.4);
+    }
+
+    .nav-item i {
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-footer img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 224, 102, 0.3);
+    }
+
+    .sidebar-footer-info {
+      flex: 1;
+    }
+
+    .sidebar-footer-info p {
+      margin: 0;
+      color: #ffe066;
+      font-weight: 700;
+    }
+
+    .sidebar-footer-info span {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.8rem;
+    }
+
+    /* HEADER */
+    .header {
+      grid-column: 2;
+      grid-row: 1;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title h1 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .header-title p {
+      margin: 2px 0 0 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.12s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-btn:hover {
+      background: var(--bg-lighter);
+      border-color: var(--accent);
+    }
+
+    .header-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid var(--accent-light);
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      grid-column: 2;
+      grid-row: 2;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(11, 42, 60, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.blue {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent);
+    }
+
+    .stat-icon.green {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .stat-icon.orange {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+
+    .stat-icon.red {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(11, 42, 60, 0.05);
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    .card-header-icon {
+      font-size: 1.8rem;
+      color: var(--accent);
+      width: 45px;
+      height: 45px;
+      background: var(--bg-lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-header-text h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .card-header-text p {
+      margin: 4px 0 0 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* FORMS */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-label .required {
+      color: var(--danger);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: var(--text-main);
+      transition: all 0.15s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: #fafcff;
+    }
+
+    .form-input.error,
+    .form-select.error {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+
+    .form-hint {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .form-error {
+      font-size: 0.85rem;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+      animation: slideInDown 0.2s ease;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* FILE UPLOAD */
+    .file-upload-area {
+      border: 2px dashed var(--accent-light);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      background: var(--bg-lighter);
+      cursor: pointer;
+      transition: all 0.12s;
+      position: relative;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .file-upload-area.drag-over {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .file-upload-icon {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .file-upload-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .file-upload-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .file-upload-hint {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .file-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border-left: 4px solid var(--success);
+    }
+
+    .file-item-icon {
+      font-size: 1.3rem;
+      color: var(--success);
+    }
+
+    .file-item-info {
+      flex: 1;
+    }
+
+    .file-item-name {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .file-item-size {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .file-item-remove {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.12s;
+    }
+
+    .file-item-remove:hover {
+      transform: scale(1.2);
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: #f3f6fb;
+      color: var(--primary);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--bg-lighter);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #059669);
+      color: #fff;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #dc2626);
+      color: #fff;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ALERTS */
+    .alert {
+      padding: 16px;
+      border-radius: 10px;
+      border-left: 4px solid;
+      display: none;
+      animation: slideInDown 0.3s ease;
+      margin-bottom: 16px;
+    }
+
+    .alert.show {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .alert-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-content {
+      flex: 1;
+    }
+
+    .alert-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .alert-message {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .alert-success {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #166534;
+    }
+
+    .alert-success .alert-icon {
+      color: #16a34a;
+    }
+
+    .alert-error {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #991b1b;
+    }
+
+    .alert-error .alert-icon {
+      color: #dc2626;
+    }
+
+    .alert-warning {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .alert-warning .alert-icon {
+      color: #f59e0b;
+    }
+
+    .alert-info {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      color: #0c4a6e;
+    }
+
+    .alert-info .alert-icon {
+      color: #0284c7;
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 12px 20px;
+      border: none;
+      background: none;
+      color: var(--text-light);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.12s;
+    }
+
+    .tab:hover {
+      color: var(--primary);
+    }
+
+    .tab.active {
+      color: var(--primary);
+    }
+
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+    }
+
+    /* DATA TABLE */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      font-size: 0.9rem;
+    }
+
+    .data-table thead {
+      background: var(--bg-lighter);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .data-table th {
+      padding: 14px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table tbody tr:hover {
+      background: var(--bg-lighter);
+    }
+
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .status-uploaded {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* PROGRESS */
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-lighter);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.12s;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .modal-body {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    .footer {
+      grid-column: 1 / 3;
+      grid-row: 3;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      padding: 30px 24px;
+      margin-left: var(--sidebar-width);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .footer-section h4 {
+      color: #ffe066;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      transition: color 0.12s;
+    }
+
+    .footer-section a:hover {
+      color: #ffe066;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .app-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -280px;
+        transition: left 0.3s ease;
+        z-index: 1100;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .main {
+        grid-column: 1;
+      }
+
+      .footer {
+        grid-column: 1;
+        margin-left: 0;
+      }
+
+      .header-left {
+        gap: 8px;
+      }
+
+      .header-title h1 {
+        font-size: 1.1rem;
+      }
+
+      .header-title p {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .card-header-text h2 {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --sidebar-width: 0;
+      }
+
+      .sidebar {
+        width: 100%;
+        left: -100%;
+      }
+
+      .header {
+        padding: 12px 16px;
+      }
+
+      .header-title h1 {
+        font-size: 1rem;
+      }
+
+      .header-right {
+        gap: 8px;
+      }
+
+      .header-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+
+      .main {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .tabs {
+        overflow-x: auto;
+      }
+
+      .tab {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+
+      .data-table {
+        font-size: 0.8rem;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 10px 8px;
+      }
+
+      .file-upload-area {
+        padding: 24px;
+      }
+
+      .modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .footer {
+        padding: 20px 16px;
+      }
+    }
+
+    /* LOADING */
+    .loading {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading.active {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+
+    .empty-state h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0 0 8px 0;
+    }
+
+    .empty-state p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      .sidebar,
+      .header,
+      .footer,
+      .btn,
+      .tabs {
+        display: none;
+      }
+
+      .app-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .main {
+        grid-column: 1;
+        padding: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="mainlogo.png" alt="ExamGuard" class="sidebar-logo">
+        <div class="sidebar-brand">
+          <h3>ExamGuard</h3>
+          <p>School Admin</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="switchPage('dashboard', this)">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('upload', this)">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span>Upload Data</span>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('results', this)">
+          <i class="fas fa-file-alt"></i>
+          <span>Student Results</span>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('history', this)">
+          <i class="fas fa-history"></i>
+          <span>Upload History</span>
+          <div class="nav-badge" id="historyBadge" style="display: none;">0</div>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('settings', this)">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('help', this)">
+          <i class="fas fa-question-circle"></i>
+          <span>Help & Support</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <img src="avatar.jpg" alt="Admin" style="object-fit: cover;">
+        <div class="sidebar-footer-info">
+          <p id="adminName">Admin</p>
+          <span id="adminRole">Administrator</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <button class="header-btn" onclick="toggleSidebar()" id="toggleSidebarBtn" style="display: none;">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-title">
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageSubtitle">Overview of your school's data</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="header-btn" onclick="downloadTemplateFile()">
+          <i class="fas fa-download"></i> Template
+        </button>
+        <button class="header-btn" onclick="openSettings()">
+          <i class="fas fa-cog"></i>
+        </button>
+        <img src="avatar.jpg" alt="Admin Avatar" class="header-avatar">
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="main-content">
+
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboardPage" style="display: block;">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Total Students</div>
+                <div class="stat-value" id="totalStudents">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <i class="fas fa-cloud-check"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Uploaded Records</div>
+                <div class="stat-value" id="uploadedRecords">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon orange">
+                <i class="fas fa-hourglass-half"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Pending Verification</div>
+                <div class="stat-value" id="pendingVerification">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon red">
+                <i class="fas fa-exclamation-circle"></i>
+              </div>
+              <div class="stat-content">
+                <div class="stat-label">Upload Errors</div>
+                <div class="stat-value" id="uploadErrors">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-activity"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>Recent Upload Activity</h2>
+                <p>Latest uploads and system status</p>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Type</th>
+                    <th>Records</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="activityTableBody">
+                  <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px;">No activity yet</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPLOAD PAGE -->
+        <div id="uploadPage" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>Upload Student Data</h2>
+                <p>Upload student records, results, and academic information to the cloud</p>
+              </div>
+            </div>
+
+            <div class="alert alert-success" id="successAlert" style="display: none;">
+              <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+              <div class="alert-content">
+                <div class="alert-title">Success</div>
+                <div class="alert-message" id="successMessage"></div>
+              </div>
+            </div>
+
+            <div class="alert alert-error" id="errorAlert" style="display: none;">
+              <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+              <div class="alert-content">
+                <div class="alert-title">Error</div>
+                <div class="alert-message" id="errorMessage"></div>
+              </div>
+            </div>
+
+            <div class="alert alert-warning" id="warningAlert" style="display: none;">
+              <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+              <div class="alert-content">
+                <div class="alert-title">Warning</div>
+                <div class="alert-message" id="warningMessage"></div>
+              </div>
+            </div>
+
+            <!-- TABS -->
+            <div class="tabs">
+              <button class="tab active" onclick="switchUploadTab('students', this)">Students Data</button>
+              <button class="tab" onclick="switchUploadTab('results', this)">Results & Scores</button>
+              <button class="tab" onclick="switchUploadTab('comments', this)">Comments & Remarks</button>
+            </div>
+
+            <!-- TAB: STUDENTS DATA -->
+            <div id="studentsTab">
+              <form id="studentsForm" onsubmit="handleStudentUpload(event)">
+                <div class="form-group">
+                  <label class="form-label">Academic Year <span class="required">*</span></label>
+                  <select class="form-select" id="academicYear" required>
+                    <option value="">Select Academic Year</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Term <span class="required">*</span></label>
+                  <select class="form-select" id="term" required>
+                    <option value="">Select Term</option>
+                    <option value="1">First Term</option>
+                    <option value="2">Second Term</option>
+                    <option value="3">Third Term</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Upload Student File <span class="required">*</span></label>
+                  <div class="file-upload-area" id="studentFileUpload" onclick="document.getElementById('studentFile').click()">
+                    <div class="file-upload-icon">
+                      <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="file-upload-title">Click to upload or drag and drop</div>
+                    <div class="file-upload-subtitle">CSV, Excel (.xlsx, .xls)</div>
+                    <div class="file-upload-hint">Maximum 10MB file size</div>
+                    <input type="file" id="studentFile" class="file-input" accept=".csv,.xlsx,.xls" onchange="handleFileSelect(event, 'students')">
+                  </div>
+                  <div class="file-list" id="studentFileList"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success" id="submitStudentsBtn">
+                  <i class="fas fa-check-circle"></i> Upload Students Data
+                </button>
+              </form>
+            </div>
+
+            <!-- TAB: RESULTS & SCORES -->
+            <div id="resultsTab" style="display: none;">
+              <form id="resultsForm" onsubmit="handleResultsUpload(event)">
+                <div class="form-group">
+                  <label class="form-label">Academic Year <span class="required">*</span></label>
+                  <select class="form-select" id="resultsAcademicYear" required>
+                    <option value="">Select Academic Year</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Term <span class="required">*</span></label>
+                  <select class="form-select" id="resultsTerm" required>
+                    <option value="">Select Term</option>
+                    <option value="1">First Term</option>
+                    <option value="2">Second Term</option>
+                    <option value="3">Third Term</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Upload Results File <span class="required">*</span></label>
+                  <div class="file-upload-area" id="resultsFileUpload" onclick="document.getElementById('resultsFile').click()">
+                    <div class="file-upload-icon">
+                      <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="file-upload-title">Click to upload or drag and drop</div>
+                    <div class="file-upload-subtitle">CSV, Excel (.xlsx, .xls)</div>
+                    <div class="file-upload-hint">Maximum 10MB file size</div>
+                    <input type="file" id="resultsFile" class="file-input" accept=".csv,.xlsx,.xls" onchange="handleFileSelect(event, 'results')">
+                  </div>
+                  <div class="file-list" id="resultsFileList"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success" id="submitResultsBtn">
+                  <i class="fas fa-check-circle"></i> Upload Results Data
+                </button>
+              </form>
+            </div>
+
+            <!-- TAB: COMMENTS & REMARKS -->
+            <div id="commentsTab" style="display: none;">
+              <form id="commentsForm" onsubmit="handleCommentsUpload(event)">
+                <div class="form-group">
+                  <label class="form-label">Academic Year <span class="required">*</span></label>
+                  <select class="form-select" id="commentsAcademicYear" required>
+                    <option value="">Select Academic Year</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Term <span class="required">*</span></label>
+                  <select class="form-select" id="commentsTerm" required>
+                    <option value="">Select Term</option>
+                    <option value="1">First Term</option>
+                    <option value="2">Second Term</option>
+                    <option value="3">Third Term</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Upload Comments File <span class="required">*</span></label>
+                  <div class="file-upload-area" id="commentsFileUpload" onclick="document.getElementById('commentsFile').click()">
+                    <div class="file-upload-icon">
+                      <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="file-upload-title">Click to upload or drag and drop</div>
+                    <div class="file-upload-subtitle">CSV, Excel (.xlsx, .xls)</div>
+                    <div class="file-upload-hint">Maximum 10MB file size</div>
+                    <input type="file" id="commentsFile" class="file-input" accept=".csv,.xlsx,.xls" onchange="handleFileSelect(event, 'comments')">
+                  </div>
+                  <div class="file-list" id="commentsFileList"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success" id="submitCommentsBtn">
+                  <i class="fas fa-check-circle"></i> Upload Comments Data
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTS PAGE -->
+        <div id="resultsPage" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>Student Results</h2>
+                <p>Manage and view all student academic results</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Academic Year</label>
+                <select class="form-select" id="filterYear" onchange="loadResults()">
+                  <option value="">All Years</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Class</label>
+                <select class="form-select" id="filterClass" onchange="loadResults()">
+                  <option value="">All Classes</option>
+                  <option value="P1">Primary 1</option>
+                  <option value="P2">Primary 2</option>
+                  <option value="P3">Primary 3</option>
+                  <option value="P4">Primary 4</option>
+                  <option value="P5">Primary 5</option>
+                  <option value="P6">Primary 6</option>
+                  <option value="JSS1">JSS 1</option>
+                  <option value="JSS2">JSS 2</option>
+                  <option value="JSS3">JSS 3</option>
+                  <option value="SS1">SS 1</option>
+                  <option value="SS2">SS 2</option>
+                  <option value="SS3">SS 3</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>Reg. No</th>
+                    <th>Class</th>
+                    <th>Year</th>
+                    <th>Total Score</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                  <tr>
+                    <td colspan="8" style="text-align: center; padding: 40px;">No results found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTORY PAGE -->
+        <div id="historyPage" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>Upload History</h2>
+                <p>View all past data uploads and their status</p>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Type</th>
+                    <th>Year & Term</th>
+                    <th>Records</th>
+                    <th>File Size</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px;">No upload history</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS PAGE -->
+        <div id="settingsPage" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-cog"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>School Settings</h2>
+                <p>Manage your school's information and preferences</p>
+              </div>
+            </div>
+
+            <form id="settingsForm" onsubmit="saveSettings(event)">
+              <h3 style="color: var(--primary); margin-top: 24px; margin-bottom: 16px; font-size: 1.1rem;">School Information</h3>
+
+              <div class="form-group">
+                <label class="form-label">School Name</label>
+                <input type="text" class="form-input" id="schoolName" value="ExamGuard International School" disabled>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">School Code</label>
+                <input type="text" class="form-input" id="schoolCode" value="" disabled>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-input" id="schoolEmail" placeholder="school@example.com">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input type="tel" class="form-input" id="schoolPhone" placeholder="+234 XXX XXXX XXXX">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-input" id="schoolAddress" placeholder="123 School Street, City">
+              </div>
+
+              <h3 style="color: var(--primary); margin-top: 24px; margin-bottom: 16px; font-size: 1.1rem;">Upload Settings</h3>
+
+              <div class="form-group">
+                <label class="form-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="autoVerify" checked>
+                  <span>Auto-verify uploads</span>
+                </label>
+                <div class="form-hint">Automatically verify uploaded data for accuracy</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="emailNotifications" checked>
+                  <span>Email notifications</span>
+                </label>
+                <div class="form-hint">Receive email when uploads complete</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="dataBackup" checked>
+                  <span>Daily data backup</span>
+                </label>
+                <div class="form-hint">Automatically backup uploaded data daily</div>
+              </div>
+
+              <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="button" class="btn btn-secondary" onclick="switchPage('dashboard', document.querySelector('.nav-item'))">Cancel</button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i> Save Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- HELP PAGE -->
+        <div id="helpPage" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-icon">
+                <i class="fas fa-question-circle"></i>
+              </div>
+              <div class="card-header-text">
+                <h2>Help & Support</h2>
+                <p>Get help with uploading and managing your school data</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <div style="border-left: 4px solid var(--accent); padding: 16px; background: var(--bg-lighter); border-radius: 8px;">
+                <h3 style="margin: 0 0 8px 0; color: var(--primary); font-size: 1rem;">How to Upload Student Data?</h3>
+                <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
+                  1. Go to the "Upload Data" section<br>
+                  2. Select the appropriate year and term<br>
+                  3. Choose the CSV or Excel file to upload<br>
+                  4. Click "Upload" to submit<br>
+                  5. Monitor the upload status in "Upload History"
+                </p>
+              </div>
+
+              <div style="border-left: 4px solid var(--success); padding: 16px; background: var(--bg-lighter); border-radius: 8px;">
+                <h3 style="margin: 0 0 8px 0; color: var(--primary); font-size: 1rem;">File Format Requirements</h3>
+                <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
+                  • <strong>Supported Formats:</strong> CSV, XLSX, XLS<br>
+                  • <strong>Maximum File Size:</strong> 10MB<br>
+                  • <strong>Character Encoding:</strong> UTF-8 recommended<br>
+                  • <strong>Required Columns:</strong> Check the downloadable template
+                </p>
+              </div>
+
+              <div style="border-left: 4px solid var(--warning); padding: 16px; background: var(--bg-lighter); border-radius: 8px;">
+                <h3 style="margin: 0 0 8px 0; color: var(--primary); font-size: 1rem;">Common Issues & Solutions</h3>
+                <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
+                  <strong>Upload Failed?</strong> Check file format and size<br>
+                  <strong>Missing Data?</strong> Verify all required columns are present<br>
+                  <strong>Still Having Issues?</strong> Contact support: support@examguard.com
+                </p>
+              </div>
+
+              <div style="border-left: 4px solid var(--danger); padding: 16px; background: var(--bg-lighter); border-radius: 8px;">
+                <h3 style="margin: 0 0 8px 0; color: var(--primary); font-size: 1rem;">Data Security</h3>
+                <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">
+                  • All data is encrypted during transmission<br>
+                  • Data is securely stored on ExamGuard servers<br>
+                  • Only authorized personnel can access your data<br>
+                  • Regular security audits and backups performed
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- PREVIEW MODAL -->
+  <div class="modal" id="previewModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Preview</h3>
+        <button class="modal-close" onclick="closeModal('previewModal')">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="progress-text">
+          <span>Upload Progress</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+
+        <div id="uploadStatusContent" style="margin-top: 20px;">
+          <!-- Status content will be inserted here -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('previewModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Details</h3>
+        <button class="modal-close" onclick="closeModal('detailModal')">&times;</button>
+      </div>
+
+      <div class="modal-body" id="detailModalBody">
+        <!-- Details will be populated here -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('detailModal')">Close</button>
+        <button class="btn btn-primary" onclick="downloadDetails()">
+          <i class="fas fa-download"></i> Download Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ API CONFIGURATION ============
+    const API_BASE_URL = "https://examgide.onrender.com";
+    const schoolId = localStorage.getItem('schoolId') || 'SCHOOL_001';
+    const token = localStorage.getItem('authToken') || '';
+
+    // ============ STATE ============
+    let uploadedFiles = {
+      students: null,
+      results: null,
+      comments: null
+    };
+
+    let academicYears = [];
+    let uploadHistory = [];
+    let currentUploadData = null;
+
+    // ============ INITIALIZATION ============
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeApp();
+      setupEventListeners();
+      loadInitialData();
+
+      // Show sidebar toggle on mobile
+      if (window.innerWidth <= 900) {
+        document.getElementById('toggleSidebarBtn').style.display = 'flex';
+      }
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        if (window.innerWidth <= 900) {
+          document.getElementById('toggleSidebarBtn').style.display = 'flex';
+        } else {
+          document.getElementById('toggleSidebarBtn').style.display = 'none';
+        }
+      });
+    });
+
+    function initializeApp() {
+      const adminName = localStorage.getItem('adminName') || 'Administrator';
+      const adminRole = localStorage.getItem('adminRole') || 'Admin';
+
+      document.getElementById('adminName').textContent = adminName;
+      document.getElementById('adminRole').textContent = adminRole;
+    }
+
+    function setupEventListeners() {
+      // Drag and drop for file uploads
+      setupDragAndDrop('studentFileUpload', 'studentFile', 'students');
+      setupDragAndDrop('resultsFileUpload', 'resultsFile', 'results');
+      setupDragAndDrop('commentsFileUpload', 'commentsFile', 'comments');
+
+      // Close modals on escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          document.querySelectorAll('.modal.active').forEach(modal => {
+            modal.classList.remove('active');
+          });
+        }
+      });
+
+      // Close modals when clicking outside
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(event) {
+          if (event.target === this) {
+            this.classList.remove('active');
+          }
+        });
+      });
+    }
+
+    function setupDragAndDrop(dropAreaId, fileInputId, type) {
+      const dropArea = document.getElementById(dropAreaId);
+      const fileInput = document.getElementById(fileInputId);
+
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+      });
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => {
+          dropArea.classList.add('drag-over');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => {
+          dropArea.classList.remove('drag-over');
+        }, false);
+      });
+
+      dropArea.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+        handleFileSelect({ target: { files } }, type);
+      }, false);
+    }
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // ============ LOAD INITIAL DATA ============
+    async function loadInitialData() {
+      try {
+        showLoading(true);
+
+        // Load academic years
+        await loadAcademicYears();
+
+        // Load dashboard stats
+        await loadDashboardStats();
+
+        // Load upload history
+        await loadUploadHistory();
+
+        showLoading(false);
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+        showLoading(false);
+        showAlert('error', 'Failed to load initial data');
+      }
+    }
+
+    async function loadAcademicYears() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/academic-years`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load years');
+
+        academicYears = await response.json();
+
+        // Populate all year dropdowns
+        ['academicYear', 'resultsAcademicYear', 'commentsAcademicYear', 'filterYear'].forEach(id => {
+          const select = document.getElementById(id);
+          if (select) {
+            const currentOption = select.querySelector('option[value=""]');
+            academicYears.forEach(year => {
+              const option = document.createElement('option');
+              option.value = year.id;
+              option.textContent = year.name;
+              select.appendChild(option);
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error loading academic years:', error);
+      }
+    }
+
+    async function loadDashboardStats() {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/school/${schoolId}/dashboard-stats`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+
+        if (!response.ok) throw new Error('Failed to load stats');
+
+        const stats = await response.json();
+
+        document.getElementById('totalStudents').textContent = stats.totalStudents || 0;
+        document.getElementById('uploadedRecords').textContent = stats.uploadedRecords || 0;
+        document.getElementById('pendingVerification').textContent = stats.pendingVerification || 0;
+        document.getElementById('uploadErrors').textContent = stats.uploadErrors || 0;
+      } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+      }
+    }
+
+    async function loadUploadHistory() {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/api/school/${schoolId}/upload-history`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+
+        if (!response.ok) throw new Error('Failed to load history');
+
+        uploadHistory = await response.json();
+        displayUploadHistory();
+      } catch (error) {
+        console.error('Error loading upload history:', error);
+      }
+    }
+
+    function displayUploadHistory() {
+      const historyBody = document.getElementById('historyTableBody');
+      const activityBody = document.getElementById('activityTableBody');
+
+      if (uploadHistory.length === 0) {
+        historyBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No upload history</td></tr>';
+        activityBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">No activity yet</td></tr>';
+        return;
+      }
+
+      // Display in history table
+      historyBody.innerHTML = uploadHistory.slice(0, 10).map(item => `
+        <tr>
+          <td>${new Date(item.createdAt).toLocaleString()}</td>
+          <td>${item.type}</td>
+          <td>${item.year} - Term ${item.term}</td>
+          <td>${item.recordCount}</td>
+          <td>${formatFileSize(item.fileSize)}</td>
+          <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
+          <td>
+            <button class="header-btn" style="font-size: 0.85rem; padding: 6px 12px;" onclick="viewDetails('${item.id}')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Display in activity table
+      activityBody.innerHTML = uploadHistory.slice(0, 5).map(item => `
+        <tr>
+          <td>${new Date(item.createdAt).toLocaleString()}</td>
+          <td>${item.type}</td>
+          <td>${item.recordCount}</td>
+          <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
+          <td>
+            <button class="header-btn" style="font-size: 0.85rem; padding: 6px 12px;" onclick="viewDetails('${item.id}')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('historyBadge').textContent = uploadHistory.length;
+      document.getElementById('historyBadge').style.display = uploadHistory.length > 0 ? 'flex' : 'none';
+    }
+
+    // ============ FILE HANDLING ============
+    function handleFileSelect(event, type) {
+      const files = event.target.files;
+      if (files.length === 0) return;
+
+      const file = files[0];
+      const maxSize = 10 * 1024 * 1024; // 10MB
+
+      if (file.size > maxSize) {
+        showAlert('error', 'File size exceeds 10MB limit');
+        return;
+      }
+
+      const validTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+      if (!validTypes.includes(file.type)) {
+        showAlert('error', 'Invalid file type. Please upload CSV or Excel file.');
+        return;
+      }
+
+      uploadedFiles[type] = file;
+      displayFileInList(type, file);
+    }
+
+    function displayFileInList(type, file) {
+      const fileListId = {
+        'students': 'studentFileList',
+        'results': 'resultsFileList',
+        'comments': 'commentsFileList'
+      }[type];
+
+      const fileList = document.getElementById(fileListId);
+      fileList.innerHTML = `
+        <div class="file-item">
+          <div class="file-item-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="file-item-info">
+            <div class="file-item-name">${file.name}</div>
+            <div class="file-item-size">${formatFileSize(file.size)}</div>
+          </div>
+          <button type="button" class="file-item-remove" onclick="removeFile('${type}')">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    function removeFile(type) {
+      uploadedFiles[type] = null;
+      const fileInputId = {
+        'students': 'studentFile',
+        'results': 'resultsFile',
+        'comments': 'commentsFile'
+      }[type];
+
+      const fileListId = {
+        'students': 'studentFileList',
+        'results': 'resultsFileList',
+        'comments': 'commentsFileList'
+      }[type];
+
+      document.getElementById(fileInputId).value = '';
+      document.getElementById(fileListId).innerHTML = '';
+    }
+
+    // ============ UPLOAD HANDLERS ============
+    async function handleStudentUpload(event) {
+      event.preventDefault();
+
+      if (!uploadedFiles.students) {
+        showAlert('warning', 'Please select a file to upload');
+        return;
+      }
+
+      await uploadData('students', document.getElementById('academicYear').value, document.getElementById('term').value);
+    }
+
+    async function handleResultsUpload(event) {
+      event.preventDefault();
+
+      if (!uploadedFiles.results) {
+        showAlert('warning', 'Please select a file to upload');
+        return;
+      }
+
+      await uploadData('results', document.getElementById('resultsAcademicYear').value, document.getElementById('resultsTerm').value);
+    }
+
+    async function handleCommentsUpload(event) {
+      event.preventDefault();
+
+      if (!uploadedFiles.comments) {
+        showAlert('warning', 'Please select a file to upload');
+        return;
+      }
+
+      await uploadData('comments', document.getElementById('commentsAcademicYear').value, document.getElementById('commentsTerm').value);
+    }
+
+    async function uploadData(type, yearId, termId) {
+      try {
+        const submitBtnId = {
+          'students': 'submitStudentsBtn',
+          'results': 'submitResultsBtn',
+          'comments': 'submitCommentsBtn'
+        }[type];
+
+        const submitBtn = document.getElementById(submitBtnId);
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Uploading...';
+
+        const formData = new FormData();
+        formData.append('file', uploadedFiles[type]);
+        formData.append('type', type);
+        formData.append('yearId', yearId);
+        formData.append('termId', termId);
+        formData.append('schoolId', schoolId);
+
+        showModal('previewModal');
+        updateUploadProgress(0);
+
+        const response = await fetch(`${API_BASE_URL}/api/upload-student-data`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        updateUploadProgress(50);
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Upload failed');
+        }
+
+        const result = await response.json();
+
+        updateUploadProgress(100);
+
+        // Display results
+        displayUploadResults(result);
+
+        showAlert('success', `Successfully uploaded ${result.recordsProcessed} ${type} records`);
+
+        // Reset form
+        setTimeout(() => {
+          document.getElementById(
+            type === 'students' ? 'studentsForm' :
+            type === 'results' ? 'resultsForm' :
+            'commentsForm'
+          ).reset();
+          removeFile(type);
+          loadDashboardStats();
+          loadUploadHistory();
+        }, 1500);
+
+      } catch (error) {
+        console.error('Upload error:', error);
+        showAlert('error', error.message || 'Upload failed');
+        closeModal('previewModal');
+      } finally {
+        const submitBtnId = {
+          'students': 'submitStudentsBtn',
+          'results': 'submitResultsBtn',
+          'comments': 'submitCommentsBtn'
+        }[type];
+
+        const submitBtn = document.getElementById(submitBtnId);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = {
+          'students': '<i class="fas fa-check-circle"></i> Upload Students Data',
+          'results': '<i class="fas fa-check-circle"></i> Upload Results Data',
+          'comments': '<i class="fas fa-check-circle"></i> Upload Comments Data'
+        }[type];
+      }
+    }
+
+    function displayUploadResults(result) {
+      const content = document.getElementById('uploadStatusContent');
+      
+      const statusClass = result.success ? 'status-uploaded' : 'status-error';
+      const statusIcon = result.success ? 'fa-check-circle' : 'fa-exclamation-circle';
+      const statusText = result.success ? 'Successful' : 'Failed';
+
+      content.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; color: ${result.success ? 'var(--success)' : 'var(--danger)'}; margin-bottom: 12px;">
+            <i class="fas ${statusIcon}"></i>
+          </div>
+          <h3 style="margin: 0 0 12px 0; color: var(--primary);">${statusText}</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;">
+            <div style="background: var(--bg-lighter); padding: 12px; border-radius: 8px;">
+              <div style="font-size: 0.85rem; color: var(--text-light);">Records Processed</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">${result.recordsProcessed}</div>
+            </div>
+            <div style="background: var(--bg-lighter); padding: 12px; border-radius: 8px;">
+              <div style="font-size: 0.85rem; color: var(--text-light);">Errors</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: ${result.errors ? 'var(--danger)' : 'var(--success)'};">${result.errors || 0}</div>
+            </div>
+          </div>
+          ${result.message ? `<p style="color: var(--text-light); font-size: 0.9rem;">${result.message}</p>` : ''}
+        </div>
+      `;
+    }
+
+    function updateUploadProgress(percent) {
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressPercent').textContent = percent + '%';
+    }
+
+    // ============ RESULTS MANAGEMENT ============
+    async function loadResults() {
+      try {
+        const yearId = document.getElementById('filterYear').value;
+        const classLevel = document.getElementById('filterClass').value;
+
+        let url = `${API_BASE_URL}/api/school/${schoolId}/results`;
+        const params = new URLSearchParams();
+        if (yearId) params.append('yearId', yearId);
+        if (classLevel) params.append('class', classLevel);
+
+        if (params.toString()) {
+          url += '?' + params.toString();
+        }
+
+        const response = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load results');
+
+        const results = await response.json();
+        displayResults(results);
+      } catch (error) {
+        console.error('Error loading results:', error);
+        showAlert('error', 'Failed to load results');
+      }
+    }
+
+    function displayResults(results) {
+      const tableBody = document.getElementById('resultsTableBody');
+
+      if (results.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px;">No results found</td></tr>';
+        return;
+      }
+
+      tableBody.innerHTML = results.map(result => `
+        <tr>
+          <td>${result.studentName}</td>
+          <td><strong>${result.regNo}</strong></td>
+          <td>${result.classLevel}</td>
+          <td>${result.academicYear}</td>
+          <td>${result.totalScore.toFixed(2)}</td>
+          <td><span style="background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; padding: 4px 8px; border-radius: 6px; font-weight: 700;">${result.grade}</span></td>
+          <td><span class="status-badge status-${result.status.toLowerCase()}">${result.status}</span></td>
+          <td>
+            <button class="header-btn" style="font-size: 0.85rem; padding: 6px 12px;" onclick="viewResultDetail('${result.id}')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function viewResultDetail(resultId) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/results/${resultId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load result');
+
+        const result = await response.json();
+
+        const body = document.getElementById('detailModalBody');
+        body.innerHTML = `
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Student Name</div>
+              <div style="font-weight: 800; color: var(--primary);">${result.studentName}</div>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Registration Number</div>
+              <div style="font-weight: 800; color: var(--primary);">${result.regNo}</div>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Class</div>
+              <div style="font-weight: 800; color: var(--primary);">${result.classLevel}</div>
+            </div>
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Total Score</div>
+              <div style="font-weight: 800; color: var(--primary);">${result.totalScore.toFixed(2)}</div>
+            </div>
+          </div>
+
+          <h4 style="margin: 0 0 12px 0; color: var(--primary);">Subject Scores</h4>
+          <div style="overflow-x: auto;">
+            <table class="data-table" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Score</th>
+                  <th>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${result.subjects.map(s => `
+                  <tr>
+                    <td>${s.name}</td>
+                    <td>${s.score}</td>
+                    <td><span style="background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700;">${s.grade}</span></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        showModal('detailModal');
+      } catch (error) {
+        console.error('Error loading result:', error);
+        showAlert('error', 'Failed to load result details');
+      }
+    }
+
+    // ============ UTILITY FUNCTIONS ============
+    function switchPage(pageName, element) {
+      // Hide all pages
+      document.querySelectorAll('[id$="Page"]').forEach(page => {
+        page.style.display = 'none';
+      });
+
+      // Show selected page
+      document.getElementById(pageName + 'Page').style.display = 'block';
+
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      // Update header
+      const titles = {
+        dashboard: { title: 'Dashboard', subtitle: 'Overview of your school\'s data' },
+        upload: { title: 'Upload Data', subtitle: 'Upload student records to the cloud' },
+        results: { title: 'Student Results', subtitle: 'Manage and view all student academic results' },
+        history: { title: 'Upload History', subtitle: 'View all past data uploads' },
+        settings: { title: 'School Settings', subtitle: 'Manage your school\'s information' },
+        help: { title: 'Help & Support', subtitle: 'Get help with uploading and managing data' }
+      };
+
+      const titleObj = titles[pageName] || {};
+      document.getElementById('pageTitle').textContent = titleObj.title || 'ExamGuard';
+      document.getElementById('pageSubtitle').textContent = titleObj.subtitle || '';
+
+      // Refresh data for certain pages
+      if (pageName === 'results') {
+        loadResults();
+      }
+
+      // Close sidebar on mobile after navigation
+      if (window.innerWidth <= 900) {
+        document.getElementById('sidebar').classList.remove('active');
+      }
+    }
+
+    function switchUploadTab(tabName, element) {
+      // Hide all tabs
+      document.getElementById('studentsTab').style.display = 'none';
+      document.getElementById('resultsTab').style.display = 'none';
+      document.getElementById('commentsTab').style.display = 'none';
+
+      // Show selected tab
+      document.getElementById(tabName + 'Tab').style.display = 'block';
+
+      // Update active tab
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      element.classList.add('active');
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    function showModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function showLoading(show) {
+      document.getElementById('loadingOverlay').classList.toggle('active', show);
+    }
+
+    function showAlert(type, message) {
+      const alerts = {
+        'success': 'successAlert',
+        'error': 'errorAlert',
+        'warning': 'warningAlert'
+      };
+
+      document.querySelectorAll('[id$="Alert"]').forEach(alert => {
+        alert.style.display = 'none';
+      });
+
+      const alertEl = document.getElementById(alerts[type]);
+      if (alertEl) {
+        const messageEl = alertEl.querySelector('[id$="Message"]');
+        if (messageEl) {
+          messageEl.textContent = message;
+        }
+        alertEl.style.display = 'flex';
+
+        setTimeout(() => {
+          alertEl.style.display = 'none';
+        }, 6000);
+      }
+    }
+
+    function viewDetails(uploadId) {
+      const upload = uploadHistory.find(u => u.id === uploadId);
+      if (!upload) return;
+
+      const body = document.getElementById('detailModalBody');
+      body.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Upload Type</div>
+            <div style="font-weight: 800; color: var(--primary);">${upload.type}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Date & Time</div>
+            <div style="font-weight: 800; color: var(--primary);">${new Date(upload.createdAt).toLocaleString()}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Records Processed</div>
+            <div style="font-weight: 800; color: var(--primary);">${upload.recordCount}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">File Size</div>
+            <div style="font-weight: 800; color: var(--primary);">${formatFileSize(upload.fileSize)}</div>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Status</div>
+            <div><span class="status-badge status-${upload.status.toLowerCase()}">${upload.status}</span></div>
+          </div>
+          ${upload.errors ? `
+            <div style="grid-column: 1 / -1;">
+              <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px;">Errors</div>
+              <div style="background: #fee2e2; padding: 12px; border-radius: 8px; color: #991b1b; font-size: 0.9rem;">${upload.errors}</div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      showModal('detailModal');
+    }
+
+    function downloadDetails() {
+      // Download upload details as CSV
+      showAlert('success', 'Download started');
+      closeModal('detailModal');
+    }
+
+    function downloadTemplateFile() {
+      const csvContent = `Registration Number,Student Name,Date of Birth,Gender,Class,Year Enrolled
+REG-2024-001,John Doe,2010-01-15,M,Primary 3,2024
+REG-2024-002,Jane Smith,2009-03-20,F,Primary 4,2024
+REG-2024-003,Michael Johnson,2008-06-10,M,Primary 5,2024`;
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'student_template.csv';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      showAlert('success', 'Template downloaded successfully');
+    }
+
+    function openSettings() {
+      switchPage('settings', document.querySelector('[onclick*="\'settings\'"]') || document.querySelector('.nav-item:nth-child(5)'));
+    }
+
+    async function saveSettings(event) {
+      event.preventDefault();
+
+      const settings = {
+        email: document.getElementById('schoolEmail').value,
+        phone: document.getElementById('schoolPhone').value,
+        address: document.getElementById('schoolAddress').value,
+        autoVerify: document.getElementById('autoVerify').checked,
+        emailNotifications: document.getElementById('emailNotifications').checked,
+        dataBackup: document.getElementById('dataBackup').checked
+      };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/school/${schoolId}/settings`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settings)
+        });
+
+        if (!response.ok) throw new Error('Failed to save settings');
+
+        showAlert('success', 'Settings saved successfully');
+      } catch (error) {
+        console.error('Error saving settings:', error);
+        showAlert('error', 'Failed to save settings');
+      }
+    }
+
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+  </script>
+
+</body>
+</html>
