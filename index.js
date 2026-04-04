@@ -41,6 +41,8 @@ const profilePicsDir = "./uploads/profilepics";
 if (!fs.existsSync(profilePicsDir)) {
   fs.mkdirSync(profilePicsDir, { recursive: true });
 }
+const theoryAnswersDir = path.join(__dirname, "uploads", "theory-answers");
+
 const profilePicStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, profilePicsDir);
@@ -81,6 +83,34 @@ const uploadEditorImage = multer({
     if (file.mimetype.startsWith("image/")) cb(null, true);
     else cb(new Error("Only image files allowed!"));
   }
+});
+const theoryAnswersStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, theoryAnswersDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${path.extname(file.originalname)}`;
+    cb(null, uniqueName);
+  }
+});
+
+const theoryAnswersFilter = (req, file, cb) => {
+  const allowedMimes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "application/pdf"
+  ];
+  if (allowedMimes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only image (JPEG, PNG, WebP) and PDF files allowed for theory answers!"));
+  }
+};
+export const uploadTheoryAnswers = multer({
+  storage: theoryAnswersStorage,
+  fileFilter: theoryAnswersFilter,
+  limits: { fileSize: 20 * 1024 * 1024 } // 20MB for theory answers
 });
 
 async function sendBlogNotification({ title, message, url }) {
@@ -580,6 +610,11 @@ app.get('/api/proxy', async (req, res) => {
   }
 });
 
+export const uploadTheoryAnswers = multer({
+  storage: theoryAnswersStorage,
+  fileFilter: theoryAnswersFilter,
+  limits: { fileSize: 20 * 1024 * 1024 } // 20MB for theory answers
+});
 
 // Registration endpoint with auto-create for faculty/department
 // Registration endpoint with auto-create for faculty/department
