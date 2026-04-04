@@ -142,7 +142,9 @@ import assignmentsRouter from './routes/assignments.js';
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 // add near other imports
 import aiMaterialRoutes from "./routes/aiMaterial.js";
-
+import theoryAnswersRoutes from "./routes/theoryAnswers.js";
+import theoryAttemptsRoutes from "./routes/theoryAttempts.js";
+import theoryQuestionsRoutes from "./routes/theoryQuestions.js";
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
 import rewardsRoutes from "./routes/rewards.js";
@@ -1352,6 +1354,9 @@ app.use("/api", postsRoutes);
 app.use("/api/studypadi/ai", studypadiAiRoutes);
 app.use("/api/exam-set", examSetRoutes);
 app.use("/api/cbt-questions", cbtQuestionsRoutes);
+app.use("/api/theory-answers", theoryAnswersRoutes);
+app.use("/api/theory-attempts", theoryAttemptsRoutes);
+app.use("/api/theory-questions", theoryQuestionsRoutes);
 app.use("/api/student", studentAuthRoutes);
 app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/liveclass"))); // Serve files publicly
 app.use("/api/liveclass", liveclassRoutes);
