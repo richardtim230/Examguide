@@ -9,7 +9,7 @@ const router = express.Router();
  * CREATE a theory question
  * POST /api/theory-questions
  */
-router.post("/", authenticate, authorizeRole("admin", "tutor"), async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { examSet, questionNumber, question, maxMarks, expectedLength, rubric, sampleAnswer } = req.body;
 
