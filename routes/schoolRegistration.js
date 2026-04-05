@@ -288,7 +288,7 @@ router.post("/register", async (req, res) => {
       // Send notification to internal team
       await client.sendEmail({
         From: "richardochuko@examguard.com.ng",
-        To: process.env.ADMIN_EMAIL || "admin@examguard.com.ng",
+        To: process.env.ADMIN_EMAIL || "richardochuko14@gmail.com",
         Subject: `[NEW] School Registration: ${schoolName} [${newSchool.schoolId}]`,
         HtmlBody: internalEmailHtml
       });
