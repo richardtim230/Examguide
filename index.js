@@ -611,11 +611,7 @@ app.get('/api/proxy', async (req, res) => {
   }
 });
 
-export const uploadTheoryAnswers = multer({
-  storage: theoryAnswersStorage,
-  fileFilter: theoryAnswersFilter,
-  limits: { fileSize: 20 * 1024 * 1024 } // 20MB for theory answers
-});
+
 
 // Registration endpoint with auto-create for faculty/department
 // Registration endpoint with auto-create for faculty/department
