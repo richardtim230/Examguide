@@ -9,7 +9,7 @@
     { "source": "/affiliate-app-login", "destination": "/affiliate-login.html" },
     { "source": "/affiliate-registration", "destination": "/affiliate-reg.html" },
     { "source": "affiliate-app-dashboard", "destination": "/affiliate-dashboard.html" },
-    { "source": "/testsession", "destination": "/test.html" },
+    { "source": "/school-registration", "destination": "/school-reg.html" },
     { "source": "/advertisement", "destination": "/advert.html" },
     { "source": "/photo-editor", "destination": "/photo-editor.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
