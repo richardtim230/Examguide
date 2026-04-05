@@ -164,6 +164,7 @@ import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 import affiliateRoutes from "./routes/affiliate.js";
 import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
+import schoolRegistrationRoutes from "./routes/schoolRegistration.js";
 import ordersRoutes from './routes/orders.js';
 import studypadiRoutes from "./routes/studypadi.js";
 import studypadiAiRoutes from "./routes/studypadi-ai.js";
@@ -1401,6 +1402,7 @@ app.use("/api/tasks", tasksRoutes);
 app.use("/api/studypadi", studypadiRoutes);
 app.use("/api/resources", resourcesGridFSRoutes);
 app.use('/api', studentsRouter);
+app.use("/api/schools", schoolRegistrationRoutes);
 app.use('/api', assignmentsRouter);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
