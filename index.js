@@ -41,7 +41,7 @@ const profilePicsDir = "./uploads/profilepics";
 if (!fs.existsSync(profilePicsDir)) {
   fs.mkdirSync(profilePicsDir, { recursive: true });
 }
-const theoryAnswersDir = path.join(__dirname, "uploads", "theory-answers");
+const theoryAnswersDir = "./uploads/theory-answers";
 
 const profilePicStorage = multer.diskStorage({
   destination: function (req, file, cb) {
