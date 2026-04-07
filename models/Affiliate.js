@@ -11,12 +11,14 @@ const affiliateSchema = new mongoose.Schema(
       minlength: [3, "Full name must be at least 3 characters"]
     },
     email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      lowercase: true,
-      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"]
-    },
+  type: String,
+  required: [true, "Email is required"],
+  unique: true,
+  lowercase: true,
+  match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"],
+  sparse: true,  // Allow multiple null values
+  trim: true
+},
     phone: {
       type: String,
       required: [true, "Phone number is required"],
