@@ -17,7 +17,8 @@ const affiliateSchema = new mongoose.Schema(
       lowercase: true,
       match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"],
       sparse: true,
-      trim: true
+      trim: true,
+      index: true
     },
     phone: {
       type: String,
@@ -60,13 +61,13 @@ const affiliateSchema = new mongoose.Schema(
       minlength: [10, "Please describe your marketing strategy in detail"]
     },
 
-    // Affiliate Code (Unique)
+    // Affiliate Code (Unique & Sparse - allows multiple nulls)
     affiliateCode: {
       type: String,
       unique: true,
-      required: false,
+      sparse: true,
       uppercase: true,
-      sparse: true
+      index: true
     },
 
     // Account Settings
@@ -96,8 +97,7 @@ const affiliateSchema = new mongoose.Schema(
     commissionRate: {
       type: Number,
       enum: [20, 25, 30],
-      default: 20,
-      description: "Commission percentage for referrals"
+      default: 20
     },
     tier: {
       type: String,
@@ -217,8 +217,7 @@ const affiliateSchema = new mongoose.Schema(
     },
     accountManager: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: null
+      ref: "User"
     },
     coMarketingOpportunities: {
       type: Boolean,
@@ -263,9 +262,9 @@ const affiliateSchema = new mongoose.Schema(
   }
 );
 
-// Compound index for email and deleted status
+// Create indexes
 affiliateSchema.index({ email: 1, isDeleted: 1 });
-affiliateSchema.index({ affiliateCode: 1 });
+affiliateSchema.index({ affiliateCode: 1, isDeleted: 1 });
 affiliateSchema.index({ status: 1 });
 affiliateSchema.index({ tier: 1 });
 affiliateSchema.index({ createdAt: -1 });
@@ -274,13 +273,22 @@ affiliateSchema.index({ createdAt: -1 });
 affiliateSchema.pre("save", async function (next) {
   if (!this.affiliateCode) {
     let code, exists;
+    let attempts = 0;
+    const maxAttempts = 10;
+    
     do {
       code = `EXAM-${crypto.randomBytes(5).toString("hex").toUpperCase()}`;
       exists = await mongoose.model("Affiliate").findOne({ 
         affiliateCode: code,
         isDeleted: false 
       });
-    } while (exists);
+      attempts++;
+    } while (exists && attempts < maxAttempts);
+    
+    if (attempts >= maxAttempts) {
+      return next(new Error("Failed to generate unique affiliate code"));
+    }
+    
     this.affiliateCode = code;
   }
   next();
