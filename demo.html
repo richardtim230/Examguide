@@ -270,43 +270,43 @@
     }
 
     /* ================= HERO SECTION ================= */
-    .hero {
-      min-height: 60vh;
-      padding-top: 70px;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, #061728 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.hero {
+  min-height: 60vh;
+  padding-top: 70px;
+  background: linear-gradient(135deg, rgba(6,23,40,0.75) 0%, rgba(15,40,71,0.75) 50%, rgba(6,23,40,0.75) 100%), 
+              url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=800&fit=crop') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(255, 180, 0, 0.15), transparent 70%);
-      border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
-      pointer-events: none;
-    }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 180, 0, 0.15), transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -10%;
-      left: -10%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(61, 130, 246, 0.1), transparent 70%);
-      border-radius: 50%;
-      animation: float 8s ease-in-out infinite reverse;
-      pointer-events: none;
-    }
-
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(61, 130, 246, 0.1), transparent 70%);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite reverse;
+  pointer-events: none;
+}
     .hero-content {
       max-width: 100%;
       margin: 0 auto;
