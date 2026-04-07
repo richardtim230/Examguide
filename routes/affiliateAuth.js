@@ -1,5 +1,5 @@
 import express from "express";
-import Affiliate from "../models/Affiliate.js";
+import AffiliateV2 from "../models/AffiliateV2.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
@@ -11,7 +11,7 @@ const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN || "");
 
 /**
  * POST /api/affiliates/register
- * Register a new affiliate
+ * Register a new affiliate using AffiliateV2 model
  */
 router.post("/register", async (req, res) => {
   try {
@@ -48,7 +48,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Validate email
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -68,7 +68,7 @@ router.post("/register", async (req, res) => {
 
     // ===== CHECK EMAIL (excluding deleted) =====
     const normalizedEmail = email.toLowerCase().trim();
-    const existingEmail = await Affiliate.findOne({
+    const existingEmail = await AffiliateV2.findOne({
       email: normalizedEmail,
       isDeleted: false
     });
@@ -87,12 +87,12 @@ router.post("/register", async (req, res) => {
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
     // ===== CREATE AFFILIATE =====
-    const newAffiliate = new Affiliate({
+    const newAffiliate = new AffiliateV2({
       fullName: fullName.trim(),
       email: normalizedEmail,
       phone: phone.trim(),
       company: company.trim(),
-      website: website?.trim() || "",
+      website: website?.trim() || null,
       country: country.trim(),
       affiliateType,
       marketingChannels: marketingChannels.trim(),
@@ -121,7 +121,7 @@ router.post("/register", async (req, res) => {
       // Email to internal team
       const internalEmailHtml = getInternalNotificationEmail(
         fullName,
-        email,
+        normalizedEmail,
         phone,
         company,
         affiliateType,
@@ -196,14 +196,14 @@ router.post("/register", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error registering affiliate",
-      error: err.message
+      error: process.env.NODE_ENV === "development" ? err.message : "Server error"
     });
   }
 });
 
 /**
  * POST /api/affiliates/login
- * Affiliate login
+ * Affiliate login using AffiliateV2
  */
 router.post("/login", async (req, res) => {
   try {
@@ -217,7 +217,7 @@ router.post("/login", async (req, res) => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const affiliate = await Affiliate.findOne({
+    const affiliate = await AffiliateV2.findOne({
       email: normalizedEmail,
       isDeleted: false
     }).select("+password");
@@ -290,7 +290,7 @@ router.post("/login", async (req, res) => {
  */
 router.get("/me", authenticate, async (req, res) => {
   try {
-    const affiliate = await Affiliate.findById(req.user.id)
+    const affiliate = await AffiliateV2.findById(req.user.id)
       .populate("accountManager", "fullname email");
 
     if (!affiliate) {
@@ -329,12 +329,22 @@ router.put("/me", authenticate, async (req, res) => {
     delete updates.withdrawnEarnings;
     delete updates.status;
     delete updates.emailVerified;
+    delete updates.isDeleted;
+    delete updates.approvedBy;
+    delete updates.approvalDate;
 
-    const affiliate = await Affiliate.findByIdAndUpdate(
+    const affiliate = await AffiliateV2.findByIdAndUpdate(
       req.user.id,
       updates,
       { new: true, runValidators: true }
     );
+
+    if (!affiliate) {
+      return res.status(404).json({
+        success: false,
+        message: "Affiliate not found"
+      });
+    }
 
     res.json({
       success: true,
@@ -355,7 +365,7 @@ router.put("/me", authenticate, async (req, res) => {
  */
 router.get("/dashboard", authenticate, async (req, res) => {
   try {
-    const affiliate = await Affiliate.findById(req.user.id);
+    const affiliate = await AffiliateV2.findById(req.user.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -403,7 +413,7 @@ router.get("/dashboard", authenticate, async (req, res) => {
  */
 router.post("/admin/approve/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const affiliate = await Affiliate.findById(req.params.id);
+    const affiliate = await AffiliateV2.findById(req.params.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -416,9 +426,13 @@ router.post("/admin/approve/:id", authenticate, authorizeRole("admin", "superadm
     affiliate.emailVerified = true;
     affiliate.approvedBy = req.user.id;
     affiliate.approvalDate = new Date();
-    affiliate.materialsAccess.banners = true;
-    affiliate.materialsAccess.emailTemplates = true;
-    affiliate.materialsAccess.socialMedia = true;
+    affiliate.materialsAccess = {
+      banners: true,
+      emailTemplates: true,
+      socialMedia: true,
+      caseStudies: false,
+      customMaterials: false
+    };
     await affiliate.save();
 
     // Send approval email
@@ -440,6 +454,7 @@ router.post("/admin/approve/:id", authenticate, authorizeRole("admin", "superadm
       data: affiliate
     });
   } catch (err) {
+    console.error("Error approving affiliate:", err);
     res.status(500).json({
       success: false,
       error: err.message
@@ -455,7 +470,7 @@ router.post("/admin/reject/:id", authenticate, authorizeRole("admin", "superadmi
   try {
     const { reason } = req.body;
 
-    const affiliate = await Affiliate.findById(req.params.id);
+    const affiliate = await AffiliateV2.findById(req.params.id);
     if (!affiliate) {
       return res.status(404).json({
         success: false,
@@ -483,6 +498,91 @@ router.post("/admin/reject/:id", authenticate, authorizeRole("admin", "superadmi
     res.json({
       success: true,
       message: "Affiliate rejected successfully",
+      data: affiliate
+    });
+  } catch (err) {
+    console.error("Error rejecting affiliate:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * GET /api/affiliates/admin/all
+ * Get all affiliates (Admin only)
+ */
+router.get("/admin/all", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const { status, tier, page = 1, limit = 10, search } = req.query;
+
+    let query = { isDeleted: false };
+
+    if (status) {
+      query.status = status;
+    }
+
+    if (tier) {
+      query.tier = tier;
+    }
+
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+        { affiliateCode: { $regex: search, $options: "i" } },
+        { company: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    const skip = (page - 1) * limit;
+
+    const affiliates = await AffiliateV2.find(query)
+      .select("-password -emailVerificationToken")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await AffiliateV2.countDocuments(query);
+
+    res.json({
+      success: true,
+      data: affiliates,
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: parseInt(page),
+        limit: parseInt(limit)
+      }
+    });
+  } catch (err) {
+    console.error("Error fetching affiliates:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+/**
+ * GET /api/affiliates/admin/:id
+ * Get single affiliate (Admin only)
+ */
+router.get("/admin/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const affiliate = await AffiliateV2.findById(req.params.id)
+      .populate("accountManager", "fullname email");
+
+    if (!affiliate) {
+      return res.status(404).json({
+        success: false,
+        message: "Affiliate not found"
+      });
+    }
+
+    res.json({
+      success: true,
       data: affiliate
     });
   } catch (err) {
@@ -671,11 +771,9 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin: 20px 0;
-      transition: all 0.3s ease;
     }
     .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      opacity: 0.9;
     }
     .footer {
       background: #f8f9fa;
@@ -715,13 +813,11 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <h1>🎉 Welcome Aboard!</h1>
       <p>ExamGuard Affiliate Program</p>
     </div>
 
-    <!-- Content -->
     <div class="content">
       <div class="greeting">
         Dear <strong>${fullName}</strong>,
@@ -731,14 +827,12 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
         Congratulations! Your affiliate registration has been received and is now under review. We're excited to welcome <strong>${company}</strong> to our growing partner network.
       </p>
 
-      <!-- Affiliate Code Section -->
       <div class="code-section">
         <div class="code-label">Your Unique Affiliate Code</div>
         <div class="code-display">${affiliateCode}</div>
         <p style="font-size: 12px; color: #718096; margin-top: 12px;">This code tracks your referrals and commissions</p>
       </div>
 
-      <!-- Quick Info -->
       <div class="info-grid">
         <div class="info-item">
           <div class="info-label">Category</div>
@@ -750,7 +844,6 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
         </div>
       </div>
 
-      <!-- What Happens Next -->
       <div class="section">
         <div class="section-title">What Happens Next?</div>
         <ul class="features-list">
@@ -762,7 +855,6 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
         </ul>
       </div>
 
-      <!-- Commission Structure -->
       <div class="section">
         <div class="section-title">Commission Structure</div>
         <p style="margin-bottom: 16px; font-size: 14px; color: #4a5568;">
@@ -787,7 +879,6 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
         </div>
       </div>
 
-      <!-- CTA -->
       <div style="text-align: center; margin: 30px 0;">
         <p style="font-size: 13px; color: #718096; margin-bottom: 16px;">
           Once approved, access your dashboard and marketing materials
@@ -795,7 +886,6 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
         <a href="${process.env.FRONTEND_ORIGIN || 'https://examguard.com.ng'}/affiliate-dashboard" class="cta-button">View Dashboard</a>
       </div>
 
-      <!-- Support -->
       <div class="section" style="background: #f0f4ff; border-left: 4px solid #3b82f6; padding: 16px; border-radius: 6px; margin: 30px 0;">
         <p style="font-size: 14px; color: #2d3748; margin: 0;">
           <strong>Questions?</strong> Contact our affiliate support team at 
@@ -809,7 +899,6 @@ function getAffiliateWelcomeEmail(fullName, company, affiliateType, affiliateCod
       </p>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
       <div class="footer-text">
         © ${new Date().getFullYear()} ExamGuard. All rights reserved.
@@ -966,25 +1055,21 @@ function getInternalNotificationEmail(fullName, email, phone, company, affiliate
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <h2>📌 New Affiliate Registration</h2>
       <p>Pending Review & Approval</p>
     </div>
 
-    <!-- Alert -->
     <div class="alert-box">
       ⚠️ <strong>Action Required:</strong> Review and approve/reject this affiliate registration
     </div>
 
-    <!-- Content -->
     <div class="content">
       <div class="code-badge">
         <span class="code-badge-label">Affiliate Code</span>
         <div class="code-badge-value">${affiliateCode}</div>
       </div>
 
-      <!-- Details Table -->
       <table>
         <thead>
           <tr>
@@ -1031,7 +1116,6 @@ function getInternalNotificationEmail(fullName, email, phone, company, affiliate
         </tbody>
       </table>
 
-      <!-- Action Section -->
       <div class="action-section">
         <strong>📋 Next Steps:</strong>
         <p style="margin: 8px 0 0 0; font-size: 13px;">
@@ -1046,7 +1130,6 @@ function getInternalNotificationEmail(fullName, email, phone, company, affiliate
       </p>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
       © ${new Date().getFullYear()} ExamGuard | Affiliate Management System
     </div>
@@ -1158,13 +1241,14 @@ function getApprovalEmail(affiliate) {
       letter-spacing: 0.5px;
       margin: 24px 0;
     }
+    .cta-button:hover {
+      opacity: 0.9;
+    }
     .footer {
       background: #f8f9fa;
       padding: 24px 30px;
       text-align: center;
       border-top: 1px solid #e2e8f0;
-    }
-    .footer-text {
       font-size: 13px;
       color: #718096;
     }
@@ -1177,12 +1261,10 @@ function getApprovalEmail(affiliate) {
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <h1>✅ Account Approved!</h1>
     </div>
 
-    <!-- Content -->
     <div class="content">
       <p>Dear <strong>${affiliate.fullName}</strong>,</p>
 
@@ -1190,13 +1272,11 @@ function getApprovalEmail(affiliate) {
         Great news! Your ExamGuard affiliate application has been <strong>approved</strong>. Your account is now fully activated and ready to start generating revenue.
       </p>
 
-      <!-- Code Section -->
       <div class="code-section">
         <div class="code-label">Your Affiliate Code</div>
         <div class="code-display">${affiliate.affiliateCode}</div>
       </div>
 
-      <!-- Details -->
       <div class="success-box">
         <p style="margin: 0;">
           <strong>Commission Rate:</strong> ${affiliate.commissionRate}%<br>
@@ -1205,7 +1285,6 @@ function getApprovalEmail(affiliate) {
         </p>
       </div>
 
-      <!-- Quick Start -->
       <div>
         <h3 style="font-size: 16px; color: #1a202c; margin-bottom: 12px; margin-top: 24px;">Quick Start Guide</h3>
         <ul class="features-list">
@@ -1217,12 +1296,10 @@ function getApprovalEmail(affiliate) {
         </ul>
       </div>
 
-      <!-- CTA -->
       <div style="text-align: center;">
         <a href="${process.env.FRONTEND_ORIGIN || 'https://examguard.com.ng'}/affiliate-dashboard" class="cta-button">Go to Dashboard</a>
       </div>
 
-      <!-- Support -->
       <p style="font-size: 13px; color: #718096; margin-top: 24px; background: #f0f4ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: 4px;">
         Need help? Contact our support team at <a href="mailto:affiliates@examguard.com.ng" style="color: #061728; font-weight: 600; text-decoration: none;">affiliates@examguard.com.ng</a>
       </p>
@@ -1233,11 +1310,8 @@ function getApprovalEmail(affiliate) {
       </p>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
-      <div class="footer-text">
-        © ${new Date().getFullYear()} ExamGuard. All rights reserved.
-      </div>
+      © ${new Date().getFullYear()} ExamGuard. All rights reserved.
     </div>
   </div>
 </body>
@@ -1322,12 +1396,10 @@ function getRejectionEmail(affiliate) {
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <h1>Application Status Update</h1>
     </div>
 
-    <!-- Content -->
     <div class="content">
       <p>Dear <strong>${affiliate.fullName}</strong>,</p>
 
@@ -1335,18 +1407,15 @@ function getRejectionEmail(affiliate) {
         Thank you for your interest in the ExamGuard Affiliate Program. We've carefully reviewed your application.
       </p>
 
-      <!-- Status -->
       <div class="info-box">
         <strong>Decision:</strong> Unfortunately, we are unable to approve your application at this time.
         ${affiliate.rejectionReason ? `<br><br><strong>Reason:</strong> ${affiliate.rejectionReason}` : ""}
       </div>
 
-      <!-- Feedback -->
       <p style="color: #4a5568; font-size: 14px;">
         We understand this may be disappointing. Please note that this decision is not final. We'd be happy to revisit your application if you'd like to provide additional information or reapply in the future.
       </p>
 
-      <!-- Next Steps -->
       <div class="next-steps">
         <strong>What You Can Do:</strong>
         <ul style="margin: 8px 0 0 0; padding-left: 20px; list-style: none;">
@@ -1366,7 +1435,6 @@ function getRejectionEmail(affiliate) {
       </p>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
       © ${new Date().getFullYear()} ExamGuard. All rights reserved.
     </div>
