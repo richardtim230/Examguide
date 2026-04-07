@@ -11,14 +11,14 @@ const affiliateSchema = new mongoose.Schema(
       minlength: [3, "Full name must be at least 3 characters"]
     },
     email: {
-  type: String,
-  required: [true, "Email is required"],
-  unique: true,
-  lowercase: true,
-  match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"],
-  sparse: true,  // Allow multiple null values
-  trim: true
-},
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"],
+      sparse: true,
+      trim: true
+    },
     phone: {
       type: String,
       required: [true, "Phone number is required"],
@@ -74,7 +74,7 @@ const affiliateSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
-      select: false // Don't return password by default
+      select: false
     },
 
     // Status & Verification
@@ -249,7 +249,8 @@ const affiliateSchema = new mongoose.Schema(
     },
     isDeleted: {
       type: Boolean,
-      default: false
+      default: false,
+      index: true
     },
     deletedAt: Date,
     deletedBy: {
@@ -262,20 +263,23 @@ const affiliateSchema = new mongoose.Schema(
   }
 );
 
-// Indexes for faster queries
+// Compound index for email and deleted status
+affiliateSchema.index({ email: 1, isDeleted: 1 });
 affiliateSchema.index({ affiliateCode: 1 });
-affiliateSchema.index({ email: 1 });
 affiliateSchema.index({ status: 1 });
 affiliateSchema.index({ tier: 1 });
 affiliateSchema.index({ createdAt: -1 });
 
-// Generate unique affiliate code before saving
+// Pre-save hook to generate unique affiliate code
 affiliateSchema.pre("save", async function (next) {
   if (!this.affiliateCode) {
     let code, exists;
     do {
       code = `EXAM-${crypto.randomBytes(5).toString("hex").toUpperCase()}`;
-      exists = await mongoose.model("Affiliate").findOne({ affiliateCode: code });
+      exists = await mongoose.model("Affiliate").findOne({ 
+        affiliateCode: code,
+        isDeleted: false 
+      });
     } while (exists);
     this.affiliateCode = code;
   }
@@ -298,7 +302,7 @@ affiliateSchema.methods.softDelete = async function (deletedBy) {
 
 // Method to calculate expected commission
 affiliateSchema.methods.calculatePendingEarnings = function () {
-  const monthlySubscriptionPrice = 99; // Adjust based on your pricing
+  const monthlySubscriptionPrice = 99;
   return this.successfulReferrals * monthlySubscriptionPrice * (this.commissionRate / 100);
 };
 
@@ -317,7 +321,7 @@ affiliateSchema.methods.updateTier = async function () {
   return this.save();
 };
 
-// Don't include soft deleted records by default
+// Query helper for active records
 affiliateSchema.query.active = function () {
   return this.find({ isDeleted: false });
 };
