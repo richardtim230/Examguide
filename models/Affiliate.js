@@ -62,7 +62,7 @@ const affiliateSchema = new mongoose.Schema(
     affiliateCode: {
       type: String,
       unique: true,
-      required: true,
+      required: false,
       uppercase: true,
       sparse: true
     },
