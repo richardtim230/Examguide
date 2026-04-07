@@ -196,6 +196,7 @@ import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 import supportRoutes from "./routes/support.js";
 import Ad from "./models/Ad.js";
+import affiliateAuthRoutes from "./routes/affiliateAuth.js";
 import creditRoutes from "./routes/credit.js";
 import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
 import lectureNotesRoutes from "./routes/lectureNotes.js";
@@ -1371,6 +1372,9 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/registrations", registrationsRoutes);
 app.use("/api/responses", responsesRoutes);
 app.use("/api/affiliate", affiliateRoutes);
+// Add this route registration with other routes
+app.use("/api/affiliates", affiliateAuthRoutes);
+
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/offers", offerRoutes);
