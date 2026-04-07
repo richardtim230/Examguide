@@ -142,7 +142,7 @@ router.post("/register", async (req, res) => {
       // Send to internal team
       await client.sendEmail({
         From: "affiliates@examguard.com.ng",
-        To: process.env.ADMIN_EMAIL || "admin@examguard.com.ng",
+        To: process.env.ADMIN_EMAIL || "richardochuko14@gmail.com",
         ReplyTo: normalizedEmail,
         Subject: `[NEW AFFILIATE REGISTRATION] ${fullName} (${newAffiliate.affiliateCode})`,
         HtmlBody: internalEmailHtml
