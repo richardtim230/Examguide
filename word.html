@@ -8,7 +8,7 @@
   <!-- SEO Meta Tags -->
   <title>Word & Character Counter | Count Words, Characters & More</title>
   <meta name="title" content="Word & Character Counter | Professional Text Analysis Tool">
-  <meta name="description" content="Free, fast, and accurate word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. Perfect for writers, students, and professionals.">
+  <meta name="description" content="Free, fast, and accurate word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. Perfect for writers, students, and professionals. Download in multiple formats and access your history.">
   <meta name="keywords" content="word counter, character counter, text counter, word counter tool, character counter online, writing tool">
   <meta name="author" content="ExamGuard">
   <meta name="robots" content="index, follow">
@@ -16,7 +16,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Word & Character Counter">
-  <meta property="og:description" content="Count words, characters, sentences, and more in real-time.">
+  <meta property="og:description" content="Count words, characters, sentences, and more in real-time with format export and history tracking.">
   <meta property="og:url" content="https://examguard.com.ng/">
   
   <!-- Favicon -->
@@ -27,6 +27,9 @@
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- jsPDF and html2canvas for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   
   <style>
     /* ================= ROOT VARIABLES ================= */
@@ -107,9 +110,42 @@
       }
     }
 
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.8; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOverlay {
+      from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        backdrop-filter: blur(4px);
+      }
     }
 
     .animate-fade-in-up {
@@ -122,6 +158,10 @@
 
     .animate-slide-in-right {
       animation: slideInRight 0.6s ease-out;
+    }
+
+    .animate-slide-in-left {
+      animation: slideInLeft 0.6s ease-out;
     }
 
     /* ================= HEADER ================= */
@@ -137,7 +177,7 @@
     }
 
     .header-container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 20px 40px;
       display: flex;
@@ -175,7 +215,13 @@
       font-weight: 700;
     }
 
-    .theme-toggle {
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .header-btn {
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid rgba(255, 255, 255, 0.2);
       color: var(--white);
@@ -188,17 +234,40 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
 
-    .theme-toggle:hover {
+    .header-btn:hover {
       background: rgba(255, 180, 0, 0.2);
       border-color: var(--gold);
       color: var(--gold);
     }
 
+    .header-btn.active {
+      background: rgba(255, 180, 0, 0.3);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .history-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent-red);
+      color: var(--white);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
     /* ================= MAIN CONTAINER ================= */
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 60px 40px;
     }
@@ -233,7 +302,7 @@
       line-height: 1.8;
     }
 
-    /* ================= MAIN CONTENT ================= */
+    /* ================= CONTENT WRAPPER ================= */
     .content-wrapper {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -300,9 +369,9 @@
 
     /* ================= BUTTON SECTION ================= */
     .button-group {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     .btn {
@@ -316,6 +385,7 @@
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       letter-spacing: 0.3px;
       text-transform: uppercase;
@@ -346,7 +416,6 @@
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: var(--navy);
       font-weight: 700;
-      flex: 1;
     }
 
     .btn-primary:hover {
@@ -358,7 +427,6 @@
       background: var(--gray-100);
       color: var(--gray-800);
       border: 2px solid var(--gray-200);
-      flex: 1;
     }
 
     .btn-secondary:hover {
@@ -371,6 +439,65 @@
     .btn i {
       position: relative;
       z-index: 1;
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ================= DOWNLOAD DROPDOWN ================= */
+    .dropdown-wrapper {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid var(--gray-200);
+      min-width: 200px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+      margin-top: 8px;
+      animation: slideDown 0.3s ease forwards;
+    }
+
+    .dropdown-menu.active {
+      max-height: 400px;
+    }
+
+    .dropdown-item {
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: var(--gray-800);
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .dropdown-item:hover {
+      background: var(--gray-50);
+      color: var(--gold);
+    }
+
+    .dropdown-item i {
+      color: var(--gold);
+      width: 16px;
     }
 
     /* ================= STATS SIDEBAR ================= */
@@ -465,7 +592,7 @@
       z-index: 1;
     }
 
-    /* ================= INFO CARDS ================= */
+    /* ================= INFO CARD ================= */
     .info-card {
       background: linear-gradient(135deg, rgba(255, 180, 0, 0.05), rgba(61, 130, 246, 0.05));
       border-radius: 12px;
@@ -483,6 +610,230 @@
       color: var(--navy);
       display: block;
       margin-bottom: 6px;
+    }
+
+    /* ================= MODAL OVERLAY ================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(0px);
+      display: none;
+      z-index: 500;
+      animation: fadeOverlay 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: block;
+    }
+
+    /* ================= HISTORY MODAL ================= */
+    .history-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-xl);
+      z-index: 501;
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .history-modal.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px;
+      border-bottom: 2px solid var(--gray-200);
+      flex-shrink: 0;
+    }
+
+    .modal-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-red);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+    }
+
+    .history-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .history-item {
+      padding: 18px;
+      background: var(--gray-50);
+      border-radius: 12px;
+      border: 2px solid var(--gray-200);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .history-item:hover {
+      background: var(--white);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+    }
+
+    .history-item-content {
+      margin-bottom: 12px;
+    }
+
+    .history-item-text {
+      font-size: 14px;
+      color: var(--gray-800);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+    }
+
+    .history-item-meta {
+      font-size: 12px;
+      color: var(--gray-600);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .history-item-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .history-item-btn {
+      padding: 8px 16px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+      flex: 1;
+    }
+
+    .history-item-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .history-item-btn.delete {
+      background: var(--accent-red);
+      color: var(--white);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray-600);
+    }
+
+    .empty-state i {
+      font-size: 64px;
+      color: var(--gray-300);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .modal-footer {
+      padding: 20px 28px;
+      border-top: 2px solid var(--gray-200);
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .modal-footer button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-footer .btn-secondary {
+      flex: 1;
+      background: var(--gray-100);
+      color: var(--gray-800);
+      border: 2px solid var(--gray-200);
+    }
+
+    .modal-footer .btn-secondary:hover {
+      background: var(--white);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .modal-footer .btn-danger {
+      flex: 1;
+      background: var(--accent-red);
+      color: var(--white);
+    }
+
+    .modal-footer .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     /* ================= RESPONSIVE DESIGN ================= */
@@ -524,6 +875,10 @@
       .stat-number {
         font-size: 28px;
       }
+
+      .button-group {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 640px) {
@@ -543,8 +898,7 @@
         font-size: 14px;
       }
 
-      .textarea-card,
-      .stat-card {
+      .textarea-card {
         padding: 20px;
       }
 
@@ -554,17 +908,17 @@
       }
 
       .button-group {
-        flex-direction: column;
+        grid-template-columns: 1fr;
       }
 
       .btn {
         width: 100%;
-        justify-content: center;
       }
 
       .stat-card {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 20px;
       }
 
       .stat-icon {
@@ -580,16 +934,44 @@
       .stat-label {
         font-size: 11px;
       }
+
+      .history-modal {
+        width: 95%;
+        max-height: 90vh;
+      }
+
+      .modal-header {
+        padding: 20px;
+      }
+
+      .modal-header h2 {
+        font-size: 22px;
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      .modal-footer {
+        flex-direction: column;
+        padding: 16px 20px;
+      }
+
+      .modal-footer button {
+        width: 100%;
+      }
     }
 
-    /* ================= DARK MODE (Future) ================= */
+    /* ================= DARK MODE ================= */
     body.dark-mode {
       background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
       color: var(--gray-100);
     }
 
     body.dark-mode .textarea-card,
-    body.dark-mode .stat-card {
+    body.dark-mode .stat-card,
+    body.dark-mode .history-modal,
+    body.dark-mode .dropdown-menu {
       background: #1f1f1f;
       border-color: #333;
     }
@@ -618,7 +1000,8 @@
     }
 
     body.dark-mode .page-header h1,
-    body.dark-mode .stat-number {
+    body.dark-mode .stat-number,
+    body.dark-mode .modal-header h2 {
       color: var(--white);
     }
 
@@ -634,6 +1017,67 @@
     body.dark-mode .info-card strong {
       color: var(--gray-200);
     }
+
+    body.dark-mode .history-item {
+      background: #2a2a2a;
+      border-color: #333;
+    }
+
+    body.dark-mode .history-item:hover {
+      background: #333;
+    }
+
+    body.dark-mode .history-item-text {
+      color: var(--gray-100);
+    }
+
+    body.dark-mode .history-item-meta {
+      color: var(--gray-400);
+    }
+
+    body.dark-mode .modal-header {
+      border-bottom-color: #333;
+    }
+
+    body.dark-mode .modal-footer {
+      border-top-color: #333;
+    }
+
+    body.dark-mode .dropdown-item:hover {
+      background: #2a2a2a;
+    }
+
+    body.dark-mode .modal-footer .btn-secondary {
+      background: #2a2a2a;
+      border-color: #333;
+    }
+
+    body.dark-mode .empty-state {
+      color: var(--gray-400);
+    }
+
+    /* ================= SCROLLBAR ================= */
+    .modal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: var(--gray-100);
+      border-radius: 10px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 10px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-light);
+    }
+
+    body.dark-mode .modal-body::-webkit-scrollbar-track {
+      background: #2a2a2a;
+    }
   </style>
 </head>
 <body>
@@ -644,18 +1088,51 @@
         <div class="logo-icon">📝</div>
         <span>WordCount</span>
       </a>
-      <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
-        <i class="fas fa-moon"></i>
-      </button>
+      <div class="header-actions">
+        <button class="header-btn" id="historyToggle" title="View History">
+          <i class="fas fa-history"></i>
+          <div class="history-badge" id="historyBadge" style="display: none;">0</div>
+        </button>
+        <button class="header-btn" id="themeToggle" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- MODAL OVERLAY -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+
+  <!-- HISTORY MODAL -->
+  <div class="history-modal" id="historyModal">
+    <div class="modal-header">
+      <h2>
+        <i class="fas fa-history"></i> Saved Documents
+      </h2>
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul class="history-list" id="historyList">
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>No saved documents yet. Start typing to save to history!</p>
+        </div>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="closeModalBtn">Close</button>
+      <button class="btn-danger" id="clearHistoryBtn">Clear All</button>
+    </div>
+  </div>
 
   <!-- MAIN CONTENT -->
   <div class="container">
     <!-- PAGE HEADER -->
     <div class="page-header">
       <h1>Word & Character <span>Counter</span></h1>
-      <p>Real-time analysis of your text. Count words, characters, sentences, paragraphs, and more instantly.</p>
+      <p>Real-time analysis of your text. Count words, characters, sentences, paragraphs, and more instantly. Save to history and download in multiple formats.</p>
     </div>
 
     <!-- CONTENT WRAPPER -->
@@ -673,19 +1150,35 @@
         <!-- ACTION BUTTONS -->
         <div class="button-group">
           <button class="btn btn-primary" id="copyBtn" title="Copy all text to clipboard">
-            <i class="fas fa-copy"></i> Copy Text
+            <i class="fas fa-copy"></i> <span>Copy</span>
           </button>
+          <div class="dropdown-wrapper">
+            <button class="btn btn-secondary" id="downloadBtn" title="Download in multiple formats">
+              <i class="fas fa-download"></i> <span>Download</span>
+            </button>
+            <div class="dropdown-menu" id="downloadMenu">
+              <button class="dropdown-item" data-format="txt">
+                <i class="fas fa-file-alt"></i> Text (.txt)
+              </button>
+              <button class="dropdown-item" data-format="doc">
+                <i class="fas fa-file-word"></i> Word (.docx)
+              </button>
+              <button class="dropdown-item" data-format="pdf">
+                <i class="fas fa-file-pdf"></i> PDF (.pdf)
+              </button>
+              <button class="dropdown-item" data-format="json">
+                <i class="fas fa-code"></i> JSON (.json)
+              </button>
+            </div>
+          </div>
           <button class="btn btn-secondary" id="clearBtn" title="Clear all text">
-            <i class="fas fa-trash"></i> Clear
-          </button>
-          <button class="btn btn-secondary" id="downloadBtn" title="Download text as .txt file">
-            <i class="fas fa-download"></i> Download
+            <i class="fas fa-trash"></i> <span>Clear</span>
           </button>
         </div>
 
         <!-- INFO CARD -->
         <div class="info-card">
-          <strong>💡 Pro Tip:</strong> The counter updates automatically as you type. Use the buttons above to quickly copy, clear, or download your text.
+          <strong>💡 Pro Tip:</strong> Your text is automatically saved to local history. Download in multiple formats or restore from history anytime.
         </div>
       </div>
 
@@ -737,6 +1230,9 @@
   </div>
 
   <!-- SCRIPT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+
   <script>
     // Elements
     const textInput = document.getElementById('textInput');
@@ -747,11 +1243,32 @@
     const paragraphCountEl = document.getElementById('paragraphCount');
     const readingTimeEl = document.getElementById('readingTime');
     const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
     const downloadBtn = document.getElementById('downloadBtn');
+    const downloadMenu = document.getElementById('downloadMenu');
+    const clearBtn = document.getElementById('clearBtn');
     const themeToggle = document.getElementById('themeToggle');
+    const historyToggle = document.getElementById('historyToggle');
+    const historyModal = document.getElementById('historyModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const historyList = document.getElementById('historyList');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const modalClose = document.getElementById('modalClose');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const historyBadge = document.getElementById('historyBadge');
 
-    // Update counters
+    const STORAGE_KEY = 'wordCounterHistory';
+    const AUTO_SAVE_KEY = 'wordCounterAutoSave';
+    const AUTO_SAVE_DELAY = 30000; // 30 seconds
+    let autoSaveTimeout;
+
+    // ================ INITIALIZATION ================
+    function init() {
+      loadAutoSave();
+      loadThemePreference();
+      updateHistoryBadge();
+    }
+
+    // ================ COUNTER LOGIC ================
     function updateCounters() {
       const text = textInput.value;
 
@@ -772,14 +1289,129 @@
       sentenceCountEl.textContent = sentences.toLocaleString();
 
       // Paragraph count
-      const paragraphs = text.trim() === '' ? 0 : text.trim().split(/\n\n+/).length;
+      const paragraphs = text.trim() === '' ? 0 : text.trim().split(/\n\n+/).filter(p => p.trim()).length;
       paragraphCountEl.textContent = paragraphs.toLocaleString();
 
       // Reading time (average 200 words per minute)
-      const readingMinutes = Math.ceil(words / 200);
+      const readingMinutes = Math.ceil(words / 200) || 0;
       readingTimeEl.textContent = readingMinutes + 'm';
+
+      // Auto-save
+      clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = setTimeout(() => {
+        autoSaveText();
+      }, AUTO_SAVE_DELAY);
     }
 
+    // ================ AUTO SAVE ================
+    function autoSaveText() {
+      const text = textInput.value.trim();
+      if (text.length === 0) return;
+
+      const item = {
+        id: Date.now(),
+        text: text,
+        preview: text.substring(0, 100),
+        wordCount: text.trim().split(/\s+/).length,
+        charCount: text.length,
+        timestamp: new Date().toLocaleString(),
+        dateTime: new Date().getTime()
+      };
+
+      let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      history.unshift(item);
+      history = history.slice(0, 50); // Keep only 50 most recent
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      updateHistoryBadge();
+    }
+
+    function loadAutoSave() {
+      const saved = localStorage.getItem(AUTO_SAVE_KEY);
+      if (saved) {
+        textInput.value = saved;
+        updateCounters();
+      }
+    }
+
+    function saveCurrentText() {
+      localStorage.setItem(AUTO_SAVE_KEY, textInput.value);
+    }
+
+    // ================ HISTORY MANAGEMENT ================
+    function renderHistory() {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+      if (history.length === 0) {
+        historyList.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No saved documents yet. Start typing to save to history!</p>
+          </div>
+        `;
+        return;
+      }
+
+      historyList.innerHTML = history.map(item => `
+        <li class="history-item">
+          <div class="history-item-content">
+            <div class="history-item-text">${escapeHtml(item.preview)}</div>
+            <div class="history-item-meta">
+              <span><i class="fas fa-file-alt"></i> ${item.wordCount} words</span>
+              <span><i class="fas fa-calendar"></i> ${item.timestamp}</span>
+            </div>
+          </div>
+          <div class="history-item-actions">
+            <button class="history-item-btn" onclick="loadFromHistory(${item.id})">Load</button>
+            <button class="history-item-btn delete" onclick="deleteFromHistory(${item.id})">Delete</button>
+          </div>
+        </li>
+      `).join('');
+    }
+
+    function updateHistoryBadge() {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (history.length > 0) {
+        historyBadge.textContent = history.length;
+        historyBadge.style.display = 'flex';
+      } else {
+        historyBadge.style.display = 'none';
+      }
+    }
+
+    function loadFromHistory(id) {
+      const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const item = history.find(h => h.id === id);
+      if (item) {
+        textInput.value = item.text;
+        updateCounters();
+        saveCurrentText();
+        closeModal();
+        textInput.focus();
+      }
+    }
+
+    function deleteFromHistory(id) {
+      if (!confirm('Are you sure you want to delete this document?')) return;
+      let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      history = history.filter(h => h.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      updateHistoryBadge();
+      renderHistory();
+    }
+
+    // ================ MODAL FUNCTIONS ================
+    function openModal() {
+      historyModal.classList.add('active');
+      modalOverlay.classList.add('active');
+      renderHistory();
+    }
+
+    function closeModal() {
+      historyModal.classList.remove('active');
+      modalOverlay.classList.remove('active');
+    }
+
+    // ================ BUTTON HANDLERS ================
     // Copy button
     copyBtn.addEventListener('click', function() {
       if (textInput.value.trim() === '') {
@@ -788,7 +1420,7 @@
       }
       navigator.clipboard.writeText(textInput.value).then(() => {
         const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> <span>Copied!</span>';
         setTimeout(() => {
           copyBtn.innerHTML = originalText;
         }, 2000);
@@ -800,26 +1432,127 @@
       if (textInput.value.trim() === '' || confirm('Are you sure you want to clear all text?')) {
         textInput.value = '';
         updateCounters();
+        saveCurrentText();
         textInput.focus();
       }
     });
 
-    // Download button
-    downloadBtn.addEventListener('click', function() {
+    // Download dropdown
+    downloadBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      downloadMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function() {
+      downloadMenu.classList.remove('active');
+    });
+
+    // Download menu items
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const format = this.dataset.format;
+        downloadFile(format);
+        downloadMenu.classList.remove('active');
+      });
+    });
+
+    // ================ DOWNLOAD LOGIC ================
+    function downloadFile(format) {
       if (textInput.value.trim() === '') {
         alert('Nothing to download! Please enter some text.');
         return;
       }
+
+      const text = textInput.value;
+      const timestamp = new Date().toISOString().slice(0, 10);
+      const filename = `document-${timestamp}`;
+
+      switch(format) {
+        case 'txt':
+          downloadTxt(text, filename);
+          break;
+        case 'doc':
+          downloadDocx(text, filename);
+          break;
+        case 'pdf':
+          downloadPdf(text, filename);
+          break;
+        case 'json':
+          downloadJson(text, filename);
+          break;
+      }
+    }
+
+    function downloadTxt(text, filename) {
       const element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textInput.value));
-      element.setAttribute('download', 'text-' + new Date().getTime() + '.txt');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename + '.txt');
       element.style.display = 'none';
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
-    });
+    }
 
-    // Theme toggle
+    function downloadDocx(text, filename) {
+      const html = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+          <head><meta charset='UTF-8'><title>${filename}</title></head>
+          <body>
+            <p>${text.replace(/\n/g, '</p><p>')}</p>
+          </body>
+        </html>
+      `;
+      
+      const link = document.createElement('a');
+      const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+      link.href = URL.createObjectURL(blob);
+      link.download = filename + '.doc';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function downloadPdf(text, filename) {
+      const element = document.createElement('div');
+      element.style.padding = '20px';
+      element.innerHTML = `<h1>${filename}</h1><hr/><pre style="white-space: pre-wrap; word-wrap: break-word; font-family: Arial, sans-serif;">${escapeHtml(text)}</pre>`;
+      
+      const options = {
+        margin: [10, 10, 10, 10],
+        filename: filename + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+      };
+      
+      html2pdf().set(options).from(element).save();
+    }
+
+    function downloadJson(text, filename) {
+      const words = text.trim().split(/\s+/).length;
+      const data = {
+        filename: filename,
+        content: text,
+        statistics: {
+          words: words,
+          characters: text.length,
+          charactersNoSpace: text.replace(/\s/g, '').length,
+          sentences: (text.match(/[.!?]+/g) || []).length,
+          paragraphs: text.trim().split(/\n\n+/).filter(p => p.trim()).length,
+          readingTime: Math.ceil(words / 200)
+        },
+        generatedAt: new Date().toISOString()
+      };
+
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data, null, 2)));
+      element.setAttribute('download', filename + '.json');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    // ================ THEME TOGGLE ================
     themeToggle.addEventListener('click', function() {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -837,17 +1570,53 @@
       }
     }
 
-    // Load dark mode preference
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark-mode');
-      updateThemeIcon();
+    function loadThemePreference() {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        updateThemeIcon();
+      }
+    }
+
+    // ================ HISTORY MODAL TOGGLE ================
+    historyToggle.addEventListener('click', openModal);
+    modalClose.addEventListener('click', closeModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    clearHistoryBtn.addEventListener('click', function() {
+      if (confirm('Are you sure you want to clear all history? This cannot be undone.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        updateHistoryBadge();
+        renderHistory();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && historyModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // ================ UTILITY FUNCTIONS ================
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
 
     // Real-time counter updates
-    textInput.addEventListener('input', updateCounters);
+    textInput.addEventListener('input', function() {
+      updateCounters();
+      saveCurrentText();
+    });
 
-    // Initial count
-    updateCounters();
+    textInput.addEventListener('blur', function() {
+      autoSaveText();
+    });
+
+    // Initialize
+    init();
   </script>
 </body>
 </html>
