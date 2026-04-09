@@ -49,7 +49,7 @@ const UserSchema = new Schema({
       "student", "tutor", "blogger", "pending_blogger", "pending_marketer",
       "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"
     ],
-    default: "student",
+    default: "admin",
     index: true
   },
   active: { type: Boolean, default: true },
