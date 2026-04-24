@@ -1882,6 +1882,146 @@
 
   /* ... rest of existing rules ... */
 }
+    @media (max-width: 768px) {
+  header {
+    height: 70px;
+  }
+
+  .nav-container {
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(6,23,40,0.99);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    gap: 0;
+    padding: 30px 20px;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(255,180,0,0.1);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    pointer-events: none;
+  }
+
+  .nav-menu.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  nav ul li {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 16px 0;
+  }
+
+  nav ul li:last-child {
+    border-bottom: none;
+  }
+
+  nav a {
+    display: block;
+    font-size: 15px;
+    padding: 8px 0;
+  }
+
+  nav a::after {
+    display: none;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .nav-btn {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 13px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .nav-btn-login {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: var(--white);
+  }
+
+  .nav-btn-login:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .nav-btn-affiliates {
+    background: rgba(255,180,0,0.1);
+    border: 2px solid var(--gold);
+    color: var(--gold);
+  }
+
+  .nav-btn-affiliates:hover {
+    background: rgba(255,180,0,0.2);
+  }
+
+  .nav-btn-demo {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy);
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .nav-btn {
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+}
   </style>
 </head>
 
