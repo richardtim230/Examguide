@@ -7,7 +7,7 @@
     { "source": "/cbt-examoau", "destination": "/tp.html" },
     { "source": "/affiliate-program", "destination": "/affiliate.html" },
     { "source": "/affiliate-app-login", "destination": "/affiliate-login.html" },
-    { "source": "/affiliate-signup", "destination": "/affiliate-reg.html" },
+    { "source": "/affiliate-signup", "destination": "/affiliate-signup.html" },
     { "source": "affiliate-app-dashboard", "destination": "/affiliate-dashboard.html" },
     { "source": "/school-registration", "destination": "/school-reg.html" },
     { "source": "/advertisement", "destination": "/advert.html" },
