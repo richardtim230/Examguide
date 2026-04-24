@@ -1220,7 +1220,46 @@
         gap: 32px;
       }
     }
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+  }
 
+  nav.open ul {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(6,23,40,0.99);
+    padding: 20px 40px;
+    display: flex;
+    z-index: 999;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-buttons {
+    display: none;
+  }
+
+  nav.open .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    width: 100%;
+  }
+
+  nav.open .nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
     @media (max-width: 768px) {
       .platform-showcase {
         padding: 80px 24px;
@@ -1882,6 +1921,16 @@
 
   /* ... rest of existing rules ... */
 }
+    .nav-btn-affiliates {
+  background: rgba(255,180,0,0.15);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.nav-btn-affiliates:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
   </style>
 </head>
 
@@ -1912,9 +1961,10 @@
     </nav>
 
     <div class="nav-buttons">
-      <a href="#" class="nav-btn nav-btn-login">Login</a>
-      <a href="demo-request" class="nav-btn nav-btn-demo">Get Demo</a>
-    </div>
+  <a href="/affiliate.html" class="nav-btn nav-btn-affiliates">Affiliates</a>
+  <a href="#" class="nav-btn nav-btn-login">Login</a>
+  <a href="/" class="nav-btn nav-btn-demo">Get Demo</a>
+</div>
   </div>
 </header>
 
