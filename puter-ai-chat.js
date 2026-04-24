@@ -1,22 +1,12 @@
 /**
  * Puter AI Chat Integration for ExamGuide
- * Replaces the WhatsApp redirect with AI-powered intelligent responses
+ * Uses Puter's native AI chat API with proper syntax
  */
 
 // Configuration
 const PUTER_CONFIG = {
     WHATSAPP_NUMBER: '2349155127634',
-    AI_CONTEXT: `You are ExamGuard support assistant. You help students with:
-    - Exam preparation and study tips
-    - Platform features and navigation
-    - Account and login issues
-    - Technical support
-    - Exam scheduling and results
-    - Mock test information
-    - Payment and subscription questions
-    
-    Be friendly, professional, and concise. Keep responses under 150 words.
-    If the user needs human support, mention they can chat on WhatsApp.`
+    AI_MODEL: 'gpt-5.4' // Use Puter's available models
 };
 
 // Initialize chat widget
@@ -93,7 +83,7 @@ function initPuterAIChat() {
         showTypingIndicator();
 
         try {
-            // Get AI response
+            // Get AI response using Puter's native API
             const aiResponse = await getPuterAIResponse(messageText);
             removeTypingIndicator();
             addMessageToChat(aiResponse, 'bot-message');
@@ -106,10 +96,11 @@ function initPuterAIChat() {
         } catch (error) {
             console.error('Error:', error);
             removeTypingIndicator();
-            addMessageToChat(
-                'I encountered an error. Would you like to chat with our team on WhatsApp instead? 😊',
-                'bot-message'
-            );
+            
+            // Fallback if Puter AI fails
+            const fallbackResponse = getFallbackAIResponse(messageText);
+            addMessageToChat(fallbackResponse, 'bot-message');
+            
             setTimeout(() => {
                 addEscalationOption();
             }, 500);
@@ -134,34 +125,52 @@ function initPuterAIChat() {
 }
 
 /**
- * Get AI response from Puter or fallback
+ * Get AI response using Puter's native API
  */
 async function getPuterAIResponse(userMessage) {
     try {
-        // Try using Puter AI if available
-        if (typeof puter !== 'undefined' && puter.ai && puter.ai.chat) {
-            const response = await puter.ai.chat({
-                messages: [
-                    {
-                        role: 'system',
-                        content: PUTER_CONFIG.AI_CONTEXT
-                    },
-                    {
-                        role: 'user',
-                        content: userMessage
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 150
-            });
-            
-            return response.choices[0].message.content || 'I understand. How can I help further?';
-        } else {
-            // Use fallback AI responses
+        // Check if Puter is available
+        if (typeof puter === 'undefined' || !puter.ai || !puter.ai.chat) {
+            console.warn('Puter AI not available, using fallback');
             return getFallbackAIResponse(userMessage);
         }
+
+        // Build system context for ExamGuard
+        const systemContext = `You are ExamGuard support assistant. Help students with:
+- Exam preparation and study tips
+- Platform features and navigation
+- Account and login issues
+- Technical support
+- Exam scheduling and results
+- Mock test information
+- Payment and subscription questions
+
+Be friendly, professional, and concise. Keep responses under 150 words.
+If the user needs human support, mention they can chat on WhatsApp.`;
+
+        // Construct the prompt with system context
+        const fullPrompt = `${systemContext}
+
+User question: ${userMessage}`;
+
+        // Call Puter AI with correct syntax
+        const response = await puter.ai.chat(fullPrompt, {
+            model: PUTER_CONFIG.AI_MODEL
+        });
+
+        // Return the response
+        if (response && typeof response === 'string') {
+            return response;
+        } else if (response && response.message) {
+            return response.message;
+        } else if (response && response.content) {
+            return response.content;
+        }
+
+        return response || 'I understand. How can I help further?';
+
     } catch (error) {
-        console.warn('Puter AI unavailable, using fallback:', error);
+        console.warn('Puter AI error:', error);
         return getFallbackAIResponse(userMessage);
     }
 }
