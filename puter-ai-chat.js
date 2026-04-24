@@ -1,16 +1,11 @@
 /**
  * Puter AI Chat Integration for ExamGuide
- * Replaces the basic WhatsApp chat with AI-powered responses
+ * Replaces the WhatsApp redirect with AI-powered intelligent responses
  */
-
-// Initialize Puter AI when script loads
-document.addEventListener('DOMContentLoaded', function() {
-    initPuterAIChat();
-});
 
 // Configuration
 const PUTER_CONFIG = {
-    WHATSAPP_FALLBACK: '2349155127634',
+    WHATSAPP_NUMBER: '2349155127634',
     AI_CONTEXT: `You are ExamGuard support assistant. You help students with:
     - Exam preparation and study tips
     - Platform features and navigation
@@ -21,8 +16,13 @@ const PUTER_CONFIG = {
     - Payment and subscription questions
     
     Be friendly, professional, and concise. Keep responses under 150 words.
-    If the user needs human support, offer WhatsApp escalation.`
+    If the user needs human support, mention they can chat on WhatsApp.`
 };
+
+// Initialize chat widget
+document.addEventListener('DOMContentLoaded', function() {
+    initPuterAIChat();
+});
 
 function initPuterAIChat() {
     const whatsappIcon = document.getElementById('whatsapp-icon');
@@ -70,16 +70,16 @@ function initPuterAIChat() {
         });
     }
 
-    // Send message on button click
+    // Send message handlers
     sendBtn.addEventListener('click', sendPuterAIMessage);
 
-    // Send message on Enter key
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && chatInput.value.trim()) {
             sendPuterAIMessage();
         }
     });
 
+    // Main message sending function
     async function sendPuterAIMessage() {
         const messageText = chatInput.value.trim();
         
@@ -93,55 +93,53 @@ function initPuterAIChat() {
         showTypingIndicator();
 
         try {
-            // Call Puter AI API
+            // Get AI response
             const aiResponse = await getPuterAIResponse(messageText);
             removeTypingIndicator();
             addMessageToChat(aiResponse, 'bot-message');
 
-            // Add escalation option after response
-            addEscalationOption();
+            // Add WhatsApp escalation option
+            setTimeout(() => {
+                addEscalationOption();
+            }, 500);
 
         } catch (error) {
-            console.error('Puter AI Error:', error);
+            console.error('Error:', error);
             removeTypingIndicator();
             addMessageToChat(
-                'I encountered an error processing your request. Would you like to chat with our team on WhatsApp instead?',
+                'I encountered an error. Would you like to chat with our team on WhatsApp instead? 😊',
                 'bot-message'
             );
-            addEscalationOption();
+            setTimeout(() => {
+                addEscalationOption();
+            }, 500);
         }
     }
 
     function addEscalationOption() {
-        const escalateContainer = document.createElement('div');
-        escalateContainer.className = 'escalation-option';
-        escalateContainer.innerHTML = `
-            <small style="color: #888; display: block; margin-top: 12px; text-align: center;">
-                Need human support?
-                <a href="javascript:escalateToWhatsApp('${PUTER_CONFIG.WHATSAPP_FALLBACK}')" 
-                   style="color: #25D366; text-decoration: underline; font-weight: 600;">
+        const escalateDiv = document.createElement('div');
+        escalateDiv.style.cssText = 'text-align: center; margin-top: 8px; padding: 0 8px;';
+        escalateDiv.innerHTML = `
+            <small style="color: #888; font-size: 12px;">
+                Need more help?
+                <a href="javascript:void(0)" onclick="escalateToWhatsApp('${PUTER_CONFIG.WHATSAPP_NUMBER}')" 
+                   style="color: #25D366; text-decoration: none; font-weight: 600; cursor: pointer;">
                     Chat on WhatsApp
                 </a>
             </small>
         `;
-        chatMessages.appendChild(escalateContainer);
+        chatMessages.appendChild(escalateDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 }
 
 /**
- * Get AI response from Puter
- * This uses Puter's AI capabilities
+ * Get AI response from Puter or fallback
  */
 async function getPuterAIResponse(userMessage) {
     try {
-        // Check if Puter is available
-        if (typeof puter === 'undefined') {
-            return await getFallbackAIResponse(userMessage);
-        }
-
-        // Use Puter's AI API (if available in their v2 SDK)
-        if (puter.ai && puter.ai.chat) {
+        // Try using Puter AI if available
+        if (typeof puter !== 'undefined' && puter.ai && puter.ai.chat) {
             const response = await puter.ai.chat({
                 messages: [
                     {
@@ -153,71 +151,75 @@ async function getPuterAIResponse(userMessage) {
                         content: userMessage
                     }
                 ],
-                model: 'gpt-3.5-turbo',
                 temperature: 0.7,
                 max_tokens: 150
             });
             
-            return response.choices[0].message.content || 'Unable to process your request.';
+            return response.choices[0].message.content || 'I understand. How can I help further?';
         } else {
-            // Fallback if Puter AI endpoint not available
-            return await getFallbackAIResponse(userMessage);
+            // Use fallback AI responses
+            return getFallbackAIResponse(userMessage);
         }
     } catch (error) {
-        console.error('Error calling Puter AI:', error);
-        return await getFallbackAIResponse(userMessage);
+        console.warn('Puter AI unavailable, using fallback:', error);
+        return getFallbackAIResponse(userMessage);
     }
 }
 
 /**
  * Fallback AI responses (rule-based)
  */
-async function getFallbackAIResponse(userMessage) {
+function getFallbackAIResponse(userMessage) {
     const message = userMessage.toLowerCase();
 
     // Exam-related queries
-    if (message.includes('mock') || message.includes('exam') || message.includes('test')) {
-        return 'Our mock exams are designed to help you practice! 📝 You can access them from the dashboard. Each mock covers the full syllabus with timed questions. Would you like help accessing a specific exam?';
+    if (message.match(/mock|exam|test|quiz|practice/)) {
+        return '📝 Our mock exams are designed to help you practice! You can access them from your dashboard. Each mock covers the full syllabus with timed questions and detailed feedback. Would you like help accessing a specific exam?';
     }
 
     // Login/Account issues
-    if (message.includes('login') || message.includes('password') || message.includes('account')) {
-        return 'I can help with login issues! 🔐 Try: 1) Clear your browser cache, 2) Reset your password, 3) Use a different browser. If issues persist, our team is ready on WhatsApp to assist!';
+    if (message.match(/login|password|account|sign in|access|forgot/)) {
+        return '🔐 I\'m here to help with login issues! Try: 1) Clear your browser cache, 2) Reset your password, 3) Use a different browser. If issues persist, our team is ready on WhatsApp to assist!';
     }
 
     // Payment/Subscription
-    if (message.includes('pay') || message.includes('fee') || message.includes('subscription') || message.includes('cost')) {
-        return 'Many features are free! 💰 Premium features require a small subscription. For payment help, receipt issues, or special offers, please contact our support team via WhatsApp.';
+    if (message.match(/pay|fee|subscription|cost|price|refund|receipt/)) {
+        return '💰 Many features are free! Premium features require a subscription. For payment help, receipt issues, or special offers, please contact our support team. How can I assist?';
     }
 
     // Features/Navigation
-    if (message.includes('feature') || message.includes('help') || message.includes('how')) {
-        return 'I\'d be happy to help! 🎯 ExamGuide offers mock exams, study materials, performance tracking, and more. What specific feature would you like to know about?';
+    if (message.match(/feature|how to|help|guide|tutorial|use|access/)) {
+        return '🎯 I\'d be happy to help! ExamGuard offers mock exams, study materials, performance tracking, and more. What specific feature would you like to know about?';
     }
 
     // Results/Performance
-    if (message.includes('result') || message.includes('score') || message.includes('performance')) {
-        return 'Your exam results are displayed immediately after submission! 📊 Check your dashboard to view scores, analytics, and detailed feedback. Need help interpreting your results?';
+    if (message.match(/result|score|grade|performance|mark|feedback/)) {
+        return '📊 Your exam results are displayed immediately after submission! Check your dashboard to view scores, analytics, and detailed feedback. Would you like help interpreting your results?';
+    }
+
+    // Support/Help general
+    if (message.match(/support|help|assist|contact|issue|problem/)) {
+        return '💬 I\'m here to help! For quick answers, I can assist with exams, accounts, payments, and features. For complex issues, our human support team is available on WhatsApp. What\'s your question?';
     }
 
     // Thank you
-    if (message.includes('thank') || message.includes('thanks')) {
-        return 'You\'re welcome! 😊 Happy to help. Feel free to ask anything else about ExamGuard!';
+    if (message.match(/thank|thanks|appreciate|awesome|great/)) {
+        return 'You\'re welcome! 😊 I\'m always here to help. Feel free to ask anything else about ExamGuard!';
     }
 
     // Default response
-    return 'Thanks for reaching out! 👋 I\'m here to help with any questions about ExamGuard. Feel free to ask about exams, accounts, payments, or features. For complex issues, I can connect you with our team on WhatsApp!';
+    return 'Thanks for reaching out! 👋 I\'m your ExamGuard AI assistant. I can help with exams, accounts, payments, and platform features. What would you like to know?';
 }
 
 /**
  * Add message to chat display
  */
-function addMessageToChat(messageText, messageClass) {
+function addMessageToChat(text, messageClass) {
     const chatMessages = document.querySelector('.chat-messages');
-    const messageEl = document.createElement('div');
-    messageEl.className = `chat-message ${messageClass}`;
-    messageEl.textContent = messageText;
-    messageEl.style.cssText = `
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${messageClass}`;
+    
+    messageDiv.style.cssText = `
         margin-bottom: 12px;
         padding: 10px 14px;
         border-radius: 8px;
@@ -227,21 +229,26 @@ function addMessageToChat(messageText, messageClass) {
     `;
 
     if (messageClass === 'user-message') {
-        messageEl.style.cssText += `
+        messageDiv.style.cssText += `
             background: #3a86ff;
             color: white;
-            align-self: flex-end;
             margin-left: auto;
+            text-align: right;
         `;
     } else {
-        messageEl.style.cssText += `
+        messageDiv.style.cssText += `
             background: #f0f0f0;
             color: #333;
-            align-self: flex-start;
+            margin-right: auto;
         `;
     }
 
-    chatMessages.appendChild(messageEl);
+    const pTag = document.createElement('p');
+    pTag.textContent = text;
+    pTag.style.margin = '0';
+    messageDiv.appendChild(pTag);
+    
+    chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
@@ -250,27 +257,42 @@ function addMessageToChat(messageText, messageClass) {
  */
 function showTypingIndicator() {
     const chatMessages = document.querySelector('.chat-messages');
-    const typingEl = document.createElement('div');
-    typingEl.className = 'typing-indicator';
-    typingEl.id = 'typing-indicator';
-    typingEl.innerHTML = `
-        <div style="display: flex; gap: 4px; align-items: center; padding: 10px 14px; background: #f0f0f0; border-radius: 8px; width: fit-content;">
-            <span style="width: 8px; height: 8px; background: #999; border-radius: 50%; animation: bounce 1.4s infinite;"></span>
-            <span style="width: 8px; height: 8px; background: #999; border-radius: 50%; animation: bounce 1.4s infinite 0.2s;"></span>
-            <span style="width: 8px; height: 8px; background: #999; border-radius: 50%; animation: bounce 1.4s infinite 0.4s;"></span>
-        </div>
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot-message typing-indicator';
+    typingDiv.id = 'typing-indicator';
+    
+    typingDiv.innerHTML = `
+        <p style="padding: 12px 16px; margin: 0;">
+            <span></span><span></span><span></span>
+        </p>
     `;
-    chatMessages.appendChild(typingEl);
+    
+    chatMessages.appendChild(typingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Add animation styles if not present
-    if (!document.getElementById('bounce-animation')) {
+    // Add typing animation if not already present
+    if (!document.getElementById('typing-animation-style')) {
         const style = document.createElement('style');
-        style.id = 'bounce-animation';
-        style.innerHTML = `
-            @keyframes bounce {
-                0%, 80%, 100% { transform: translateY(0); }
-                40% { transform: translateY(-10px); }
+        style.id = 'typing-animation-style';
+        style.textContent = `
+            .typing-indicator p span {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #999;
+                margin: 0 2px;
+                animation: typing 1.4s infinite;
+            }
+            .typing-indicator p span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .typing-indicator p span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            @keyframes typing {
+                0%, 60%, 100% { opacity: 0.3; }
+                30% { opacity: 1; }
             }
         `;
         document.head.appendChild(style);
@@ -281,27 +303,22 @@ function showTypingIndicator() {
  * Remove typing indicator
  */
 function removeTypingIndicator() {
-    const typingEl = document.getElementById('typing-indicator');
-    if (typingEl) typingEl.remove();
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
 }
 
 /**
  * Escalate to WhatsApp
  */
 function escalateToWhatsApp(whatsappNumber) {
-    const chatInput = document.getElementById('chat-input');
-    const lastUserMessage = chatInput.placeholder; // or retrieve from chat history
-    
     const whatsappMessage = encodeURIComponent(
-        `Hi, I need help with ExamGuard. I was chatting with your AI assistant and need human support.\n\nPlease help me!`
+        `Hi ExamGuard Support! 👋\n\nI was chatting with your AI assistant and need human support.\n\nPlease help me!`
     );
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
     window.open(whatsappURL, '_blank');
 }
 
 // Export for external use
-window.PuterAIChat = {
-    sendMessage: sendPuterAIMessage,
-    escalateToWhatsApp: escalateToWhatsApp,
-    addMessageToChat: addMessageToChat
-};
+window.escalateToWhatsApp = escalateToWhatsApp;
