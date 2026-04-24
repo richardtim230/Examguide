@@ -1,12 +1,12 @@
 /**
  * Puter AI Chat Integration for ExamGuide
- * Uses Puter's native AI chat API with proper syntax
+ * Uses Puter's native AI chat API with simplified syntax
  */
 
 // Configuration
 const PUTER_CONFIG = {
     WHATSAPP_NUMBER: '2349155127634',
-    AI_MODEL: 'gpt-5.4' // Use Puter's available models
+    AI_MODEL: 'gpt-5.4'
 };
 
 // Initialize chat widget
@@ -83,7 +83,7 @@ function initPuterAIChat() {
         showTypingIndicator();
 
         try {
-            // Get AI response using Puter's native API
+            // Get AI response using Puter's API
             const aiResponse = await getPuterAIResponse(messageText);
             removeTypingIndicator();
             addMessageToChat(aiResponse, 'bot-message');
@@ -135,42 +135,36 @@ async function getPuterAIResponse(userMessage) {
             return getFallbackAIResponse(userMessage);
         }
 
-        // Build system context for ExamGuard
-        const systemContext = `You are ExamGuard support assistant. Help students with:
-- Exam preparation and study tips
-- Platform features and navigation
-- Account and login issues
-- Technical support
-- Exam scheduling and results
-- Mock test information
-- Payment and subscription questions
+        // Simple prompt without system context (to avoid map() error)
+        const prompt = `You are ExamGuard support. Help with exams, accounts, payments, features. Be brief. ${userMessage}`;
 
-Be friendly, professional, and concise. Keep responses under 150 words.
-If the user needs human support, mention they can chat on WhatsApp.`;
-
-        // Construct the prompt with system context
-        const fullPrompt = `${systemContext}
-
-User question: ${userMessage}`;
-
-        // Call Puter AI with correct syntax
-        const response = await puter.ai.chat(fullPrompt, {
+        // Call Puter AI with simple string prompt
+        let response = await puter.ai.chat(prompt, {
             model: PUTER_CONFIG.AI_MODEL
         });
 
-        // Return the response
-        if (response && typeof response === 'string') {
-            return response;
+        // Parse response
+        if (typeof response === 'string') {
+            return response.trim();
         } else if (response && response.message) {
-            return response.message;
+            return response.message.trim();
+        } else if (response && response.text) {
+            return response.text.trim();
         } else if (response && response.content) {
-            return response.content;
+            return response.content.trim();
+        } else if (response && response.choices && response.choices[0]) {
+            const choice = response.choices[0];
+            if (typeof choice === 'string') return choice.trim();
+            if (choice.message) return choice.message.trim();
+            if (choice.text) return choice.text.trim();
         }
 
-        return response || 'I understand. How can I help further?';
+        // Fallback if response format unknown
+        console.warn('Unknown response format:', response);
+        return getFallbackAIResponse(userMessage);
 
     } catch (error) {
-        console.warn('Puter AI error:', error);
+        console.error('Puter AI error:', error);
         return getFallbackAIResponse(userMessage);
     }
 }
@@ -183,41 +177,41 @@ function getFallbackAIResponse(userMessage) {
 
     // Exam-related queries
     if (message.match(/mock|exam|test|quiz|practice/)) {
-        return '📝 Our mock exams are designed to help you practice! You can access them from your dashboard. Each mock covers the full syllabus with timed questions and detailed feedback. Would you like help accessing a specific exam?';
+        return '📝 Our mock exams help you practice! Access them from your dashboard. Each mock covers the full syllabus with timed questions and detailed feedback. Need help accessing a specific exam?';
     }
 
     // Login/Account issues
     if (message.match(/login|password|account|sign in|access|forgot/)) {
-        return '🔐 I\'m here to help with login issues! Try: 1) Clear your browser cache, 2) Reset your password, 3) Use a different browser. If issues persist, our team is ready on WhatsApp to assist!';
+        return '🔐 Help with login issues: 1) Clear browser cache, 2) Reset password, 3) Use different browser. If issues persist, chat with our team on WhatsApp!';
     }
 
     // Payment/Subscription
     if (message.match(/pay|fee|subscription|cost|price|refund|receipt/)) {
-        return '💰 Many features are free! Premium features require a subscription. For payment help, receipt issues, or special offers, please contact our support team. How can I assist?';
+        return '💰 Many features are free! Premium features require subscription. For payment help, contact our support team. How can I assist?';
     }
 
     // Features/Navigation
     if (message.match(/feature|how to|help|guide|tutorial|use|access/)) {
-        return '🎯 I\'d be happy to help! ExamGuard offers mock exams, study materials, performance tracking, and more. What specific feature would you like to know about?';
+        return '🎯 I can help! ExamGuard offers mock exams, study materials, performance tracking, and more. What specific feature would you like to know about?';
     }
 
     // Results/Performance
     if (message.match(/result|score|grade|performance|mark|feedback/)) {
-        return '📊 Your exam results are displayed immediately after submission! Check your dashboard to view scores, analytics, and detailed feedback. Would you like help interpreting your results?';
+        return '📊 Results display immediately after submission! Check your dashboard for scores, analytics, and detailed feedback. Need help interpreting your results?';
     }
 
     // Support/Help general
     if (message.match(/support|help|assist|contact|issue|problem/)) {
-        return '💬 I\'m here to help! For quick answers, I can assist with exams, accounts, payments, and features. For complex issues, our human support team is available on WhatsApp. What\'s your question?';
+        return '💬 I\'m here to help! I can assist with exams, accounts, payments, and features. For complex issues, reach out on WhatsApp. What\'s your question?';
     }
 
     // Thank you
     if (message.match(/thank|thanks|appreciate|awesome|great/)) {
-        return 'You\'re welcome! 😊 I\'m always here to help. Feel free to ask anything else about ExamGuard!';
+        return 'You\'re welcome! 😊 Always happy to help. Ask me anything about ExamGuard!';
     }
 
     // Default response
-    return 'Thanks for reaching out! 👋 I\'m your ExamGuard AI assistant. I can help with exams, accounts, payments, and platform features. What would you like to know?';
+    return 'Thanks for reaching out! 👋 I\'m ExamGuard AI assistant. I help with exams, accounts, payments, and features. What can I help with?';
 }
 
 /**
@@ -225,6 +219,8 @@ function getFallbackAIResponse(userMessage) {
  */
 function addMessageToChat(text, messageClass) {
     const chatMessages = document.querySelector('.chat-messages');
+    if (!chatMessages) return;
+
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${messageClass}`;
     
@@ -266,6 +262,8 @@ function addMessageToChat(text, messageClass) {
  */
 function showTypingIndicator() {
     const chatMessages = document.querySelector('.chat-messages');
+    if (!chatMessages) return;
+
     const typingDiv = document.createElement('div');
     typingDiv.className = 'message bot-message typing-indicator';
     typingDiv.id = 'typing-indicator';
