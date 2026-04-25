@@ -1,3 +1,4 @@
+// routes/theoryAnswers.js
 import express from "express";
 import TheoryAnswer from "../models/TheoryAnswer.js";
 import TheoryAttempt from "../models/TheoryAttempt.js";
@@ -5,8 +6,12 @@ import TheoryQuestion from "../models/TheoryQuestion.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import Tesseract from "tesseract.js";
 import fetch from "node-fetch";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const router = express.Router();
+
+// Initialize Gemini AI
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 /**
  * AUTO-GRADE: Extract text and match keywords
@@ -51,6 +56,74 @@ function autoGradeAnswer(answerText, rubric) {
 }
 
 /**
+ * GEMINI AI AUTO-GRADE: Use AI for intelligent grading
+ */
+async function geminiAutoGrade(answerText, question, maxMarks, rubric) {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const prompt = `You are an expert academic grader. Grade the following student answer based on the rubric provided.
+
+Question: ${question}
+
+Student Answer: ${answerText}
+
+Rubric Scoring Guide:
+${rubric.scoreBuckets
+  .map(
+    (bucket, idx) => `
+Score ${bucket.score}/${maxMarks}: ${bucket.description || `Level ${idx + 1}`}
+Required keywords/concepts: ${(bucket.keywords || []).join(", ")}
+`
+  )
+  .join("\n")}
+
+Please provide:
+1. A score out of ${maxMarks}
+2. The matched keywords/concepts from the rubric
+3. A brief explanation of why this score
+4. Constructive feedback
+
+Format your response as JSON:
+{
+  "score": <number>,
+  "matched_keywords": [<keywords from rubric>],
+  "explanation": "<why this score>",
+  "feedback": "<constructive feedback>"
+}`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    let text = response.text();
+
+    // Extract JSON from response
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error("Could not parse AI response");
+    }
+
+    const gradeResult = JSON.parse(jsonMatch[0]);
+
+    return {
+      aiScore: Math.min(gradeResult.score, maxMarks),
+      aiMatchedKeywords: gradeResult.matched_keywords || [],
+      aiExplanation: gradeResult.explanation || "",
+      aiFeedback: gradeResult.feedback || "",
+      aiGradingAttempted: true
+    };
+  } catch (err) {
+    console.error("Gemini grading error:", err.message);
+    return {
+      aiScore: null,
+      aiMatchedKeywords: [],
+      aiExplanation: "AI grading failed",
+      aiFeedback: "",
+      aiGradingAttempted: false
+    };
+  }
+}
+
+/**
  * START a theory exam attempt
  * POST /api/theory-answers/attempt/start
  * Body: { examSet }
@@ -74,7 +147,7 @@ router.post("/attempt/start", authenticate, async (req, res) => {
       examSet,
       student: req.user.id,
       maxScore,
-      answers: [] // Will be populated as student answers each question
+      answers: []
     });
 
     res.status(201).json({
@@ -97,11 +170,11 @@ router.post("/attempt/start", authenticate, async (req, res) => {
 /**
  * SUBMIT answer for a single question (text or image)
  * POST /api/theory-answers
- * Body: { examSet, question, attempt, answerType, answerText?, answerImageUrl? }
+ * Body: { examSet, question, attempt, answerType, answerText?, answerImageUrl?, useAI? }
  */
 router.post("/", authenticate, async (req, res) => {
   try {
-    const { examSet, question, attempt, answerType, answerText, answerImageUrl } = req.body;
+    const { examSet, question, attempt, answerType, answerText, answerImageUrl, useAI = true } = req.body;
 
     if (!examSet || !question || !attempt || !answerType) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -136,12 +209,34 @@ router.post("/", authenticate, async (req, res) => {
     });
 
     // Auto-grade if text submission
-    if (answerType === "text") {
-      const grading = autoGradeAnswer(answerText, theoryQuestion.rubric);
-      answer.autoScore = grading.autoScore;
-      answer.matchedKeywords = grading.matchedKeywords;
-      answer.rubricMatches = grading.rubricMatches;
-      answer.finalScore = grading.autoScore;
+    if (answerType === "text" && answerText) {
+      // Keyword-based grading
+      const keywordGrading = autoGradeAnswer(answerText, theoryQuestion.rubric);
+      answer.autoScore = keywordGrading.autoScore;
+      answer.matchedKeywords = keywordGrading.matchedKeywords;
+      answer.rubricMatches = keywordGrading.rubricMatches;
+
+      // AI-based grading (if enabled and GEMINI_API_KEY exists)
+      if (useAI && process.env.GEMINI_API_KEY) {
+        const aiGrading = await geminiAutoGrade(
+          answerText,
+          theoryQuestion.question,
+          theoryQuestion.maxMarks,
+          theoryQuestion.rubric
+        );
+
+        answer.aiScore = aiGrading.aiScore;
+        answer.aiMatchedKeywords = aiGrading.aiMatchedKeywords;
+        answer.aiExplanation = aiGrading.aiExplanation;
+        answer.aiFeedback = aiGrading.aiFeedback;
+        answer.aiGradingAttempted = aiGrading.aiGradingAttempted;
+
+        // Use AI score if available, otherwise use keyword score
+        answer.finalScore = aiGrading.aiScore !== null ? aiGrading.aiScore : keywordGrading.autoScore;
+      } else {
+        answer.finalScore = keywordGrading.autoScore;
+      }
+
       answer.isGraded = true;
       answer.gradedAt = new Date();
       await answer.save();
@@ -165,8 +260,12 @@ router.post("/", authenticate, async (req, res) => {
     res.status(201).json({
       answerId: answer._id,
       autoScore: answer.autoScore,
+      aiScore: answer.aiScore || null,
+      finalScore: answer.finalScore,
       isGraded: answer.isGraded,
-      message: answerType === "text" ? "Auto-graded" : "Awaiting OCR processing"
+      matchedKeywords: answer.matchedKeywords,
+      aiMatchedKeywords: answer.aiMatchedKeywords,
+      message: answerType === "text" ? "Auto-graded successfully" : "Awaiting OCR processing"
     });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -179,6 +278,8 @@ router.post("/", authenticate, async (req, res) => {
  */
 router.post("/:answerId/process-ocr", authenticate, async (req, res) => {
   try {
+    const { useAI = true } = req.body;
+
     const answer = await TheoryAnswer.findById(req.params.answerId);
     if (!answer) return res.status(404).json({ error: "Answer not found" });
 
@@ -194,14 +295,34 @@ router.post("/:answerId/process-ocr", authenticate, async (req, res) => {
     answer.ocrExtractedText = data.text;
     answer.answerText = data.text;
 
-    // Auto-grade with extracted text
+    // Keyword-based grading
     const theoryQuestion = await TheoryQuestion.findById(answer.question);
-    const grading = autoGradeAnswer(data.text, theoryQuestion.rubric);
+    const keywordGrading = autoGradeAnswer(data.text, theoryQuestion.rubric);
 
-    answer.autoScore = grading.autoScore;
-    answer.matchedKeywords = grading.matchedKeywords;
-    answer.rubricMatches = grading.rubricMatches;
-    answer.finalScore = grading.autoScore;
+    answer.autoScore = keywordGrading.autoScore;
+    answer.matchedKeywords = keywordGrading.matchedKeywords;
+    answer.rubricMatches = keywordGrading.rubricMatches;
+
+    // AI-based grading (if enabled)
+    if (useAI && process.env.GEMINI_API_KEY) {
+      const aiGrading = await geminiAutoGrade(
+        data.text,
+        theoryQuestion.question,
+        theoryQuestion.maxMarks,
+        theoryQuestion.rubric
+      );
+
+      answer.aiScore = aiGrading.aiScore;
+      answer.aiMatchedKeywords = aiGrading.aiMatchedKeywords;
+      answer.aiExplanation = aiGrading.aiExplanation;
+      answer.aiFeedback = aiGrading.aiFeedback;
+      answer.aiGradingAttempted = aiGrading.aiGradingAttempted;
+
+      answer.finalScore = aiGrading.aiScore !== null ? aiGrading.aiScore : keywordGrading.autoScore;
+    } else {
+      answer.finalScore = keywordGrading.autoScore;
+    }
+
     answer.isGraded = true;
     answer.gradedAt = new Date();
 
@@ -210,7 +331,11 @@ router.post("/:answerId/process-ocr", authenticate, async (req, res) => {
     res.json({
       message: "OCR processed and auto-graded",
       autoScore: answer.autoScore,
-      extractedText: data.text.substring(0, 200) + "..." // Preview
+      aiScore: answer.aiScore || null,
+      finalScore: answer.finalScore,
+      extractedText: data.text.substring(0, 200) + "...",
+      matchedKeywords: answer.matchedKeywords,
+      aiMatchedKeywords: answer.aiMatchedKeywords
     });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -280,7 +405,10 @@ router.get("/:answerId", authenticate, async (req, res) => {
   try {
     const answer = await TheoryAnswer.findById(req.params.answerId)
       .populate("student", "username fullname")
-      .populate("question", "question maxMarks rubric");
+      .populate({
+        path: "question",
+        select: "question maxMarks rubric sampleAnswer expectedLength"
+      });
 
     if (!answer) return res.status(404).json({ error: "Not found" });
 
