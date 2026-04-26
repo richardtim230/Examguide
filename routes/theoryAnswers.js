@@ -144,6 +144,140 @@ RESPONSE FORMAT (valid JSON only):
 }
 
 /**
+ * BATCH AI GRADE: Grade all answers in an attempt using AI
+ * This is called when the exam is submitted
+ */
+async function batchAIGradeAttempt(attemptId) {
+  try {
+    const attempt = await TheoryAttempt.findById(attemptId)
+      .populate({
+        path: "answers.answer",
+        select: "answerText answerImageUrl ocrExtractedText question answerType"
+      })
+      .populate({
+        path: "answers.question",
+        select: "question maxMarks rubric sampleAnswer"
+      });
+
+    if (!attempt) {
+      console.error("Attempt not found:", attemptId);
+      return false;
+    }
+
+    let totalScore = 0;
+    const gradingResults = [];
+
+    // Process each answer
+    for (let i = 0; i < attempt.answers.length; i++) {
+      const answerRef = attempt.answers[i];
+      const answer = answerRef.answer;
+      const question = answerRef.question;
+
+      if (!answer || !question) {
+        console.warn(`Skipping answer ${i} - missing data`);
+        continue;
+      }
+
+      try {
+        // Determine the text to grade
+        let textToGrade = answer.answerText;
+        if (answer.answerType === "image" && answer.ocrExtractedText) {
+          textToGrade = answer.ocrExtractedText;
+        }
+
+        if (!textToGrade || textToGrade.trim() === "") {
+          console.warn(`Skipping answer ${i} - no text content`);
+          // Update answer status even if empty
+          await TheoryAnswer.findByIdAndUpdate(answer._id, {
+            isGraded: true,
+            gradedAt: new Date(),
+            finalScore: 0,
+            scoringMethod: "ai"
+          });
+          continue;
+        }
+
+        // Call Gemini AI for grading
+        const aiGrading = await geminiAutoGrade(
+          textToGrade,
+          question.question,
+          question.maxMarks,
+          question.rubric,
+          question.sampleAnswer
+        );
+
+        const finalScore = aiGrading.aiGradingSuccess ? (aiGrading.aiScore || 0) : 0;
+        totalScore += finalScore;
+
+        // Update answer with AI grading results
+        const updatedAnswer = await TheoryAnswer.findByIdAndUpdate(
+          answer._id,
+          {
+            aiScore: aiGrading.aiScore,
+            aiMatchedKeywords: aiGrading.aiMatchedKeywords,
+            aiExplanation: aiGrading.aiExplanation,
+            aiFeedback: aiGrading.aiFeedback,
+            aiGradingAttempted: aiGrading.aiGradingAttempted,
+            aiGradingSuccess: aiGrading.aiGradingSuccess,
+            aiGradedAt: new Date(),
+            finalScore: finalScore,
+            scoringMethod: "ai",
+            isGraded: true,
+            gradedAt: new Date()
+          },
+          { new: true }
+        );
+
+        gradingResults.push({
+          questionNumber: i + 1,
+          score: finalScore,
+          maxMarks: question.maxMarks,
+          feedback: aiGrading.aiFeedback
+        });
+
+        console.log(`✓ AI graded answer ${i + 1}/${attempt.answers.length}`);
+      } catch (err) {
+        console.error(`Error grading answer ${i}:`, err.message);
+        // Mark as graded even on error, with 0 score
+        await TheoryAnswer.findByIdAndUpdate(answer._id, {
+          isGraded: true,
+          gradedAt: new Date(),
+          finalScore: 0,
+          scoringMethod: "ai",
+          aiGradingSuccess: false
+        });
+      }
+    }
+
+    // Update attempt with final scores
+    const percentage = attempt.maxScore > 0 
+      ? Math.round((totalScore / attempt.maxScore) * 100) 
+      : 0;
+
+    const updatedAttempt = await TheoryAttempt.findByIdAndUpdate(
+      attemptId,
+      {
+        totalScore,
+        percentage,
+        status: "graded",
+        allQuestionsGraded: true,
+        gradedAt: new Date(),
+        completedAt: new Date()
+      },
+      { new: true }
+    );
+
+    console.log(`✓ Batch AI grading completed for attempt ${attemptId}`);
+    console.log(`  Total Score: ${totalScore}/${attempt.maxScore} (${percentage}%)`);
+
+    return true;
+  } catch (err) {
+    console.error("Batch AI grading error:", err.message);
+    return false;
+  }
+}
+
+/**
  * START a theory exam attempt
  * POST /api/theory-answers/attempt/start
  * Body: { examSet }
@@ -213,7 +347,7 @@ router.post("/", authenticate, async (req, res) => {
     const theoryQuestion = await TheoryQuestion.findById(question);
     if (!theoryQuestion) return res.status(400).json({ error: "Question not found" });
 
-    // Create answer document
+    // Create answer document - save without immediate grading
     const answer = await TheoryAnswer.create({
       examSet,
       question,
@@ -224,49 +358,6 @@ router.post("/", authenticate, async (req, res) => {
       submittedAt: new Date()
     });
 
-    // Auto-grade if text submission
-    if (answerType === "text" && answerText) {
-      // Keyword-based grading
-      const keywordGrading = autoGradeAnswer(answerText, theoryQuestion.rubric);
-      answer.autoScore = keywordGrading.autoScore;
-      answer.matchedKeywords = keywordGrading.matchedKeywords;
-      answer.rubricMatches = keywordGrading.rubricMatches;
-
-      // AI-based grading (if enabled and API key exists)
-      if (useAI && process.env.GEMINI_API_KEY) {
-        const aiGrading = await geminiAutoGrade(
-          answerText,
-          theoryQuestion.question,
-          theoryQuestion.maxMarks,
-          theoryQuestion.rubric,
-          theoryQuestion.sampleAnswer
-        );
-
-        answer.aiScore = aiGrading.aiScore;
-        answer.aiMatchedKeywords = aiGrading.aiMatchedKeywords;
-        answer.aiExplanation = aiGrading.aiExplanation;
-        answer.aiFeedback = aiGrading.aiFeedback;
-        answer.aiGradingAttempted = aiGrading.aiGradingAttempted;
-        answer.aiGradingSuccess = aiGrading.aiGradingSuccess;
-        answer.aiGradedAt = new Date();
-
-        // Use AI score if available and successful, otherwise keyword score
-        if (aiGrading.aiGradingSuccess && aiGrading.aiScore !== null) {
-          answer.finalScore = aiGrading.aiScore;
-          answer.scoringMethod = "ai";
-        } else {
-          answer.finalScore = keywordGrading.autoScore;
-          answer.scoringMethod = "keyword";
-        }
-      } else {
-        answer.finalScore = keywordGrading.autoScore;
-        answer.scoringMethod = "keyword";
-      }
-
-      answer.isGraded = true;
-      answer.gradedAt = new Date();
-    }
-
     await answer.save();
 
     // Add to attempt
@@ -275,26 +366,11 @@ router.post("/", authenticate, async (req, res) => {
       answer: answer._id
     });
 
-    // Check if all questions answered
-    const allQuestions = await TheoryQuestion.countDocuments({ examSet });
-    if (attemptDoc.answers.length === allQuestions) {
-      attemptDoc.status = "submitted";
-      attemptDoc.submittedAt = new Date();
-    }
-
     await attemptDoc.save();
 
     res.status(201).json({
       answerId: answer._id,
-      autoScore: answer.autoScore,
-      aiScore: answer.aiScore,
-      finalScore: answer.finalScore,
-      scoringMethod: answer.scoringMethod,
-      isGraded: answer.isGraded,
-      matchedKeywords: answer.matchedKeywords,
-      aiMatchedKeywords: answer.aiMatchedKeywords,
-      aiFeedback: answer.aiFeedback,
-      message: answerType === "text" ? "Auto-graded successfully" : "Awaiting OCR processing"
+      message: "Answer saved. Will be graded when exam is submitted."
     });
   } catch (e) {
     console.error("Answer submission error:", e);
@@ -308,8 +384,6 @@ router.post("/", authenticate, async (req, res) => {
  */
 router.post("/:answerId/process-ocr", authenticate, async (req, res) => {
   try {
-    const { useAI = true } = req.body;
-
     const answer = await TheoryAnswer.findById(req.params.answerId);
     if (!answer) return res.status(404).json({ error: "Answer not found" });
 
@@ -325,62 +399,60 @@ router.post("/:answerId/process-ocr", authenticate, async (req, res) => {
     answer.ocrExtractedText = data.text;
     answer.answerText = data.text;
 
-    // Keyword-based grading
-    const theoryQuestion = await TheoryQuestion.findById(answer.question);
-    const keywordGrading = autoGradeAnswer(data.text, theoryQuestion.rubric);
-
-    answer.autoScore = keywordGrading.autoScore;
-    answer.matchedKeywords = keywordGrading.matchedKeywords;
-    answer.rubricMatches = keywordGrading.rubricMatches;
-
-    // AI-based grading (if enabled)
-    if (useAI && process.env.GEMINI_API_KEY) {
-      const aiGrading = await geminiAutoGrade(
-        data.text,
-        theoryQuestion.question,
-        theoryQuestion.maxMarks,
-        theoryQuestion.rubric,
-        theoryQuestion.sampleAnswer
-      );
-
-      answer.aiScore = aiGrading.aiScore;
-      answer.aiMatchedKeywords = aiGrading.aiMatchedKeywords;
-      answer.aiExplanation = aiGrading.aiExplanation;
-      answer.aiFeedback = aiGrading.aiFeedback;
-      answer.aiGradingAttempted = aiGrading.aiGradingAttempted;
-      answer.aiGradingSuccess = aiGrading.aiGradingSuccess;
-      answer.aiGradedAt = new Date();
-
-      if (aiGrading.aiGradingSuccess && aiGrading.aiScore !== null) {
-        answer.finalScore = aiGrading.aiScore;
-        answer.scoringMethod = "ai";
-      } else {
-        answer.finalScore = keywordGrading.autoScore;
-        answer.scoringMethod = "keyword";
-      }
-    } else {
-      answer.finalScore = keywordGrading.autoScore;
-      answer.scoringMethod = "keyword";
-    }
-
-    answer.isGraded = true;
-    answer.gradedAt = new Date();
-
     await answer.save();
 
     res.json({
-      message: "OCR processed and auto-graded",
-      autoScore: answer.autoScore,
-      aiScore: answer.aiScore,
-      finalScore: answer.finalScore,
-      scoringMethod: answer.scoringMethod,
-      extractedText: data.text.substring(0, 200) + "...",
-      matchedKeywords: answer.matchedKeywords,
-      aiMatchedKeywords: answer.aiMatchedKeywords,
-      aiFeedback: answer.aiFeedback
+      message: "OCR processed successfully. Will be graded when exam is submitted.",
+      extractedText: data.text.substring(0, 200) + "..."
     });
   } catch (e) {
     console.error("OCR processing error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * SUBMIT & GRADE entire theory exam attempt with AI
+ * PUT /api/theory-attempts/:attemptId/submit-and-grade
+ */
+router.put("/:attemptId/submit-and-grade", authenticate, async (req, res) => {
+  try {
+    const attempt = await TheoryAttempt.findById(req.params.attemptId);
+    if (!attempt) return res.status(404).json({ error: "Attempt not found" });
+
+    if (attempt.student.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    // Mark as submitted
+    attempt.status = "submitted";
+    attempt.submittedAt = new Date();
+    await attempt.save();
+
+    // Start batch AI grading (non-blocking)
+    // This will happen in background and update the attempt when complete
+    setImmediate(() => {
+      batchAIGradeAttempt(attempt._id)
+        .then(success => {
+          if (success) {
+            console.log("✓ Batch grading completed for attempt:", attempt._id);
+          } else {
+            console.error("✗ Batch grading failed for attempt:", attempt._id);
+          }
+        })
+        .catch(err => {
+          console.error("Batch grading error:", err.message);
+        });
+    });
+
+    res.json({
+      message: "Exam submitted. AI grading in progress...",
+      attemptId: attempt._id,
+      status: "submitted",
+      note: "Your answers are being graded by AI. Results will be available shortly."
+    });
+  } catch (e) {
+    console.error("Submit and grade error:", e);
     res.status(500).json({ error: e.message });
   }
 });
