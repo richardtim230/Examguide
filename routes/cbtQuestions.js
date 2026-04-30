@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    const { examSet, limit = 50 } = req.query;
+    const { examSet, limit = 70 } = req.query;
     if (!examSet) return res.status(400).json({ error: "examSet param required" });
     const questions = await CbtQuestion.find({ examSet }).limit(Number(limit));
     res.json(questions);
