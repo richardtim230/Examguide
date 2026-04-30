@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
@@ -33,6 +32,11 @@ const UserSchema = new Schema({
   emailVerificationToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  
+  // Password reset verification (new)
+  passwordResetCode: { type: String },
+  passwordResetCodeExpires: { type: Date },
+  lastPasswordChange: { type: Date, default: Date.now },
 
   // Profile picture & identity
   profilePic: { type: String, default: "" },
@@ -141,6 +145,8 @@ UserSchema.methods.toJSON = function () {
   delete obj.emailVerificationToken;
   delete obj.resetPasswordToken;
   delete obj.resetPasswordExpires;
+  delete obj.passwordResetCode;
+  delete obj.passwordResetCodeExpires;
   delete obj.__v;
   return obj;
 };
@@ -148,7 +154,17 @@ UserSchema.methods.toJSON = function () {
 /**
  * Password hashing (bcryptjs)
  */
-
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    this.lastPasswordChange = Date.now();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 /**
  * Compare candidate password with stored hash
@@ -161,6 +177,47 @@ UserSchema.methods.comparePassword = function (candidate) {
       resolve(isMatch);
     });
   });
+};
+
+/**
+ * Generate password reset code (6 digits)
+ */
+UserSchema.methods.generatePasswordResetCode = function () {
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  this.passwordResetCode = code;
+  this.passwordResetCodeExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+  return code;
+};
+
+/**
+ * Verify password reset code
+ */
+UserSchema.methods.verifyPasswordResetCode = function (code) {
+  if (!this.passwordResetCode || !this.passwordResetCodeExpires) {
+    return false;
+  }
+  
+  // Check if code matches
+  if (this.passwordResetCode !== code.toString()) {
+    return false;
+  }
+  
+  // Check if code has expired
+  if (this.passwordResetCodeExpires < new Date()) {
+    this.passwordResetCode = undefined;
+    this.passwordResetCodeExpires = undefined;
+    return false;
+  }
+  
+  return true;
+};
+
+/**
+ * Clear password reset code
+ */
+UserSchema.methods.clearPasswordResetCode = function () {
+  this.passwordResetCode = undefined;
+  this.passwordResetCodeExpires = undefined;
 };
 
 /**
