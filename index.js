@@ -23,7 +23,7 @@ import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
 const server = http.createServer(app);
-
+const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
 dotenv.config();
 
 cloudinary.v2.config({
@@ -1668,7 +1668,7 @@ app.get("/api/listings/count", async (req, res) => {
 const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/liveclass" });
 setupLiveClassSocket(io);
 server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
-const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
+
 app.use("/api/ai", aiMaterialRoutes);
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
