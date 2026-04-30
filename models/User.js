@@ -33,6 +33,9 @@ const UserSchema = new Schema({
   emailVerificationToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+    // Password reset via email
+  resetPasswordCode: { type: String },
+  resetPasswordCodeExpires: { type: Date },
 
   // Profile picture & identity
   profilePic: { type: String, default: "" },
