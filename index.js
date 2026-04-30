@@ -32,6 +32,23 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// ============ EMAIL CONFIGURATION ============
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE || 'gmail', // or your email service
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+// Verify transporter connection
+transporter.verify((error, success) => {
+  if (error) {
+    console.warn('Email transporter error:', error);
+  } else {
+    console.log('✓ Email transporter ready');
+  }
+});
 import multer from "multer";
 
 // Profile pic uploads
