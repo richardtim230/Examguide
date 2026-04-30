@@ -1007,6 +1007,279 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// ============ PASSWORD RESET WITH EMAIL VERIFICATION ============
+
+// Generate random 6-digit verification code
+function generateVerificationCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// Store verification codes temporarily (you can use Redis for production)
+const verificationCodes = new Map();
+
+// Send verification code to email
+app.post('/api/auth/send-reset-code', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return res.status(404).json({ message: 'No account found with this email address' });
+    }
+
+    // Generate verification code
+    const code = generateVerificationCode();
+    const expiresAt = Date.now() + (15 * 60 * 1000); // 15 minutes
+
+    // Store code with expiration
+    verificationCodes.set(email.toLowerCase(), { code, expiresAt });
+
+    // Send email with verification code
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'noreply@examguard.com',
+      to: email,
+      subject: 'OAU ExamGuard - Password Reset Verification Code',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #276EF1 0%, #003366 100%); color: #fff; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 24px;">OAU ExamGuard</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">Password Reset Request</p>
+          </div>
+          <div style="background: #f5f7fa; padding: 30px; border-radius: 0 0 10px 10px;">
+            <p style="color: #333; font-size: 16px; margin-bottom: 20px;">Hello ${user.fullname || 'Student'},</p>
+            
+            <p style="color: #555; font-size: 14px; line-height: 1.6;">
+              We received a request to reset your password. Use the verification code below to proceed:
+            </p>
+            
+            <div style="background: #fff; border: 2px solid #276EF1; border-radius: 8px; padding: 20px; text-align: center; margin: 30px 0;">
+              <p style="margin: 0; font-size: 12px; color: #888;">Verification Code</p>
+              <p style="margin: 10px 0 0 0; font-size: 36px; font-weight: bold; color: #276EF1; letter-spacing: 5px;">${code}</p>
+            </div>
+            
+            <p style="color: #888; font-size: 12px; margin: 20px 0 0 0;">
+              ⏱️ This code expires in 15 minutes. If you didn't request this, please ignore this email.
+            </p>
+            
+            <p style="color: #555; font-size: 14px; margin-top: 20px;">
+              For security reasons, never share this code with anyone.
+            </p>
+            
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+            
+            <p style="color: #888; font-size: 12px; text-align: center; margin: 0;">
+              © 2026 OAU ExamGuard. All rights reserved.<br>
+              <a href="https://oau.examguard.com.ng" style="color: #276EF1; text-decoration: none;">Visit Our Website</a>
+            </p>
+          </div>
+        </div>
+      `
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ 
+      message: 'Verification code sent to your email',
+      email: email 
+    });
+
+  } catch (error) {
+    console.error('Send reset code error:', error);
+    res.status(500).json({ message: 'Failed to send verification code' });
+  }
+});
+
+// Reset password with email verification
+app.post('/api/auth/reset-with-email', async (req, res) => {
+  try {
+    const { email, code, password } = req.body;
+
+    if (!email || !code || !password) {
+      return res.status(400).json({ message: 'Email, code, and password are required' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    }
+
+    const emailLower = email.toLowerCase();
+
+    // Check if verification code exists and is valid
+    const storedData = verificationCodes.get(emailLower);
+    if (!storedData) {
+      return res.status(400).json({ message: 'No verification code found. Please request a new one.' });
+    }
+
+    // Check if code has expired
+    if (storedData.expiresAt < Date.now()) {
+      verificationCodes.delete(emailLower);
+      return res.status(400).json({ message: 'Verification code has expired. Please request a new one.' });
+    }
+
+    // Check if code matches
+    if (storedData.code !== code.toString()) {
+      return res.status(400).json({ message: 'Invalid verification code' });
+    }
+
+    // Find user
+    const user = await User.findOne({ email: emailLower });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Hash and update password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    // Delete verification code
+    verificationCodes.delete(emailLower);
+
+    // Send confirmation email
+    const confirmMailOptions = {
+      from: process.env.EMAIL_USER || 'noreply@examguard.com',
+      to: email,
+      subject: 'OAU ExamGuard - Password Reset Successful',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #276EF1 0%, #003366 100%); color: #fff; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 24px;">OAU ExamGuard</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">Password Reset Successful</p>
+          </div>
+          <div style="background: #f5f7fa; padding: 30px; border-radius: 0 0 10px 10px;">
+            <p style="color: #333; font-size: 16px; margin-bottom: 20px;">Hello ${user.fullname || 'Student'},</p>
+            
+            <div style="background: #dcfce7; border-left: 4px solid #27ae60; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <p style="margin: 0; color: #27ae60; font-weight: bold;">✓ Your password has been successfully reset</p>
+            </div>
+            
+            <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 20px 0;">
+              You can now log in with your new password at:
+            </p>
+            
+            <p style="text-align: center; margin: 20px 0;">
+              <a href="https://examguard.com/mock.html" style="background: #276EF1; color: #fff; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+                Go to Login
+              </a>
+            </p>
+            
+            <p style="color: #888; font-size: 12px; margin: 20px 0 0 0;">
+              ⚠️ If you didn't make this change, please contact our support team immediately.
+            </p>
+            
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+            
+            <p style="color: #888; font-size: 12px; text-align: center; margin: 0;">
+              © 2026 OAU ExamGuard. All rights reserved.<br>
+              <a href="https://examguard.com" style="color: #276EF1; text-decoration: none;">Visit Our Website</a>
+            </p>
+          </div>
+        </div>
+      `
+    };
+
+    await transporter.sendMail(confirmMailOptions);
+
+    res.status(200).json({ 
+      message: 'Password has been reset successfully' 
+    });
+
+  } catch (error) {
+    console.error('Reset with email error:', error);
+    res.status(500).json({ message: 'Failed to reset password' });
+  }
+});
+
+// Update existing Student ID reset endpoint (if needed)
+app.post('/api/auth/reset', async (req, res) => {
+  try {
+    const { studentId, password } = req.body;
+
+    if (!studentId || !password) {
+      return res.status(400).json({ message: 'Student ID and password are required' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    }
+
+    // Find user by student ID or registration number
+    const user = await User.findOne({
+      $or: [
+        { regNum: studentId },
+        { studentId: studentId },
+        { username: studentId }
+      ]
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Hash and update password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    // Send confirmation email
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'noreply@examguard.com',
+      to: user.email,
+      subject: 'OAU ExamGuard - Password Reset Successful',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #276EF1 0%, #003366 100%); color: #fff; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 24px;">OAU ExamGuard</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">Password Reset Successful</p>
+          </div>
+          <div style="background: #f5f7fa; padding: 30px; border-radius: 0 0 10px 10px;">
+            <p style="color: #333; font-size: 16px; margin-bottom: 20px;">Hello ${user.fullname || 'Student'},</p>
+            
+            <div style="background: #dcfce7; border-left: 4px solid #27ae60; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <p style="margin: 0; color: #27ae60; font-weight: bold;">✓ Your password has been successfully reset</p>
+            </div>
+            
+            <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 20px 0;">
+              You can now log in with your new password.
+            </p>
+            
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+            
+            <p style="color: #888; font-size: 12px; text-align: center; margin: 0;">
+              © 2026 OAU ExamGuard. All rights reserved.
+            </p>
+          </div>
+        </div>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ 
+      message: 'Password has been reset successfully' 
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ message: 'Failed to reset password' });
+  }
+});
+
+// Cleanup expired verification codes (run periodically)
+setInterval(() => {
+  const now = Date.now();
+  for (const [email, data] of verificationCodes.entries()) {
+    if (data.expiresAt < now) {
+      verificationCodes.delete(email);
+    }
+  }
+}, 5 * 60 * 1000); // Clean up every 5 minutes
 app.post("/api/auth/resend-verification", async (req, res) => {
   try {
     const { usernameOrEmail } = req.body;
@@ -1112,25 +1385,7 @@ app.post("/api/auth/resend-verification", async (req, res) => {
   }
 });
 // Password reset using Student ID
-app.post("/api/auth/reset", async (req, res) => {
-  try {
-    const { studentId, password } = req.body;
-    if (!studentId || !password)
-      return res.status(400).json({ message: "Student ID and new password required" });
 
-    const user = await User.findOne({ studentId });
-    if (!user)
-      return res.status(404).json({ message: "User not found" });
-
-    const hashed = await bcrypt.hash(password, 12);
-    user.password = hashed;
-    await user.save();
-    res.json({ message: "Password reset successful" });
-  } catch (e) {
-    console.error("Reset error:", e);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 // Get user info (protected) -- now returns full user document, not just JWT claims!
 app.get("/api/auth/me", authenticate, async (req, res) => {
   try {
