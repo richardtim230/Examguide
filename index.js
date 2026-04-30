@@ -1007,6 +1007,150 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// --- SEND PASSWORD RESET CODE via EMAIL ---
+app.post("/api/auth/send-reset-code", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email address is required." });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return res.status(404).json({ message: "User not found with this email address." });
+    }
+
+    // Generate 6-digit code
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Set expiration to 15 minutes from now
+    user.resetPasswordCode = resetCode;
+    user.resetPasswordCodeExpires = new Date(Date.now() + 15 * 60 * 1000);
+    await user.save();
+
+    // Send email with reset code
+    const emailContent = `
+<!DOCTYPE html>
+<html lang="en" style="background:#f3f7fb;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Password Reset Code | OAU ExamGuard</title>
+  <style>
+    body {background:#f3f7fb;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
+    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px #276ef11a;padding:40px 24px 28px 24px;}
+    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px #276ef11a;background:#fff;}
+    .title {color:#276EF1;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
+    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
+    .code-box {background:linear-gradient(90deg,#276EF1 0%,#003366 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}
+    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
+    .warning {background:#fff3cd;border-left:4px solid #ffc107;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#856404;}
+    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
+    .link {word-break:break-all;color:#276EF1;text-decoration:underline;}
+    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
+    .socials {text-align:center;margin-top:18px;}
+    .socials a {display:inline-block;margin:0 8px;}
+    .socials img {width:32px;height:32px;}
+    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+    <div class="title">Password Reset Code</div>
+    <div class="subtitle">
+      Hi <b>${user.fullname || user.username},</b>
+    </div>
+    <div class="subtitle" style="font-size:1.01rem;">
+      We received a request to reset your password. Use the code below to proceed:
+    </div>
+    <div class="code-box">${resetCode}</div>
+    <div class="info">
+      This code will expire in <b>15 minutes</b>. Do not share this code with anyone.
+    </div>
+    <div class="warning">
+      <strong>⚠️ Security Notice:</strong> If you did not request a password reset, please ignore this email and your password will remain unchanged. Your account is secure.
+    </div>
+    <div class="support">
+      Need help? <a class="link" style="color:#276EF1;" href="mailto:support@examguard.com.ng">Contact Support</a>
+    </div>
+    <div class="socials">
+      <a href="https://facebook.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+      <a href="https://twitter.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+      <a href="https://instagram.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+    </div>
+    <div class="footer">
+      &copy; ${new Date().getFullYear()} OAU ExamGuard. All rights reserved.<br>
+      123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+    try {
+      await client.sendEmail({
+        From: "richardochuko@examguard.com.ng",
+        To: user.email,
+        Subject: "Your Password Reset Code - OAU ExamGuard",
+        HtmlBody: emailContent
+      });
+      res.status(200).json({ message: "Verification code sent to your email. Please check your inbox (and spam/promotions folders)." });
+    } catch (err) {
+      console.error("Error sending reset code email:", err);
+      res.status(500).json({ message: "Failed to send email. Please try again." });
+    }
+  } catch (e) {
+    console.error("Send reset code error:", e);
+    res.status(500).json({ message: "Server error. Please try again." });
+  }
+});
+
+// --- RESET PASSWORD WITH EMAIL CODE ---
+app.post("/api/auth/reset-with-email", async (req, res) => {
+  try {
+    const { email, code, password } = req.body;
+    
+    if (!email || !code || !password) {
+      return res.status(400).json({ message: "Email, code, and password are required." });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ message: "Password must be at least 8 characters." });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Check if code matches and hasn't expired
+    if (user.resetPasswordCode !== code) {
+      return res.status(400).json({ message: "Invalid verification code." });
+    }
+
+    if (!user.resetPasswordCodeExpires || new Date() > user.resetPasswordCodeExpires) {
+      return res.status(400).json({ message: "Verification code has expired. Please request a new one." });
+    }
+
+    // Hash new password
+    const hashed = await bcrypt.hash(password, 12);
+    user.password = hashed;
+    
+    // Clear reset code fields
+    user.resetPasswordCode = undefined;
+    user.resetPasswordCodeExpires = undefined;
+    
+    await user.save();
+
+    res.json({ message: "Password reset successfully. You can now log in with your new password." });
+  } catch (e) {
+    console.error("Reset with email error:", e);
+    res.status(500).json({ message: "Server error. Please try again." });
+  }
+});
 app.post("/api/auth/resend-verification", async (req, res) => {
   try {
     const { usernameOrEmail } = req.body;
