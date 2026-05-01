@@ -1146,421 +1146,694 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
     await user.save();
 
     // Send confirmation email
-    const confirmationEmailContent = `
+ const confirmationEmailContent = `
 <!DOCTYPE html>
-<html lang="en" style="background:#f3f7fb;">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Password Reset Confirmation | OAU ExamGuard</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1b2541; line-height: 1.6; }
-    .container { max-width: 620px; margin: 24px auto; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 48px rgba(39, 110, 241, 0.18); }
-    
-    /* BEAUTIFUL HEADER */
-    .header { 
-      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%); 
-      padding: 0; 
-      position: relative; 
-      overflow: hidden;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-    /* Decorative shapes background */
-    .header::before { 
-      content: ''; 
-      position: absolute; 
-      top: -50%; 
-      right: -10%; 
-      width: 400px; 
-      height: 400px; 
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); 
-      border-radius: 50%;
-      z-index: 0;
-    }
-    
-    .header::after { 
-      content: ''; 
-      position: absolute; 
-      bottom: -30%; 
-      left: -10%; 
-      width: 350px; 
-      height: 350px; 
-      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); 
-      border-radius: 50%;
-      z-index: 0;
-    }
-    
-    .header-content { 
-      position: relative; 
-      z-index: 2; 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 50px 32px;
+
+    html, body {
       width: 100%;
+      height: 100%;
+      background-color: #f5f7fa;
     }
-    
-    .header-logo { 
-      width: 110px; 
-      height: 110px; 
-      background: #fff; 
-      border-radius: 50%; 
-      margin: 0 auto 24px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 -2px 8px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      padding: 40px 20px;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* PREMIUM HEADER */
+    .header {
+      background: linear-gradient(135deg, #0052cc 0%, #003d99 50%, #002666 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .header-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .header-shape-1 {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -100px;
+      right: -50px;
+    }
+
+    .header-shape-2 {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -80px;
+      left: -30px;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 10;
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .logo-circle {
+      width: 100px;
+      height: 100px;
+      background: #ffffff;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       position: relative;
     }
-    
-    .header-logo img { 
-      width: 85px; 
-      height: 85px; 
+
+    .logo-circle img {
+      width: 80px;
+      height: 80px;
       object-fit: contain;
-      object-position: center;
     }
-    
-    .header-title { 
-      color: #fff; 
-      font-size: 2.2rem; 
-      font-weight: 900; 
-      margin: 0 0 12px 0;
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+
+    .logo-badge {
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      width: 40px;
+      height: 40px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      border: 3px solid white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 16px 0 8px;
       letter-spacing: -0.5px;
     }
-    
-    .header-subtitle { 
-      color: rgba(255, 255, 255, 0.94); 
-      font-size: 1.15rem; 
-      font-weight: 300; 
-      letter-spacing: 0.3px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-    
-    .content { padding: 48px 40px; }
-    
-    .greeting { 
-      font-size: 1.3rem; 
-      color: #276EF1; 
-      font-weight: 700; 
-      margin-bottom: 20px;
-    }
-    
-    .message-box { 
-      background: linear-gradient(135deg, rgba(39, 110, 241, 0.06) 0%, rgba(0, 51, 102, 0.06) 100%); 
-      border-left: 4px solid #276EF1; 
-      border-radius: 12px; 
-      padding: 24px; 
-      margin: 28px 0; 
-    }
-    
-    .message-box p { 
-      color: #1b2541; 
-      margin-bottom: 12px; 
-      font-size: 0.98rem;
-    }
-    
-    .message-box strong { 
-      color: #276EF1; 
-      font-weight: 700; 
-    }
-    
-    .success-icon { 
-      display: inline-block; 
-      width: 60px; 
-      height: 60px; 
-      background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); 
-      border-radius: 50%; 
-      text-align: center; 
-      line-height: 60px; 
-      color: #fff; 
-      font-size: 32px; 
-      margin-bottom: 18px;
-      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.25);
-    }
-    
-    .info-section { 
-      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
-      border-radius: 12px; 
-      padding: 24px; 
-      margin: 28px 0;
-      border: 1px solid rgba(39, 110, 241, 0.1);
-    }
-    
-    .info-section h3 { 
-      color: #003366; 
-      font-size: 1.1rem; 
-      font-weight: 700; 
-      margin-bottom: 16px; 
-      display: flex; 
-      align-items: center; 
-      gap: 10px;
-    }
-    
-    .info-section ul { 
-      list-style: none; 
-      padding: 0; 
-    }
-    
-    .info-section li { 
-      color: #1b2541; 
-      padding: 10px 0; 
-      padding-left: 28px; 
-      position: relative; 
-      font-size: 0.96rem;
+
+    .header-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
       font-weight: 500;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      opacity: 0.95;
     }
-    
-    .info-section li::before { 
-      content: '✓'; 
-      position: absolute; 
-      left: 0; 
-      color: #27ae60; 
+
+    /* CONTENT AREA */
+    .content {
+      padding: 48px 40px;
+    }
+
+    .greeting {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0052cc;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .success-message {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 32px 24px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
+      border-radius: 12px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+      margin: 0 auto 16px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .success-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #059669;
+      margin-bottom: 8px;
+    }
+
+    .success-subtext {
+      font-size: 14px;
+      color: #2c3e50;
+      opacity: 0.75;
+    }
+
+    /* INFO CARD */
+    .info-card {
+      background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      border-left: 4px solid #0052cc;
+      border: 1px solid rgba(0, 82, 204, 0.1);
+    }
+
+    .info-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003d99;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-card-title::before {
+      content: '→';
       font-weight: bold;
-      font-size: 1.2rem;
     }
-    
-    .security-warning { 
-      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
-      border-radius: 12px; 
-      padding: 20px 24px; 
-      margin: 28px 0; 
-      border-left: 4px solid #ff9800;
-      border: 1px solid rgba(255, 152, 0, 0.2);
+
+    .info-list {
+      list-style: none;
+      padding: 0;
     }
-    
-    .security-warning strong { 
-      color: #e65100; 
-      display: block; 
-      margin-bottom: 10px; 
-      font-size: 0.99rem;
-    }
-    
-    .security-warning p { 
-      color: #d84315; 
-      font-size: 0.93rem; 
-      margin: 0;
+
+    .info-list li {
+      color: #2c3e50;
+      padding: 10px 0 10px 28px;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
       line-height: 1.5;
     }
-    
-    .button-container { 
-      text-align: center; 
-      margin: 36px 0; 
+
+    .info-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 16px;
     }
-    
-    .button { 
-      display: inline-block; 
-      background: linear-gradient(90deg, #276EF1 0%, #1e5ba8 100%); 
-      color: #fff; 
-      text-decoration: none; 
-      padding: 16px 48px; 
-      border-radius: 12px; 
-      font-weight: 700; 
-      font-size: 1.05rem; 
-      box-shadow: 0 6px 24px rgba(39, 110, 241, 0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
+
+    /* SECURITY ALERT */
+    .security-alert {
+      background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      border-left: 4px solid #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    .security-alert strong {
+      color: #d97706;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .security-alert p {
+      color: #92400e;
+      font-size: 13px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ACCOUNT DETAILS */
+    .account-details {
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(0, 82, 204, 0.1);
+    }
+
+    .account-details-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003d99;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .account-details-title::before {
+      content: 'ℹ';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #0052cc;
+      color: white;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .account-details-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .account-details-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 82, 204, 0.08);
+      font-size: 13px;
+    }
+
+    .account-details-list li:last-child {
+      border-bottom: none;
+    }
+
+    .account-details-list strong {
+      color: #003d99;
+      font-weight: 600;
+    }
+
+    .account-details-list span {
+      color: #5a6c7d;
+      word-break: break-word;
+      text-align: right;
+      max-width: 50%;
+    }
+
+    /* CTA BUTTON */
+    .button-container {
+      text-align: center;
+      margin: 36px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 44px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(0, 82, 204, 0.3);
+      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
+      letter-spacing: 0.3px;
     }
-    
-    .button:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 8px 32px rgba(39, 110, 241, 0.45);
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 82, 204, 0.4);
     }
-    
-    .contact-section { 
-      text-align: center; 
-      margin: 32px 0; 
-      padding: 24px; 
-      border-top: 1px solid #e0e4ed; 
-      border-bottom: 1px solid #e0e4ed;
+
+    /* SUPPORT SECTION */
+    .support-section {
+      text-align: center;
+      margin: 32px 0;
+      padding: 24px;
+      border-top: 1px solid #e5e9f0;
+      border-bottom: 1px solid #e5e9f0;
     }
-    
-    .contact-section p { 
-      color: #555; 
-      font-size: 0.96rem; 
-      margin-bottom: 14px;
+
+    .support-section p {
+      color: #5a6c7d;
+      font-size: 13px;
+      margin-bottom: 12px;
     }
-    
-    .contact-link { 
-      color: #276EF1; 
-      text-decoration: none; 
+
+    .support-link {
+      color: #0052cc;
+      text-decoration: none;
       font-weight: 700;
+      transition: all 0.3s ease;
     }
-    
-    .contact-link:hover {
+
+    .support-link:hover {
       text-decoration: underline;
-    }
-    
-    .socials { 
-      text-align: center; 
-      margin-top: 28px; 
-      padding-top: 24px; 
-      border-top: 1px solid #e0e4ed;
-    }
-    
-    .socials a { 
-      display: inline-block; 
-      margin: 0 12px; 
-      text-decoration: none; 
-      transition: transform 0.2s;
       opacity: 0.8;
     }
-    
-    .socials a:hover { 
-      transform: scale(1.2);
-      opacity: 1;
+
+    /* SOCIAL LINKS */
+    .socials {
+      text-align: center;
+      margin: 28px 0;
+      padding: 20px 0;
+      border-top: 1px solid #e5e9f0;
     }
-    
-    .socials img { 
-      width: 40px; 
+
+    .socials-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5a6c7d;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 14px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
       height: 40px;
-      filter: brightness(0.7);
+      background: #f0f3f7;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid #e5e9f0;
     }
-    
-    .footer { 
-      background: linear-gradient(135deg, #f3f7fb 0%, #eef2ff 100%);
-      padding: 28px; 
-      text-align: center; 
-      color: #999; 
-      font-size: 0.85rem; 
-      border-top: 1px solid #e0e4ed;
+
+    .social-link:hover {
+      background: #0052cc;
+      transform: translateY(-2px);
+      border-color: #0052cc;
     }
-    
-    .footer p { 
+
+    .social-link img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0.5);
+    }
+
+    .social-link:hover img {
+      filter: brightness(1) invert(1);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      padding: 32px 40px;
+      text-align: center;
+      color: #7a8a99;
+      font-size: 12px;
+      border-top: 1px solid #e5e9f0;
+    }
+
+    .footer p {
       margin: 6px 0;
+      line-height: 1.6;
     }
-    
-    .footer-brand { 
-      font-weight: 700; 
-      color: #276EF1;
+
+    .footer-brand {
+      font-weight: 700;
+      color: #0052cc;
     }
-    
+
+    .footer-divider {
+      color: #d5dce3;
+      margin: 0 4px;
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 600px) {
-      .container { margin: 12px; border-radius: 20px; }
-      .content { padding: 32px 24px; }
-      .header-content { padding: 40px 24px; }
-      .header-logo { width: 95px; height: 95px; margin-bottom: 18px; }
-      .header-logo img { width: 75px; height: 75px; }
-      .header-title { font-size: 1.8rem; }
-      .header-subtitle { font-size: 1.05rem; }
-      .greeting { font-size: 1.15rem; }
-      .button { padding: 14px 40px; font-size: 1rem; }
+      .email-wrapper {
+        padding: 20px 16px;
+      }
+
+      .email-container {
+        border-radius: 12px;
+      }
+
+      .header-content {
+        padding: 40px 24px;
+      }
+
+      .logo-circle {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 20px;
+      }
+
+      .logo-circle img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .content {
+        padding: 32px 24px;
+      }
+
+      .greeting {
+        font-size: 18px;
+      }
+
+      .info-card,
+      .account-details {
+        padding: 20px;
+      }
+
+      .button {
+        padding: 12px 36px;
+        font-size: 14px;
+      }
+
+      .support-section {
+        padding: 20px;
+      }
+
+      .footer {
+        padding: 24px 20px;
+      }
     }
-    
+
     @media (max-width: 480px) {
-      .container { margin: 8px; }
-      .content { padding: 24px 16px; }
-      .header-content { padding: 32px 20px; }
-      .header-logo { width: 85px; height: 85px; }
-      .header-logo img { width: 65px; height: 65px; }
-      .header-title { font-size: 1.5rem; margin-bottom: 8px; }
-      .header-subtitle { font-size: 0.95rem; }
-      .greeting { font-size: 1rem; }
-      .message-box { padding: 18px; }
-      .info-section { padding: 18px; }
-      .content { padding: 20px 16px; }
-      .button { padding: 12px 32px; font-size: 0.95rem; }
+      .header-content {
+        padding: 32px 20px;
+      }
+
+      .logo-circle {
+        width: 80px;
+        height: 80px;
+      }
+
+      .header-title {
+        font-size: 20px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .content {
+        padding: 24px 16px;
+      }
+
+      .greeting {
+        font-size: 16px;
+      }
+
+      .success-message {
+        padding: 24px 16px;
+      }
+
+      .info-card,
+      .account-details {
+        padding: 16px;
+      }
+
+      .button {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 14px;
+      }
+
+      .account-details-list li {
+        flex-direction: column;
+      }
+
+      .account-details-list span {
+        text-align: left;
+        margin-top: 4px;
+      }
+
+      .footer {
+        padding: 20px 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- BEAUTIFUL HEADER WITH LOGO -->
-    <div class="header">
-      <div class="header-content">
-        <div class="header-logo">
-          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-background">
+          <div class="header-shape-1"></div>
+          <div class="header-shape-2"></div>
         </div>
-        <div class="header-title">Password Reset Successful</div>
-        <div class="header-subtitle">Your ExamGuard account is secure</div>
-      </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="content">
-      <div class="greeting">Hi ${user.fullname || user.username},</div>
-      
-      <!-- SUCCESS MESSAGE -->
-      <div style="text-align: center; margin-bottom: 32px;">
-        <div class="success-icon">✓</div>
-        <p style="color: #27ae60; font-weight: 700; font-size: 1.12rem;">Your password has been successfully reset!</p>
+        <div class="header-content">
+          <div class="logo-circle">
+            <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+            <div class="logo-badge">✓</div>
+          </div>
+          <div class="header-title">Password Reset Successful</div>
+          <div class="header-subtitle">Your account is now secure</div>
+        </div>
       </div>
 
-      <!-- MESSAGE BOX -->
-      <div class="message-box">
-        <p><strong>What just happened:</strong></p>
-        <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
-        <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
+      <!-- MAIN CONTENT -->
+      <div class="content">
+        <div class="greeting">Hello ${user.fullname || user.username},</div>
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="success-message">
+          <div class="success-icon">✓</div>
+          <div class="success-text">Your password has been successfully reset</div>
+          <div class="success-subtext">You can now log in with your new credentials</div>
+        </div>
+
+        <!-- WHAT HAPPENED -->
+        <div class="info-card">
+          <div class="info-card-title">What just happened</div>
+          <ul class="info-list">
+            <li>Your ExamGuard account password has been updated</li>
+            <li>Your account is now protected with your new password</li>
+            <li>You can log in immediately with your new credentials</li>
+          </ul>
+        </div>
+
+        <!-- NEXT STEPS -->
+        <div class="info-card">
+          <div class="info-card-title">Next steps</div>
+          <ul class="info-list">
+            <li>Log in to your account</li>
+            <li>Keep your password private and secure</li>
+            <li>Never share your credentials with anyone</li>
+            <li>Change your password regularly for added security</li>
+          </ul>
+        </div>
+
+        <!-- SECURITY ALERT -->
+        <div class="security-alert">
+          <strong>🔒 Important Security Notice</strong>
+          <p>If you did not request this password reset, please secure your account immediately by contacting our support team. We'll help you regain control of your account.</p>
+        </div>
+
+        <!-- CTA BUTTON -->
+        <div class="button-container">
+          <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
+        </div>
+
+        <!-- ACCOUNT DETAILS -->
+        <div class="account-details">
+          <div class="account-details-title">Account Information</div>
+          <ul class="account-details-list">
+            <li>
+              <strong>Username:</strong>
+              <span>${user.username}</span>
+            </li>
+            <li>
+              <strong>Email:</strong>
+              <span>${user.email}</span>
+            </li>
+            <li>
+              <strong>Reset Time:</strong>
+              <span>${new Date().toLocaleString()}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- SUPPORT SECTION -->
+        <div class="support-section">
+          <p style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">Need assistance?</p>
+          <p>Our support team is available 24/7 to help you with any questions or concerns.</p>
+          <p style="margin-bottom: 0;"><a href="mailto:richardochuko14@gmail.com" class="support-link">📧 Contact Support</a></p>
+        </div>
+
+        <!-- SOCIALS -->
+        <div class="socials">
+          <div class="socials-title">Follow us</div>
+          <div class="social-links">
+            <a href="https://facebook.com/OAUExamGuard" class="social-link" title="Facebook">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+            </a>
+            <a href="https://twitter.com/OAUExamGuard" class="social-link" title="X (Twitter)">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+            </a>
+            <a href="https://instagram.com/OAUExamGuard" class="social-link" title="Instagram">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://linkedin.com/company/OAUExamGuard" class="social-link" title="LinkedIn">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+          </div>
+        </div>
       </div>
 
-      <!-- INFO SECTION -->
-      <div class="info-section">
-        <h3>📋 Quick Actions</h3>
-        <ul>
-          <li>Log in with your new password immediately</li>
-          <li>Keep your password secure and private</li>
-          <li>Do not share your credentials with anyone</li>
-          <li>Consider changing your password regularly</li>
-        </ul>
+      <!-- FOOTER -->
+      <div class="footer">
+        <p>
+          <span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span>
+          <span class="footer-divider">|</span>
+          All rights reserved
+        </p>
+        <p>Your Exam, Our Priority</p>
+        <p>123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
       </div>
-
-      <!-- SECURITY WARNING -->
-      <div class="security-warning">
-        <strong>🔒 Important Security Notice</strong>
-        <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
-      </div>
-
-      <!-- BUTTON -->
-      <div class="button-container">
-        <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
-      </div>
-
-      <!-- CONTACT SECTION -->
-      <div class="contact-section">
-        <p><strong>Need further assistance?</strong></p>
-        <p>If you have any questions or concerns about your account, our support team is here to help.</p>
-        <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
-      </div>
-
-      <!-- ACCOUNT DETAILS -->
-      <div class="info-section" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%); border: 1px solid rgba(39, 110, 241, 0.15);">
-        <h3>ℹ️ Account Information</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
-        </ul>
-      </div>
-
-      <!-- SOCIALS -->
-      <div class="socials">
-        <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-        </a>
-        <a href="https://twitter.com/OAUExamGuard" target="_blank" title="Follow us on Twitter">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter">
-        </a>
-        <a href="https://instagram.com/OAUExamGuard" target="_blank" title="Follow us on Instagram">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-        </a>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-      <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
-      <p>All rights reserved | Your Exam, Our Priority</p>
-      <p style="margin-top: 12px; color: #bbb;">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
     </div>
   </div>
 </body>
@@ -1721,419 +1994,781 @@ app.post("/api/auth/reset", async (req, res) => {
     // Send password reset confirmation email
     const emailContent = `
 <!DOCTYPE html>
-<html lang="en" style="background:#f3f7fb;">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Password Reset Confirmation | OAU ExamGuard</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1b2541; line-height: 1.6; }
-    .container { max-width: 620px; margin: 24px auto; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 48px rgba(39, 110, 241, 0.18); }
-    
-    /* BEAUTIFUL HEADER */
-    .header { 
-      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%); 
-      padding: 0; 
-      position: relative; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      background-color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      color: #1e293b;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .email-container {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
       overflow: hidden;
-      min-height: 280px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* ===== PREMIUM HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      min-height: 320px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    
-    /* Decorative shapes background */
-    .header::before { 
-      content: ''; 
-      position: absolute; 
-      top: -50%; 
-      right: -10%; 
-      width: 400px; 
-      height: 400px; 
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); 
-      border-radius: 50%;
-      z-index: 0;
+
+    .header-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
     }
-    
-    .header::after { 
-      content: ''; 
-      position: absolute; 
-      bottom: -30%; 
-      left: -10%; 
-      width: 350px; 
-      height: 350px; 
-      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); 
+
+    .header-blur-1 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
       border-radius: 50%;
-      z-index: 0;
+      top: -150px;
+      right: -100px;
+      filter: blur(40px);
     }
-    
-    .header-content { 
-      position: relative; 
-      z-index: 2; 
+
+    .header-blur-2 {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -120px;
+      left: -80px;
+      filter: blur(40px);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 50px 32px;
+      padding: 60px 40px;
       width: 100%;
     }
-    
-    .header-logo { 
-      width: 110px; 
-      height: 110px; 
-      background: #fff; 
-      border-radius: 50%; 
-      margin: 0 auto 24px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 -2px 8px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
+
+    .logo-wrapper {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .logo-circle {
+      width: 120px;
+      height: 120px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.08);
       position: relative;
     }
-    
-    .header-logo img { 
-      width: 85px; 
-      height: 85px; 
+
+    .logo-circle img {
+      width: 95px;
+      height: 95px;
       object-fit: contain;
       object-position: center;
     }
-    
-    .header-title { 
-      color: #fff; 
-      font-size: 2.2rem; 
-      font-weight: 900; 
-      margin: 0 0 12px 0;
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
-      letter-spacing: -0.5px;
-    }
-    
-    .header-subtitle { 
-      color: rgba(255, 255, 255, 0.94); 
-      font-size: 1.15rem; 
-      font-weight: 300; 
-      letter-spacing: 0.3px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-    
-    .content { padding: 48px 40px; }
-    
-    .greeting { 
-      font-size: 1.3rem; 
-      color: #276EF1; 
-      font-weight: 700; 
-      margin-bottom: 20px;
-    }
-    
-    .message-box { 
-      background: linear-gradient(135deg, rgba(39, 110, 241, 0.06) 0%, rgba(0, 51, 102, 0.06) 100%); 
-      border-left: 4px solid #276EF1; 
-      border-radius: 12px; 
-      padding: 24px; 
-      margin: 28px 0; 
-    }
-    
-    .message-box p { 
-      color: #1b2541; 
-      margin-bottom: 12px; 
-      font-size: 0.98rem;
-    }
-    
-    .message-box strong { 
-      color: #276EF1; 
-      font-weight: 700; 
-    }
-    
-    .success-icon { 
-      display: inline-block; 
-      width: 60px; 
-      height: 60px; 
-      background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); 
-      border-radius: 50%; 
-      text-align: center; 
-      line-height: 60px; 
-      color: #fff; 
-      font-size: 32px; 
-      margin-bottom: 18px;
-      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.25);
-    }
-    
-    .info-section { 
-      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
-      border-radius: 12px; 
-      padding: 24px; 
-      margin: 28px 0;
-      border: 1px solid rgba(39, 110, 241, 0.1);
-    }
-    
-    .info-section h3 { 
-      color: #003366; 
-      font-size: 1.1rem; 
-      font-weight: 700; 
-      margin-bottom: 16px; 
-      display: flex; 
-      align-items: center; 
-      gap: 10px;
-    }
-    
-    .info-section ul { 
-      list-style: none; 
-      padding: 0; 
-    }
-    
-    .info-section li { 
-      color: #1b2541; 
-      padding: 10px 0; 
-      padding-left: 28px; 
-      position: relative; 
-      font-size: 0.96rem;
-      font-weight: 500;
-    }
-    
-    .info-section li::before { 
-      content: '✓'; 
-      position: absolute; 
-      left: 0; 
-      color: #27ae60; 
+
+    .success-badge {
+      position: absolute;
+      bottom: -12px;
+      right: -12px;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
       font-weight: bold;
-      font-size: 1.2rem;
+      border: 4px solid #ffffff;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
     }
-    
-    .security-warning { 
-      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
-      border-radius: 12px; 
-      padding: 20px 24px; 
-      margin: 28px 0; 
-      border-left: 4px solid #ff9800;
-      border: 1px solid rgba(255, 152, 0, 0.2);
+
+    .header-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 12px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
     }
-    
-    .security-warning strong { 
-      color: #e65100; 
-      display: block; 
-      margin-bottom: 10px; 
-      font-size: 0.99rem;
+
+    .header-subtitle {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0.98;
     }
-    
-    .security-warning p { 
-      color: #d84315; 
-      font-size: 0.93rem; 
-      margin: 0;
+
+    /* ===== CONTENT AREA ===== */
+    .content {
+      padding: 56px 48px;
+    }
+
+    .greeting {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 32px;
+      line-height: 1.3;
+    }
+
+    /* Success Message Box */
+    .success-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
+      border-radius: 16px;
+      padding: 40px 32px;
+      margin-bottom: 36px;
+      border: 2px solid rgba(16, 185, 129, 0.15);
+      text-align: center;
+    }
+
+    .success-icon-large {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 40px;
+      margin: 0 auto 20px;
+      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.25);
+    }
+
+    .success-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #059669;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .success-subtext {
+      font-size: 15px;
+      color: #475569;
       line-height: 1.5;
     }
-    
-    .button-container { 
-      text-align: center; 
-      margin: 36px 0; 
+
+    /* Info Cards */
+    .card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(3, 102, 214, 0.1);
+      border-left: 4px solid #0366d6;
     }
-    
-    .button { 
-      display: inline-block; 
-      background: linear-gradient(90deg, #276EF1 0%, #1e5ba8 100%); 
-      color: #fff; 
-      text-decoration: none; 
-      padding: 16px 48px; 
-      border-radius: 12px; 
-      font-weight: 700; 
-      font-size: 1.05rem; 
-      box-shadow: 0 6px 24px rgba(39, 110, 241, 0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0c2d6b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .card-list li {
+      color: #1e293b;
+      padding: 12px 0 12px 32px;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .card-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      color: #10b981;
+      font-weight: 800;
+      font-size: 18px;
+      top: 8px;
+    }
+
+    /* Security Alert */
+    .alert-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      border-left: 4px solid #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .alert-title {
+      color: #b45309;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+    }
+
+    .alert-content {
+      color: #92400e;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* CTA Button */
+    .button-container {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #0366d6 0%, #0c2d6b 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 16px 52px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 8px 28px rgba(3, 102, 214, 0.35);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: none;
       cursor: pointer;
+      letter-spacing: 0.3px;
     }
-    
-    .button:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 8px 32px rgba(39, 110, 241, 0.45);
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(3, 102, 214, 0.45);
     }
-    
-    .contact-section { 
-      text-align: center; 
-      margin: 32px 0; 
-      padding: 24px; 
-      border-top: 1px solid #e0e4ed; 
-      border-bottom: 1px solid #e0e4ed;
+
+    .button:active {
+      transform: translateY(0);
     }
-    
-    .contact-section p { 
-      color: #555; 
-      font-size: 0.96rem; 
-      margin-bottom: 14px;
+
+    /* Account Details */
+    .account-card {
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(3, 102, 214, 0.1);
     }
-    
-    .contact-link { 
-      color: #276EF1; 
-      text-decoration: none; 
+
+    .account-card-title {
+      font-size: 14px;
       font-weight: 700;
+      color: #0c2d6b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    
-    .contact-link:hover {
+
+    .account-card-title::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: #0366d6;
+      border-radius: 50%;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(3, 102, 214, 0.08);
+      font-size: 13px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #0c2d6b;
+      font-weight: 600;
+    }
+
+    .detail-value {
+      color: #64748b;
+      word-break: break-word;
+      text-align: right;
+      max-width: 50%;
+    }
+
+    /* Support Section */
+    .support-box {
+      text-align: center;
+      margin: 36px 0;
+      padding: 28px;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .support-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .support-text {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .support-link {
+      color: #0366d6;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .support-link:hover {
       text-decoration: underline;
-    }
-    
-    .socials { 
-      text-align: center; 
-      margin-top: 28px; 
-      padding-top: 24px; 
-      border-top: 1px solid #e0e4ed;
-    }
-    
-    .socials a { 
-      display: inline-block; 
-      margin: 0 12px; 
-      text-decoration: none; 
-      transition: transform 0.2s;
       opacity: 0.8;
     }
-    
-    .socials a:hover { 
-      transform: scale(1.2);
-      opacity: 1;
+
+    /* Social Links */
+    .socials-section {
+      text-align: center;
+      padding: 28px 0;
+      border-top: 1px solid #e2e8f0;
     }
-    
-    .socials img { 
-      width: 40px; 
-      height: 40px;
-      filter: brightness(0.7);
+
+    .socials-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 18px;
     }
-    
-    .footer { 
-      background: linear-gradient(135deg, #f3f7fb 0%, #eef2ff 100%);
-      padding: 28px; 
-      text-align: center; 
-      color: #999; 
-      font-size: 0.85rem; 
-      border-top: 1px solid #e0e4ed;
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
     }
-    
-    .footer p { 
-      margin: 6px 0;
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
     }
-    
-    .footer-brand { 
-      font-weight: 700; 
-      color: #276EF1;
+
+    .social-icon:hover {
+      background: #0366d6;
+      border-color: #0366d6;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(3, 102, 214, 0.2);
     }
-    
-    @media (max-width: 600px) {
-      .container { margin: 12px; border-radius: 20px; }
-      .content { padding: 32px 24px; }
-      .header-content { padding: 40px 24px; }
-      .header-logo { width: 95px; height: 95px; margin-bottom: 18px; }
-      .header-logo img { width: 75px; height: 75px; }
-      .header-title { font-size: 1.8rem; }
-      .header-subtitle { font-size: 1.05rem; }
-      .greeting { font-size: 1.15rem; }
-      .button { padding: 14px 40px; font-size: 1rem; }
+
+    .social-icon img {
+      width: 22px;
+      height: 22px;
+      filter: brightness(0.5);
+      transition: all 0.3s ease;
     }
-    
+
+    .social-icon:hover img {
+      filter: brightness(1) invert(1);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      padding: 36px 48px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 12px;
+      border-top: 1px solid #e2e8f0;
+      line-height: 1.8;
+    }
+
+    .footer-brand {
+      font-weight: 700;
+      color: #0366d6;
+    }
+
+    .footer-divider {
+      color: #cbd5e1;
+      margin: 0 6px;
+    }
+
+    .footer-text {
+      margin: 8px 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .email-wrapper {
+        padding: 24px 16px;
+      }
+
+      .email-container {
+        border-radius: 16px;
+      }
+
+      .header-content {
+        padding: 48px 24px;
+      }
+
+      .logo-circle {
+        width: 100px;
+        height: 100px;
+      }
+
+      .logo-circle img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .header-title {
+        font-size: 26px;
+      }
+
+      .header-subtitle {
+        font-size: 13px;
+      }
+
+      .content {
+        padding: 40px 24px;
+      }
+
+      .greeting {
+        font-size: 19px;
+        margin-bottom: 24px;
+      }
+
+      .success-box {
+        padding: 32px 24px;
+      }
+
+      .success-text {
+        font-size: 18px;
+      }
+
+      .card,
+      .account-card,
+      .alert-box {
+        padding: 24px;
+      }
+
+      .button {
+        padding: 14px 40px;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      .support-box {
+        padding: 20px;
+      }
+
+      .detail-row {
+        flex-direction: column;
+      }
+
+      .detail-value {
+        text-align: left;
+        max-width: 100%;
+        margin-top: 4px;
+      }
+
+      .footer {
+        padding: 28px 24px;
+      }
+    }
+
     @media (max-width: 480px) {
-      .container { margin: 8px; }
-      .content { padding: 24px 16px; }
-      .header-content { padding: 32px 20px; }
-      .header-logo { width: 85px; height: 85px; }
-      .header-logo img { width: 65px; height: 65px; }
-      .header-title { font-size: 1.5rem; margin-bottom: 8px; }
-      .header-subtitle { font-size: 0.95rem; }
-      .greeting { font-size: 1rem; }
-      .message-box { padding: 18px; }
-      .info-section { padding: 18px; }
-      .content { padding: 20px 16px; }
-      .button { padding: 12px 32px; font-size: 0.95rem; }
+      .header-content {
+        padding: 40px 20px;
+      }
+
+      .logo-circle {
+        width: 90px;
+        height: 90px;
+      }
+
+      .logo-circle img {
+        width: 72px;
+        height: 72px;
+      }
+
+      .header-title {
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+
+      .content {
+        padding: 28px 16px;
+      }
+
+      .greeting {
+        font-size: 17px;
+      }
+
+      .success-box {
+        padding: 24px 16px;
+      }
+
+      .success-icon-large {
+        width: 64px;
+        height: 64px;
+        font-size: 36px;
+      }
+
+      .card,
+      .account-card {
+        padding: 20px;
+      }
+
+      .card-title,
+      .account-card-title {
+        font-size: 13px;
+      }
+
+      .button {
+        padding: 12px 28px;
+        font-size: 13px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .social-icon img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .footer {
+        padding: 24px 16px;
+        font-size: 11px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- BEAUTIFUL HEADER WITH LOGO -->
-    <div class="header">
-      <div class="header-content">
-        <div class="header-logo">
-          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-background">
+          <div class="header-blur-1"></div>
+          <div class="header-blur-2"></div>
         </div>
-        <div class="header-title">Password Reset Successful</div>
-        <div class="header-subtitle">Your ExamGuard account is secure</div>
-      </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="content">
-      <div class="greeting">Hi ${user.fullname || user.username},</div>
-      
-      <!-- SUCCESS MESSAGE -->
-      <div style="text-align: center; margin-bottom: 32px;">
-        <div class="success-icon">✓</div>
-        <p style="color: #27ae60; font-weight: 700; font-size: 1.12rem;">Your password has been successfully reset!</p>
+        <div class="header-content">
+          <div class="logo-wrapper">
+            <div class="logo-circle">
+              <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+            </div>
+            <div class="success-badge">✓</div>
+          </div>
+          <div class="header-title">Password Reset Successful</div>
+          <div class="header-subtitle">Your account is now secure</div>
+        </div>
       </div>
 
-      <!-- MESSAGE BOX -->
-      <div class="message-box">
-        <p><strong>What just happened:</strong></p>
-        <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
-        <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
+      <!-- CONTENT -->
+      <div class="content">
+        <div class="greeting">Hi ${user.fullname || user.username},</div>
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="success-box">
+          <div class="success-icon-large">✓</div>
+          <div class="success-text">Your password has been successfully reset</div>
+          <div class="success-subtext">You can now log in with your new credentials immediately</div>
+        </div>
+
+        <!-- WHAT HAPPENED -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-icon">📋</span>
+            What just happened
+          </div>
+          <ul class="card-list">
+            <li>Your ExamGuard account password has been updated</li>
+            <li>Your account is now protected with your new password</li>
+            <li>You can log in immediately with your new credentials</li>
+          </ul>
+        </div>
+
+        <!-- SECURITY TIPS -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-icon">🔐</span>
+            Security tips
+          </div>
+          <ul class="card-list">
+            <li>Keep your password secure and private</li>
+            <li>Do not share your credentials with anyone</li>
+            <li>Change your password regularly for added security</li>
+            <li>Log out from untrusted devices</li>
+          </ul>
+        </div>
+
+        <!-- SECURITY ALERT -->
+        <div class="alert-box">
+          <div class="alert-title">
+            <span>🔒</span>
+            Important Security Notice
+          </div>
+          <p class="alert-content">If you did not request this password reset, please secure your account immediately by contacting our support team. We'll help you regain control of your account.</p>
+        </div>
+
+        <!-- CTA BUTTON -->
+        <div class="button-container">
+          <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
+        </div>
+
+        <!-- ACCOUNT DETAILS -->
+        <div class="account-card">
+          <div class="account-card-title">Account Information</div>
+          <div class="detail-row">
+            <span class="detail-label">Username</span>
+            <span class="detail-value">${user.username}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Email Address</span>
+            <span class="detail-value">${user.email}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Reset Time</span>
+            <span class="detail-value">${new Date().toLocaleString()}</span>
+          </div>
+        </div>
+
+        <!-- SUPPORT SECTION -->
+        <div class="support-box">
+          <div class="support-title">Need Further Assistance?</div>
+          <p class="support-text">Our support team is available 24/7 to help you with any questions or concerns about your account.</p>
+          <a href="mailto:richardochuko14@gmail.com" class="support-link">📧 Contact Support</a>
+        </div>
+
+        <!-- SOCIAL LINKS -->
+        <div class="socials-section">
+          <div class="socials-title">Follow Us</div>
+          <div class="social-links">
+            <a href="https://facebook.com/OAUExamGuard" class="social-icon" title="Facebook">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+            </a>
+            <a href="https://twitter.com/OAUExamGuard" class="social-icon" title="X (Twitter)">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+            </a>
+            <a href="https://instagram.com/OAUExamGuard" class="social-icon" title="Instagram">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://linkedin.com/company/OAUExamGuard" class="social-icon" title="LinkedIn">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+          </div>
+        </div>
       </div>
 
-      <!-- INFO SECTION -->
-      <div class="info-section">
-        <h3>📋 Quick Actions</h3>
-        <ul>
-          <li>Log in with your new password immediately</li>
-          <li>Keep your password secure and private</li>
-          <li>Do not share your credentials with anyone</li>
-          <li>Consider changing your password regularly</li>
-        </ul>
+      <!-- FOOTER -->
+      <div class="footer">
+        <div class="footer-text">
+          <span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span>
+          <span class="footer-divider">|</span>
+          All rights reserved
+        </div>
+        <div class="footer-text">Your Exam, Our Priority</div>
+        <div class="footer-text">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</div>
       </div>
-
-      <!-- SECURITY WARNING -->
-      <div class="security-warning">
-        <strong>🔒 Important Security Notice</strong>
-        <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
-      </div>
-
-      <!-- BUTTON -->
-      <div class="button-container">
-        <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
-      </div>
-
-      <!-- CONTACT SECTION -->
-      <div class="contact-section">
-        <p><strong>Need further assistance?</strong></p>
-        <p>If you have any questions or concerns about your account, our support team is here to help.</p>
-        <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
-      </div>
-
-      <!-- ACCOUNT DETAILS -->
-      <div class="info-section" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%); border: 1px solid rgba(39, 110, 241, 0.15);">
-        <h3>ℹ️ Account Information</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
-          <li style="padding: 8px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
-        </ul>
-      </div>
-
-      <!-- SOCIALS -->
-      <div class="socials">
-        <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-        </a>
-        <a href="https://twitter.com/OAUExamGuard" target="_blank" title="Follow us on Twitter">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter">
-        </a>
-        <a href="https://instagram.com/OAUExamGuard" target="_blank" title="Follow us on Instagram">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-        </a>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-      <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
-      <p>All rights reserved | Your Exam, Our Priority</p>
-      <p style="margin-top: 12px; color: #bbb;">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
     </div>
   </div>
 </body>
