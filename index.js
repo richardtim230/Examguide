@@ -1255,7 +1255,6 @@ app.post("/api/auth/resend-verification", async (req, res) => {
     res.status(500).json({ message: "Something went wrong. Please try again or contact support." });
   }
 });
-// Password reset using Student ID
 app.post("/api/auth/reset", async (req, res) => {
   try {
     const { studentId, password } = req.body;
@@ -1266,13 +1265,21 @@ app.post("/api/auth/reset", async (req, res) => {
     if (!user)
       return res.status(404).json({ message: "User not found" });
 
+    // Check if user has email
+    if (!user.email) {
+      console.warn(`User ${user.username} has no email address. Skipping email send.`);
+      const hashed = await bcrypt.hash(password, 12);
+      user.password = hashed;
+      await user.save();
+      return res.json({ message: "Password reset successful, but no email address on file to send confirmation." });
+    }
+
     const hashed = await bcrypt.hash(password, 12);
     user.password = hashed;
     await user.save();
 
     // Send password reset confirmation email
-    if (user.email) {
-      const emailContent = `
+    const emailContent = `
 <!DOCTYPE html>
 <html lang="en" style="background:#f3f7fb;">
 <head>
@@ -1341,7 +1348,6 @@ app.post("/api/auth/reset", async (req, res) => {
 </head>
 <body>
   <div class="container">
-    <!-- HEADER WITH IMAGE -->
     <div class="header">
       <div class="header-content">
         <div class="header-logo">
@@ -1352,24 +1358,20 @@ app.post("/api/auth/reset", async (req, res) => {
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="content">
       <div class="greeting">Hi ${user.fullname || user.username},</div>
       
-      <!-- SUCCESS MESSAGE -->
       <div style="text-align: center; margin-bottom: 28px;">
         <div class="success-icon">✓</div>
         <p style="color: #27ae60; font-weight: 600; font-size: 1.1rem;">Your password has been successfully reset!</p>
       </div>
 
-      <!-- MESSAGE BOX -->
       <div class="message-box">
         <p><strong>What just happened:</strong></p>
         <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
         <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
       </div>
 
-      <!-- INFO SECTION -->
       <div class="info-section">
         <h3>📋 Quick Actions</h3>
         <ul>
@@ -1380,25 +1382,21 @@ app.post("/api/auth/reset", async (req, res) => {
         </ul>
       </div>
 
-      <!-- SECURITY WARNING -->
       <div class="security-warning">
         <strong>🔒 Important Security Notice</strong>
         <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
       </div>
 
-      <!-- BUTTON -->
       <div class="button-container">
         <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
       </div>
 
-      <!-- CONTACT SECTION -->
       <div class="contact-section">
         <p><strong>Need further assistance?</strong></p>
         <p>If you have any questions or concerns about your account, our support team is here to help.</p>
         <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
       </div>
 
-      <!-- ACCOUNT DETAILS -->
       <div class="info-section" style="background: #f0f4ff;">
         <h3>ℹ️ Account Information</h3>
         <ul style="list-style: none; padding: 0;">
@@ -1408,7 +1406,6 @@ app.post("/api/auth/reset", async (req, res) => {
         </ul>
       </div>
 
-      <!-- SOCIALS -->
       <div class="socials">
         <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
           <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
@@ -1422,7 +1419,6 @@ app.post("/api/auth/reset", async (req, res) => {
       </div>
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
       <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
       <p>All rights reserved | Your Exam, Our Priority</p>
@@ -1433,18 +1429,22 @@ app.post("/api/auth/reset", async (req, res) => {
 </html>
 `;
 
-      try {
-        await client.sendEmail({
-          From: "richardochuko@examguard.com.ng",
-          To: user.email,
-          Subject: "Password Reset Confirmation - OAU ExamGuard",
-          HtmlBody: emailContent
-        });
-        console.log("Password reset confirmation email sent to " + user.email);
-      } catch (err) {
-        console.error("Error sending password reset confirmation email:", err);
-        // Don't fail the response, password is already reset
-      }
+    try {
+      console.log(`Attempting to send reset email to: ${user.email}`);
+      const emailResponse = await client.sendEmail({
+        From: "richardochuko@examguard.com.ng",
+        To: user.email,
+        Subject: "Password Reset Confirmation - OAU ExamGuard",
+        HtmlBody: emailContent
+      });
+      console.log("✓ Password reset confirmation email sent successfully to " + user.email, emailResponse);
+    } catch (emailErr) {
+      console.error("✗ Error sending password reset confirmation email:", emailErr);
+      // Still return success for password reset, but log the email error
+      return res.json({ 
+        message: "Password reset successful, but confirmation email could not be sent. Please contact support if needed.",
+        warning: "Email delivery failed"
+      });
     }
 
     res.json({ message: "Password reset successful. Confirmation email sent to your account." });
