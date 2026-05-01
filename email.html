@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Reset Confirmation | OAU ExamGuard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #f5f7fa;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      padding: 40px 20px;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* PREMIUM HEADER */
+    .header {
+      background: linear-gradient(135deg, #0052cc 0%, #003d99 50%, #002666 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .header-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .header-shape-1 {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -100px;
+      right: -50px;
+    }
+
+    .header-shape-2 {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -80px;
+      left: -30px;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 10;
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .logo-circle {
+      width: 100px;
+      height: 100px;
+      background: #ffffff;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .logo-circle img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    .logo-badge {
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      width: 40px;
+      height: 40px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      border: 3px solid white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 16px 0 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      opacity: 0.95;
+    }
+
+    /* CONTENT AREA */
+    .content {
+      padding: 48px 40px;
+    }
+
+    .greeting {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0052cc;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .success-message {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 32px 24px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
+      border-radius: 12px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+      margin: 0 auto 16px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .success-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #059669;
+      margin-bottom: 8px;
+    }
+
+    .success-subtext {
+      font-size: 14px;
+      color: #2c3e50;
+      opacity: 0.75;
+    }
+
+    /* INFO CARD */
+    .info-card {
+      background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      border-left: 4px solid #0052cc;
+      border: 1px solid rgba(0, 82, 204, 0.1);
+    }
+
+    .info-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003d99;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-card-title::before {
+      content: '→';
+      font-weight: bold;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-list li {
+      color: #2c3e50;
+      padding: 10px 0 10px 28px;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .info-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* SECURITY ALERT */
+    .security-alert {
+      background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      border-left: 4px solid #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    .security-alert strong {
+      color: #d97706;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .security-alert p {
+      color: #92400e;
+      font-size: 13px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ACCOUNT DETAILS */
+    .account-details {
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(0, 82, 204, 0.1);
+    }
+
+    .account-details-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003d99;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .account-details-title::before {
+      content: 'ℹ';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #0052cc;
+      color: white;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .account-details-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .account-details-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 82, 204, 0.08);
+      font-size: 13px;
+    }
+
+    .account-details-list li:last-child {
+      border-bottom: none;
+    }
+
+    .account-details-list strong {
+      color: #003d99;
+      font-weight: 600;
+    }
+
+    .account-details-list span {
+      color: #5a6c7d;
+      word-break: break-word;
+      text-align: right;
+      max-width: 50%;
+    }
+
+    /* CTA BUTTON */
+    .button-container {
+      text-align: center;
+      margin: 36px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 44px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(0, 82, 204, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 82, 204, 0.4);
+    }
+
+    /* SUPPORT SECTION */
+    .support-section {
+      text-align: center;
+      margin: 32px 0;
+      padding: 24px;
+      border-top: 1px solid #e5e9f0;
+      border-bottom: 1px solid #e5e9f0;
+    }
+
+    .support-section p {
+      color: #5a6c7d;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .support-link {
+      color: #0052cc;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .support-link:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    /* SOCIAL LINKS */
+    .socials {
+      text-align: center;
+      margin: 28px 0;
+      padding: 20px 0;
+      border-top: 1px solid #e5e9f0;
+    }
+
+    .socials-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5a6c7d;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 14px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #f0f3f7;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid #e5e9f0;
+    }
+
+    .social-link:hover {
+      background: #0052cc;
+      transform: translateY(-2px);
+      border-color: #0052cc;
+    }
+
+    .social-link img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0.5);
+    }
+
+    .social-link:hover img {
+      filter: brightness(1) invert(1);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      padding: 32px 40px;
+      text-align: center;
+      color: #7a8a99;
+      font-size: 12px;
+      border-top: 1px solid #e5e9f0;
+    }
+
+    .footer p {
+      margin: 6px 0;
+      line-height: 1.6;
+    }
+
+    .footer-brand {
+      font-weight: 700;
+      color: #0052cc;
+    }
+
+    .footer-divider {
+      color: #d5dce3;
+      margin: 0 4px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .email-wrapper {
+        padding: 20px 16px;
+      }
+
+      .email-container {
+        border-radius: 12px;
+      }
+
+      .header-content {
+        padding: 40px 24px;
+      }
+
+      .logo-circle {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 20px;
+      }
+
+      .logo-circle img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .content {
+        padding: 32px 24px;
+      }
+
+      .greeting {
+        font-size: 18px;
+      }
+
+      .info-card,
+      .account-details {
+        padding: 20px;
+      }
+
+      .button {
+        padding: 12px 36px;
+        font-size: 14px;
+      }
+
+      .support-section {
+        padding: 20px;
+      }
+
+      .footer {
+        padding: 24px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        padding: 32px 20px;
+      }
+
+      .logo-circle {
+        width: 80px;
+        height: 80px;
+      }
+
+      .header-title {
+        font-size: 20px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .content {
+        padding: 24px 16px;
+      }
+
+      .greeting {
+        font-size: 16px;
+      }
+
+      .success-message {
+        padding: 24px 16px;
+      }
+
+      .info-card,
+      .account-details {
+        padding: 16px;
+      }
+
+      .button {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 14px;
+      }
+
+      .account-details-list li {
+        flex-direction: column;
+      }
+
+      .account-details-list span {
+        text-align: left;
+        margin-top: 4px;
+      }
+
+      .footer {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-background">
+          <div class="header-shape-1"></div>
+          <div class="header-shape-2"></div>
+        </div>
+        <div class="header-content">
+          <div class="logo-circle">
+            <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+            <div class="logo-badge">✓</div>
+          </div>
+          <div class="header-title">Password Reset Successful</div>
+          <div class="header-subtitle">Your account is now secure</div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="content">
+        <div class="greeting">Hello ${user.fullname || user.username},</div>
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="success-message">
+          <div class="success-icon">✓</div>
+          <div class="success-text">Your password has been successfully reset</div>
+          <div class="success-subtext">You can now log in with your new credentials</div>
+        </div>
+
+        <!-- WHAT HAPPENED -->
+        <div class="info-card">
+          <div class="info-card-title">What just happened</div>
+          <ul class="info-list">
+            <li>Your ExamGuard account password has been updated</li>
+            <li>Your account is now protected with your new password</li>
+            <li>You can log in immediately with your new credentials</li>
+          </ul>
+        </div>
+
+        <!-- NEXT STEPS -->
+        <div class="info-card">
+          <div class="info-card-title">Next steps</div>
+          <ul class="info-list">
+            <li>Log in to your account</li>
+            <li>Keep your password private and secure</li>
+            <li>Never share your credentials with anyone</li>
+            <li>Change your password regularly for added security</li>
+          </ul>
+        </div>
+
+        <!-- SECURITY ALERT -->
+        <div class="security-alert">
+          <strong>🔒 Important Security Notice</strong>
+          <p>If you did not request this password reset, please secure your account immediately by contacting our support team. We'll help you regain control of your account.</p>
+        </div>
+
+        <!-- CTA BUTTON -->
+        <div class="button-container">
+          <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
+        </div>
+
+        <!-- ACCOUNT DETAILS -->
+        <div class="account-details">
+          <div class="account-details-title">Account Information</div>
+          <ul class="account-details-list">
+            <li>
+              <strong>Username:</strong>
+              <span>${user.username}</span>
+            </li>
+            <li>
+              <strong>Email:</strong>
+              <span>${user.email}</span>
+            </li>
+            <li>
+              <strong>Reset Time:</strong>
+              <span>${new Date().toLocaleString()}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- SUPPORT SECTION -->
+        <div class="support-section">
+          <p style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">Need assistance?</p>
+          <p>Our support team is available 24/7 to help you with any questions or concerns.</p>
+          <p style="margin-bottom: 0;"><a href="mailto:support@examguard.com.ng" class="support-link">📧 Contact Support</a></p>
+        </div>
+
+        <!-- SOCIALS -->
+        <div class="socials">
+          <div class="socials-title">Follow us</div>
+          <div class="social-links">
+            <a href="https://facebook.com/OAUExamGuard" class="social-link" title="Facebook">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+            </a>
+            <a href="https://twitter.com/OAUExamGuard" class="social-link" title="X (Twitter)">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+            </a>
+            <a href="https://instagram.com/OAUExamGuard" class="social-link" title="Instagram">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://linkedin.com/company/OAUExamGuard" class="social-link" title="LinkedIn">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="footer">
+        <p>
+          <span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span>
+          <span class="footer-divider">|</span>
+          All rights reserved
+        </p>
+        <p>Your Exam, Our Priority</p>
+        <p>123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
