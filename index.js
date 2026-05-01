@@ -1147,163 +1147,147 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
 
     // Send confirmation email
  const confirmationEmailContent = `
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Password Reset Confirmation | OAU ExamGuard</title>
-  <style>
+  <style type="text/css">
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    html, body {
+    html {
       width: 100%;
-      height: 100%;
       background-color: #f5f7fa;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      color: #2c3e50;
+      width: 100%;
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #1b2541;
       line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+    }
+
+    td {
+      padding: 0;
+      vertical-align: top;
+    }
+
+    img {
+      border: 0;
+      outline: none;
+      text-decoration: none;
+      display: block;
+    }
+
+    a {
+      color: #1e5ba8;
+      text-decoration: none;
+    }
+
+    /* Main container */
     .email-wrapper {
       width: 100%;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-      padding: 40px 20px;
+      background: #f5f7fa;
+      padding: 30px 0;
     }
 
     .email-container {
-      max-width: 600px;
+      width: 100%;
+      max-width: 620px;
       margin: 0 auto;
       background: #ffffff;
       border-radius: 16px;
-      overflow: hidden;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
 
-    /* PREMIUM HEADER */
+    /* HEADER SECTION */
     .header {
-      background: linear-gradient(135deg, #0052cc 0%, #003d99 50%, #002666 100%);
+      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%);
+      padding: 50px 30px;
+      text-align: center;
       position: relative;
       overflow: hidden;
-      padding: 0;
     }
 
-    .header-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
-
-    .header-shape-1 {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      top: -100px;
-      right: -50px;
-    }
-
-    .header-shape-2 {
-      position: absolute;
-      width: 250px;
-      height: 250px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-      border-radius: 50%;
-      bottom: -80px;
-      left: -30px;
-    }
-
-    .header-content {
+    .header-inner {
       position: relative;
-      z-index: 10;
-      padding: 48px 40px;
-      text-align: center;
+      z-index: 2;
     }
 
     .logo-circle {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       background: #ffffff;
       border-radius: 50%;
       margin: 0 auto 24px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
     .logo-circle img {
-      width: 80px;
-      height: 80px;
+      width: 85px;
+      height: 85px;
       object-fit: contain;
-    }
-
-    .logo-badge {
-      position: absolute;
-      bottom: -8px;
-      right: -8px;
-      width: 40px;
-      height: 40px;
-      background: #10b981;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 24px;
-      border: 3px solid white;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
     .header-title {
       font-size: 28px;
-      font-weight: 700;
+      font-weight: 900;
       color: #ffffff;
-      margin: 16px 0 8px;
-      letter-spacing: -0.5px;
+      margin: 16px 0 12px;
+      line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .header-subtitle {
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.95);
       font-weight: 500;
       letter-spacing: 0.3px;
       text-transform: uppercase;
-      opacity: 0.95;
     }
 
-    /* CONTENT AREA */
-    .content {
+    /* CONTENT SECTION */
+    .content-wrapper {
       padding: 48px 40px;
     }
 
     .greeting {
       font-size: 20px;
       font-weight: 700;
-      color: #0052cc;
-      margin-bottom: 24px;
-      line-height: 1.4;
+      color: #1e5ba8;
+      margin-bottom: 28px;
     }
 
+    /* Success Message */
     .success-message {
       text-align: center;
-      margin-bottom: 40px;
-      padding: 32px 24px;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0.03) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.15);
       border-radius: 12px;
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 32px 24px;
+      margin-bottom: 32px;
     }
 
     .success-icon {
@@ -1311,12 +1295,12 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
       height: 64px;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       border-radius: 50%;
-      display: flex;
+      margin: 0 auto 16px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: #ffffff;
       font-size: 36px;
-      margin: 0 auto 16px;
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
     }
 
@@ -1329,44 +1313,38 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
 
     .success-subtext {
       font-size: 14px;
-      color: #2c3e50;
-      opacity: 0.75;
+      color: #475569;
+      margin: 0;
     }
 
-    /* INFO CARD */
+    /* Info Cards */
     .info-card {
       background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%);
+      border: 1px solid rgba(39, 110, 241, 0.1);
+      border-left: 4px solid #1e5ba8;
       border-radius: 12px;
       padding: 28px;
-      margin-bottom: 28px;
-      border-left: 4px solid #0052cc;
-      border: 1px solid rgba(0, 82, 204, 0.1);
+      margin-bottom: 24px;
     }
 
-    .info-card-title {
+    .card-title {
       font-size: 14px;
       font-weight: 700;
-      color: #003d99;
+      color: #003d66;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+      display: block;
     }
 
-    .info-card-title::before {
-      content: '→';
-      font-weight: bold;
-    }
-
-    .info-list {
+    .card-list {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
 
-    .info-list li {
-      color: #2c3e50;
+    .card-list li {
+      color: #1b2541;
       padding: 10px 0 10px 28px;
       position: relative;
       font-size: 14px;
@@ -1374,106 +1352,43 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
       line-height: 1.5;
     }
 
-    .info-list li::before {
+    .card-list li::before {
       content: '✓';
       position: absolute;
-      left: 4px;
+      left: 0;
       color: #10b981;
       font-weight: bold;
       font-size: 16px;
     }
 
-    /* SECURITY ALERT */
-    .security-alert {
-      background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      border-left: 4px solid #f59e0b;
-      border: 1px solid rgba(245, 158, 11, 0.15);
-    }
-
-    .security-alert strong {
-      color: #d97706;
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    .security-alert p {
-      color: #92400e;
-      font-size: 13px;
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* ACCOUNT DETAILS */
-    .account-details {
-      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+    /* Security Warning */
+    .security-warning {
+      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+      border: 1px solid rgba(255, 152, 0, 0.15);
+      border-left: 4px solid #ff9800;
       border-radius: 12px;
       padding: 24px;
-      margin-bottom: 28px;
-      border: 1px solid rgba(0, 82, 204, 0.1);
+      margin-bottom: 24px;
     }
 
-    .account-details-title {
-      font-size: 14px;
+    .warning-title {
+      color: #e65100;
       font-weight: 700;
-      color: #003d99;
+      font-size: 14px;
+      margin-bottom: 10px;
+      display: block;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      letter-spacing: 0.2px;
     }
 
-    .account-details-title::before {
-      content: 'ℹ';
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      background: #0052cc;
-      color: white;
-      border-radius: 50%;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .account-details-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .account-details-list li {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(0, 82, 204, 0.08);
+    .warning-text {
+      color: #d84315;
       font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
     }
 
-    .account-details-list li:last-child {
-      border-bottom: none;
-    }
-
-    .account-details-list strong {
-      color: #003d99;
-      font-weight: 600;
-    }
-
-    .account-details-list span {
-      color: #5a6c7d;
-      word-break: break-word;
-      text-align: right;
-      max-width: 50%;
-    }
-
-    /* CTA BUTTON */
+    /* Button */
     .button-container {
       text-align: center;
       margin: 36px 0;
@@ -1481,193 +1396,241 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
 
     .button {
       display: inline-block;
-      background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+      background: linear-gradient(90deg, #1e5ba8 0%, #0d3d7a 100%);
       color: #ffffff;
       text-decoration: none;
-      padding: 14px 44px;
+      padding: 15px 50px;
       border-radius: 8px;
       font-weight: 700;
       font-size: 15px;
-      box-shadow: 0 6px 20px rgba(0, 82, 204, 0.3);
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 24px rgba(30, 91, 168, 0.35);
       border: none;
-      cursor: pointer;
-      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
     }
 
     .button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(0, 82, 204, 0.4);
+      background: linear-gradient(90deg, #154a8a 0%, #0a2d66 100%);
+      box-shadow: 0 8px 32px rgba(30, 91, 168, 0.45);
+      text-decoration: none;
     }
 
-    /* SUPPORT SECTION */
+    /* Account Details */
+    .account-details {
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border: 1px solid rgba(39, 110, 241, 0.1);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .details-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003d66;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .detail-item {
+      display: block;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(39, 110, 241, 0.08);
+      font-size: 13px;
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 700;
+      color: #003d66;
+      display: inline-block;
+      min-width: 100px;
+    }
+
+    .detail-value {
+      color: #475569;
+    }
+
+    /* Support Section */
     .support-section {
       text-align: center;
-      margin: 32px 0;
-      padding: 24px;
-      border-top: 1px solid #e5e9f0;
-      border-bottom: 1px solid #e5e9f0;
+      padding: 28px 0;
+      margin-bottom: 24px;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
     }
 
-    .support-section p {
-      color: #5a6c7d;
-      font-size: 13px;
+    .support-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1b2541;
       margin-bottom: 12px;
     }
 
+    .support-text {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+    }
+
     .support-link {
-      color: #0052cc;
+      color: #1e5ba8;
       text-decoration: none;
       font-weight: 700;
-      transition: all 0.3s ease;
     }
 
     .support-link:hover {
       text-decoration: underline;
-      opacity: 0.8;
     }
 
-    /* SOCIAL LINKS */
+    /* Socials */
     .socials {
       text-align: center;
-      margin: 28px 0;
-      padding: 20px 0;
-      border-top: 1px solid #e5e9f0;
+      padding: 28px 0;
+      border-top: 1px solid #e2e8f0;
     }
 
     .socials-title {
       font-size: 12px;
-      font-weight: 600;
-      color: #5a6c7d;
+      font-weight: 700;
+      color: #64748b;
       text-transform: uppercase;
       letter-spacing: 0.3px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      display: block;
     }
 
     .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
+      display: inline-block;
     }
 
     .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: #f0f3f7;
-      border-radius: 8px;
+      display: inline-block;
+      margin: 0 10px;
       text-decoration: none;
       transition: all 0.3s ease;
-      border: 1px solid #e5e9f0;
-    }
-
-    .social-link:hover {
-      background: #0052cc;
-      transform: translateY(-2px);
-      border-color: #0052cc;
     }
 
     .social-link img {
-      width: 20px;
-      height: 20px;
-      filter: brightness(0.5);
+      width: 32px;
+      height: 32px;
+      filter: brightness(0.7);
+      transition: all 0.3s ease;
     }
 
     .social-link:hover img {
-      filter: brightness(1) invert(1);
+      transform: scale(1.15);
+      filter: brightness(0.9);
     }
 
     /* FOOTER */
     .footer {
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
       padding: 32px 40px;
       text-align: center;
-      color: #7a8a99;
-      font-size: 12px;
-      border-top: 1px solid #e5e9f0;
+      border-top: 1px solid #e2e8f0;
     }
 
-    .footer p {
-      margin: 6px 0;
-      line-height: 1.6;
+    .footer-text {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.8;
+      margin: 0;
     }
 
     .footer-brand {
       font-weight: 700;
-      color: #0052cc;
+      color: #1e5ba8;
     }
 
     .footer-divider {
-      color: #d5dce3;
+      color: #cbd5e1;
       margin: 0 4px;
     }
 
     /* RESPONSIVE */
-    @media (max-width: 600px) {
-      .email-wrapper {
-        padding: 20px 16px;
-      }
-
+    @media only screen and (max-width: 600px) {
       .email-container {
+        width: 100% !important;
         border-radius: 12px;
       }
 
-      .header-content {
-        padding: 40px 24px;
+      .content-wrapper {
+        padding: 32px 24px !important;
+      }
+
+      .header {
+        padding: 40px 24px !important;
       }
 
       .logo-circle {
-        width: 90px;
-        height: 90px;
+        width: 95px;
+        height: 95px;
         margin-bottom: 20px;
       }
 
       .logo-circle img {
-        width: 70px;
-        height: 70px;
+        width: 75px;
+        height: 75px;
       }
 
       .header-title {
         font-size: 24px;
       }
 
-      .content {
-        padding: 32px 24px;
-      }
-
       .greeting {
         font-size: 18px;
       }
 
-      .info-card,
+      .info-card {
+        padding: 20px;
+      }
+
+      .security-warning {
+        padding: 20px;
+      }
+
       .account-details {
         padding: 20px;
       }
 
       .button {
-        padding: 12px 36px;
+        padding: 14px 40px;
         font-size: 14px;
+        width: 100%;
       }
 
       .support-section {
-        padding: 20px;
+        padding: 20px 0;
       }
 
       .footer {
-        padding: 24px 20px;
+        padding: 24px;
       }
     }
 
-    @media (max-width: 480px) {
-      .header-content {
-        padding: 32px 20px;
+    @media only screen and (max-width: 480px) {
+      .content-wrapper {
+        padding: 24px 16px !important;
+      }
+
+      .header {
+        padding: 32px 16px !important;
       }
 
       .logo-circle {
-        width: 80px;
-        height: 80px;
+        width: 85px;
+        height: 85px;
+      }
+
+      .logo-circle img {
+        width: 65px;
+        height: 65px;
       }
 
       .header-title {
@@ -1678,10 +1641,6 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
         font-size: 12px;
       }
 
-      .content {
-        padding: 24px 16px;
-      }
-
       .greeting {
         font-size: 16px;
       }
@@ -1690,152 +1649,288 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
         padding: 24px 16px;
       }
 
-      .info-card,
-      .account-details {
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 32px;
+      }
+
+      .info-card {
         padding: 16px;
       }
 
-      .button {
-        width: 100%;
-        padding: 12px 24px;
-        font-size: 14px;
-      }
-
-      .account-details-list li {
-        flex-direction: column;
-      }
-
-      .account-details-list span {
-        text-align: left;
-        margin-top: 4px;
+      .card-title {
+        font-size: 13px;
       }
 
       .footer {
         padding: 20px 16px;
+        font-size: 11px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="email-wrapper">
-    <div class="email-container">
-      <!-- HEADER -->
-      <div class="header">
-        <div class="header-background">
-          <div class="header-shape-1"></div>
-          <div class="header-shape-2"></div>
-        </div>
-        <div class="header-content">
-          <div class="logo-circle">
-            <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
-            <div class="logo-badge">✓</div>
-          </div>
-          <div class="header-title">Password Reset Successful</div>
-          <div class="header-subtitle">Your account is now secure</div>
-        </div>
-      </div>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td align="center" bgcolor="#f5f7fa" style="padding: 20px 0;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+          
+          <!-- HEADER -->
+          <tr>
+            <td bgcolor="#1e5ba8" style="padding: 50px 30px; text-align: center;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center" bgcolor="#ffffff" style="border-radius: 50%; width: 110px; height: 110px; padding: 0;">
+                          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo" width="85" height="85" style="display: block; border-radius: 50%; object-fit: contain;">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <h1 style="margin: 0; font-size: 28px; font-weight: 900; color: #ffffff; line-height: 1.3; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);">Password Reset Successful</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-top: 12px;">
+                    <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.95); font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase;">Your ExamGuard Account Is Secure</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-      <!-- MAIN CONTENT -->
-      <div class="content">
-        <div class="greeting">Hello ${user.fullname || user.username},</div>
+          <!-- CONTENT -->
+          <tr>
+            <td style="padding: 48px 40px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                
+                <!-- Greeting -->
+                <tr>
+                  <td style="padding-bottom: 28px;">
+                    <p style="margin: 0; font-size: 20px; font-weight: 700; color: #1e5ba8;">Hi ${user.fullname || user.username},</p>
+                  </td>
+                </tr>
 
-        <!-- SUCCESS MESSAGE -->
-        <div class="success-message">
-          <div class="success-icon">✓</div>
-          <div class="success-text">Your password has been successfully reset</div>
-          <div class="success-subtext">You can now log in with your new credentials</div>
-        </div>
+                <!-- Success Message -->
+                <tr>
+                  <td style="padding-bottom: 32px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0.03) 100%); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 32px 24px;">
+                      <tr>
+                        <td align="center" style="padding-bottom: 16px;">
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td align="center" bgcolor="#10b981" style="border-radius: 50%; width: 64px; height: 64px; padding: 0;">
+                                <p style="margin: 0; font-size: 36px; color: #ffffff; line-height: 64px; text-align: center;">✓</p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center" style="padding-bottom: 8px;">
+                          <p style="margin: 0; font-size: 18px; font-weight: 700; color: #059669;">Your password has been successfully reset!</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0; font-size: 14px; color: #475569;">You can now log in using your new credentials</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- WHAT HAPPENED -->
-        <div class="info-card">
-          <div class="info-card-title">What just happened</div>
-          <ul class="info-list">
-            <li>Your ExamGuard account password has been updated</li>
-            <li>Your account is now protected with your new password</li>
-            <li>You can log in immediately with your new credentials</li>
-          </ul>
-        </div>
+                <!-- Info Card 1 -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-left: 4px solid #1e5ba8; border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">📋 What Just Happened</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                We have successfully updated your ExamGuard account password
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Your account is now protected with your new password
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 0 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                You can now log in using your new credentials
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- NEXT STEPS -->
-        <div class="info-card">
-          <div class="info-card-title">Next steps</div>
-          <ul class="info-list">
-            <li>Log in to your account</li>
-            <li>Keep your password private and secure</li>
-            <li>Never share your credentials with anyone</li>
-            <li>Change your password regularly for added security</li>
-          </ul>
-        </div>
+                <!-- Info Card 2 -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-left: 4px solid #1e5ba8; border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">🔐 Security Tips</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Keep your password secure and private
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Do not share your credentials with anyone
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 0 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Consider changing your password regularly
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- SECURITY ALERT -->
-        <div class="security-alert">
-          <strong>🔒 Important Security Notice</strong>
-          <p>If you did not request this password reset, please secure your account immediately by contacting our support team. We'll help you regain control of your account.</p>
-        </div>
+                <!-- Security Warning -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%); border: 1px solid rgba(255, 152, 0, 0.15); border-left: 4px solid #ff9800; border-radius: 12px; padding: 24px;">
+                      <tr>
+                        <td style="padding-bottom: 10px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #e65100; text-transform: uppercase; letter-spacing: 0.2px;">🔒 Important Security Notice</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p style="margin: 0; font-size: 13px; color: #d84315; line-height: 1.6;">If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- CTA BUTTON -->
-        <div class="button-container">
-          <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
-        </div>
+                <!-- Button -->
+                <tr>
+                  <td align="center" style="padding: 36px 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center" bgcolor="#1e5ba8" style="border-radius: 8px; padding: 15px 50px;">
+                          <a href="https://oau.examguard.com.ng/login" style="display: block; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 15px;">Go to Login</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- ACCOUNT DETAILS -->
-        <div class="account-details">
-          <div class="account-details-title">Account Information</div>
-          <ul class="account-details-list">
-            <li>
-              <strong>Username:</strong>
-              <span>${user.username}</span>
-            </li>
-            <li>
-              <strong>Email:</strong>
-              <span>${user.email}</span>
-            </li>
-            <li>
-              <strong>Reset Time:</strong>
-              <span>${new Date().toLocaleString()}</span>
-            </li>
-          </ul>
-        </div>
+                <!-- Account Details -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">ℹ️ Account Information</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(39, 110, 241, 0.08); font-size: 13px;">
+                          <strong style="color: #003d66;">Username:</strong> <span style="color: #475569;">${user.username}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(39, 110, 241, 0.08); font-size: 13px;">
+                          <strong style="color: #003d66;">Email:</strong> <span style="color: #475569;">${user.email}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; font-size: 13px;">
+                          <strong style="color: #003d66;">Reset Time:</strong> <span style="color: #475569;">${new Date().toLocaleString()}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- SUPPORT SECTION -->
-        <div class="support-section">
-          <p style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">Need assistance?</p>
-          <p>Our support team is available 24/7 to help you with any questions or concerns.</p>
-          <p style="margin-bottom: 0;"><a href="mailto:richardochuko14@gmail.com" class="support-link">📧 Contact Support</a></p>
-        </div>
+                <!-- Support Section -->
+                <tr>
+                  <td style="padding: 28px 0; text-align: center; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                    <p style="margin: 0 0 12px 0; font-size: 15px; font-weight: 700; color: #1b2541;">Need Further Assistance?</p>
+                    <p style="margin: 0 0 14px 0; font-size: 13px; color: #64748b; line-height: 1.6;">If you have any questions or concerns about your account, our support team is here to help.</p>
+                    <p style="margin: 0;"><a href="mailto:support@examguard.com.ng" style="color: #1e5ba8; text-decoration: none; font-weight: 700;">📧 Contact Support</a></p>
+                  </td>
+                </tr>
 
-        <!-- SOCIALS -->
-        <div class="socials">
-          <div class="socials-title">Follow us</div>
-          <div class="social-links">
-            <a href="https://facebook.com/OAUExamGuard" class="social-link" title="Facebook">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-            </a>
-            <a href="https://twitter.com/OAUExamGuard" class="social-link" title="X (Twitter)">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
-            </a>
-            <a href="https://instagram.com/OAUExamGuard" class="social-link" title="Instagram">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-            </a>
-            <a href="https://linkedin.com/company/OAUExamGuard" class="social-link" title="LinkedIn">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-            </a>
-          </div>
-        </div>
-      </div>
+                <!-- Socials -->
+                <tr>
+                  <td style="padding: 28px 0; text-align: center; border-top: 1px solid #e2e8f0;">
+                    <p style="margin: 0 0 16px 0; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">Follow Us</p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center">
+                      <tr>
+                        <td style="padding: 0 10px;">
+                          <a href="https://facebook.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 10px;">
+                          <a href="https://twitter.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 10px;">
+                          <a href="https://instagram.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-      <!-- FOOTER -->
-      <div class="footer">
-        <p>
-          <span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span>
-          <span class="footer-divider">|</span>
-          All rights reserved
-        </p>
-        <p>Your Exam, Our Priority</p>
-        <p>123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
-      </div>
-    </div>
-  </div>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td bgcolor="#f5f7fa" style="padding: 32px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 6px 0; font-size: 12px; color: #94a3b8;"><span style="font-weight: 700; color: #1e5ba8;">© ${new Date().getFullYear()} OAU ExamGuard</span> <span style="color: #cbd5e1;">|</span> All rights reserved</p>
+              <p style="margin: 0 0 8px 0; font-size: 12px; color: #94a3b8;">Your Exam, Our Priority</p>
+              <p style="margin: 0; font-size: 12px; color: #cbd5e1;">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
 `;
@@ -1992,246 +2087,194 @@ app.post("/api/auth/reset", async (req, res) => {
     await user.save();
 
     // Send password reset confirmation email
-    const emailContent = `
+const emailContent = `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Password Reset Confirmation | OAU ExamGuard</title>
-  <style>
+  <style type="text/css">
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    html, body {
+    html {
       width: 100%;
-      background-color: #f8fafc;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-      color: #1e293b;
+      background-color: #f5f7fa;
     }
 
     body {
-      padding: 0;
+      width: 100%;
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #1b2541;
+      line-height: 1.6;
       margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+    }
+
+    td {
+      padding: 0;
+      vertical-align: top;
+    }
+
+    img {
+      border: 0;
+      outline: none;
+      text-decoration: none;
+      display: block;
+    }
+
+    a {
+      color: #1e5ba8;
+      text-decoration: none;
+    }
+
+    /* Main container */
     .email-wrapper {
       width: 100%;
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      padding: 40px 20px;
-      min-height: 100vh;
+      background: #f5f7fa;
+      padding: 30px 0;
     }
 
     .email-container {
-      max-width: 640px;
+      width: 100%;
+      max-width: 620px;
       margin: 0 auto;
       background: #ffffff;
-      border-radius: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.05);
     }
 
-    /* ===== PREMIUM HEADER ===== */
+    /* HEADER SECTION */
     .header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
-      position: relative;
-      overflow: hidden;
-      padding: 0;
-      min-height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-    }
-
-    .header-blur-1 {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      top: -150px;
-      right: -100px;
-      filter: blur(40px);
-    }
-
-    .header-blur-2 {
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      bottom: -120px;
-      left: -80px;
-      filter: blur(40px);
-    }
-
-    .header-content {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%);
+      padding: 50px 30px;
       text-align: center;
-      padding: 60px 40px;
-      width: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
-    .logo-wrapper {
+    .header-inner {
       position: relative;
-      margin-bottom: 32px;
+      z-index: 2;
     }
 
     .logo-circle {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       background: #ffffff;
       border-radius: 50%;
-      display: flex;
+      margin: 0 auto 24px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -2px 10px rgba(0, 0, 0, 0.08);
-      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
     .logo-circle img {
-      width: 95px;
-      height: 95px;
+      width: 85px;
+      height: 85px;
       object-fit: contain;
-      object-position: center;
-    }
-
-    .success-badge {
-      position: absolute;
-      bottom: -12px;
-      right: -12px;
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      border: 4px solid #ffffff;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
     }
 
     .header-title {
-      font-size: 32px;
-      font-weight: 800;
+      font-size: 28px;
+      font-weight: 900;
       color: #ffffff;
-      margin: 0 0 12px;
-      letter-spacing: -0.5px;
-      line-height: 1.2;
+      margin: 16px 0 12px;
+      line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .header-subtitle {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.92);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.95);
       font-weight: 500;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       text-transform: uppercase;
-      opacity: 0.98;
     }
 
-    /* ===== CONTENT AREA ===== */
-    .content {
-      padding: 56px 48px;
+    /* CONTENT SECTION */
+    .content-wrapper {
+      padding: 48px 40px;
     }
 
     .greeting {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
-      color: #1e3a8a;
-      margin-bottom: 32px;
-      line-height: 1.3;
+      color: #1e5ba8;
+      margin-bottom: 28px;
     }
 
-    /* Success Message Box */
-    .success-box {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.04) 100%);
-      border-radius: 16px;
-      padding: 40px 32px;
-      margin-bottom: 36px;
-      border: 2px solid rgba(16, 185, 129, 0.15);
+    /* Success Message */
+    .success-message {
       text-align: center;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0.03) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      border-radius: 12px;
+      padding: 32px 24px;
+      margin-bottom: 32px;
     }
 
-    .success-icon-large {
-      width: 72px;
-      height: 72px;
+    .success-icon {
+      width: 64px;
+      height: 64px;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       border-radius: 50%;
-      display: flex;
+      margin: 0 auto 16px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 40px;
-      margin: 0 auto 20px;
-      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.25);
+      color: #ffffff;
+      font-size: 36px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
     }
 
     .success-text {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       color: #059669;
-      margin-bottom: 10px;
-      line-height: 1.4;
+      margin-bottom: 8px;
     }
 
     .success-subtext {
-      font-size: 15px;
+      font-size: 14px;
       color: #475569;
-      line-height: 1.5;
+      margin: 0;
     }
 
     /* Info Cards */
-    .card {
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border-radius: 16px;
-      padding: 32px;
-      margin-bottom: 28px;
-      border: 1px solid rgba(3, 102, 214, 0.1);
-      border-left: 4px solid #0366d6;
+    .info-card {
+      background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%);
+      border: 1px solid rgba(39, 110, 241, 0.1);
+      border-left: 4px solid #1e5ba8;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
     }
 
     .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #0c2d6b;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .card-icon {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 14px;
+      font-weight: 700;
+      color: #003d66;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+      display: block;
     }
 
     .card-list {
@@ -2241,148 +2284,122 @@ app.post("/api/auth/reset", async (req, res) => {
     }
 
     .card-list li {
-      color: #1e293b;
-      padding: 12px 0 12px 32px;
+      color: #1b2541;
+      padding: 10px 0 10px 28px;
       position: relative;
       font-size: 14px;
       font-weight: 500;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .card-list li::before {
       content: '✓';
       position: absolute;
-      left: 4px;
+      left: 0;
       color: #10b981;
-      font-weight: 800;
-      font-size: 18px;
-      top: 8px;
+      font-weight: bold;
+      font-size: 16px;
     }
 
-    /* Security Alert */
-    .alert-box {
-      background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%);
-      border-radius: 16px;
-      padding: 24px 28px;
-      margin-bottom: 28px;
-      border-left: 4px solid #f59e0b;
-      border: 1px solid rgba(245, 158, 11, 0.2);
+    /* Security Warning */
+    .security-warning {
+      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+      border: 1px solid rgba(255, 152, 0, 0.15);
+      border-left: 4px solid #ff9800;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
     }
 
-    .alert-title {
-      color: #b45309;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
+    .warning-title {
+      color: #e65100;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+      font-size: 14px;
       margin-bottom: 10px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
     }
 
-    .alert-content {
-      color: #92400e;
+    .warning-text {
+      color: #d84315;
       font-size: 13px;
       line-height: 1.6;
       margin: 0;
     }
 
-    /* CTA Button */
+    /* Button */
     .button-container {
       text-align: center;
-      margin: 40px 0;
+      margin: 36px 0;
     }
 
     .button {
       display: inline-block;
-      background: linear-gradient(135deg, #0366d6 0%, #0c2d6b 100%);
+      background: linear-gradient(90deg, #1e5ba8 0%, #0d3d7a 100%);
       color: #ffffff;
       text-decoration: none;
-      padding: 16px 52px;
-      border-radius: 10px;
+      padding: 15px 50px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 15px;
-      box-shadow: 0 8px 28px rgba(3, 102, 214, 0.35);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 6px 24px rgba(30, 91, 168, 0.35);
       border: none;
-      cursor: pointer;
-      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
     }
 
     .button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(3, 102, 214, 0.45);
-    }
-
-    .button:active {
-      transform: translateY(0);
+      background: linear-gradient(90deg, #154a8a 0%, #0a2d66 100%);
+      box-shadow: 0 8px 32px rgba(30, 91, 168, 0.45);
+      text-decoration: none;
     }
 
     /* Account Details */
-    .account-card {
+    .account-details {
       background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
-      border-radius: 16px;
+      border: 1px solid rgba(39, 110, 241, 0.1);
+      border-radius: 12px;
       padding: 28px;
-      margin-bottom: 28px;
-      border: 1px solid rgba(3, 102, 214, 0.1);
+      margin-bottom: 24px;
     }
 
-    .account-card-title {
+    .details-title {
       font-size: 14px;
       font-weight: 700;
-      color: #0c2d6b;
+      color: #003d66;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+      display: block;
     }
 
-    .account-card-title::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background: #0366d6;
-      border-radius: 50%;
-      color: white;
-      text-align: center;
-      line-height: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
+    .detail-item {
+      display: block;
       padding: 12px 0;
-      border-bottom: 1px solid rgba(3, 102, 214, 0.08);
+      border-bottom: 1px solid rgba(39, 110, 241, 0.08);
       font-size: 13px;
     }
 
-    .detail-row:last-child {
+    .detail-item:last-child {
       border-bottom: none;
     }
 
     .detail-label {
-      color: #0c2d6b;
-      font-weight: 600;
+      font-weight: 700;
+      color: #003d66;
+      display: inline-block;
+      min-width: 100px;
     }
 
     .detail-value {
-      color: #64748b;
-      word-break: break-word;
-      text-align: right;
-      max-width: 50%;
+      color: #475569;
     }
 
     /* Support Section */
-    .support-box {
+    .support-section {
       text-align: center;
-      margin: 36px 0;
-      padding: 28px;
+      padding: 28px 0;
+      margin-bottom: 24px;
       border-top: 1px solid #e2e8f0;
       border-bottom: 1px solid #e2e8f0;
     }
@@ -2390,7 +2407,7 @@ app.post("/api/auth/reset", async (req, res) => {
     .support-title {
       font-size: 15px;
       font-weight: 700;
-      color: #1e293b;
+      color: #1b2541;
       margin-bottom: 12px;
     }
 
@@ -2398,24 +2415,21 @@ app.post("/api/auth/reset", async (req, res) => {
       color: #64748b;
       font-size: 13px;
       line-height: 1.6;
-      margin-bottom: 12px;
+      margin: 0 0 14px 0;
     }
 
     .support-link {
-      color: #0366d6;
+      color: #1e5ba8;
       text-decoration: none;
       font-weight: 700;
-      transition: all 0.3s ease;
-      display: inline-block;
     }
 
     .support-link:hover {
       text-decoration: underline;
-      opacity: 0.8;
     }
 
-    /* Social Links */
-    .socials-section {
+    /* Socials */
+    .socials {
       text-align: center;
       padding: 28px 0;
       border-top: 1px solid #e2e8f0;
@@ -2426,125 +2440,103 @@ app.post("/api/auth/reset", async (req, res) => {
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 18px;
+      letter-spacing: 0.3px;
+      margin-bottom: 16px;
+      display: block;
     }
 
     .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
+      display: inline-block;
     }
 
-    .social-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      background: #f1f5f9;
-      border-radius: 10px;
+    .social-link {
+      display: inline-block;
+      margin: 0 10px;
       text-decoration: none;
       transition: all 0.3s ease;
-      border: 1px solid #e2e8f0;
     }
 
-    .social-icon:hover {
-      background: #0366d6;
-      border-color: #0366d6;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 16px rgba(3, 102, 214, 0.2);
-    }
-
-    .social-icon img {
-      width: 22px;
-      height: 22px;
-      filter: brightness(0.5);
+    .social-link img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0.7);
       transition: all 0.3s ease;
     }
 
-    .social-icon:hover img {
-      filter: brightness(1) invert(1);
+    .social-link:hover img {
+      transform: scale(1.15);
+      filter: brightness(0.9);
     }
 
-    /* ===== FOOTER ===== */
+    /* FOOTER */
     .footer {
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      padding: 36px 48px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
+      padding: 32px 40px;
       text-align: center;
-      color: #94a3b8;
-      font-size: 12px;
       border-top: 1px solid #e2e8f0;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: #94a3b8;
       line-height: 1.8;
+      margin: 0;
     }
 
     .footer-brand {
       font-weight: 700;
-      color: #0366d6;
+      color: #1e5ba8;
     }
 
     .footer-divider {
       color: #cbd5e1;
-      margin: 0 6px;
+      margin: 0 4px;
     }
 
-    .footer-text {
-      margin: 8px 0;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 640px) {
-      .email-wrapper {
-        padding: 24px 16px;
-      }
-
+    /* RESPONSIVE */
+    @media only screen and (max-width: 600px) {
       .email-container {
-        border-radius: 16px;
+        width: 100% !important;
+        border-radius: 12px;
       }
 
-      .header-content {
-        padding: 48px 24px;
+      .content-wrapper {
+        padding: 32px 24px !important;
+      }
+
+      .header {
+        padding: 40px 24px !important;
       }
 
       .logo-circle {
-        width: 100px;
-        height: 100px;
+        width: 95px;
+        height: 95px;
+        margin-bottom: 20px;
       }
 
       .logo-circle img {
-        width: 80px;
-        height: 80px;
+        width: 75px;
+        height: 75px;
       }
 
       .header-title {
-        font-size: 26px;
-      }
-
-      .header-subtitle {
-        font-size: 13px;
-      }
-
-      .content {
-        padding: 40px 24px;
+        font-size: 24px;
       }
 
       .greeting {
-        font-size: 19px;
-        margin-bottom: 24px;
-      }
-
-      .success-box {
-        padding: 32px 24px;
-      }
-
-      .success-text {
         font-size: 18px;
       }
 
-      .card,
-      .account-card,
-      .alert-box {
-        padding: 24px;
+      .info-card {
+        padding: 20px;
+      }
+
+      .security-warning {
+        padding: 20px;
+      }
+
+      .account-details {
+        padding: 20px;
       }
 
       .button {
@@ -2553,224 +2545,332 @@ app.post("/api/auth/reset", async (req, res) => {
         width: 100%;
       }
 
-      .support-box {
-        padding: 20px;
-      }
-
-      .detail-row {
-        flex-direction: column;
-      }
-
-      .detail-value {
-        text-align: left;
-        max-width: 100%;
-        margin-top: 4px;
+      .support-section {
+        padding: 20px 0;
       }
 
       .footer {
-        padding: 28px 24px;
+        padding: 24px;
       }
     }
 
-    @media (max-width: 480px) {
-      .header-content {
-        padding: 40px 20px;
+    @media only screen and (max-width: 480px) {
+      .content-wrapper {
+        padding: 24px 16px !important;
+      }
+
+      .header {
+        padding: 32px 16px !important;
       }
 
       .logo-circle {
-        width: 90px;
-        height: 90px;
+        width: 85px;
+        height: 85px;
       }
 
       .logo-circle img {
-        width: 72px;
-        height: 72px;
+        width: 65px;
+        height: 65px;
       }
 
       .header-title {
-        font-size: 22px;
-        margin-bottom: 8px;
+        font-size: 20px;
       }
 
-      .content {
-        padding: 28px 16px;
+      .header-subtitle {
+        font-size: 12px;
       }
 
       .greeting {
-        font-size: 17px;
+        font-size: 16px;
       }
 
-      .success-box {
+      .success-message {
         padding: 24px 16px;
       }
 
-      .success-icon-large {
-        width: 64px;
-        height: 64px;
-        font-size: 36px;
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 32px;
       }
 
-      .card,
-      .account-card {
-        padding: 20px;
+      .info-card {
+        padding: 16px;
       }
 
-      .card-title,
-      .account-card-title {
+      .card-title {
         font-size: 13px;
-      }
-
-      .button {
-        padding: 12px 28px;
-        font-size: 13px;
-      }
-
-      .social-icon {
-        width: 40px;
-        height: 40px;
-      }
-
-      .social-icon img {
-        width: 20px;
-        height: 20px;
       }
 
       .footer {
-        padding: 24px 16px;
+        padding: 20px 16px;
         font-size: 11px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="email-wrapper">
-    <div class="email-container">
-      <!-- HEADER -->
-      <div class="header">
-        <div class="header-background">
-          <div class="header-blur-1"></div>
-          <div class="header-blur-2"></div>
-        </div>
-        <div class="header-content">
-          <div class="logo-wrapper">
-            <div class="logo-circle">
-              <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
-            </div>
-            <div class="success-badge">✓</div>
-          </div>
-          <div class="header-title">Password Reset Successful</div>
-          <div class="header-subtitle">Your account is now secure</div>
-        </div>
-      </div>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td align="center" bgcolor="#f5f7fa" style="padding: 20px 0;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+          
+          <!-- HEADER -->
+          <tr>
+            <td bgcolor="#1e5ba8" style="padding: 50px 30px; text-align: center;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center" bgcolor="#ffffff" style="border-radius: 50%; width: 110px; height: 110px; padding: 0;">
+                          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo" width="85" height="85" style="display: block; border-radius: 50%; object-fit: contain;">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <h1 style="margin: 0; font-size: 28px; font-weight: 900; color: #ffffff; line-height: 1.3; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);">Password Reset Successful</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-top: 12px;">
+                    <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.95); font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase;">Your ExamGuard Account Is Secure</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-      <!-- CONTENT -->
-      <div class="content">
-        <div class="greeting">Hi ${user.fullname || user.username},</div>
+          <!-- CONTENT -->
+          <tr>
+            <td style="padding: 48px 40px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                
+                <!-- Greeting -->
+                <tr>
+                  <td style="padding-bottom: 28px;">
+                    <p style="margin: 0; font-size: 20px; font-weight: 700; color: #1e5ba8;">Hi ${user.fullname || user.username},</p>
+                  </td>
+                </tr>
 
-        <!-- SUCCESS MESSAGE -->
-        <div class="success-box">
-          <div class="success-icon-large">✓</div>
-          <div class="success-text">Your password has been successfully reset</div>
-          <div class="success-subtext">You can now log in with your new credentials immediately</div>
-        </div>
+                <!-- Success Message -->
+                <tr>
+                  <td style="padding-bottom: 32px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0.03) 100%); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 32px 24px;">
+                      <tr>
+                        <td align="center" style="padding-bottom: 16px;">
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td align="center" bgcolor="#10b981" style="border-radius: 50%; width: 64px; height: 64px; padding: 0;">
+                                <p style="margin: 0; font-size: 36px; color: #ffffff; line-height: 64px; text-align: center;">✓</p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center" style="padding-bottom: 8px;">
+                          <p style="margin: 0; font-size: 18px; font-weight: 700; color: #059669;">Your password has been successfully reset!</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0; font-size: 14px; color: #475569;">You can now log in using your new credentials</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- WHAT HAPPENED -->
-        <div class="card">
-          <div class="card-title">
-            <span class="card-icon">📋</span>
-            What just happened
-          </div>
-          <ul class="card-list">
-            <li>Your ExamGuard account password has been updated</li>
-            <li>Your account is now protected with your new password</li>
-            <li>You can log in immediately with your new credentials</li>
-          </ul>
-        </div>
+                <!-- Info Card 1 -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-left: 4px solid #1e5ba8; border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">📋 What Just Happened</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                We have successfully updated your ExamGuard account password
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Your account is now protected with your new password
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 0 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                You can now log in using your new credentials
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- SECURITY TIPS -->
-        <div class="card">
-          <div class="card-title">
-            <span class="card-icon">🔐</span>
-            Security tips
-          </div>
-          <ul class="card-list">
-            <li>Keep your password secure and private</li>
-            <li>Do not share your credentials with anyone</li>
-            <li>Change your password regularly for added security</li>
-            <li>Log out from untrusted devices</li>
-          </ul>
-        </div>
+                <!-- Info Card 2 -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f0f6ff 0%, #e8f1ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-left: 4px solid #1e5ba8; border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">🔐 Security Tips</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Keep your password secure and private
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 10px 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Do not share your credentials with anyone
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 10px 0 0 28px; position: relative; font-size: 14px; font-weight: 500; color: #1b2541; line-height: 1.5;">
+                                <span style="position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 16px;">✓</span>
+                                Consider changing your password regularly
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- SECURITY ALERT -->
-        <div class="alert-box">
-          <div class="alert-title">
-            <span>🔒</span>
-            Important Security Notice
-          </div>
-          <p class="alert-content">If you did not request this password reset, please secure your account immediately by contacting our support team. We'll help you regain control of your account.</p>
-        </div>
+                <!-- Security Warning -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%); border: 1px solid rgba(255, 152, 0, 0.15); border-left: 4px solid #ff9800; border-radius: 12px; padding: 24px;">
+                      <tr>
+                        <td style="padding-bottom: 10px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #e65100; text-transform: uppercase; letter-spacing: 0.2px;">🔒 Important Security Notice</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p style="margin: 0; font-size: 13px; color: #d84315; line-height: 1.6;">If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- CTA BUTTON -->
-        <div class="button-container">
-          <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
-        </div>
+                <!-- Button -->
+                <tr>
+                  <td align="center" style="padding: 36px 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center" bgcolor="#1e5ba8" style="border-radius: 8px; padding: 15px 50px;">
+                          <a href="https://oau.examguard.com.ng/login" style="display: block; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 15px;">Go to Login</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- ACCOUNT DETAILS -->
-        <div class="account-card">
-          <div class="account-card-title">Account Information</div>
-          <div class="detail-row">
-            <span class="detail-label">Username</span>
-            <span class="detail-value">${user.username}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Email Address</span>
-            <span class="detail-value">${user.email}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Reset Time</span>
-            <span class="detail-value">${new Date().toLocaleString()}</span>
-          </div>
-        </div>
+                <!-- Account Details -->
+                <tr>
+                  <td style="padding-bottom: 24px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%); border: 1px solid rgba(39, 110, 241, 0.1); border-radius: 12px; padding: 28px;">
+                      <tr>
+                        <td style="padding-bottom: 18px;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #003d66; text-transform: uppercase; letter-spacing: 0.3px;">ℹ️ Account Information</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(39, 110, 241, 0.08); font-size: 13px;">
+                          <strong style="color: #003d66;">Username:</strong> <span style="color: #475569;">${user.username}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(39, 110, 241, 0.08); font-size: 13px;">
+                          <strong style="color: #003d66;">Email:</strong> <span style="color: #475569;">${user.email}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 0; font-size: 13px;">
+                          <strong style="color: #003d66;">Reset Time:</strong> <span style="color: #475569;">${new Date().toLocaleString()}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-        <!-- SUPPORT SECTION -->
-        <div class="support-box">
-          <div class="support-title">Need Further Assistance?</div>
-          <p class="support-text">Our support team is available 24/7 to help you with any questions or concerns about your account.</p>
-          <a href="mailto:richardochuko14@gmail.com" class="support-link">📧 Contact Support</a>
-        </div>
+                <!-- Support Section -->
+                <tr>
+                  <td style="padding: 28px 0; text-align: center; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                    <p style="margin: 0 0 12px 0; font-size: 15px; font-weight: 700; color: #1b2541;">Need Further Assistance?</p>
+                    <p style="margin: 0 0 14px 0; font-size: 13px; color: #64748b; line-height: 1.6;">If you have any questions or concerns about your account, our support team is here to help.</p>
+                    <p style="margin: 0;"><a href="mailto:support@examguard.com.ng" style="color: #1e5ba8; text-decoration: none; font-weight: 700;">📧 Contact Support</a></p>
+                  </td>
+                </tr>
 
-        <!-- SOCIAL LINKS -->
-        <div class="socials-section">
-          <div class="socials-title">Follow Us</div>
-          <div class="social-links">
-            <a href="https://facebook.com/OAUExamGuard" class="social-icon" title="Facebook">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
-            </a>
-            <a href="https://twitter.com/OAUExamGuard" class="social-icon" title="X (Twitter)">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
-            </a>
-            <a href="https://instagram.com/OAUExamGuard" class="social-icon" title="Instagram">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
-            </a>
-            <a href="https://linkedin.com/company/OAUExamGuard" class="social-icon" title="LinkedIn">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
-            </a>
-          </div>
-        </div>
-      </div>
+                <!-- Socials -->
+                <tr>
+                  <td style="padding: 28px 0; text-align: center; border-top: 1px solid #e2e8f0;">
+                    <p style="margin: 0 0 16px 0; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">Follow Us</p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center">
+                      <tr>
+                        <td style="padding: 0 10px;">
+                          <a href="https://facebook.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 10px;">
+                          <a href="https://twitter.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 10px;">
+                          <a href="https://instagram.com/OAUExamGuard" target="_blank" style="text-decoration: none; display: inline-block;">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="32" height="32" style="filter: brightness(0.7); display: block;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
 
-      <!-- FOOTER -->
-      <div class="footer">
-        <div class="footer-text">
-          <span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span>
-          <span class="footer-divider">|</span>
-          All rights reserved
-        </div>
-        <div class="footer-text">Your Exam, Our Priority</div>
-        <div class="footer-text">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</div>
-      </div>
-    </div>
-  </div>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td bgcolor="#f5f7fa" style="padding: 32px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 6px 0; font-size: 12px; color: #94a3b8;"><span style="font-weight: 700; color: #1e5ba8;">© ${new Date().getFullYear()} OAU ExamGuard</span> <span style="color: #cbd5e1;">|</span> All rights reserved</p>
+              <p style="margin: 0 0 8px 0; font-size: 12px; color: #94a3b8;">Your Exam, Our Priority</p>
+              <p style="margin: 0; font-size: 12px; color: #cbd5e1;">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
 `;
