@@ -1107,8 +1107,7 @@ app.post("/api/auth/send-reset-code", async (req, res) => {
   }
 });
 
-// --- RESET PASSWORD WITH EMAIL CODE ---
-// --- RESET PASSWORD WITH EMAIL CODE ---
+
 app.post("/api/auth/reset-with-email", async (req, res) => {
   try {
     const { email, code, password } = req.body;
@@ -1156,90 +1155,355 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
   <title>Password Reset Confirmation | OAU ExamGuard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, Arial, sans-serif; color: #1b2541; line-height: 1.6; }
-    .container { max-width: 600px; margin: 32px auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(39, 110, 241, 0.15); }
-    .header { background: linear-gradient(135deg, #276EF1 0%, #003366 100%); padding: 0; position: relative; overflow: hidden; }
-    .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,40 Q300,80 600,40 T1200,40 L1200,120 L0,120 Z" fill="%23276EF122"/></svg>'); background-size: cover; opacity: 0.3; }
-    .header-content { position: relative; z-index: 1; padding: 40px 24px; text-align: center; }
-    .header-logo { width: 90px; height: 90px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-    .header-logo img { width: 70px; height: 70px; object-fit: contain; }
-    .header-title { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); }
-    .header-subtitle { color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.5px; }
-    .content { padding: 40px 32px; }
-    .greeting { font-size: 1.2rem; color: #276EF1; font-weight: 700; margin-bottom: 16px; }
-    .message-box { background: linear-gradient(135deg, rgba(39, 110, 241, 0.05) 0%, rgba(0, 51, 102, 0.05) 100%); border-left: 4px solid #276EF1; border-radius: 8px; padding: 20px; margin: 24px 0; }
-    .message-box p { color: #1b2541; margin-bottom: 10px; font-size: 0.98rem; }
-    .message-box strong { color: #276EF1; font-weight: 700; }
-    .success-icon { display: inline-block; width: 50px; height: 50px; background: #27ae60; border-radius: 50%; text-align: center; line-height: 50px; color: #fff; font-size: 28px; margin-bottom: 16px; }
-    .info-section { background: #f8fbff; border-radius: 12px; padding: 20px; margin: 24px 0; }
-    .info-section h3 { color: #003366; font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .info-section ul { list-style: none; padding: 0; }
-    .info-section li { color: #1b2541; padding: 8px 0; padding-left: 24px; position: relative; font-size: 0.95rem; }
-    .info-section li::before { content: '✓'; position: absolute; left: 0; color: #27ae60; font-weight: bold; }
-    .security-warning { background: #fff3cd; border-radius: 12px; padding: 16px 20px; margin: 24px 0; border-left: 4px solid #ffc107; }
-    .security-warning strong { color: #856404; display: block; margin-bottom: 8px; font-size: 0.98rem; }
-    .security-warning p { color: #856404; font-size: 0.93rem; margin: 0; }
-    .button-container { text-align: center; margin: 28px 0; }
-    .button { display: inline-block; background: linear-gradient(90deg, #276EF1 60%, #003366 100%); color: #fff; text-decoration: none; padding: 14px 40px; border-radius: 10px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 15px rgba(39, 110, 241, 0.3); transition: transform 0.2s, box-shadow 0.2s; }
-    .button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(39, 110, 241, 0.4); }
-    .contact-section { text-align: center; margin: 28px 0; padding: 20px; border-top: 1px solid #e0e4ed; border-bottom: 1px solid #e0e4ed; }
-    .contact-section p { color: #555; font-size: 0.95rem; margin-bottom: 12px; }
-    .contact-link { color: #276EF1; text-decoration: none; font-weight: 600; }
-    .socials { text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e0e4ed; }
-    .socials a { display: inline-block; margin: 0 10px; text-decoration: none; transition: transform 0.2s; }
-    .socials a:hover { transform: scale(1.15); }
-    .socials img { width: 36px; height: 36px; }
-    .footer { background: #f3f7fb; padding: 24px; text-align: center; color: #999; font-size: 0.85rem; border-top: 1px solid #e0e4ed; }
-    .footer p { margin: 4px 0; }
-    .footer-brand { font-weight: 700; color: #276EF1; }
-    @media (max-width: 600px) {
-      .container { margin: 16px; border-radius: 16px; }
-      .content { padding: 24px 20px; }
-      .header-content { padding: 30px 20px; }
-      .header-title { font-size: 1.5rem; }
-      .greeting { font-size: 1.05rem; }
-      .button { padding: 12px 32px; font-size: 0.95rem; }
+    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1b2541; line-height: 1.6; }
+    .container { max-width: 620px; margin: 24px auto; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 48px rgba(39, 110, 241, 0.18); }
+    
+    /* BEAUTIFUL HEADER */
+    .header { 
+      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%); 
+      padding: 0; 
+      position: relative; 
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+    
+    /* Decorative shapes background */
+    .header::before { 
+      content: ''; 
+      position: absolute; 
+      top: -50%; 
+      right: -10%; 
+      width: 400px; 
+      height: 400px; 
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); 
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .header::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -30%; 
+      left: -10%; 
+      width: 350px; 
+      height: 350px; 
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); 
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .header-content { 
+      position: relative; 
+      z-index: 2; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 32px;
+      width: 100%;
+    }
+    
+    .header-logo { 
+      width: 110px; 
+      height: 110px; 
+      background: #fff; 
+      border-radius: 50%; 
+      margin: 0 auto 24px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+      position: relative;
+    }
+    
+    .header-logo img { 
+      width: 85px; 
+      height: 85px; 
+      object-fit: contain;
+      object-position: center;
+    }
+    
+    .header-title { 
+      color: #fff; 
+      font-size: 2.2rem; 
+      font-weight: 900; 
+      margin: 0 0 12px 0;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.5px;
+    }
+    
+    .header-subtitle { 
+      color: rgba(255, 255, 255, 0.94); 
+      font-size: 1.15rem; 
+      font-weight: 300; 
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .content { padding: 48px 40px; }
+    
+    .greeting { 
+      font-size: 1.3rem; 
+      color: #276EF1; 
+      font-weight: 700; 
+      margin-bottom: 20px;
+    }
+    
+    .message-box { 
+      background: linear-gradient(135deg, rgba(39, 110, 241, 0.06) 0%, rgba(0, 51, 102, 0.06) 100%); 
+      border-left: 4px solid #276EF1; 
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 28px 0; 
+    }
+    
+    .message-box p { 
+      color: #1b2541; 
+      margin-bottom: 12px; 
+      font-size: 0.98rem;
+    }
+    
+    .message-box strong { 
+      color: #276EF1; 
+      font-weight: 700; 
+    }
+    
+    .success-icon { 
+      display: inline-block; 
+      width: 60px; 
+      height: 60px; 
+      background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); 
+      border-radius: 50%; 
+      text-align: center; 
+      line-height: 60px; 
+      color: #fff; 
+      font-size: 32px; 
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.25);
+    }
+    
+    .info-section { 
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 28px 0;
+      border: 1px solid rgba(39, 110, 241, 0.1);
+    }
+    
+    .info-section h3 { 
+      color: #003366; 
+      font-size: 1.1rem; 
+      font-weight: 700; 
+      margin-bottom: 16px; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .info-section ul { 
+      list-style: none; 
+      padding: 0; 
+    }
+    
+    .info-section li { 
+      color: #1b2541; 
+      padding: 10px 0; 
+      padding-left: 28px; 
+      position: relative; 
+      font-size: 0.96rem;
+      font-weight: 500;
+    }
+    
+    .info-section li::before { 
+      content: '✓'; 
+      position: absolute; 
+      left: 0; 
+      color: #27ae60; 
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .security-warning { 
+      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+      border-radius: 12px; 
+      padding: 20px 24px; 
+      margin: 28px 0; 
+      border-left: 4px solid #ff9800;
+      border: 1px solid rgba(255, 152, 0, 0.2);
+    }
+    
+    .security-warning strong { 
+      color: #e65100; 
+      display: block; 
+      margin-bottom: 10px; 
+      font-size: 0.99rem;
+    }
+    
+    .security-warning p { 
+      color: #d84315; 
+      font-size: 0.93rem; 
+      margin: 0;
+      line-height: 1.5;
+    }
+    
+    .button-container { 
+      text-align: center; 
+      margin: 36px 0; 
+    }
+    
+    .button { 
+      display: inline-block; 
+      background: linear-gradient(90deg, #276EF1 0%, #1e5ba8 100%); 
+      color: #fff; 
+      text-decoration: none; 
+      padding: 16px 48px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      font-size: 1.05rem; 
+      box-shadow: 0 6px 24px rgba(39, 110, 241, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .button:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 32px rgba(39, 110, 241, 0.45);
+    }
+    
+    .contact-section { 
+      text-align: center; 
+      margin: 32px 0; 
+      padding: 24px; 
+      border-top: 1px solid #e0e4ed; 
+      border-bottom: 1px solid #e0e4ed;
+    }
+    
+    .contact-section p { 
+      color: #555; 
+      font-size: 0.96rem; 
+      margin-bottom: 14px;
+    }
+    
+    .contact-link { 
+      color: #276EF1; 
+      text-decoration: none; 
+      font-weight: 700;
+    }
+    
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+    
+    .socials { 
+      text-align: center; 
+      margin-top: 28px; 
+      padding-top: 24px; 
+      border-top: 1px solid #e0e4ed;
+    }
+    
+    .socials a { 
+      display: inline-block; 
+      margin: 0 12px; 
+      text-decoration: none; 
+      transition: transform 0.2s;
+      opacity: 0.8;
+    }
+    
+    .socials a:hover { 
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    
+    .socials img { 
+      width: 40px; 
+      height: 40px;
+      filter: brightness(0.7);
+    }
+    
+    .footer { 
+      background: linear-gradient(135deg, #f3f7fb 0%, #eef2ff 100%);
+      padding: 28px; 
+      text-align: center; 
+      color: #999; 
+      font-size: 0.85rem; 
+      border-top: 1px solid #e0e4ed;
+    }
+    
+    .footer p { 
+      margin: 6px 0;
+    }
+    
+    .footer-brand { 
+      font-weight: 700; 
+      color: #276EF1;
+    }
+    
+    @media (max-width: 600px) {
+      .container { margin: 12px; border-radius: 20px; }
+      .content { padding: 32px 24px; }
+      .header-content { padding: 40px 24px; }
+      .header-logo { width: 95px; height: 95px; margin-bottom: 18px; }
+      .header-logo img { width: 75px; height: 75px; }
+      .header-title { font-size: 1.8rem; }
+      .header-subtitle { font-size: 1.05rem; }
+      .greeting { font-size: 1.15rem; }
+      .button { padding: 14px 40px; font-size: 1rem; }
+    }
+    
     @media (max-width: 480px) {
       .container { margin: 8px; }
-      .content { padding: 16px 16px; }
-      .header-content { padding: 24px 16px; }
-      .header-logo { width: 80px; height: 80px; }
-      .header-logo img { width: 60px; height: 60px; }
-      .header-title { font-size: 1.3rem; }
-      .header-subtitle { font-size: 1rem; }
+      .content { padding: 24px 16px; }
+      .header-content { padding: 32px 20px; }
+      .header-logo { width: 85px; height: 85px; }
+      .header-logo img { width: 65px; height: 65px; }
+      .header-title { font-size: 1.5rem; margin-bottom: 8px; }
+      .header-subtitle { font-size: 0.95rem; }
       .greeting { font-size: 1rem; }
-      .message-box { padding: 16px; }
-      .info-section { padding: 16px; }
+      .message-box { padding: 18px; }
+      .info-section { padding: 18px; }
+      .content { padding: 20px 16px; }
+      .button { padding: 12px 32px; font-size: 0.95rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- BEAUTIFUL HEADER WITH LOGO -->
     <div class="header">
       <div class="header-content">
         <div class="header-logo">
-          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard">
+          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
         </div>
         <div class="header-title">Password Reset Successful</div>
         <div class="header-subtitle">Your ExamGuard account is secure</div>
       </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="content">
       <div class="greeting">Hi ${user.fullname || user.username},</div>
       
-      <div style="text-align: center; margin-bottom: 28px;">
+      <!-- SUCCESS MESSAGE -->
+      <div style="text-align: center; margin-bottom: 32px;">
         <div class="success-icon">✓</div>
-        <p style="color: #27ae60; font-weight: 600; font-size: 1.1rem;">Your password has been successfully reset!</p>
+        <p style="color: #27ae60; font-weight: 700; font-size: 1.12rem;">Your password has been successfully reset!</p>
       </div>
 
+      <!-- MESSAGE BOX -->
       <div class="message-box">
         <p><strong>What just happened:</strong></p>
         <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
         <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
       </div>
 
+      <!-- INFO SECTION -->
       <div class="info-section">
         <h3>📋 Quick Actions</h3>
         <ul>
@@ -1250,30 +1514,35 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
         </ul>
       </div>
 
+      <!-- SECURITY WARNING -->
       <div class="security-warning">
         <strong>🔒 Important Security Notice</strong>
         <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
       </div>
 
+      <!-- BUTTON -->
       <div class="button-container">
         <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
       </div>
 
+      <!-- CONTACT SECTION -->
       <div class="contact-section">
         <p><strong>Need further assistance?</strong></p>
         <p>If you have any questions or concerns about your account, our support team is here to help.</p>
         <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
       </div>
 
-      <div class="info-section" style="background: #f0f4ff;">
+      <!-- ACCOUNT DETAILS -->
+      <div class="info-section" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%); border: 1px solid rgba(39, 110, 241, 0.15);">
         <h3>ℹ️ Account Information</h3>
         <ul style="list-style: none; padding: 0;">
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
         </ul>
       </div>
 
+      <!-- SOCIALS -->
       <div class="socials">
         <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
           <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
@@ -1287,6 +1556,7 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
       </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
       <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
       <p>All rights reserved | Your Exam, Our Priority</p>
@@ -1458,90 +1728,355 @@ app.post("/api/auth/reset", async (req, res) => {
   <title>Password Reset Confirmation | OAU ExamGuard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, Arial, sans-serif; color: #1b2541; line-height: 1.6; }
-    .container { max-width: 600px; margin: 32px auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(39, 110, 241, 0.15); }
-    .header { background: linear-gradient(135deg, #276EF1 0%, #003366 100%); padding: 0; position: relative; overflow: hidden; }
-    .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,40 Q300,80 600,40 T1200,40 L1200,120 L0,120 Z" fill="%23276EF122"/></svg>'); background-size: cover; opacity: 0.3; }
-    .header-content { position: relative; z-index: 1; padding: 40px 24px; text-align: center; }
-    .header-logo { width: 90px; height: 90px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-    .header-logo img { width: 70px; height: 70px; object-fit: contain; }
-    .header-title { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); }
-    .header-subtitle { color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.5px; }
-    .content { padding: 40px 32px; }
-    .greeting { font-size: 1.2rem; color: #276EF1; font-weight: 700; margin-bottom: 16px; }
-    .message-box { background: linear-gradient(135deg, rgba(39, 110, 241, 0.05) 0%, rgba(0, 51, 102, 0.05) 100%); border-left: 4px solid #276EF1; border-radius: 8px; padding: 20px; margin: 24px 0; }
-    .message-box p { color: #1b2541; margin-bottom: 10px; font-size: 0.98rem; }
-    .message-box strong { color: #276EF1; font-weight: 700; }
-    .success-icon { display: inline-block; width: 50px; height: 50px; background: #27ae60; border-radius: 50%; text-align: center; line-height: 50px; color: #fff; font-size: 28px; margin-bottom: 16px; }
-    .info-section { background: #f8fbff; border-radius: 12px; padding: 20px; margin: 24px 0; }
-    .info-section h3 { color: #003366; font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .info-section ul { list-style: none; padding: 0; }
-    .info-section li { color: #1b2541; padding: 8px 0; padding-left: 24px; position: relative; font-size: 0.95rem; }
-    .info-section li::before { content: '✓'; position: absolute; left: 0; color: #27ae60; font-weight: bold; }
-    .security-warning { background: #fff3cd; border-radius: 12px; padding: 16px 20px; margin: 24px 0; border-left: 4px solid #ffc107; }
-    .security-warning strong { color: #856404; display: block; margin-bottom: 8px; font-size: 0.98rem; }
-    .security-warning p { color: #856404; font-size: 0.93rem; margin: 0; }
-    .button-container { text-align: center; margin: 28px 0; }
-    .button { display: inline-block; background: linear-gradient(90deg, #276EF1 60%, #003366 100%); color: #fff; text-decoration: none; padding: 14px 40px; border-radius: 10px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 15px rgba(39, 110, 241, 0.3); transition: transform 0.2s, box-shadow 0.2s; }
-    .button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(39, 110, 241, 0.4); }
-    .contact-section { text-align: center; margin: 28px 0; padding: 20px; border-top: 1px solid #e0e4ed; border-bottom: 1px solid #e0e4ed; }
-    .contact-section p { color: #555; font-size: 0.95rem; margin-bottom: 12px; }
-    .contact-link { color: #276EF1; text-decoration: none; font-weight: 600; }
-    .socials { text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e0e4ed; }
-    .socials a { display: inline-block; margin: 0 10px; text-decoration: none; transition: transform 0.2s; }
-    .socials a:hover { transform: scale(1.15); }
-    .socials img { width: 36px; height: 36px; }
-    .footer { background: #f3f7fb; padding: 24px; text-align: center; color: #999; font-size: 0.85rem; border-top: 1px solid #e0e4ed; }
-    .footer p { margin: 4px 0; }
-    .footer-brand { font-weight: 700; color: #276EF1; }
-    @media (max-width: 600px) {
-      .container { margin: 16px; border-radius: 16px; }
-      .content { padding: 24px 20px; }
-      .header-content { padding: 30px 20px; }
-      .header-title { font-size: 1.5rem; }
-      .greeting { font-size: 1.05rem; }
-      .button { padding: 12px 32px; font-size: 0.95rem; }
+    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1b2541; line-height: 1.6; }
+    .container { max-width: 620px; margin: 24px auto; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 48px rgba(39, 110, 241, 0.18); }
+    
+    /* BEAUTIFUL HEADER */
+    .header { 
+      background: linear-gradient(135deg, #1e5ba8 0%, #0d3d7a 50%, #003d66 100%); 
+      padding: 0; 
+      position: relative; 
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+    
+    /* Decorative shapes background */
+    .header::before { 
+      content: ''; 
+      position: absolute; 
+      top: -50%; 
+      right: -10%; 
+      width: 400px; 
+      height: 400px; 
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); 
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .header::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -30%; 
+      left: -10%; 
+      width: 350px; 
+      height: 350px; 
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); 
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .header-content { 
+      position: relative; 
+      z-index: 2; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 32px;
+      width: 100%;
+    }
+    
+    .header-logo { 
+      width: 110px; 
+      height: 110px; 
+      background: #fff; 
+      border-radius: 50%; 
+      margin: 0 auto 24px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+      position: relative;
+    }
+    
+    .header-logo img { 
+      width: 85px; 
+      height: 85px; 
+      object-fit: contain;
+      object-position: center;
+    }
+    
+    .header-title { 
+      color: #fff; 
+      font-size: 2.2rem; 
+      font-weight: 900; 
+      margin: 0 0 12px 0;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.5px;
+    }
+    
+    .header-subtitle { 
+      color: rgba(255, 255, 255, 0.94); 
+      font-size: 1.15rem; 
+      font-weight: 300; 
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .content { padding: 48px 40px; }
+    
+    .greeting { 
+      font-size: 1.3rem; 
+      color: #276EF1; 
+      font-weight: 700; 
+      margin-bottom: 20px;
+    }
+    
+    .message-box { 
+      background: linear-gradient(135deg, rgba(39, 110, 241, 0.06) 0%, rgba(0, 51, 102, 0.06) 100%); 
+      border-left: 4px solid #276EF1; 
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 28px 0; 
+    }
+    
+    .message-box p { 
+      color: #1b2541; 
+      margin-bottom: 12px; 
+      font-size: 0.98rem;
+    }
+    
+    .message-box strong { 
+      color: #276EF1; 
+      font-weight: 700; 
+    }
+    
+    .success-icon { 
+      display: inline-block; 
+      width: 60px; 
+      height: 60px; 
+      background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); 
+      border-radius: 50%; 
+      text-align: center; 
+      line-height: 60px; 
+      color: #fff; 
+      font-size: 32px; 
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.25);
+    }
+    
+    .info-section { 
+      background: linear-gradient(135deg, #f8fbff 0%, #f0f6ff 100%);
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 28px 0;
+      border: 1px solid rgba(39, 110, 241, 0.1);
+    }
+    
+    .info-section h3 { 
+      color: #003366; 
+      font-size: 1.1rem; 
+      font-weight: 700; 
+      margin-bottom: 16px; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .info-section ul { 
+      list-style: none; 
+      padding: 0; 
+    }
+    
+    .info-section li { 
+      color: #1b2541; 
+      padding: 10px 0; 
+      padding-left: 28px; 
+      position: relative; 
+      font-size: 0.96rem;
+      font-weight: 500;
+    }
+    
+    .info-section li::before { 
+      content: '✓'; 
+      position: absolute; 
+      left: 0; 
+      color: #27ae60; 
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .security-warning { 
+      background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+      border-radius: 12px; 
+      padding: 20px 24px; 
+      margin: 28px 0; 
+      border-left: 4px solid #ff9800;
+      border: 1px solid rgba(255, 152, 0, 0.2);
+    }
+    
+    .security-warning strong { 
+      color: #e65100; 
+      display: block; 
+      margin-bottom: 10px; 
+      font-size: 0.99rem;
+    }
+    
+    .security-warning p { 
+      color: #d84315; 
+      font-size: 0.93rem; 
+      margin: 0;
+      line-height: 1.5;
+    }
+    
+    .button-container { 
+      text-align: center; 
+      margin: 36px 0; 
+    }
+    
+    .button { 
+      display: inline-block; 
+      background: linear-gradient(90deg, #276EF1 0%, #1e5ba8 100%); 
+      color: #fff; 
+      text-decoration: none; 
+      padding: 16px 48px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      font-size: 1.05rem; 
+      box-shadow: 0 6px 24px rgba(39, 110, 241, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .button:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 32px rgba(39, 110, 241, 0.45);
+    }
+    
+    .contact-section { 
+      text-align: center; 
+      margin: 32px 0; 
+      padding: 24px; 
+      border-top: 1px solid #e0e4ed; 
+      border-bottom: 1px solid #e0e4ed;
+    }
+    
+    .contact-section p { 
+      color: #555; 
+      font-size: 0.96rem; 
+      margin-bottom: 14px;
+    }
+    
+    .contact-link { 
+      color: #276EF1; 
+      text-decoration: none; 
+      font-weight: 700;
+    }
+    
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+    
+    .socials { 
+      text-align: center; 
+      margin-top: 28px; 
+      padding-top: 24px; 
+      border-top: 1px solid #e0e4ed;
+    }
+    
+    .socials a { 
+      display: inline-block; 
+      margin: 0 12px; 
+      text-decoration: none; 
+      transition: transform 0.2s;
+      opacity: 0.8;
+    }
+    
+    .socials a:hover { 
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    
+    .socials img { 
+      width: 40px; 
+      height: 40px;
+      filter: brightness(0.7);
+    }
+    
+    .footer { 
+      background: linear-gradient(135deg, #f3f7fb 0%, #eef2ff 100%);
+      padding: 28px; 
+      text-align: center; 
+      color: #999; 
+      font-size: 0.85rem; 
+      border-top: 1px solid #e0e4ed;
+    }
+    
+    .footer p { 
+      margin: 6px 0;
+    }
+    
+    .footer-brand { 
+      font-weight: 700; 
+      color: #276EF1;
+    }
+    
+    @media (max-width: 600px) {
+      .container { margin: 12px; border-radius: 20px; }
+      .content { padding: 32px 24px; }
+      .header-content { padding: 40px 24px; }
+      .header-logo { width: 95px; height: 95px; margin-bottom: 18px; }
+      .header-logo img { width: 75px; height: 75px; }
+      .header-title { font-size: 1.8rem; }
+      .header-subtitle { font-size: 1.05rem; }
+      .greeting { font-size: 1.15rem; }
+      .button { padding: 14px 40px; font-size: 1rem; }
+    }
+    
     @media (max-width: 480px) {
       .container { margin: 8px; }
-      .content { padding: 16px 16px; }
-      .header-content { padding: 24px 16px; }
-      .header-logo { width: 80px; height: 80px; }
-      .header-logo img { width: 60px; height: 60px; }
-      .header-title { font-size: 1.3rem; }
-      .header-subtitle { font-size: 1rem; }
+      .content { padding: 24px 16px; }
+      .header-content { padding: 32px 20px; }
+      .header-logo { width: 85px; height: 85px; }
+      .header-logo img { width: 65px; height: 65px; }
+      .header-title { font-size: 1.5rem; margin-bottom: 8px; }
+      .header-subtitle { font-size: 0.95rem; }
       .greeting { font-size: 1rem; }
-      .message-box { padding: 16px; }
-      .info-section { padding: 16px; }
+      .message-box { padding: 18px; }
+      .info-section { padding: 18px; }
+      .content { padding: 20px 16px; }
+      .button { padding: 12px 32px; font-size: 0.95rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- BEAUTIFUL HEADER WITH LOGO -->
     <div class="header">
       <div class="header-content">
         <div class="header-logo">
-          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard">
+          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
         </div>
         <div class="header-title">Password Reset Successful</div>
         <div class="header-subtitle">Your ExamGuard account is secure</div>
       </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="content">
       <div class="greeting">Hi ${user.fullname || user.username},</div>
       
-      <div style="text-align: center; margin-bottom: 28px;">
+      <!-- SUCCESS MESSAGE -->
+      <div style="text-align: center; margin-bottom: 32px;">
         <div class="success-icon">✓</div>
-        <p style="color: #27ae60; font-weight: 600; font-size: 1.1rem;">Your password has been successfully reset!</p>
+        <p style="color: #27ae60; font-weight: 700; font-size: 1.12rem;">Your password has been successfully reset!</p>
       </div>
 
+      <!-- MESSAGE BOX -->
       <div class="message-box">
         <p><strong>What just happened:</strong></p>
         <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
         <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
       </div>
 
+      <!-- INFO SECTION -->
       <div class="info-section">
         <h3>📋 Quick Actions</h3>
         <ul>
@@ -1552,30 +2087,35 @@ app.post("/api/auth/reset", async (req, res) => {
         </ul>
       </div>
 
+      <!-- SECURITY WARNING -->
       <div class="security-warning">
         <strong>🔒 Important Security Notice</strong>
         <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
       </div>
 
+      <!-- BUTTON -->
       <div class="button-container">
         <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
       </div>
 
+      <!-- CONTACT SECTION -->
       <div class="contact-section">
         <p><strong>Need further assistance?</strong></p>
         <p>If you have any questions or concerns about your account, our support team is here to help.</p>
         <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
       </div>
 
-      <div class="info-section" style="background: #f0f4ff;">
+      <!-- ACCOUNT DETAILS -->
+      <div class="info-section" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%); border: 1px solid rgba(39, 110, 241, 0.15);">
         <h3>ℹ️ Account Information</h3>
         <ul style="list-style: none; padding: 0;">
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
-          <li style="padding: 6px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
+          <li style="padding: 8px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
         </ul>
       </div>
 
+      <!-- SOCIALS -->
       <div class="socials">
         <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
           <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
@@ -1589,6 +2129,7 @@ app.post("/api/auth/reset", async (req, res) => {
       </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
       <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
       <p>All rights reserved | Your Exam, Our Priority</p>
@@ -1610,7 +2151,6 @@ app.post("/api/auth/reset", async (req, res) => {
       console.log("✓ Password reset confirmation email sent successfully to " + user.email, emailResponse);
     } catch (emailErr) {
       console.error("✗ Error sending password reset confirmation email:", emailErr);
-      // Still return success for password reset, but log the email error
       return res.json({ 
         message: "Password reset successful, but confirmation email could not be sent. Please contact support if needed.",
         warning: "Email delivery failed"
