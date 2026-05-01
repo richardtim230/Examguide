@@ -1108,6 +1108,7 @@ app.post("/api/auth/send-reset-code", async (req, res) => {
 });
 
 // --- RESET PASSWORD WITH EMAIL CODE ---
+// --- RESET PASSWORD WITH EMAIL CODE ---
 app.post("/api/auth/reset-with-email", async (req, res) => {
   try {
     const { email, code, password } = req.body;
@@ -1145,7 +1146,176 @@ app.post("/api/auth/reset-with-email", async (req, res) => {
     
     await user.save();
 
-    res.json({ message: "Password reset successfully. You can now log in with your new password." });
+    // Send confirmation email
+    const confirmationEmailContent = `
+<!DOCTYPE html>
+<html lang="en" style="background:#f3f7fb;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Password Reset Confirmation | OAU ExamGuard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f3f7fb; font-family: 'Segoe UI', Roboto, Arial, sans-serif; color: #1b2541; line-height: 1.6; }
+    .container { max-width: 600px; margin: 32px auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(39, 110, 241, 0.15); }
+    .header { background: linear-gradient(135deg, #276EF1 0%, #003366 100%); padding: 0; position: relative; overflow: hidden; }
+    .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,40 Q300,80 600,40 T1200,40 L1200,120 L0,120 Z" fill="%23276EF122"/></svg>'); background-size: cover; opacity: 0.3; }
+    .header-content { position: relative; z-index: 1; padding: 40px 24px; text-align: center; }
+    .header-logo { width: 90px; height: 90px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+    .header-logo img { width: 70px; height: 70px; object-fit: contain; }
+    .header-title { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); }
+    .header-subtitle { color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.5px; }
+    .content { padding: 40px 32px; }
+    .greeting { font-size: 1.2rem; color: #276EF1; font-weight: 700; margin-bottom: 16px; }
+    .message-box { background: linear-gradient(135deg, rgba(39, 110, 241, 0.05) 0%, rgba(0, 51, 102, 0.05) 100%); border-left: 4px solid #276EF1; border-radius: 8px; padding: 20px; margin: 24px 0; }
+    .message-box p { color: #1b2541; margin-bottom: 10px; font-size: 0.98rem; }
+    .message-box strong { color: #276EF1; font-weight: 700; }
+    .success-icon { display: inline-block; width: 50px; height: 50px; background: #27ae60; border-radius: 50%; text-align: center; line-height: 50px; color: #fff; font-size: 28px; margin-bottom: 16px; }
+    .info-section { background: #f8fbff; border-radius: 12px; padding: 20px; margin: 24px 0; }
+    .info-section h3 { color: #003366; font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .info-section ul { list-style: none; padding: 0; }
+    .info-section li { color: #1b2541; padding: 8px 0; padding-left: 24px; position: relative; font-size: 0.95rem; }
+    .info-section li::before { content: '✓'; position: absolute; left: 0; color: #27ae60; font-weight: bold; }
+    .security-warning { background: #fff3cd; border-radius: 12px; padding: 16px 20px; margin: 24px 0; border-left: 4px solid #ffc107; }
+    .security-warning strong { color: #856404; display: block; margin-bottom: 8px; font-size: 0.98rem; }
+    .security-warning p { color: #856404; font-size: 0.93rem; margin: 0; }
+    .button-container { text-align: center; margin: 28px 0; }
+    .button { display: inline-block; background: linear-gradient(90deg, #276EF1 60%, #003366 100%); color: #fff; text-decoration: none; padding: 14px 40px; border-radius: 10px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 15px rgba(39, 110, 241, 0.3); transition: transform 0.2s, box-shadow 0.2s; }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(39, 110, 241, 0.4); }
+    .contact-section { text-align: center; margin: 28px 0; padding: 20px; border-top: 1px solid #e0e4ed; border-bottom: 1px solid #e0e4ed; }
+    .contact-section p { color: #555; font-size: 0.95rem; margin-bottom: 12px; }
+    .contact-link { color: #276EF1; text-decoration: none; font-weight: 600; }
+    .socials { text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e0e4ed; }
+    .socials a { display: inline-block; margin: 0 10px; text-decoration: none; transition: transform 0.2s; }
+    .socials a:hover { transform: scale(1.15); }
+    .socials img { width: 36px; height: 36px; }
+    .footer { background: #f3f7fb; padding: 24px; text-align: center; color: #999; font-size: 0.85rem; border-top: 1px solid #e0e4ed; }
+    .footer p { margin: 4px 0; }
+    .footer-brand { font-weight: 700; color: #276EF1; }
+    @media (max-width: 600px) {
+      .container { margin: 16px; border-radius: 16px; }
+      .content { padding: 24px 20px; }
+      .header-content { padding: 30px 20px; }
+      .header-title { font-size: 1.5rem; }
+      .greeting { font-size: 1.05rem; }
+      .button { padding: 12px 32px; font-size: 0.95rem; }
+    }
+    @media (max-width: 480px) {
+      .container { margin: 8px; }
+      .content { padding: 16px 16px; }
+      .header-content { padding: 24px 16px; }
+      .header-logo { width: 80px; height: 80px; }
+      .header-logo img { width: 60px; height: 60px; }
+      .header-title { font-size: 1.3rem; }
+      .header-subtitle { font-size: 1rem; }
+      .greeting { font-size: 1rem; }
+      .message-box { padding: 16px; }
+      .info-section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="header-logo">
+          <img src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard">
+        </div>
+        <div class="header-title">Password Reset Successful</div>
+        <div class="header-subtitle">Your ExamGuard account is secure</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="greeting">Hi ${user.fullname || user.username},</div>
+      
+      <div style="text-align: center; margin-bottom: 28px;">
+        <div class="success-icon">✓</div>
+        <p style="color: #27ae60; font-weight: 600; font-size: 1.1rem;">Your password has been successfully reset!</p>
+      </div>
+
+      <div class="message-box">
+        <p><strong>What just happened:</strong></p>
+        <p>We have successfully updated your ExamGuard account password. Your account is now protected with your new password.</p>
+        <p style="margin-bottom: 0;">You can now log in using your new credentials.</p>
+      </div>
+
+      <div class="info-section">
+        <h3>📋 Quick Actions</h3>
+        <ul>
+          <li>Log in with your new password immediately</li>
+          <li>Keep your password secure and private</li>
+          <li>Do not share your credentials with anyone</li>
+          <li>Consider changing your password regularly</li>
+        </ul>
+      </div>
+
+      <div class="security-warning">
+        <strong>🔒 Important Security Notice</strong>
+        <p>If you did not request this password reset, please secure your account immediately by contacting our support team. Change your password again using a unique code we'll send you.</p>
+      </div>
+
+      <div class="button-container">
+        <a href="https://oau.examguard.com.ng/login" class="button">Go to Login</a>
+      </div>
+
+      <div class="contact-section">
+        <p><strong>Need further assistance?</strong></p>
+        <p>If you have any questions or concerns about your account, our support team is here to help.</p>
+        <p><a href="mailto:support@examguard.com.ng" class="contact-link">📧 Contact Support</a></p>
+      </div>
+
+      <div class="info-section" style="background: #f0f4ff;">
+        <h3>ℹ️ Account Information</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 6px 0; padding-left: 0;"><strong>Username:</strong> ${user.username}</li>
+          <li style="padding: 6px 0; padding-left: 0;"><strong>Email:</strong> ${user.email}</li>
+          <li style="padding: 6px 0; padding-left: 0;"><strong>Reset Time:</strong> ${new Date().toLocaleString()}</li>
+        </ul>
+      </div>
+
+      <div class="socials">
+        <a href="https://facebook.com/OAUExamGuard" target="_blank" title="Follow us on Facebook">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://twitter.com/OAUExamGuard" target="_blank" title="Follow us on Twitter">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter">
+        </a>
+        <a href="https://instagram.com/OAUExamGuard" target="_blank" title="Follow us on Instagram">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p><span class="footer-brand">© ${new Date().getFullYear()} OAU ExamGuard</span></p>
+      <p>All rights reserved | Your Exam, Our Priority</p>
+      <p style="margin-top: 12px; color: #bbb;">123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+    try {
+      console.log(`Attempting to send reset confirmation email to: ${user.email}`);
+      await client.sendEmail({
+        From: "richardochuko@examguard.com.ng",
+        To: user.email,
+        Subject: "Password Reset Confirmation - OAU ExamGuard",
+        HtmlBody: confirmationEmailContent
+      });
+      console.log("✓ Reset confirmation email sent successfully to " + user.email);
+    } catch (emailErr) {
+      console.error("✗ Error sending reset confirmation email:", emailErr);
+      // Still return success for password reset, but log the email error
+      return res.json({ 
+        message: "Password reset successful, but confirmation email could not be sent. Please contact support if needed.",
+        warning: "Email delivery failed"
+      });
+    }
+
+    res.json({ message: "Password reset successfully. Confirmation email sent to your account." });
   } catch (e) {
     console.error("Reset with email error:", e);
     res.status(500).json({ message: "Server error. Please try again." });
