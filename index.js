@@ -540,6 +540,147 @@ app.post("/api/auth/change-password", authenticate, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// ============ DYNAMIC OG META TAGS FOR MOCK EXAMS ============
+app.get('/tutor/mock', async (req, res) => {
+    try {
+        const { accessCode, courseCode } = req.query;
+        
+        // Read your HTML template
+        let html = fs.readFileSync('./tutor/mock.html', 'utf8');
+        
+        // Default meta tags (fallback)
+        let title = "OAU ExamGuard | Exam Access";
+        let description = "Join OAU students for mock tests, past questions, blogging, and a safe student marketplace. Your exam, our priority.";
+        let imageUrl = "https://res.cloudinary.com/da7o22rnq/image/upload/v1766033098/editor-uploads/hqkaws7fzstlyyuamlxf.png";
+        let canonicalUrl = `https://oau.examguard.com.ng/tutor/mock`;
+
+        // If exam parameters exist, fetch and customize
+        if (accessCode && courseCode) {
+            try {
+                // Import ExamSet model
+                const ExamSet = mongoose.model('ExamSet');
+                const examInfo = await ExamSet.findOne({ accessCode });
+                
+                if (examInfo) {
+                    const totalQuestions = examInfo.totalQuestions || examInfo.questions?.length || 0;
+                    const duration = examInfo.duration ? Math.round(examInfo.duration / 60) : 'Not specified';
+                    const examType = examInfo.examType || 'Mock Test';
+                    
+                    title = `${courseCode} Mock Exam | OAU ExamGuard`;
+                    description = `Access the ${courseCode} mock exam with ${totalQuestions} questions. Duration: ${duration} mins. Only 8 credits required. ${examType} format. Join OAU students now!`;
+                    
+                    // Generate Cloudinary dynamic image with text overlays
+                    imageUrl = generateCloudinaryOGImage(courseCode, totalQuestions, examType);
+                    canonicalUrl = `https://oau.examguard.com.ng/tutor/mock?accessCode=${encodeURIComponent(accessCode)}&courseCode=${encodeURIComponent(courseCode)}`;
+                }
+            } catch (err) {
+                console.error('Error fetching exam info for OG tags:', err);
+                // Use defaults if fetch fails
+            }
+        }
+
+        // Replace meta tags in HTML
+        html = html.replace(
+            /<title id="page-title">.*?<\/title>/,
+            `<title id="page-title">${escapeHtml(title)}</title>`
+        );
+        
+        html = html.replace(
+            /id="page-description" content="[^"]*"/,
+            `id="page-description" content="${escapeHtml(description)}"`
+        );
+        
+        html = html.replace(
+            /id="og-title" \/>/,
+            `id="og-title" />`
+        ).replace(
+            /property="og:title" content="[^"]*"/,
+            `property="og:title" content="${escapeHtml(title)}"`
+        );
+        
+        html = html.replace(
+            /property="og:description" content="[^"]*"/,
+            `property="og:description" content="${escapeHtml(description)}"`
+        );
+        
+        html = html.replace(
+            /id="og-image"[^>]*\/>/,
+            `id="og-image" content="${imageUrl}" />`
+        );
+        
+        html = html.replace(
+            /property="og:url" content="[^"]*"/,
+            `property="og:url" content="${canonicalUrl}"`
+        );
+        
+        html = html.replace(
+            /id="canonical-url"[^>]*\/>/,
+            `id="canonical-url" href="${canonicalUrl}" />`
+        );
+        
+        // Update Twitter tags
+        html = html.replace(
+            /id="twitter-title" content="[^"]*"/,
+            `id="twitter-title" content="${escapeHtml(title)}"`
+        );
+        
+        html = html.replace(
+            /id="twitter-description" content="[^"]*"/,
+            `id="twitter-description" content="${escapeHtml(description)}"`
+        );
+        
+        html = html.replace(
+            /id="twitter-image" content="[^"]*"/,
+            `id="twitter-image" content="${imageUrl}"`
+        );
+
+        res.type('text/html').send(html);
+    } catch (error) {
+        console.error('Error serving mock.html:', error);
+        res.status(500).send('Error loading page');
+    }
+});
+
+// ============ HELPER FUNCTION: Generate Cloudinary OG Image ============
+function generateCloudinaryOGImage(courseCode, questionCount, examType) {
+    try {
+        const CLOUDINARY_CLOUD = process.env.CLOUDINARY_CLOUD_NAME || "da7o22rnq";
+        const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload`;
+        
+        // Encode text for Cloudinary
+        const courseText = encodeURIComponent(courseCode);
+        const questionText = encodeURIComponent(`${questionCount} Questions`);
+        const typeText = encodeURIComponent(examType.toUpperCase());
+
+        // Create text layer overlays
+        const overlays = [
+            `l_text:Arial_80_bold:${courseText},c_fit,w_900,h_300,co_rgb:1e40af,g_north,y_80`,
+            `l_text:Arial_40:${questionText},c_fit,w_900,h_100,co_rgb:666666,g_center,y_20`,
+            `l_text:Arial_30_bold:${typeText},c_fit,w_900,h_100,co_rgb:ffd500,g_south,y_60`
+        ].join('/');
+
+        // Build complete URL
+        const imageUrl = `${CLOUDINARY_BASE}/c_scale,w_1200,h_630,b_auto/` +
+                        `${overlays}/` +
+                        `v1766033098/editor-uploads/hqkaws7fzstlyyuamlxf.png`;
+
+        return imageUrl;
+    } catch (error) {
+        console.error('Error generating OG image:', error);
+        return 'https://res.cloudinary.com/da7o22rnq/image/upload/v1766033098/editor-uploads/hqkaws7fzstlyyuamlxf.png';
+    }
+}
+
+// ============ HELPER FUNCTION: Escape HTML for safety ============
+function escapeHtml(text) {
+    if (!text) return '';
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 // Replace this block that uses router.patch(...)
 app.patch('/api/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
