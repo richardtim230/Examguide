@@ -830,7 +830,37 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     res.status(500).json({message: "Server error"});
   }
 }); 
+app.get('/api/og-preview', async (req, res) => {
+    try {
+        const { accessCode, courseCode, type } = req.query;
+        
+        if (!accessCode || !courseCode) {
+            return res.status(400).json({ error: 'Missing parameters' });
+        }
 
+        // Fetch exam details from your database
+        const examInfo = await ExamSet.findOne({ accessCode });
+        
+        if (!examInfo) {
+            return res.status(404).json({ error: 'Exam not found' });
+        }
+
+        // Generate dynamic content
+        const title = `${courseCode} Mock Exam | OAU ExamGuard`;
+        const description = `Access the ${courseCode} mock test with ${examInfo.totalQuestions || 0} questions. 
+                            Duration: ${Math.round(examInfo.duration / 60)} mins. Test your knowledge now!`;
+        const imageUrl = generateDynamicImage(courseCode, examInfo); // See below
+
+        res.json({
+            title,
+            description,
+            imageUrl,
+            url: `https://oau.examguard.com.ng/mock-access?accessCode=${accessCode}&courseCode=${courseCode}`
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 // --- AI Question Generator/Converter Endpoint using Gemini API ---
 app.post('/api/ai-questions', async (req, res) => {
   const { type, topic, number, faculty, department, text } = req.body;
