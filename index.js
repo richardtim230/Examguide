@@ -135,6 +135,108 @@ async function sendBlogNotification({ title, message, url }) {
     body: JSON.stringify(payload)
   });
 }
+// ============ PUSH NOTIFICATION SERVICE ============
+
+// 1. Add this to your index.js (backend)
+
+const OneSignal = require('onesignal-node');
+
+// Initialize OneSignal Client
+const oneSignalClient = new OneSignal.Client({
+  userAuthKey: process.env.ONESIGNAL_USER_AUTH_KEY,
+  app: {
+    appAuthKey: process.env.ONESIGNAL_APP_AUTH_KEY,
+    id: process.env.ONESIGNAL_APP_ID
+  }
+});
+
+// ============ FUNCTION: Send Notification to All Users ============
+async function sendNotificationToAllUsers(notificationData) {
+  try {
+    const notification = {
+      contents: { en: notificationData.message },
+      headings: { en: notificationData.title },
+      big_picture: notificationData.image || "",
+      large_icon: notificationData.icon || "",
+      data: {
+        url: notificationData.url || "",
+        type: notificationData.type || "exam",
+        examCode: notificationData.examCode || ""
+      },
+      included_segments: ["All"], // Send to all users
+      ios_badgeType: "Increase",
+      ios_badgeCount: 1
+    };
+
+    const response = await oneSignalClient.createNotification(notification);
+    console.log("✓ Notification sent to all users:", response.body.id);
+    return response.body;
+  } catch (err) {
+    console.error("❌ Failed to send notification:", err.message);
+    return null;
+  }
+}
+
+// ============ FUNCTION: Send Notification to Specific Segment ============
+async function sendNotificationToSegment(segment, notificationData) {
+  try {
+    const notification = {
+      contents: { en: notificationData.message },
+      headings: { en: notificationData.title },
+      big_picture: notificationData.image || "",
+      large_icon: notificationData.icon || "",
+      data: {
+        url: notificationData.url || "",
+        type: notificationData.type || "exam",
+        examCode: notificationData.examCode || ""
+      },
+      included_segments: [segment],
+      ios_badgeType: "Increase",
+      ios_badgeCount: 1
+    };
+
+    const response = await oneSignalClient.createNotification(notification);
+    console.log(`✓ Notification sent to ${segment}:`, response.body.id);
+    return response.body;
+  } catch (err) {
+    console.error("❌ Failed to send notification:", err.message);
+    return null;
+  }
+}
+
+// ============ MOCK UPLOAD ENDPOINT: Send Notification ============
+
+
+// ============ OPTIONAL: Send to Specific User Segment ============
+app.post("/api/notification/send-custom", authenticateToken, adminOnly, async (req, res) => {
+  try {
+    const { title, message, segment, image, examCode } = req.body;
+
+    const notificationPayload = {
+      title,
+      message,
+      image: image || "https://oau.examguard.com.ng/logo.png",
+      icon: "https://oau.examguard.com.ng/logo.png",
+      url: examCode ? `https://oau.examguard.com.ng/mock.html?accessCode=${examCode}` : "",
+      type: "exam",
+      examCode: examCode || ""
+    };
+
+    const segmentName = segment || "All";
+    const result = segment 
+      ? await sendNotificationToSegment(segmentName, notificationPayload)
+      : await sendNotificationToAllUsers(notificationPayload);
+
+    res.json({
+      message: "✓ Notification sent",
+      result
+    });
+
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 // Broadcast image uploads
 const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
