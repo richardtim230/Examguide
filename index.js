@@ -139,9 +139,6 @@ async function sendBlogNotification({ title, message, url }) {
 
 // 1. Add this to your index.js (backend)
 
-const OneSignal = require('onesignal-node');
-
-// Initialize OneSignal Client
 const oneSignalClient = new OneSignal.Client({
   userAuthKey: process.env.ONESIGNAL_USER_AUTH_KEY,
   app: {
