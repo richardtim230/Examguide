@@ -203,40 +203,7 @@ async function sendNotificationToSegment(segment, notificationData) {
   }
 }
 
-// ============ MOCK UPLOAD ENDPOINT: Send Notification ============
 
-
-// ============ OPTIONAL: Send to Specific User Segment ============
-app.post("/api/notification/send-custom", authenticateToken, adminOnly, async (req, res) => {
-  try {
-    const { title, message, segment, image, examCode } = req.body;
-
-    const notificationPayload = {
-      title,
-      message,
-      image: image || "https://oau.examguard.com.ng/logo.png",
-      icon: "https://oau.examguard.com.ng/logo.png",
-      url: examCode ? `https://oau.examguard.com.ng/mock.html?accessCode=${examCode}` : "",
-      type: "exam",
-      examCode: examCode || ""
-    };
-
-    const segmentName = segment || "All";
-    const result = segment 
-      ? await sendNotificationToSegment(segmentName, notificationPayload)
-      : await sendNotificationToAllUsers(notificationPayload);
-
-    res.json({
-      message: "✓ Notification sent",
-      result
-    });
-
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
-// Broadcast image uploads
 const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
