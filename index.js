@@ -23,6 +23,9 @@ import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
 import OneSignal from "onesignal-node";
+// In your index.js, add:
+
+import examReportsRouter from "./routes/examReport.js";
 
 const server = http.createServer(app);
 const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
@@ -3393,6 +3396,7 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
+app.use("/api/exam-reports", examReportsRouter);
 app.use("/api/studypadi/ai", studypadiAiRoutes);
 app.use("/api/exam-set", examSetRoutes);
 app.use("/api/cbt-questions", cbtQuestionsRoutes);
