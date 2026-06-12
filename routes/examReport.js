@@ -2,7 +2,7 @@
 
 import express from "express";
 import ExamReport from "../models/ExamReport.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
