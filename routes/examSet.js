@@ -1,6 +1,9 @@
+// ============ routes/examSet.js ============
+
 import express from "express";
 import ExamSet from "../models/ExamSet.js";
 import CbtQuestion from "../models/CbtQuestion.js";
+import { sendNotificationToAllUsers } from "../services/notificationService.js";
 
 const router = express.Router();
 
@@ -29,6 +32,7 @@ router.post("/", async (req, res) => {
     if (await ExamSet.findOne({ accessCode })) {
       return res.status(409).json({ error: "Access code already exists" });
     }
+    
     const set = await ExamSet.create({
       subject,
       title,
@@ -37,6 +41,26 @@ router.post("/", async (req, res) => {
       tags: tagsArr,
       createdBy: req.user?.id,
     });
+
+    // ============ SEND PUSH NOTIFICATION ============
+    try {
+      const notificationPayload = {
+        title: `🎓 New Mock Exam Available!`,
+        message: `${subject} - ${title || "Practice Now"}`,
+        image: "https://oau.examguard.com.ng/logo.png",
+        icon: "https://oau.examguard.com.ng/logo.png",
+        url: `https://oau.examguard.com.ng/tutor/mock.html?accessCode=${set.accessCode}`,
+        type: "exam",
+        examCode: set.accessCode
+      };
+
+      await sendNotificationToAllUsers(notificationPayload);
+      console.log("✓ Notification sent for new exam set:", set.accessCode);
+    } catch (notifErr) {
+      console.error("⚠ Notification failed (non-blocking):", notifErr.message);
+      // Don't fail the request if notification fails
+    }
+
     res.status(201).json(set);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -99,6 +123,24 @@ router.get("/by-access", async (req, res) => {
         duration: duration ? Number(duration) : 3600,
         tags: tagsArr,
       });
+
+      // ============ SEND PUSH NOTIFICATION FOR AUTO-CREATED EXAM SET ============
+      try {
+        const notificationPayload = {
+          title: `🎓 New Mock Exam Available!`,
+          message: `${subject.trim()} - ${examSet.title}`,
+          image: "https://oau.examguard.com.ng/logo.png",
+          icon: "https://oau.examguard.com.ng/logo.png",
+          url: `https://oau.examguard.com.ng/tutor/mock.html?accessCode=${examSet.accessCode}`,
+          type: "exam",
+          examCode: examSet.accessCode
+        };
+
+        await sendNotificationToAllUsers(notificationPayload);
+        console.log("✓ Notification sent for auto-created exam set:", examSet.accessCode);
+      } catch (notifErr) {
+        console.error("⚠ Notification failed (non-blocking):", notifErr.message);
+      }
     }
 
     // Always get latest questions for this set
