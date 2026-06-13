@@ -20,10 +20,22 @@ const upload = multer({
   limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit (adjust as needed)
 });
 
-/**
- * GET /api/resources
- * Query: q, type, course, uploader, page, limit, sort
- */
+const getResourceType = (mimeType = "") => {
+  const rawTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.ms-powerpoint",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/zip",
+    "application/x-rar-compressed",
+    "text/plain"
+  ];
+
+  return rawTypes.includes(mimeType) ? "raw" : "image";
+};
 router.get("/", async (req, res) => {
   try {
     const { q, type, course, uploader, page = 1, limit = 20, sort = "-createdAt" } = req.query;
@@ -91,13 +103,21 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
     if (req.file && req.file.buffer) {
       // upload buffer to Cloudinary using upload_stream (resource_type auto)
       const uploadResult = await new Promise((resolve, reject) => {
-        const opts = {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-          resource_type: "auto",
-          use_filename: true,
-          unique_filename: true,
-          overwrite: false
-        };
+        const resourceType = getResourceType(req.file.mimetype);
+
+const opts = {
+  folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+  resource_type: resourceType,
+  use_filename: true,
+  unique_filename: true,
+  overwrite: false
+};
+
+console.log("Uploading:", {
+  name: req.file.originalname,
+  mime: req.file.mimetype,
+  resourceType
+});
         const stream = cl.uploader.upload_stream(opts, (error, result) => {
           if (error) return reject(error);
           resolve(result);
@@ -242,13 +262,15 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
     if (req.file && req.file.buffer) {
       // upload new file to Cloudinary
       const uploadResult = await new Promise((resolve, reject) => {
-        const opts = {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-          resource_type: "auto",
-          use_filename: true,
-          unique_filename: true,
-          overwrite: false
-        };
+        const resourceType = getResourceType(req.file.mimetype);
+
+const opts = {
+  folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+  resource_type: resourceType,
+  use_filename: true,
+  unique_filename: true,
+  overwrite: false
+};
         const stream = cl.uploader.upload_stream(opts, (error, result) => {
           if (error) return reject(error);
           resolve(result);
