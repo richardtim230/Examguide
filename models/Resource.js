@@ -5,18 +5,35 @@ const RatingSchema = new mongoose.Schema({
   rating: { type: Number, min: 1, max: 5 }
 }, { _id: false });
 
+const PageSchema = new mongoose.Schema({
+  pageNumber: { type: Number, required: true },
+  imageUrl: { type: String, required: true },
+  cloudinaryPublicId: { type: String, required: true },
+  width: { type: Number, default: 0 },
+  height: { type: Number, default: 0 }
+}, { _id: false });
+
 const ResourceSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, default: "" },
   type: { type: String, enum: ["pdf", "video", "notes", "audio", "link", "other"], default: "other" },
   course: { type: String, default: "" }, // e.g. "PHY101"
-  // GridFS file reference (when using GridFS)
+  
+  // For PDFs and Notes - store individual page images
+  pages: [PageSchema],
+  
+  // Original file reference (when using GridFS or Cloudinary)
   fileId: { type: mongoose.Schema.Types.ObjectId, default: null },
   // If external link (not using GridFS)
   fileUrl: { type: String, default: "" },
   thumbnailUrl: { type: String, default: "" },
   fileMime: { type: String, default: "" },
   fileSize: { type: Number, default: 0 },
+  cloudinaryPublicId: { type: String, default: "" },
+  
+  // Metadata for paginated resources
+  totalPages: { type: Number, default: 0 },
+  
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   downloads: { type: Number, default: 0 },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
