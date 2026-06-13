@@ -4,126 +4,105 @@ import UserLibrary from "../models/UserLibrary.js";
 import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
 import multer from "multer";
-import streamifier from "streamifier";
-import cloudinary from "cloudinary";
 import path from "path";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-// Cloudinary must already be configured in index.js via cloudinary.v2.config(...)
-const cl = cloudinary.v2;
+// Initialize GridFS
+let gfsBucket;
+const conn = mongoose.connection;
 
-// Use memory storage so we can stream directly to Cloudinary
-const storage = multer.memoryStorage();
-
-// More robust multer config
-const upload = multer({
-  storage,
-  limits: { 
-    fileSize: 200 * 1024 * 1024, // 200MB limit
-    files: 1,
-    fields: 20 // Allow more text fields
-  },
-  fileFilter: (req, file, cb) => {
-    // Accept any file type - don't reject anything
-    cb(null, true);
-  }
+conn.once("open", () => {
+  gfsBucket = new mongoose.mongo.GridFSBucket(conn.db, { bucketName: "resources" });
+  console.log("GridFS bucket initialized");
 });
 
-// Error handling middleware for multer
-const handleMulterError = (err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === 'UNEXPECTED_FILE') {
-      return res.status(400).json({ 
-        error: 'Unexpected file field. Expected field name: "file"' 
-      });
-    }
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(413).json({ 
-        error: 'File too large. Maximum size is 200MB' 
-      });
-    }
-    return res.status(400).json({ error: err.message });
-  }
-  next(err);
-};
+// Use memory storage
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage,
+  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit
+});
 
 const getResourceType = (mimeType = "", originalName = "") => {
-  // Get file extension from originalName (most reliable)
   const ext = path.extname((originalName || "")).toLowerCase();
-  
-  // Raw document/archive extensions (prioritized)
-  const rawExtensions = new Set([
-    ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx",
-    ".zip", ".rar", ".7z", ".txt", ".csv", ".rtf", ".json", ".xml",
-    ".py", ".js", ".java", ".cpp", ".ts", ".go", ".rb", ".php",
-    ".odt", ".ods", ".odp", ".pages", ".numbers", ".key"
-  ]);
 
-  // Image extensions
-  const imageExtensions = new Set([
-    ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".bmp", ".ico"
-  ]);
+  const typeMap = {
+    ".pdf": "pdf",
+    ".doc": "document",
+    ".docx": "document",
+    ".txt": "document",
+    ".ppt": "presentation",
+    ".pptx": "presentation",
+    ".xls": "spreadsheet",
+    ".xlsx": "spreadsheet",
+    ".mp4": "video",
+    ".avi": "video",
+    ".mov": "video",
+    ".webm": "video",
+    ".mp3": "audio",
+    ".wav": "audio",
+    ".flac": "audio",
+    ".m4a": "audio",
+    ".jpg": "image",
+    ".jpeg": "image",
+    ".png": "image",
+    ".gif": "image",
+    ".webp": "image",
+    ".zip": "archive",
+    ".rar": "archive",
+    ".7z": "archive"
+  };
 
-  // Video extensions
-  const videoExtensions = new Set([
-    ".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm", ".m4v"
-  ]);
-
-  // Audio extensions
-  const audioExtensions = new Set([
-    ".mp3", ".wav", ".aac", ".flac", ".m4a", ".ogg", ".wma", ".opus"
-  ]);
-
-  if (rawExtensions.has(ext)) {
-    return "raw";
-  }
-  if (imageExtensions.has(ext)) {
-    return "image";
-  }
-  if (videoExtensions.has(ext)) {
-    return "video";
-  }
-  if (audioExtensions.has(ext)) {
-    return "audio";
-  }
-
-  // Fallback: check mimetype
-  const mimeNormalized = (mimeType || "").toLowerCase().trim();
-
-  const rawMimes = [
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/vnd.ms-powerpoint",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    "application/vnd.ms-excel",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/zip",
-    "application/x-rar-compressed",
-    "application/x-7z-compressed",
-    "text/plain",
-    "text/csv"
-  ];
-
-  if (rawMimes.includes(mimeNormalized)) {
-    return "raw";
-  }
-  if (mimeNormalized.startsWith("image/")) {
-    return "image";
-  }
-  if (mimeNormalized.startsWith("video/")) {
-    return "video";
-  }
-  if (mimeNormalized.startsWith("audio/")) {
-    return "audio";
-  }
-
-  // Default to raw for safety
-  return "raw";
+  return typeMap[ext] || "file";
 };
 
-// ============ NON-PARAMETERIZED ROUTES (must come first) ============
+const uploadToGridFS = async (buffer, fileName, mimeType) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = gfsBucket.openUploadStream(fileName, {
+      contentType: mimeType,
+      metadata: {
+        uploadedAt: new Date()
+      }
+    });
+
+    uploadStream.on("error", (error) => {
+      console.error("GridFS upload error:", error);
+      reject(error);
+    });
+
+    uploadStream.on("finish", (file) => {
+      console.log("GridFS upload successful:", {
+        fileId: file._id,
+        filename: file.filename,
+        size: file.length
+      });
+      resolve({
+        fileId: file._id,
+        fileSize: file.length
+      });
+    });
+
+    uploadStream.end(buffer);
+  });
+};
+
+const deleteFromGridFS = async (fileId) => {
+  if (!fileId) return;
+
+  return new Promise((resolve, reject) => {
+    gfsBucket.delete(fileId, (error) => {
+      if (error) {
+        console.warn("GridFS delete error:", error);
+        resolve(); // don't reject, just warn
+      } else {
+        console.log("GridFS delete successful:", fileId);
+        resolve();
+      }
+    });
+  });
+};
 
 router.get("/", async (req, res) => {
   try {
@@ -158,7 +137,6 @@ router.get("/", async (req, res) => {
 
 /**
  * GET /api/resources/courses
- * distinct list of courses present in resources
  */
 router.get("/courses", async (req, res) => {
   try {
@@ -171,98 +149,50 @@ router.get("/courses", async (req, res) => {
 
 /**
  * POST /api/resources
- * Auth required. Fields (multipart/form-data):
- *  - title (required)
- *  - description
- *  - type
- *  - course
- *  - link (optional external URL)
- *  - file (optional file upload)  <-- streamed to Cloudinary
  */
-router.post("/", authenticate, upload.single("file"), handleMulterError, async (req, res) => {
+router.post("/", authenticate, upload.single("file"), async (req, res) => {
   try {
     const { title, description = "", type = "other", course = "", link } = req.body;
-    
-    console.log("POST /api/resources request:", {
-      body: req.body,
-      file: req.file ? { name: req.file.originalname, size: req.file.size } : null
-    });
-
     if (!title) return res.status(400).json({ message: "Title required" });
 
-    let fileUrl = "";
-    let cloudinaryPublicId = "";
+    let fileId = null;
     let fileMime = "";
     let fileSize = 0;
+    let resourceType = "other";
 
     if (req.file && req.file.buffer) {
-      const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
+      resourceType = getResourceType(req.file.mimetype, req.file.originalname);
 
-      console.log("Uploading file to Cloudinary:", {
+      console.log("Uploading to MongoDB GridFS:", {
         name: req.file.originalname,
         mime: req.file.mimetype,
         resourceType,
         size: req.file.size
       });
 
-      // upload buffer to Cloudinary using upload_stream
-      const uploadResult = await new Promise((resolve, reject) => {
-        const opts = {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-          resource_type: resourceType,
-          use_filename: true,
-          unique_filename: true,
-          overwrite: false
-        };
+      const uploadResult = await uploadToGridFS(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
 
-        const stream = cl.uploader.upload_stream(opts, (error, result) => {
-          if (error) {
-            console.error("Cloudinary upload error:", error);
-            return reject(error);
-          }
-          resolve(result);
-        });
-
-        // Handle stream errors
-        stream.on('error', (err) => {
-          console.error("Stream error:", err);
-          reject(err);
-        });
-
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
-      });
-
-      console.log("Upload successful:", {
-        url: uploadResult.secure_url,
-        publicId: uploadResult.public_id,
-        resourceType: uploadResult.resource_type
-      });
-
-      fileUrl = uploadResult.secure_url || "";
-      cloudinaryPublicId = uploadResult.public_id || "";
-      fileSize = uploadResult.bytes || req.file.size || 0;
-      fileMime = req.file.mimetype || uploadResult.resource_type || "";
-    } else if (link) {
-      fileUrl = link;
-      console.log("Using external link:", link);
-    } else {
-      console.log("No file or link provided");
-      fileUrl = "";
+      fileId = uploadResult.fileId;
+      fileSize = uploadResult.fileSize;
+      fileMime = req.file.mimetype;
     }
 
     const resource = await Resource.create({
       title,
       description,
-      type,
+      type: resourceType || type,
       course,
-      fileUrl,
-      cloudinaryPublicId,
+      fileId,
       fileMime,
       fileSize,
-      uploadedBy: req.user.id
+      uploadedBy: req.user.id,
+      link: link || undefined
     });
 
-    console.log("Resource created:", resource._id);
     res.status(201).json(resource);
   } catch (e) {
     console.error("POST /api/resources error:", e);
@@ -271,34 +201,13 @@ router.post("/", authenticate, upload.single("file"), handleMulterError, async (
 });
 
 /**
- * GET /api/resources/library/me
- * Get current user's saved resources (paginated)
- */
-router.get("/library/me", authenticate, async (req, res) => {
-  try {
-    const { page = 1, limit = 20 } = req.query;
-    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
-    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
-    const pg = Math.max(1, parseInt(page, 10));
-    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
-    const total = resourcesIds.length;
-    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
-    const items = await Resource.find({ _id: { $in: slice } }).populate("uploadedBy", "fullname username").lean();
-    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// ============ PARAMETERIZED ROUTES (must come last) ============
-
-/**
  * GET /api/resources/:id
- * Details
  */
 router.get("/:id", async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id).populate("uploadedBy", "fullname username email").lean();
+    const resource = await Resource.findById(req.params.id)
+      .populate("uploadedBy", "fullname username email")
+      .lean();
     if (!resource) return res.status(404).json({ message: "Not found" });
     res.json(resource);
   } catch (e) {
@@ -308,7 +217,7 @@ router.get("/:id", async (req, res) => {
 
 /**
  * GET /api/resources/:id/download
- * Increment downloads and redirect to Cloudinary URL or external link.
+ * Stream file directly from GridFS
  */
 router.get("/:id/download", async (req, res) => {
   try {
@@ -318,11 +227,28 @@ router.get("/:id/download", async (req, res) => {
     resource.downloads = (resource.downloads || 0) + 1;
     await resource.save();
 
-    const url = resource.fileUrl || "";
-    if (!url) return res.status(404).json({ message: "No file available" });
-    
-    // redirect (Cloudinary or external)
-    return res.redirect(url);
+    // If external link, redirect to it
+    if (resource.link) {
+      return res.redirect(resource.link);
+    }
+
+    // If file in GridFS, stream it
+    if (resource.fileId) {
+      const downloadStream = gfsBucket.openDownloadStream(resource.fileId);
+
+      downloadStream.on("error", (error) => {
+        console.error("GridFS download error:", error);
+        res.status(404).json({ message: "File not found" });
+      });
+
+      // Set appropriate headers for download
+      res.setHeader("Content-Type", resource.fileMime || "application/octet-stream");
+      res.setHeader("Content-Disposition", `attachment; filename="${resource.title}${path.extname(resource.title) ? "" : ".bin"}"`);
+
+      downloadStream.pipe(res);
+    } else {
+      res.status(404).json({ message: "No file available" });
+    }
   } catch (e) {
     console.error("GET download error:", e);
     res.status(500).json({ error: e.message });
@@ -331,7 +257,6 @@ router.get("/:id/download", async (req, res) => {
 
 /**
  * POST /api/resources/:id/favorite
- * Toggle favorite for authenticated user
  */
 router.post("/:id/favorite", authenticate, async (req, res) => {
   try {
@@ -354,7 +279,6 @@ router.post("/:id/favorite", authenticate, async (req, res) => {
 
 /**
  * POST /api/resources/:id/rate
- * Body: { rating: 1..5 }
  */
 router.post("/:id/rate", authenticate, async (req, res) => {
   try {
@@ -380,9 +304,8 @@ router.post("/:id/rate", authenticate, async (req, res) => {
 
 /**
  * PUT /api/resources/:id
- * Edit resource (owner or admin). If file present, upload to Cloudinary and replace.
  */
-router.put("/:id", authenticate, upload.single("file"), handleMulterError, async (req, res) => {
+router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
     if (!resource) return res.status(404).json({ message: "Not found" });
@@ -399,56 +322,29 @@ router.put("/:id", authenticate, upload.single("file"), handleMulterError, async
     if (req.file && req.file.buffer) {
       const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
 
-      // upload new file to Cloudinary
-      const uploadResult = await new Promise((resolve, reject) => {
-        const opts = {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-          resource_type: resourceType,
-          use_filename: true,
-          unique_filename: true,
-          overwrite: false
-        };
+      const uploadResult = await uploadToGridFS(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
 
-        const stream = cl.uploader.upload_stream(opts, (error, result) => {
-          if (error) {
-            console.error("Cloudinary upload error:", error);
-            return reject(error);
-          }
-          resolve(result);
-        });
-
-        stream.on('error', (err) => {
-          console.error("Stream error:", err);
-          reject(err);
-        });
-
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
-      });
-
-      // delete old Cloudinary asset if present
-      if (resource.cloudinaryPublicId) {
-        try {
-          await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
-        } catch (er) {
-          console.warn("Failed to delete old asset:", er.message);
-        }
+      // Delete old file from GridFS
+      if (resource.fileId) {
+        await deleteFromGridFS(resource.fileId);
       }
 
-      resource.fileUrl = uploadResult.secure_url || "";
-      resource.cloudinaryPublicId = uploadResult.public_id || "";
-      resource.fileSize = uploadResult.bytes || req.file.size || 0;
-      resource.fileMime = req.file.mimetype || uploadResult.resource_type || "";
+      resource.fileId = uploadResult.fileId;
+      resource.fileSize = uploadResult.fileSize;
+      resource.fileMime = req.file.mimetype;
+      resource.type = resourceType;
+      resource.link = undefined; // clear link if file uploaded
     } else if (link) {
-      // switching to external link: remove old Cloudinary asset if any
-      if (resource.cloudinaryPublicId) {
-        try {
-          await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
-        } catch (er) {
-          console.warn("Failed to delete old asset:", er.message);
-        }
+      // Switch to external link: delete GridFS file if present
+      if (resource.fileId) {
+        await deleteFromGridFS(resource.fileId);
       }
-      resource.cloudinaryPublicId = "";
-      resource.fileUrl = link;
+      resource.fileId = null;
+      resource.link = link;
       resource.fileMime = "";
       resource.fileSize = 0;
     }
@@ -464,7 +360,6 @@ router.put("/:id", authenticate, upload.single("file"), handleMulterError, async
 
 /**
  * DELETE /api/resources/:id
- * Owner or admin. Removes resource and Cloudinary asset if present.
  */
 router.delete("/:id", authenticate, async (req, res) => {
   try {
@@ -473,13 +368,12 @@ router.delete("/:id", authenticate, async (req, res) => {
     if (String(resource.uploadedBy) !== String(req.user.id) && req.user.role !== "admin") {
       return res.status(403).json({ message: "Forbidden" });
     }
-    if (resource.cloudinaryPublicId) {
-      try {
-        await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
-      } catch (er) {
-        console.warn("Failed to delete asset:", er.message);
-      }
+
+    // Delete from GridFS if present
+    if (resource.fileId) {
+      await deleteFromGridFS(resource.fileId);
     }
+
     await resource.deleteOne();
     res.json({ message: "Deleted" });
   } catch (e) {
@@ -489,7 +383,6 @@ router.delete("/:id", authenticate, async (req, res) => {
 
 /**
  * POST /api/resources/:id/save
- * Save resource to authenticated user's library (idempotent).
  */
 router.post("/:id/save", authenticate, async (req, res) => {
   try {
@@ -511,7 +404,6 @@ router.post("/:id/save", authenticate, async (req, res) => {
 
 /**
  * DELETE /api/resources/:id/save
- * Remove resource from authenticated user's library.
  */
 router.delete("/:id/save", authenticate, async (req, res) => {
   try {
@@ -522,6 +414,27 @@ router.delete("/:id/save", authenticate, async (req, res) => {
       { new: true }
     );
     res.json({ removed: true, libraryCount: lib ? lib.resources.length : 0 });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * GET /api/resources/library/me
+ */
+router.get("/library/me", authenticate, async (req, res) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
+    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
+    const pg = Math.max(1, parseInt(page, 10));
+    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
+    const total = resourcesIds.length;
+    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
+    const items = await Resource.find({ _id: { $in: slice } })
+      .populate("uploadedBy", "fullname username")
+      .lean();
+    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
