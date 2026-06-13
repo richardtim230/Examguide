@@ -36,6 +36,8 @@ const getResourceType = (mimeType = "") => {
   return rawTypes.includes(mimeType) ? "raw" : "image";
 };
 
+// ============ NON-PARAMETERIZED ROUTES (must come first) ============
+
 router.get("/", async (req, res) => {
   try {
     const { q, type, course, uploader, page = 1, limit = 20, sort = "-createdAt" } = req.query;
@@ -125,58 +127,6 @@ router.post("/upload-page", authenticate, upload.single("file"), async (req, res
 });
 
 /**
- * POST /api/resources
- * Auth required. Create resource with pages array or single file/link
- * Fields (application/json):
- *  - title (required)
- *  - description (optional)
- *  - type (optional - pdf, notes, video, etc)
- *  - course (optional)
- *  - pages (optional - array of page objects with imageUrl, cloudinaryPublicId, pageNumber)
- *  - link (optional - external URL)
- */
-router.post("/", authenticate, async (req, res) => {
-  try {
-    const { title, description = "", type = "other", course = "", pages = [], link } = req.body;
-    
-    if (!title) return res.status(400).json({ message: "Title required" });
-
-    // Build resource object
-    const resourceData = {
-      title,
-      description,
-      type,
-      course,
-      uploadedBy: req.user.id,
-      fileUrl: link || ""
-    };
-
-    // If pages array provided (for PDF/notes), store them
-    if (pages && pages.length > 0) {
-      resourceData.pages = pages.map((page, idx) => ({
-        pageNumber: page.pageNumber || idx + 1,
-        imageUrl: page.url || page.imageUrl,
-        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
-        width: page.width || 0,
-        height: page.height || 0
-      }));
-      resourceData.totalPages = pages.length;
-      // Set type to pdf or notes if not explicitly set
-      if (!type || type === "other") {
-        resourceData.type = "pdf";
-      }
-    }
-
-    const resource = await Resource.create(resourceData);
-
-    res.status(201).json(resource);
-  } catch (e) {
-    console.error("POST /api/resources error:", e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-/**
  * POST /api/resources/upload-file
  * Upload file directly and auto-extract pages if PDF/DOCX
  * Auth required. Fields (multipart/form-data):
@@ -244,6 +194,82 @@ router.post("/upload-file", authenticate, upload.single("file"), async (req, res
     res.status(201).json(resource);
   } catch (e) {
     console.error("POST /api/resources/upload-file error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * GET /api/resources/library/me
+ * Get current user's saved resources (paginated)
+ */
+router.get("/library/me", authenticate, async (req, res) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
+    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
+    const pg = Math.max(1, parseInt(page, 10));
+    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
+    const total = resourcesIds.length;
+    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
+    const items = await Resource.find({ _id: { $in: slice } })
+      .populate("uploadedBy", "fullname username")
+      .lean();
+    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ============ PARAMETERIZED ROUTES (must come last) ============
+
+/**
+ * POST /api/resources
+ * Auth required. Create resource with pages array or single file/link
+ * Fields (application/json):
+ *  - title (required)
+ *  - description (optional)
+ *  - type (optional - pdf, notes, video, etc)
+ *  - course (optional)
+ *  - pages (optional - array of page objects with imageUrl, cloudinaryPublicId, pageNumber)
+ *  - link (optional - external URL)
+ */
+router.post("/", authenticate, async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", pages = [], link } = req.body;
+    
+    if (!title) return res.status(400).json({ message: "Title required" });
+
+    // Build resource object
+    const resourceData = {
+      title,
+      description,
+      type,
+      course,
+      uploadedBy: req.user.id,
+      fileUrl: link || ""
+    };
+
+    // If pages array provided (for PDF/notes), store them
+    if (pages && pages.length > 0) {
+      resourceData.pages = pages.map((page, idx) => ({
+        pageNumber: page.pageNumber || idx + 1,
+        imageUrl: page.url || page.imageUrl,
+        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
+        width: page.width || 0,
+        height: page.height || 0
+      }));
+      resourceData.totalPages = pages.length;
+      // Set type to pdf or notes if not explicitly set
+      if (!type || type === "other") {
+        resourceData.type = "pdf";
+      }
+    }
+
+    const resource = await Resource.create(resourceData);
+
+    res.status(201).json(resource);
+  } catch (e) {
+    console.error("POST /api/resources error:", e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -491,28 +517,6 @@ router.delete("/:id/save", authenticate, async (req, res) => {
       { new: true }
     );
     res.json({ removed: true, libraryCount: lib ? lib.resources.length : 0 });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-/**
- * GET /api/resources/library/me
- * Get current user's saved resources (paginated)
- */
-router.get("/library/me", authenticate, async (req, res) => {
-  try {
-    const { page = 1, limit = 20 } = req.query;
-    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
-    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
-    const pg = Math.max(1, parseInt(page, 10));
-    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
-    const total = resourcesIds.length;
-    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
-    const items = await Resource.find({ _id: { $in: slice } })
-      .populate("uploadedBy", "fullname username")
-      .lean();
-    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
