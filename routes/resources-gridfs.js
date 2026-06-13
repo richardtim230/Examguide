@@ -59,49 +59,62 @@ const getResourceType = (mimeType = "", originalName = "") => {
 };
 
 const uploadToGridFS = async (buffer, fileName, mimeType) => {
-  return new Promise((resolve, reject) => {
-    if (!gfsBucket) {
-      return reject(new Error("GridFS bucket not initialized"));
+  if (!gfsBucket) {
+    throw new Error("GridFS bucket not initialized");
+  }
+
+  try {
+    // Use insertOne on the files collection directly for more control
+    const filesCollection = conn.collection('resources.files');
+    const chunksCollection = conn.collection('resources.chunks');
+
+    const fileId = new mongoose.Types.ObjectId();
+    const chunkSize = 255 * 1024; // 255KB chunks
+    const uploadDate = new Date();
+
+    // Calculate chunks
+    const chunks = [];
+    for (let i = 0; i < buffer.length; i += chunkSize) {
+      chunks.push({
+        files_id: fileId,
+        n: Math.floor(i / chunkSize),
+        data: buffer.slice(i, i + chunkSize)
+      });
     }
 
-    let fileId = null;
-    let fileSize = 0;
+    // Insert chunks
+    if (chunks.length > 0) {
+      await chunksCollection.insertMany(chunks);
+    }
 
-    const uploadStream = gfsBucket.openUploadStream(fileName, {
+    // Insert file metadata
+    await filesCollection.insertOne({
+      _id: fileId,
+      length: buffer.length,
+      chunkSize: chunkSize,
+      uploadDate: uploadDate,
+      filename: fileName,
       contentType: mimeType,
       metadata: {
-        uploadedAt: new Date()
+        uploadedAt: uploadDate
       }
     });
 
-    // Capture fileId from the stream object itself
-    uploadStream.on("id", (id) => {
-      fileId = id;
-      console.log("GridFS stream ID assigned:", fileId);
+    console.log("GridFS upload successful (direct):", {
+      fileId: fileId.toString(),
+      filename: fileName,
+      size: buffer.length
     });
 
-    uploadStream.on("error", (error) => {
-      console.error("GridFS upload error:", error);
-      reject(error);
-    });
+    return {
+      fileId: fileId.toString(),
+      fileSize: buffer.length
+    };
 
-    uploadStream.on("finish", () => {
-      if (!fileId) {
-        return reject(new Error("GridFS upload completed but fileId not captured"));
-      }
-      console.log("GridFS upload successful:", {
-        fileId: fileId.toString(),
-        filename: fileName,
-        size: buffer.length
-      });
-      resolve({
-        fileId: fileId.toString(),
-        fileSize: buffer.length
-      });
-    });
-
-    uploadStream.end(buffer);
-  });
+  } catch (error) {
+    console.error("GridFS direct upload error:", error);
+    throw error;
+  }
 };
 
 const deleteFromGridFS = async (fileId) => {
