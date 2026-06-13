@@ -60,6 +60,10 @@ const getResourceType = (mimeType = "", originalName = "") => {
 
 const uploadToGridFS = async (buffer, fileName, mimeType) => {
   return new Promise((resolve, reject) => {
+    if (!gfsBucket) {
+      return reject(new Error("GridFS bucket not initialized"));
+    }
+
     const uploadStream = gfsBucket.openUploadStream(fileName, {
       contentType: mimeType,
       metadata: {
@@ -79,7 +83,7 @@ const uploadToGridFS = async (buffer, fileName, mimeType) => {
         size: file.length
       });
       resolve({
-        fileId: file._id,
+        fileId: file._id.toString(), // Ensure it's a string
         fileSize: file.length
       });
     });
@@ -89,18 +93,26 @@ const uploadToGridFS = async (buffer, fileName, mimeType) => {
 };
 
 const deleteFromGridFS = async (fileId) => {
-  if (!fileId) return;
+  if (!fileId || !gfsBucket) return;
 
   return new Promise((resolve, reject) => {
-    gfsBucket.delete(fileId, (error) => {
-      if (error) {
-        console.warn("GridFS delete error:", error);
-        resolve(); // don't reject, just warn
-      } else {
-        console.log("GridFS delete successful:", fileId);
-        resolve();
-      }
-    });
+    try {
+      // Convert fileId to ObjectId if it's a string
+      const objectId = typeof fileId === 'string' ? new mongoose.Types.ObjectId(fileId) : fileId;
+      
+      gfsBucket.delete(objectId, (error) => {
+        if (error) {
+          console.warn("GridFS delete error:", error);
+          resolve(); // don't reject, just warn
+        } else {
+          console.log("GridFS delete successful:", fileId);
+          resolve();
+        }
+      });
+    } catch (e) {
+      console.warn("GridFS delete conversion error:", e);
+      resolve(); // Don't reject on conversion errors
+    }
   });
 };
 
@@ -152,13 +164,24 @@ router.get("/courses", async (req, res) => {
  */
 router.post("/", authenticate, upload.single("file"), async (req, res) => {
   try {
-    const { title, description = "", type = "other", course = "", link } = req.body;
+    const { title, description = "", type = "other", course = "", link, pages } = req.body;
     if (!title) return res.status(400).json({ message: "Title required" });
 
     let fileId = null;
     let fileMime = "";
     let fileSize = 0;
     let resourceType = "other";
+    let parsedPages = [];
+
+    // Parse pages if provided
+    if (pages) {
+      try {
+        parsedPages = typeof pages === 'string' ? JSON.parse(pages) : pages;
+      } catch (e) {
+        console.warn("Failed to parse pages:", e);
+        parsedPages = [];
+      }
+    }
 
     if (req.file && req.file.buffer) {
       resourceType = getResourceType(req.file.mimetype, req.file.originalname);
@@ -170,15 +193,20 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
         size: req.file.size
       });
 
-      const uploadResult = await uploadToGridFS(
-        req.file.buffer,
-        req.file.originalname,
-        req.file.mimetype
-      );
+      try {
+        const uploadResult = await uploadToGridFS(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype
+        );
 
-      fileId = uploadResult.fileId;
-      fileSize = uploadResult.fileSize;
-      fileMime = req.file.mimetype;
+        fileId = uploadResult.fileId;
+        fileSize = uploadResult.fileSize;
+        fileMime = req.file.mimetype;
+      } catch (uploadError) {
+        console.error("GridFS upload failed:", uploadError);
+        return res.status(500).json({ error: "File upload failed: " + uploadError.message });
+      }
     }
 
     const resource = await Resource.create({
@@ -186,11 +214,12 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
       description,
       type: resourceType || type,
       course,
-      fileId,
-      fileMime,
-      fileSize,
+      fileId: fileId || undefined,
+      fileMime: fileMime || undefined,
+      fileSize: fileSize || 0,
       uploadedBy: req.user.id,
-      link: link || undefined
+      link: link || undefined,
+      pages: parsedPages.length > 0 ? parsedPages : undefined
     });
 
     res.status(201).json(resource);
@@ -234,18 +263,31 @@ router.get("/:id/download", async (req, res) => {
 
     // If file in GridFS, stream it
     if (resource.fileId) {
-      const downloadStream = gfsBucket.openDownloadStream(resource.fileId);
+      if (!gfsBucket) {
+        return res.status(500).json({ error: "GridFS not initialized" });
+      }
 
-      downloadStream.on("error", (error) => {
-        console.error("GridFS download error:", error);
+      try {
+        const objectId = typeof resource.fileId === 'string' 
+          ? new mongoose.Types.ObjectId(resource.fileId) 
+          : resource.fileId;
+
+        const downloadStream = gfsBucket.openDownloadStream(objectId);
+
+        downloadStream.on("error", (error) => {
+          console.error("GridFS download error:", error);
+          res.status(404).json({ message: "File not found" });
+        });
+
+        // Set appropriate headers for download
+        res.setHeader("Content-Type", resource.fileMime || "application/octet-stream");
+        res.setHeader("Content-Disposition", `attachment; filename="${resource.title}${path.extname(resource.title) ? "" : ".bin"}"`);
+
+        downloadStream.pipe(res);
+      } catch (e) {
+        console.error("Download stream error:", e);
         res.status(404).json({ message: "File not found" });
-      });
-
-      // Set appropriate headers for download
-      res.setHeader("Content-Type", resource.fileMime || "application/octet-stream");
-      res.setHeader("Content-Disposition", `attachment; filename="${resource.title}${path.extname(resource.title) ? "" : ".bin"}"`);
-
-      downloadStream.pipe(res);
+      }
     } else {
       res.status(404).json({ message: "No file available" });
     }
@@ -313,31 +355,45 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    const { title, description, type, course, link } = req.body;
+    const { title, description, type, course, link, pages } = req.body;
     if (title) resource.title = title;
     if (description !== undefined) resource.description = description;
     if (type) resource.type = type;
     if (course !== undefined) resource.course = course;
 
+    // Parse pages if provided
+    if (pages) {
+      try {
+        resource.pages = typeof pages === 'string' ? JSON.parse(pages) : pages;
+      } catch (e) {
+        console.warn("Failed to parse pages:", e);
+      }
+    }
+
     if (req.file && req.file.buffer) {
       const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
 
-      const uploadResult = await uploadToGridFS(
-        req.file.buffer,
-        req.file.originalname,
-        req.file.mimetype
-      );
+      try {
+        const uploadResult = await uploadToGridFS(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype
+        );
 
-      // Delete old file from GridFS
-      if (resource.fileId) {
-        await deleteFromGridFS(resource.fileId);
+        // Delete old file from GridFS
+        if (resource.fileId) {
+          await deleteFromGridFS(resource.fileId);
+        }
+
+        resource.fileId = uploadResult.fileId;
+        resource.fileSize = uploadResult.fileSize;
+        resource.fileMime = req.file.mimetype;
+        resource.type = resourceType;
+        resource.link = undefined; // clear link if file uploaded
+      } catch (uploadError) {
+        console.error("GridFS upload failed:", uploadError);
+        return res.status(500).json({ error: "File upload failed: " + uploadError.message });
       }
-
-      resource.fileId = uploadResult.fileId;
-      resource.fileSize = uploadResult.fileSize;
-      resource.fileMime = req.file.mimetype;
-      resource.type = resourceType;
-      resource.link = undefined; // clear link if file uploaded
     } else if (link) {
       // Switch to external link: delete GridFS file if present
       if (resource.fileId) {
