@@ -6,26 +6,64 @@ import { authenticate } from "../middleware/authenticate.js";
 import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
+import path from "path";
 
 const router = express.Router();
 
 // Cloudinary must already be configured in index.js via cloudinary.v2.config(...)
-// We'll use the v2 API here:
 const cl = cloudinary.v2;
 
 // Use memory storage so we can stream directly to Cloudinary
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit (adjust as needed)
+  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit
 });
 
 const getResourceType = (mimeType = "", originalName = "") => {
-  const mimeNormalized = (mimeType || "").toLowerCase().trim();
-  const nameLower = (originalName || "").toLowerCase();
+  // Get file extension from originalName (most reliable)
+  const ext = path.extname((originalName || "")).toLowerCase();
+  
+  // Raw document/archive extensions (prioritized)
+  const rawExtensions = new Set([
+    ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx",
+    ".zip", ".rar", ".7z", ".txt", ".csv", ".rtf", ".json", ".xml",
+    ".py", ".js", ".java", ".cpp", ".ts", ".go", ".rb", ".php",
+    ".odt", ".ods", ".odp", ".pages", ".numbers", ".key"
+  ]);
 
-  // Explicit raw types (documents, archives, code)
-  const rawTypes = [
+  // Image extensions
+  const imageExtensions = new Set([
+    ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".bmp", ".ico"
+  ]);
+
+  // Video extensions
+  const videoExtensions = new Set([
+    ".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm", ".m4v"
+  ]);
+
+  // Audio extensions
+  const audioExtensions = new Set([
+    ".mp3", ".wav", ".aac", ".flac", ".m4a", ".ogg", ".wma", ".opus"
+  ]);
+
+  if (rawExtensions.has(ext)) {
+    return "raw";
+  }
+  if (imageExtensions.has(ext)) {
+    return "image";
+  }
+  if (videoExtensions.has(ext)) {
+    return "video";
+  }
+  if (audioExtensions.has(ext)) {
+    return "audio";
+  }
+
+  // Fallback: check mimetype
+  const mimeNormalized = (mimeType || "").toLowerCase().trim();
+
+  const rawMimes = [
     "application/pdf",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -40,37 +78,20 @@ const getResourceType = (mimeType = "", originalName = "") => {
     "text/csv"
   ];
 
-  // Fallback: check file extension if mimetype is unreliable
-  const rawExtensions = [
-    ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx",
-    ".zip", ".rar", ".7z", ".txt", ".csv", ".rtf", ".json", ".xml",
-    ".py", ".js", ".java", ".cpp", ".ts", ".go", ".rb"
-  ];
-
-  if (rawTypes.includes(mimeNormalized)) {
+  if (rawMimes.includes(mimeNormalized)) {
     return "raw";
   }
-
-  if (rawExtensions.some(ext => nameLower.endsWith(ext))) {
-    return "raw";
-  }
-
-  // Default to image for image mimetypes
   if (mimeNormalized.startsWith("image/")) {
     return "image";
   }
-
-  // Default to video for video mimetypes
   if (mimeNormalized.startsWith("video/")) {
     return "video";
   }
-
-  // Default to audio for audio mimetypes
   if (mimeNormalized.startsWith("audio/")) {
     return "audio";
   }
 
-  // Fallback to raw for unknown types
+  // Default to raw for safety
   return "raw";
 };
 
@@ -139,10 +160,17 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
     let fileSize = 0;
 
     if (req.file && req.file.buffer) {
+      const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
+
+      console.log("Uploading:", {
+        name: req.file.originalname,
+        mime: req.file.mimetype,
+        resourceType,
+        size: req.file.size
+      });
+
       // upload buffer to Cloudinary using upload_stream
       const uploadResult = await new Promise((resolve, reject) => {
-        const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
-
         const opts = {
           folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
           resource_type: resourceType,
@@ -151,17 +179,20 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
           overwrite: false
         };
 
-        console.log("Uploading:", {
-          name: req.file.originalname,
-          mime: req.file.mimetype,
-          resourceType
-        });
-
         const stream = cl.uploader.upload_stream(opts, (error, result) => {
-          if (error) return reject(error);
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            return reject(error);
+          }
           resolve(result);
         });
         streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+
+      console.log("Upload successful:", {
+        url: uploadResult.secure_url,
+        publicId: uploadResult.public_id,
+        resourceType: uploadResult.resource_type
       });
 
       fileUrl = uploadResult.secure_url || "";
@@ -222,6 +253,7 @@ router.get("/:id/download", async (req, res) => {
 
     const url = resource.fileUrl || "";
     if (!url) return res.status(404).json({ message: "No file available" });
+    
     // redirect (Cloudinary or external)
     return res.redirect(url);
   } catch (e) {
@@ -298,10 +330,10 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
     if (course !== undefined) resource.course = course;
 
     if (req.file && req.file.buffer) {
+      const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
+
       // upload new file to Cloudinary
       const uploadResult = await new Promise((resolve, reject) => {
-        const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
-
         const opts = {
           folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
           resource_type: resourceType,
@@ -311,7 +343,10 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
         };
 
         const stream = cl.uploader.upload_stream(opts, (error, result) => {
-          if (error) return reject(error);
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            return reject(error);
+          }
           resolve(result);
         });
         streamifier.createReadStream(req.file.buffer).pipe(stream);
@@ -322,7 +357,7 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
         try {
           await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
         } catch (er) {
-          // ignore deletion errors
+          console.warn("Failed to delete old asset:", er.message);
         }
       }
 
@@ -335,7 +370,9 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
       if (resource.cloudinaryPublicId) {
         try {
           await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
-        } catch (er) {}
+        } catch (er) {
+          console.warn("Failed to delete old asset:", er.message);
+        }
       }
       resource.cloudinaryPublicId = "";
       resource.fileUrl = link;
@@ -367,7 +404,7 @@ router.delete("/:id", authenticate, async (req, res) => {
       try {
         await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
       } catch (er) {
-        // ignore
+        console.warn("Failed to delete asset:", er.message);
       }
     }
     await resource.deleteOne();
@@ -418,7 +455,7 @@ router.delete("/:id/save", authenticate, async (req, res) => {
 });
 
 /**
- * GET /api/resources/library
+ * GET /api/resources/library/me
  * Get current user's saved resources (paginated)
  */
 router.get("/library/me", authenticate, async (req, res) => {
