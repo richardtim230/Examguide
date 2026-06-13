@@ -1,48 +1,43 @@
 import express from "express";
-import fs from "fs";
-import path from "path";
-import multer from "multer";
-import streamifier from "streamifier";
 import Resource from "../models/Resource.js";
 import UserLibrary from "../models/UserLibrary.js";
 import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
+import multer from "multer";
+import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 
 const router = express.Router();
 
-// Use Cloudinary v2 API
+// Cloudinary must already be configured in index.js via cloudinary.v2.config(...)
 const cl = cloudinary.v2;
 
-// Memory storage for direct streaming to Cloudinary
+// Use memory storage so we can stream directly to Cloudinary
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 200 * 1024 * 1024 } // 200MB
+  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit
 });
 
-// Helper to upload a buffer to Cloudinary
-async function uploadBufferToCloudinary(buffer, filename, options = {}) {
-  return new Promise((resolve, reject) => {
-    const opts = {
-      folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-      resource_type: "auto",
-      use_filename: true,
-      unique_filename: true,
-      overwrite: false,
-      ...options
-    };
-    const stream = cl.uploader.upload_stream(opts, (error, result) => {
-      if (error) return reject(error);
-      resolve(result);
-    });
-    streamifier.createReadStream(buffer).pipe(stream);
-  });
-}
+const getResourceType = (mimeType = "") => {
+  const rawTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.ms-powerpoint",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/zip",
+    "application/x-rar-compressed",
+    "text/plain"
+  ];
 
-/**
- * GET /api/resources
- */
+  return rawTypes.includes(mimeType) ? "raw" : "image";
+};
+
+// ============ NON-PARAMETERIZED ROUTES (must come first) ============
+
 router.get("/", async (req, res) => {
   try {
     const { q, type, course, uploader, page = 1, limit = 20, sort = "-createdAt" } = req.query;
@@ -56,15 +51,17 @@ router.get("/", async (req, res) => {
     }
     const pg = Math.max(1, parseInt(page, 10) || 1);
     const lim = Math.max(1, Math.min(200, parseInt(limit, 10) || 20));
+
     const [total, items] = await Promise.all([
       Resource.countDocuments(query),
       Resource.find(query)
         .sort(sort)
         .skip((pg - 1) * lim)
         .limit(lim)
-        .populate("uploadedBy", "fullname username email profilePic")
+        .populate("uploadedBy", "fullname username email")
         .lean()
     ]);
+
     res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
     console.error("GET /api/resources error:", e);
@@ -74,6 +71,7 @@ router.get("/", async (req, res) => {
 
 /**
  * GET /api/resources/courses
+ * distinct list of courses present in resources
  */
 router.get("/courses", async (req, res) => {
   try {
@@ -85,50 +83,100 @@ router.get("/courses", async (req, res) => {
 });
 
 /**
- * POST /api/resources
- * multipart/form-data: title (required), description, type, course, link, file, thumbnail
+ * POST /api/resources/upload-page
+ * Upload individual extracted page images to Cloudinary
+ * Auth required. Fields (multipart/form-data):
+ *  - file (image file - required)
+ *  - pageNumber (optional)
  */
-router.post("/", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { name: "thumbnail", maxCount: 1 }]), async (req, res) => {
+router.post("/upload-page", authenticate, upload.single("file"), async (req, res) => {
   try {
-    const { title, description = "", type = "other", course = "", link } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ error: "No file provided" });
+    }
+
+    const uploadResult = await new Promise((resolve, reject) => {
+      const opts = {
+        folder: `${process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"}/pages`,
+        resource_type: "image",
+        use_filename: true,
+        unique_filename: true,
+        quality: "auto",
+        format: "jpg"
+      };
+
+      const stream = cl.uploader.upload_stream(opts, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+
+    res.json({
+      url: uploadResult.secure_url,
+      publicId: uploadResult.public_id,
+      width: uploadResult.width,
+      height: uploadResult.height,
+      success: true
+    });
+  } catch (error) {
+    console.error("Page upload error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/resources/upload-file
+ * Upload file directly and auto-extract pages if PDF/DOCX
+ * Auth required. Fields (multipart/form-data):
+ *  - file (required)
+ *  - title (required)
+ *  - description (optional)
+ *  - type (optional)
+ *  - course (optional)
+ *  - extractPages (optional - "true" to extract pages for PDF/DOCX)
+ */
+router.post("/upload-file", authenticate, upload.single("file"), async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", extractPages } = req.body;
+    
     if (!title) return res.status(400).json({ message: "Title required" });
+    if (!req.file) return res.status(400).json({ message: "File required" });
 
     let fileUrl = "";
     let cloudinaryPublicId = "";
-    let thumbUrl = "";
-    let thumbPublicId = "";
     let fileMime = "";
     let fileSize = 0;
 
-    // Upload main file if provided
-    if (req.files && req.files.file && req.files.file[0]) {
-      const file = req.files.file[0];
-      const uploadResult = await uploadBufferToCloudinary(file.buffer, file.originalname, {
-        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"
-      });
-      fileUrl = uploadResult.secure_url || "";
-      cloudinaryPublicId = uploadResult.public_id || "";
-      fileSize = uploadResult.bytes || file.size || 0;
-      fileMime = file.mimetype || uploadResult.resource_type || "";
-    } else if (link) {
-      // external link
-      fileUrl = link;
-    }
+    const uploadResult = await new Promise((resolve, reject) => {
+      const resourceType = getResourceType(req.file.mimetype);
 
-    // Upload thumbnail if provided
-    if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
-      const t = req.files.thumbnail[0];
-      try {
-        const thumbResult = await uploadBufferToCloudinary(t.buffer, t.originalname, {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER ? `${process.env.CLOUDINARY_RESOURCES_FOLDER}/thumbnails` : "resources/thumbnails"
-        });
-        thumbUrl = thumbResult.secure_url || "";
-        thumbPublicId = thumbResult.public_id || "";
-      } catch (thumbErr) {
-        // non-fatal: log and continue without thumbnail
-        console.warn("Thumbnail upload failed:", thumbErr.message || thumbErr);
-      }
-    }
+      const opts = {
+        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+        resource_type: resourceType,
+        use_filename: true,
+        unique_filename: true,
+        overwrite: false
+      };
+
+      console.log("Uploading:", {
+        name: req.file.originalname,
+        mime: req.file.mimetype,
+        resourceType
+      });
+
+      const stream = cl.uploader.upload_stream(opts, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+
+    fileUrl = uploadResult.secure_url || "";
+    cloudinaryPublicId = uploadResult.public_id || "";
+    fileSize = uploadResult.bytes || req.file.size || 0;
+    fileMime = req.file.mimetype || uploadResult.resource_type || "";
 
     const resource = await Resource.create({
       title,
@@ -137,12 +185,87 @@ router.post("/", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { n
       course,
       fileUrl,
       cloudinaryPublicId,
-      thumbnailUrl: thumbUrl,
-      thumbnailPublicId: thumbPublicId,
       fileMime,
       fileSize,
-      uploadedBy: req.user.id
+      uploadedBy: req.user.id,
+      pages: [] // Client will handle page extraction
     });
+
+    res.status(201).json(resource);
+  } catch (e) {
+    console.error("POST /api/resources/upload-file error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * GET /api/resources/library/me
+ * Get current user's saved resources (paginated)
+ */
+router.get("/library/me", authenticate, async (req, res) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
+    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
+    const pg = Math.max(1, parseInt(page, 10));
+    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
+    const total = resourcesIds.length;
+    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
+    const items = await Resource.find({ _id: { $in: slice } })
+      .populate("uploadedBy", "fullname username")
+      .lean();
+    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ============ PARAMETERIZED ROUTES (must come last) ============
+
+/**
+ * POST /api/resources
+ * Auth required. Create resource with pages array or single file/link
+ * Fields (application/json):
+ *  - title (required)
+ *  - description (optional)
+ *  - type (optional - pdf, notes, video, etc)
+ *  - course (optional)
+ *  - pages (optional - array of page objects with imageUrl, cloudinaryPublicId, pageNumber)
+ *  - link (optional - external URL)
+ */
+router.post("/", authenticate, async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", pages = [], link } = req.body;
+    
+    if (!title) return res.status(400).json({ message: "Title required" });
+
+    // Build resource object
+    const resourceData = {
+      title,
+      description,
+      type,
+      course,
+      uploadedBy: req.user.id,
+      fileUrl: link || ""
+    };
+
+    // If pages array provided (for PDF/notes), store them
+    if (pages && pages.length > 0) {
+      resourceData.pages = pages.map((page, idx) => ({
+        pageNumber: page.pageNumber || idx + 1,
+        imageUrl: page.url || page.imageUrl,
+        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
+        width: page.width || 0,
+        height: page.height || 0
+      }));
+      resourceData.totalPages = pages.length;
+      // Set type to pdf or notes if not explicitly set
+      if (!type || type === "other") {
+        resourceData.type = "pdf";
+      }
+    }
+
+    const resource = await Resource.create(resourceData);
 
     res.status(201).json(resource);
   } catch (e) {
@@ -153,10 +276,13 @@ router.post("/", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { n
 
 /**
  * GET /api/resources/:id
+ * Details
  */
 router.get("/:id", async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id).populate("uploadedBy", "fullname username email profilePic").lean();
+    const resource = await Resource.findById(req.params.id)
+      .populate("uploadedBy", "fullname username email")
+      .lean();
     if (!resource) return res.status(404).json({ message: "Not found" });
     res.json(resource);
   } catch (e) {
@@ -166,7 +292,7 @@ router.get("/:id", async (req, res) => {
 
 /**
  * GET /api/resources/:id/download
- * redirect to Cloudinary or external link
+ * Increment downloads and redirect to Cloudinary URL or external link.
  */
 router.get("/:id/download", async (req, res) => {
   try {
@@ -178,8 +304,7 @@ router.get("/:id/download", async (req, res) => {
 
     const url = resource.fileUrl || "";
     if (!url) return res.status(404).json({ message: "No file available" });
-
-    // redirect to the hosted file (Cloudinary or external)
+    // redirect (Cloudinary or external)
     return res.redirect(url);
   } catch (e) {
     console.error("GET download error:", e);
@@ -189,6 +314,7 @@ router.get("/:id/download", async (req, res) => {
 
 /**
  * POST /api/resources/:id/favorite
+ * Toggle favorite for authenticated user
  */
 router.post("/:id/favorite", authenticate, async (req, res) => {
   try {
@@ -197,8 +323,11 @@ router.post("/:id/favorite", authenticate, async (req, res) => {
 
     const uid = req.user.id;
     const idx = (resource.favorites || []).findIndex(f => String(f) === String(uid));
-    if (idx === -1) resource.favorites.push(uid);
-    else resource.favorites.splice(idx, 1);
+    if (idx === -1) {
+      resource.favorites.push(uid);
+    } else {
+      resource.favorites.splice(idx, 1);
+    }
     await resource.save();
     res.json({ favorited: idx === -1, favoritesCount: resource.favorites.length });
   } catch (e) {
@@ -208,6 +337,7 @@ router.post("/:id/favorite", authenticate, async (req, res) => {
 
 /**
  * POST /api/resources/:id/rate
+ * Body: { rating: 1..5 }
  */
 router.post("/:id/rate", authenticate, async (req, res) => {
   try {
@@ -219,8 +349,11 @@ router.post("/:id/rate", authenticate, async (req, res) => {
     if (!resource) return res.status(404).json({ message: "Not found" });
 
     const existing = resource.ratings.find(rt => String(rt.user) === String(req.user.id));
-    if (existing) existing.rating = r;
-    else resource.ratings.push({ user: req.user.id, rating: r });
+    if (existing) {
+      existing.rating = r;
+    } else {
+      resource.ratings.push({ user: req.user.id, rating: r });
+    }
     await resource.save();
     res.json({ ratingAvg: resource.ratingAvg, ratingCount: resource.ratings.length });
   } catch (e) {
@@ -229,10 +362,10 @@ router.post("/:id/rate", authenticate, async (req, res) => {
 });
 
 /**
- * PUT /api/resources/:id (edit)
- * Allows replacing file/thumbnail (uploads new Cloudinary assets and tries to destroy previous ones)
+ * PUT /api/resources/:id
+ * Edit resource (owner or admin). If file present, upload to Cloudinary and replace.
  */
-router.put("/:id", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { name: "thumbnail", maxCount: 1 }]), async (req, res) => {
+router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
     if (!resource) return res.status(404).json({ message: "Not found" });
@@ -240,28 +373,46 @@ router.put("/:id", authenticate, upload.fields([{ name: "file", maxCount: 1 }, {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    const { title, description, type, course, link } = req.body;
+    const { title, description, type, course, link, pages = [] } = req.body;
     if (title) resource.title = title;
     if (description !== undefined) resource.description = description;
     if (type) resource.type = type;
     if (course !== undefined) resource.course = course;
 
-    // Replace file if provided
-    if (req.files && req.files.file && req.files.file[0]) {
-      const file = req.files.file[0];
-      const uploadResult = await uploadBufferToCloudinary(file.buffer, file.originalname, {
-        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"
+    if (req.file && req.file.buffer) {
+      // upload new file to Cloudinary
+      const uploadResult = await new Promise((resolve, reject) => {
+        const resourceType = getResourceType(req.file.mimetype);
+
+        const opts = {
+          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+          resource_type: resourceType,
+          use_filename: true,
+          unique_filename: true,
+          overwrite: false
+        };
+        const stream = cl.uploader.upload_stream(opts, (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
-      // try destroy existing
+
+      // delete old Cloudinary asset if present
       if (resource.cloudinaryPublicId) {
-        try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) { /* ignore */ }
+        try {
+          await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
+        } catch (er) {
+          // ignore deletion errors
+        }
       }
+
       resource.fileUrl = uploadResult.secure_url || "";
       resource.cloudinaryPublicId = uploadResult.public_id || "";
-      resource.fileSize = uploadResult.bytes || file.size || 0;
-      resource.fileMime = file.mimetype || uploadResult.resource_type || "";
+      resource.fileSize = uploadResult.bytes || req.file.size || 0;
+      resource.fileMime = req.file.mimetype || uploadResult.resource_type || "";
     } else if (link) {
-      // switch to external link: delete cloudinary asset if existed
+      // switching to external link: remove old Cloudinary asset if any
       if (resource.cloudinaryPublicId) {
         try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) {}
         resource.cloudinaryPublicId = "";
@@ -271,17 +422,16 @@ router.put("/:id", authenticate, upload.fields([{ name: "file", maxCount: 1 }, {
       resource.fileSize = 0;
     }
 
-    // Replace thumbnail if provided
-    if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
-      const t = req.files.thumbnail[0];
-      const thumbResult = await uploadBufferToCloudinary(t.buffer, t.originalname, {
-        folder: process.env.CLOUDINARY_RESOURCES_FOLDER ? `${process.env.CLOUDINARY_RESOURCES_FOLDER}/thumbnails` : "resources/thumbnails"
-      });
-      if (resource.thumbnailPublicId) {
-        try { await cl.uploader.destroy(resource.thumbnailPublicId, { resource_type: "image" }); } catch (er) {}
-      }
-      resource.thumbnailUrl = thumbResult.secure_url || "";
-      resource.thumbnailPublicId = thumbResult.public_id || "";
+    // Update pages if provided
+    if (pages && pages.length > 0) {
+      resource.pages = pages.map((page, idx) => ({
+        pageNumber: page.pageNumber || idx + 1,
+        imageUrl: page.url || page.imageUrl,
+        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
+        width: page.width || 0,
+        height: page.height || 0
+      }));
+      resource.totalPages = pages.length;
     }
 
     resource.updatedAt = new Date();
@@ -295,6 +445,7 @@ router.put("/:id", authenticate, upload.fields([{ name: "file", maxCount: 1 }, {
 
 /**
  * DELETE /api/resources/:id
+ * Owner or admin. Removes resource and Cloudinary asset if present.
  */
 router.delete("/:id", authenticate, async (req, res) => {
   try {
@@ -303,14 +454,28 @@ router.delete("/:id", authenticate, async (req, res) => {
     if (String(resource.uploadedBy) !== String(req.user.id) && req.user.role !== "admin") {
       return res.status(403).json({ message: "Forbidden" });
     }
-    // remove cloudinary assets if present
+
+    // Delete main file if present
     if (resource.cloudinaryPublicId) {
-      try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) {}
+      try {
+        await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
+      } catch (er) {
+        // ignore
+      }
     }
-    if (resource.thumbnailPublicId) {
-      try { await cl.uploader.destroy(resource.thumbnailPublicId, { resource_type: "image" }); } catch (er) {}
+
+    // Delete all page images if present
+    if (resource.pages && resource.pages.length > 0) {
+      for (const page of resource.pages) {
+        try {
+          await cl.uploader.destroy(page.cloudinaryPublicId, { resource_type: "image" });
+        } catch (er) {
+          // ignore individual page deletion errors
+        }
+      }
     }
-    await resource.remove();
+
+    await Resource.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -318,7 +483,8 @@ router.delete("/:id", authenticate, async (req, res) => {
 });
 
 /**
- * Save to / remove from library & library listing (same as before)
+ * POST /api/resources/:id/save
+ * Save resource to authenticated user's library (idempotent).
  */
 router.post("/:id/save", authenticate, async (req, res) => {
   try {
@@ -338,6 +504,10 @@ router.post("/:id/save", authenticate, async (req, res) => {
   }
 });
 
+/**
+ * DELETE /api/resources/:id/save
+ * Remove resource from authenticated user's library.
+ */
 router.delete("/:id/save", authenticate, async (req, res) => {
   try {
     const resourceId = req.params.id;
@@ -347,22 +517,6 @@ router.delete("/:id/save", authenticate, async (req, res) => {
       { new: true }
     );
     res.json({ removed: true, libraryCount: lib ? lib.resources.length : 0 });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-router.get("/library/me", authenticate, async (req, res) => {
-  try {
-    const { page = 1, limit = 20 } = req.query;
-    const lib = await UserLibrary.findOne({ user: req.user.id }).lean();
-    const resourcesIds = (lib && lib.resources) ? lib.resources : [];
-    const pg = Math.max(1, parseInt(page, 10));
-    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
-    const total = resourcesIds.length;
-    const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
-    const items = await Resource.find({ _id: { $in: slice } }).populate("uploadedBy", "fullname username").lean();
-    res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
