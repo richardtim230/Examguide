@@ -10,21 +10,16 @@ import cloudinary from "cloudinary";
 const router = express.Router();
 
 // Cloudinary must already be configured in index.js via cloudinary.v2.config(...)
-// We'll use the v2 API here:
 const cl = cloudinary.v2;
 
 // Use memory storage so we can stream directly to Cloudinary
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit (adjust as needed)
+  limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit
 });
 
-const getResourceType = (mimeType = "", originalName = "") => {
-  const mimeNormalized = (mimeType || "").toLowerCase().trim();
-  const nameLower = (originalName || "").toLowerCase();
-
-  // Explicit raw types (documents, archives, code)
+const getResourceType = (mimeType = "") => {
   const rawTypes = [
     "application/pdf",
     "application/msword",
@@ -35,43 +30,10 @@ const getResourceType = (mimeType = "", originalName = "") => {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/zip",
     "application/x-rar-compressed",
-    "application/x-7z-compressed",
-    "text/plain",
-    "text/csv"
+    "text/plain"
   ];
 
-  // Fallback: check file extension if mimetype is unreliable
-  const rawExtensions = [
-    ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx",
-    ".zip", ".rar", ".7z", ".txt", ".csv", ".rtf", ".json", ".xml",
-    ".py", ".js", ".java", ".cpp", ".ts", ".go", ".rb"
-  ];
-
-  if (rawTypes.includes(mimeNormalized)) {
-    return "raw";
-  }
-
-  if (rawExtensions.some(ext => nameLower.endsWith(ext))) {
-    return "raw";
-  }
-
-  // Default to image for image mimetypes
-  if (mimeNormalized.startsWith("image/")) {
-    return "image";
-  }
-
-  // Default to video for video mimetypes
-  if (mimeNormalized.startsWith("video/")) {
-    return "video";
-  }
-
-  // Default to audio for audio mimetypes
-  if (mimeNormalized.startsWith("audio/")) {
-    return "audio";
-  }
-
-  // Fallback to raw for unknown types
-  return "raw";
+  return rawTypes.includes(mimeType) ? "raw" : "image";
 };
 
 router.get("/", async (req, res) => {
@@ -119,61 +81,152 @@ router.get("/courses", async (req, res) => {
 });
 
 /**
- * POST /api/resources
+ * POST /api/resources/upload-page
+ * Upload individual extracted page images to Cloudinary
  * Auth required. Fields (multipart/form-data):
- *  - title (required)
- *  - description
- *  - type
- *  - course
- *  - link (optional external URL)
- *  - file (optional file upload)  <-- streamed to Cloudinary
+ *  - file (image file - required)
+ *  - pageNumber (optional)
  */
-router.post("/", authenticate, upload.single("file"), async (req, res) => {
+router.post("/upload-page", authenticate, upload.single("file"), async (req, res) => {
   try {
-    const { title, description = "", type = "other", course = "", link } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ error: "No file provided" });
+    }
+
+    const uploadResult = await new Promise((resolve, reject) => {
+      const opts = {
+        folder: `${process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"}/pages`,
+        resource_type: "image",
+        use_filename: true,
+        unique_filename: true,
+        quality: "auto",
+        format: "jpg"
+      };
+
+      const stream = cl.uploader.upload_stream(opts, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+
+    res.json({
+      url: uploadResult.secure_url,
+      publicId: uploadResult.public_id,
+      width: uploadResult.width,
+      height: uploadResult.height,
+      success: true
+    });
+  } catch (error) {
+    console.error("Page upload error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * POST /api/resources
+ * Auth required. Create resource with pages array or single file/link
+ * Fields (application/json):
+ *  - title (required)
+ *  - description (optional)
+ *  - type (optional - pdf, notes, video, etc)
+ *  - course (optional)
+ *  - pages (optional - array of page objects with imageUrl, cloudinaryPublicId, pageNumber)
+ *  - link (optional - external URL)
+ */
+router.post("/", authenticate, async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", pages = [], link } = req.body;
+    
     if (!title) return res.status(400).json({ message: "Title required" });
+
+    // Build resource object
+    const resourceData = {
+      title,
+      description,
+      type,
+      course,
+      uploadedBy: req.user.id,
+      fileUrl: link || ""
+    };
+
+    // If pages array provided (for PDF/notes), store them
+    if (pages && pages.length > 0) {
+      resourceData.pages = pages.map((page, idx) => ({
+        pageNumber: page.pageNumber || idx + 1,
+        imageUrl: page.url || page.imageUrl,
+        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
+        width: page.width || 0,
+        height: page.height || 0
+      }));
+      resourceData.totalPages = pages.length;
+      // Set type to pdf or notes if not explicitly set
+      if (!type || type === "other") {
+        resourceData.type = "pdf";
+      }
+    }
+
+    const resource = await Resource.create(resourceData);
+
+    res.status(201).json(resource);
+  } catch (e) {
+    console.error("POST /api/resources error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * POST /api/resources/upload-file
+ * Upload file directly and auto-extract pages if PDF/DOCX
+ * Auth required. Fields (multipart/form-data):
+ *  - file (required)
+ *  - title (required)
+ *  - description (optional)
+ *  - type (optional)
+ *  - course (optional)
+ *  - extractPages (optional - "true" to extract pages for PDF/DOCX)
+ */
+router.post("/upload-file", authenticate, upload.single("file"), async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", extractPages } = req.body;
+    
+    if (!title) return res.status(400).json({ message: "Title required" });
+    if (!req.file) return res.status(400).json({ message: "File required" });
 
     let fileUrl = "";
     let cloudinaryPublicId = "";
     let fileMime = "";
     let fileSize = 0;
 
-    if (req.file && req.file.buffer) {
-      // upload buffer to Cloudinary using upload_stream
-      const uploadResult = await new Promise((resolve, reject) => {
-        const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
+    const uploadResult = await new Promise((resolve, reject) => {
+      const resourceType = getResourceType(req.file.mimetype);
 
-        const opts = {
-          folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-          resource_type: resourceType,
-          use_filename: true,
-          unique_filename: true,
-          overwrite: false
-        };
+      const opts = {
+        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+        resource_type: resourceType,
+        use_filename: true,
+        unique_filename: true,
+        overwrite: false
+      };
 
-        console.log("Uploading:", {
-          name: req.file.originalname,
-          mime: req.file.mimetype,
-          resourceType
-        });
-
-        const stream = cl.uploader.upload_stream(opts, (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
-        });
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      console.log("Uploading:", {
+        name: req.file.originalname,
+        mime: req.file.mimetype,
+        resourceType
       });
 
-      fileUrl = uploadResult.secure_url || "";
-      cloudinaryPublicId = uploadResult.public_id || "";
-      fileSize = uploadResult.bytes || req.file.size || 0;
-      fileMime = req.file.mimetype || uploadResult.resource_type || "";
-    } else if (link) {
-      fileUrl = link;
-    } else {
-      // no file or link: allowed (maybe a note)
-      fileUrl = "";
-    }
+      const stream = cl.uploader.upload_stream(opts, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+
+    fileUrl = uploadResult.secure_url || "";
+    cloudinaryPublicId = uploadResult.public_id || "";
+    fileSize = uploadResult.bytes || req.file.size || 0;
+    fileMime = req.file.mimetype || uploadResult.resource_type || "";
 
     const resource = await Resource.create({
       title,
@@ -184,12 +237,13 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
       cloudinaryPublicId,
       fileMime,
       fileSize,
-      uploadedBy: req.user.id
+      uploadedBy: req.user.id,
+      pages: [] // Client will handle page extraction
     });
 
     res.status(201).json(resource);
   } catch (e) {
-    console.error("POST /api/resources error:", e);
+    console.error("POST /api/resources/upload-file error:", e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -200,7 +254,9 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
  */
 router.get("/:id", async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id).populate("uploadedBy", "fullname username email").lean();
+    const resource = await Resource.findById(req.params.id)
+      .populate("uploadedBy", "fullname username email")
+      .lean();
     if (!resource) return res.status(404).json({ message: "Not found" });
     res.json(resource);
   } catch (e) {
@@ -291,7 +347,7 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    const { title, description, type, course, link } = req.body;
+    const { title, description, type, course, link, pages = [] } = req.body;
     if (title) resource.title = title;
     if (description !== undefined) resource.description = description;
     if (type) resource.type = type;
@@ -300,7 +356,7 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
     if (req.file && req.file.buffer) {
       // upload new file to Cloudinary
       const uploadResult = await new Promise((resolve, reject) => {
-        const resourceType = getResourceType(req.file.mimetype, req.file.originalname);
+        const resourceType = getResourceType(req.file.mimetype);
 
         const opts = {
           folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
@@ -309,7 +365,6 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
           unique_filename: true,
           overwrite: false
         };
-
         const stream = cl.uploader.upload_stream(opts, (error, result) => {
           if (error) return reject(error);
           resolve(result);
@@ -333,14 +388,24 @@ router.put("/:id", authenticate, upload.single("file"), async (req, res) => {
     } else if (link) {
       // switching to external link: remove old Cloudinary asset if any
       if (resource.cloudinaryPublicId) {
-        try {
-          await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
-        } catch (er) {}
+        try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) {}
+        resource.cloudinaryPublicId = "";
       }
-      resource.cloudinaryPublicId = "";
       resource.fileUrl = link;
       resource.fileMime = "";
       resource.fileSize = 0;
+    }
+
+    // Update pages if provided
+    if (pages && pages.length > 0) {
+      resource.pages = pages.map((page, idx) => ({
+        pageNumber: page.pageNumber || idx + 1,
+        imageUrl: page.url || page.imageUrl,
+        cloudinaryPublicId: page.publicId || page.cloudinaryPublicId,
+        width: page.width || 0,
+        height: page.height || 0
+      }));
+      resource.totalPages = pages.length;
     }
 
     resource.updatedAt = new Date();
@@ -363,6 +428,8 @@ router.delete("/:id", authenticate, async (req, res) => {
     if (String(resource.uploadedBy) !== String(req.user.id) && req.user.role !== "admin") {
       return res.status(403).json({ message: "Forbidden" });
     }
+
+    // Delete main file if present
     if (resource.cloudinaryPublicId) {
       try {
         await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" });
@@ -370,7 +437,19 @@ router.delete("/:id", authenticate, async (req, res) => {
         // ignore
       }
     }
-    await resource.deleteOne();
+
+    // Delete all page images if present
+    if (resource.pages && resource.pages.length > 0) {
+      for (const page of resource.pages) {
+        try {
+          await cl.uploader.destroy(page.cloudinaryPublicId, { resource_type: "image" });
+        } catch (er) {
+          // ignore individual page deletion errors
+        }
+      }
+    }
+
+    await Resource.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -418,7 +497,7 @@ router.delete("/:id/save", authenticate, async (req, res) => {
 });
 
 /**
- * GET /api/resources/library
+ * GET /api/resources/library/me
  * Get current user's saved resources (paginated)
  */
 router.get("/library/me", authenticate, async (req, res) => {
@@ -430,7 +509,9 @@ router.get("/library/me", authenticate, async (req, res) => {
     const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
     const total = resourcesIds.length;
     const slice = resourcesIds.slice((pg - 1) * lim, (pg - 1) * lim + lim);
-    const items = await Resource.find({ _id: { $in: slice } }).populate("uploadedBy", "fullname username").lean();
+    const items = await Resource.find({ _id: { $in: slice } })
+      .populate("uploadedBy", "fullname username")
+      .lean();
     res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
     res.status(500).json({ error: e.message });
