@@ -103,7 +103,152 @@ router.get("/public/posts", async (req, res) => {
         res.status(500).json({ error: "Could not fetch posts." });
     }
 });
+router.post(
+    "/public/article-tasks/:postId/complete",
+    authenticate,
+    async (req, res) => {
+        try {
+            const { postId } = req.params;
 
+            const post = await Post.findById(postId);
+
+            if (!post) {
+                return res.status(404).json({
+                    error: "Post not found"
+                });
+            }
+
+            let points = 2;
+
+            switch (post.category) {
+                case "Academics":
+                    points = 5;
+                    break;
+
+                case "Opportunities":
+                    points = 5;
+                    break;
+
+                case "Tips & Hacks":
+                    points = 4;
+                    break;
+
+                case "Campus Life":
+                    points = 3;
+                    break;
+            }
+
+            const user = await User.findById(req.user.id);
+
+            if (!user) {
+                return res.status(404).json({
+                    error: "User not found"
+                });
+            }
+
+            if (!user.completedArticles) {
+                user.completedArticles = [];
+            }
+
+            const alreadyCompleted =
+                user.completedArticles.includes(postId);
+
+            if (alreadyCompleted) {
+                return res.status(400).json({
+                    error: "Article already completed"
+                });
+            }
+
+            user.completedArticles.push(postId);
+
+            user.points = (user.points || 0) + points;
+
+            await user.save();
+
+            return res.json({
+                success: true,
+                pointsAwarded: points,
+                totalPoints: user.points
+            });
+
+        } catch (err) {
+            console.error(err);
+
+            return res.status(500).json({
+                error: "Could not complete article task"
+            });
+        }
+    }
+);
+router.get("/public/article-tasks", async (req, res) => {
+    try {
+        const limit = Math.max(1, parseInt(req.query.limit) || 10);
+
+        const posts = await Post.find({
+            status: "Published"
+        })
+        .populate("author", "fullname username profilePic")
+        .sort({ date: -1 })
+        .limit(limit);
+
+        const articleTasks = posts.map(post => {
+            let points = 2;
+
+            switch (post.category) {
+                case "Academics":
+                    points = 5;
+                    break;
+
+                case "Opportunities":
+                    points = 5;
+                    break;
+
+                case "Tips & Hacks":
+                    points = 4;
+                    break;
+
+                case "Campus Life":
+                    points = 3;
+                    break;
+
+                default:
+                    points = 2;
+            }
+
+            return {
+                taskId: `article_${post._id}`,
+                postId: post._id,
+                title: post.title,
+                description: post.content
+                    ?.replace(/<[^>]*>/g, "")
+                    ?.substring(0, 180) + "...",
+                activityType: "article",
+                status: "active",
+                points,
+                category: post.category,
+                image: post.imageUrl,
+                createdAt: post.date,
+                meta: {
+                    url: `/blog/${post._id}`,
+                    readTime: Math.max(
+                        60,
+                        Math.ceil(
+                            (post.content?.split(" ").length || 200) / 200
+                        ) * 60
+                    )
+                }
+            };
+        });
+
+        res.json(articleTasks);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Could not generate article tasks."
+        });
+    }
+});
 router.get("/public/posts/:id", async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
