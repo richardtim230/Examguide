@@ -83,6 +83,12 @@ const UserSchema = new Schema({
   accountNumber: { type: String },
   idType: { type: String },
   creditPoints: { type: Number, default: 35 },
+  completedArticles: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post"
+    }
+],
   isPremium: { type: Boolean, default: false },
 
   // Activation keys / verification
