@@ -4,7 +4,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import sendBlogNotification from '../utils/sendBlogNotification.js';
-
+import { awardTaskPoints } from "../utils/awardTaskPoints.js";
 const router = express.Router();
 
 // ==========================================
