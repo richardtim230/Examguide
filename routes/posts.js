@@ -248,6 +248,22 @@ router.get("/public/article-tasks", async (req, res) => {
         });
     }
 });
+router.get("/public/posts/latest", async (req, res) => {
+  try {
+    const posts = await Post.find({
+      status: "Published"
+    })
+      .populate("author", "fullname username profilePic")
+      .sort({ date: -1 })
+      .limit(3);
+
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({
+      error: "Could not fetch latest posts"
+    });
+  }
+});
 router.get("/public/posts/:id", async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
