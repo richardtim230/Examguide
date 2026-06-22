@@ -233,7 +233,7 @@ router.get("/public/article-tasks", async (req, res) => {
                     readTime: Math.max(
                         60,
                         Math.ceil(
-                            (post.content?.split(" ").length || 200) / 200
+                            (post.content?.split(" ").length || 200) / 1000
                         ) * 60
                     )
                 }
