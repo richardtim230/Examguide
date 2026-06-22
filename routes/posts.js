@@ -229,7 +229,7 @@ router.get("/public/article-tasks", async (req, res) => {
                 image: post.imageUrl,
                 createdAt: post.date,
                 meta: {
-                    url: `/blog/${post._id}`,
+                    url: `/campus-news-update?id=${post._id}`,
                     readTime: Math.max(
                         60,
                         Math.ceil(
