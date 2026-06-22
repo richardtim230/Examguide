@@ -1,6 +1,7 @@
 import express from "express";
 import Task from "../models/Task.js";
 import User from "../models/User.js";
+import { awardTaskPoints } from "../utils/awardTaskPoints.js";
 import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
@@ -279,16 +280,42 @@ router.get("/user/:id", authenticate, async (req, res) => {
 router.patch("/:taskId", authenticate, async (req, res) => {
   try {
     const task = await Task.findById(req.params.taskId);
-    if (!task) return res.status(404).json({ error: "Task not found" });
 
-    if (task.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    if (
+      task.user.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
       return res.status(403).json({ message: "Forbidden" });
     }
 
+    const wasCompleted = task.status === "done";
+
     Object.assign(task, req.body);
-    if (req.body.status === "done" && !task.completedAt) task.completedAt = new Date();
+
+    if (req.body.status === "done" && !task.completedAt) {
+      task.completedAt = new Date();
+    }
+
     await task.save();
+
+    // Award points only once
+    if (!wasCompleted && task.status === "done") {
+      const user = await User.findById(task.user);
+
+      if (user) {
+        await awardTaskPoints(
+          user,
+          task.points || 0
+        );
+      }
+    }
+
     res.json(task);
+
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
