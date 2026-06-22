@@ -161,15 +161,14 @@ router.post(
 
             user.completedArticles.push(postId);
 
-            user.points = (user.points || 0) + points;
+const updatedUser = await awardTaskPoints(user, points);
 
-            await user.save();
-
-            return res.json({
-                success: true,
-                pointsAwarded: points,
-                totalPoints: user.points
-            });
+return res.json({
+    success: true,
+    pointsAwarded: points,
+    totalPoints: updatedUser.points,
+    totalCreditPoints: updatedUser.creditPoints
+});
 
         } catch (err) {
             console.error(err);
