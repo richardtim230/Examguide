@@ -917,20 +917,22 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
     const user = new User({
-      username,
-      password: hashed,
-      role: role || "student",
-      faculty: facultyId,
-      department: departmentId,
-      email: email || "",
-      level: level || "",
-      phone: phone || "",
-      fullname: fullname || "",
-      profilePic: profilePicUrl,
-      emailVerified: false, // <-- NEW
-      emailVerificationToken: verificationToken // <-- NEW
-    });
+  username,
+  password: hashed,
+  role: role || "student",
+  faculty: facultyId,
+  department: departmentId,
+  email: email || "",
+  level: level || "",
+  phone: phone || "",
+  fullname: fullname || "",
+  profilePic: profilePicUrl,
 
+  referredBy: ref || "",
+
+  emailVerified: false,
+  emailVerificationToken: verificationToken
+});
     await user.save();
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
@@ -963,7 +965,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
     if (email) {
-      const verifyUrl = `https//oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
+      const verifyUrl = `https://oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
         await client.sendEmail({
   From: "richardochuko@examguard.com.ng",
