@@ -22,6 +22,8 @@ import postmark from "postmark";
 import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
+    
+import User from "./models/User.js"; // adjust path if needed
 import OneSignal from "onesignal-node";
 // In your index.js, add:
 
@@ -937,33 +939,51 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
     // ---- AFFILIATE REFERRAL LOGIC ----
-    if (ref && typeof ref === "string" && ref.trim().length > 0) {
-      let Affiliate;
-      try {
-        Affiliate = require("../models/Affiliate.js").default || require("../models/Affiliate.js");
-      } catch (err) {
-        Affiliate = null;
+
+const referralId = (req.body.ref || req.body.referredBy || "").trim();
+
+// Only proceed when referralId is present and is a valid ObjectId
+if (referralId && mongoose.Types.ObjectId.isValid(referralId)) {
+  try {
+    // Prevent self-referral (just in case)
+    if (referralId === String(newUser._id)) {
+      console.warn("Self-referral attempt ignored for user:", newUser._id);
+    } else {
+      // Set referredBy on the created user if not already set
+      if (!newUser.referredBy) {
+        newUser.referredBy = referralId;
+        await newUser.save(); // persist referredBy link
       }
-      if (Affiliate) {
-        const affiliate = await Affiliate.findOne({ referralCode: ref.trim() });
-        if (affiliate) {
-          affiliate.referrals = affiliate.referrals || [];
-          const alreadyReferred = affiliate.referrals.some(
-            r => (r.email && r.email === user.email) || (r.username && r.username === user.username)
-          );
-          if (!alreadyReferred) {
-            affiliate.clicks = (affiliate.clicks || 0) + 1;
-            affiliate.referrals.push({
-              name: user.fullname,
-              email: user.email,
-              username: user.username,
-              referrals: 0
-            });
-            await affiliate.save();
+
+      // Update referrer's document atomically
+      const update = {
+        $inc: { creditPoints: 10, totalReferrals: 1 },
+        $push: {
+          referrals: newUser._id,
+          'rewardHistory.referrals': {
+            referredUser: newUser._id,
+            points: 10,
+            date: new Date()
           }
         }
+      };
+
+      const referrer = await User.findByIdAndUpdate(referralId, update, { new: true }).exec();
+
+      if (referrer) {
+        // Optionally: notify the referrer (if you have a notification function)
+        // await sendNotificationToUser(referralId, { title: 'You earned 10 points!', message: `You earned 10 points because ${newUser.fullname || newUser.username} registered using your referral.` });
+
+        console.log(`Credited 10 points to referrer ${referralId}. New points: ${referrer.creditPoints}`);
+      } else {
+        console.warn('Referral id provided but no user found with that id:', referralId);
       }
     }
+  } catch (err) {
+    // Log but do not break registration flow — we don't want referral update failure to block user registration
+    console.error('Failed to credit referrer:', err);
+  }
+}
     if (email) {
       const verifyUrl = `https://oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
