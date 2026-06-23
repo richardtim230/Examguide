@@ -936,50 +936,60 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     await user.save();
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
-    // ---- AFFILIATE REFERRAL LOGIC ----
-
-const referralId = (req.body.ref || req.body.referredBy || "").trim();
-
-// Only proceed when referralId is present and is a valid ObjectId
-if (referralId && mongoose.Types.ObjectId.isValid(referralId)) {
+// ======= Referral crediting (safe) =======
+if (ref && typeof ref === "string" && ref.trim().length > 0) {
   try {
-    // Prevent self-referral (just in case)
-    if (referralId === String(newUser._id)) {
-      console.warn("Self-referral attempt ignored for user:", newUser._id);
+    const refTrim = ref.trim();
+    let referrer = null;
+
+    // if it's a 24-char hex string assume it's an ObjectId, otherwise treat as referralCode
+    if (isObjectId(refTrim)) {
+      referrer = await User.findById(refTrim).exec();
     } else {
-      // Set referredBy on the created user if not already set
-      if (!newUser.referredBy) {
-        newUser.referredBy = referralId;
-        await newUser.save(); // persist referredBy link
-      }
+      referrer = await User.findOne({ referralCode: refTrim }).exec();
+    }
 
-      // Update referrer's document atomically
-      const update = {
-        $inc: { creditPoints: 10, totalReferrals: 1 },
-        $push: {
-          referrals: newUser._id,
-          'rewardHistory.referrals': {
-            referredUser: newUser._id,
-            points: 10,
-            date: new Date()
+    // If we found a referrer and it's not the same as the newly created user
+    if (referrer && String(referrer._id) !== String(user._id)) {
+
+      // Atomically update referrer only if they don't already have this user in their referrals
+      const updated = await User.findOneAndUpdate(
+        { _id: referrer._id, referrals: { $ne: user._id } }, // ensure no duplicate credit
+        {
+          $inc: { creditPoints: 10, totalReferrals: 1 },
+          $addToSet: { referrals: user._id },
+          $push: {
+            'rewardHistory.referrals': {
+              referredUser: user._id,
+              points: 10,
+              date: new Date()
+            }
           }
-        }
-      };
+        },
+        { new: true }
+      ).exec();
 
-      const referrer = await User.findByIdAndUpdate(referralId, update, { new: true }).exec();
-
-      if (referrer) {
-        // Optionally: notify the referrer (if you have a notification function)
-        // await sendNotificationToUser(referralId, { title: 'You earned 10 points!', message: `You earned 10 points because ${newUser.fullname || newUser.username} registered using your referral.` });
-
-        console.log(`Credited 10 points to referrer ${referralId}. New points: ${referrer.creditPoints}`);
+      if (updated) {
+        console.log(`Credited 10 points to referrer ${referrer._id}. New points: ${updated.creditPoints}`);
       } else {
-        console.warn('Referral id provided but no user found with that id:', referralId);
+        console.warn(`Referrer ${referrer._id} was not updated (maybe already credited for this user).`);
       }
+
+      // Ensure the created user has referredBy set (if not already)
+      if (!user.referredBy) {
+        user.referredBy = referrer._id;
+        // best-effort save, but don't throw registration off if it fails
+        try { await user.save(); } catch (e) { console.warn("Failed to persist user.referredBy:", e); }
+      }
+
+    } else {
+      // no referrer found or self-referral
+      if (!referrer) console.warn("Referral provided but no matching referrer found for:", refTrim);
+      else console.warn("Self-referral attempt ignored for user:", user._id);
     }
   } catch (err) {
-    // Log but do not break registration flow — we don't want referral update failure to block user registration
-    console.error('Failed to credit referrer:', err);
+    console.error("Failed to credit referrer:", err);
+    // Do not block user registration — registration already succeeded
   }
 }
     if (email) {
