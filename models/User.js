@@ -103,10 +103,11 @@ const UserSchema = new Schema({
     index: true
   },
 
-  referredBy: {
+    referredBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    default: null
+    default: null,
+    set: v => (v === '' ? undefined : v)
   },
 
   totalReferrals: {
