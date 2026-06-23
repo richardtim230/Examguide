@@ -1,6 +1,7 @@
 import express from "express";
 import BloggerDashboard from "../models/BloggerDashboard.js";
 import multer from "multer";
+import Post from "../models/Post.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import path from "path";
 import fs from "fs";
@@ -147,24 +148,36 @@ router.post("/posts", authenticate, async (req, res) => {
 
 
 // In routes/bloggerDashboard.js
-router.patch('/admin/posts/:postId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
-  try {
-    const { approved, status } = req.body;
-    const dashboards = await BloggerDashboard.find({});
-    let found = false, post = null, dash = null;
-    for (const d of dashboards) {
-      const p = d.posts.id(req.params.postId);
-      if (p) { post = p; dash = d; found = true; break; }
+router.patch(
+  "/admin/posts/:id/approval",
+  authenticate,
+  authorizeRole("admin", "superadmin"),
+  async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+
+      if (!post) {
+        return res.status(404).json({
+          message: "Post not found"
+        });
+      }
+
+      post.approved = true;
+      post.status = "Published"; // optional
+
+      await post.save();
+
+      res.json({
+        message: "Post approved successfully",
+        post
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message || "Server error"
+      });
     }
-    if (!found) return res.status(404).json({ message: 'Post not found' });
-    if (typeof approved !== 'undefined') post.approved = approved;
-    if (status) post.status = status;
-    await dash.save();
-    return res.json(post);
-  } catch (e) {
-    res.status(500).json({ error: 'Could not update post approval.' });
   }
-});
+);
     
 
 // Helper: Validate ObjectId
@@ -679,32 +692,32 @@ router.patch("/like-comment/:postId/:commentId", async (req, res) => {
     res.status(500).json({ error: "Could not like comment" });
   }
 });
-router.delete("/posts/:id", authenticate, async (req, res) => {
-  try {
-    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+router.delete(
+  "/admin/posts/:id/reject",
+  authenticate,
+  authorizeRole("admin", "superadmin"),
+  async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
 
-    const postId = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-      return res.status(400).json({ error: "Invalid post ID" });
+      if (!post) {
+        return res.status(404).json({
+          message: "Post not found"
+        });
+      }
+
+      await post.deleteOne();
+
+      res.json({
+        message: "Post rejected and deleted successfully"
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message || "Server error"
+      });
     }
-
-    // Find index of the post
-    const postIndex = dashboard.posts.findIndex(
-      p => p._id.toString() === postId
-    );
-    if (postIndex === -1) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-
-    dashboard.posts.splice(postIndex, 1); // Remove the post
-    await dashboard.save();
-    res.json({ message: "Post deleted" });
-  } catch (err) {
-    console.error("Delete post error:", err);
-    res.status(500).json({ error: "Could not delete post." });
   }
-});
+);
 
 // ==== SELLER ENDPOINTS ====
 
