@@ -103,13 +103,21 @@ const UserSchema = new Schema({
     index: true
   },
 
-    referredBy: {
+      referredBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
     default: null,
-    set: v => (v === '' ? undefined : v)
-  },
+    set: v => {
+      // treat explicit empty/blank values as undefined
+      if (v === '' || v === null || typeof v === 'undefined') return undefined;
 
+      // allow a proper 24-char hex string (ObjectId)
+      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+
+      // if it's not a valid ObjectId (eg: referralCode like "EG54272972"), do not attempt cast
+      return undefined;
+    }
+  },
   totalReferrals: {
     type: Number,
     default: 0
