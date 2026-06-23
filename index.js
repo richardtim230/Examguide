@@ -22,8 +22,6 @@ import postmark from "postmark";
 import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
-    
-import User from "./models/User.js"; // adjust path if needed
 import OneSignal from "onesignal-node";
 // In your index.js, add:
 
