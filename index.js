@@ -936,25 +936,26 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     await user.save();
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
-// ======= Referral crediting (safe) =======
+// --- Safe referral resolution and credit (after user.save()) ---
 if (ref && typeof ref === "string" && ref.trim().length > 0) {
   try {
-    const refTrim = ref.trim();
-    let referrer = null;
+    const rawRef = ref.trim();
+    const looksLikeObjectId = v => typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
 
-    // if it's a 24-char hex string assume it's an ObjectId, otherwise treat as referralCode
-    if (isObjectId(refTrim)) {
-      referrer = await User.findById(refTrim).exec();
-    } else {
-      referrer = await User.findOne({ referralCode: refTrim }).exec();
+    // Resolve the referrer user (try ID first, fallback to referralCode)
+    let referrer = null;
+    if (looksLikeObjectId(rawRef)) {
+      referrer = await User.findById(rawRef).exec();
+    }
+    if (!referrer) {
+      // referralCode in DB is uppercase; normalize
+      referrer = await User.findOne({ referralCode: rawRef.toUpperCase() }).exec();
     }
 
-    // If we found a referrer and it's not the same as the newly created user
     if (referrer && String(referrer._id) !== String(user._id)) {
-
-      // Atomically update referrer only if they don't already have this user in their referrals
+      // Atomically update the referrer if they don't already have this user in referrals
       const updated = await User.findOneAndUpdate(
-        { _id: referrer._id, referrals: { $ne: user._id } }, // ensure no duplicate credit
+        { _id: referrer._id, referrals: { $ne: user._id } },
         {
           $inc: { creditPoints: 10, totalReferrals: 1 },
           $addToSet: { referrals: user._id },
@@ -972,24 +973,21 @@ if (ref && typeof ref === "string" && ref.trim().length > 0) {
       if (updated) {
         console.log(`Credited 10 points to referrer ${referrer._id}. New points: ${updated.creditPoints}`);
       } else {
-        console.warn(`Referrer ${referrer._id} was not updated (maybe already credited for this user).`);
+        console.warn(`Referrer ${referrer._id} not updated (maybe already credited).`);
       }
 
-      // Ensure the created user has referredBy set (if not already)
+      // Persist referredBy as the referrer's ObjectId (never the raw code)
       if (!user.referredBy) {
         user.referredBy = referrer._id;
-        // best-effort save, but don't throw registration off if it fails
-        try { await user.save(); } catch (e) { console.warn("Failed to persist user.referredBy:", e); }
+        try { await user.save(); } catch (err) { console.warn("Failed to persist user.referredBy:", err); }
       }
-
     } else {
-      // no referrer found or self-referral
-      if (!referrer) console.warn("Referral provided but no matching referrer found for:", refTrim);
-      else console.warn("Self-referral attempt ignored for user:", user._id);
+      if (!referrer) console.warn("Referral provided but no user found for:", rawRef);
+      else console.warn("Ignored self-referral attempt for user:", user._id);
     }
   } catch (err) {
     console.error("Failed to credit referrer:", err);
-    // Do not block user registration — registration already succeeded
+    // do not block registration flow
   }
 }
     if (email) {
