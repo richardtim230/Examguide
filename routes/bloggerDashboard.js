@@ -147,13 +147,14 @@ router.post("/posts", authenticate, async (req, res) => {
 });
 
 
-// In routes/bloggerDashboard.js
 router.patch(
   "/admin/posts/:id/approval",
   authenticate,
   authorizeRole("admin", "superadmin"),
   async (req, res) => {
     try {
+      const { approved } = req.body;
+
       const post = await Post.findById(req.params.id);
 
       if (!post) {
@@ -162,15 +163,18 @@ router.patch(
         });
       }
 
-      post.approved = true;
-      post.status = "Published"; // optional
+      post.approved = approved;
+      post.status = approved ? "Published" : "Draft";
 
       await post.save();
 
       res.json({
-        message: "Post approved successfully",
+        message: approved
+          ? "Post approved successfully"
+          : "Post rejected successfully",
         post
       });
+
     } catch (err) {
       res.status(500).json({
         message: err.message || "Server error"
