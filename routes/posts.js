@@ -82,18 +82,35 @@ router.get("/public/posts/academics", async (req, res) => {
 // 2. PARAMETERIZED ROUTES (Put these last)
 // ==========================================
 
+// ==========================================
+// 2. PARAMETERIZED ROUTES (Put these last)
+// ==========================================
+
 router.get("/public/posts", async (req, res) => {
     const category = req.query.category;
+    // FETCH CHECK: Support both ?author=ID and ?id=ID from the frontend query parameters
+    const author = req.query.author || req.query.id; 
+    
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 20);
+    
     const filter = { status: "Published" };
+    
+    // Apply category filter if requested
     if (category && category !== "All") filter.category = category;
+    
+    // NEW: Apply author validation and filtering to prevent CastErrors or mixed-feed leaks
+    if (author && mongoose.Types.ObjectId.isValid(author)) {
+        filter.author = author;
+    }
+
     try {
         const posts = await Post.find(filter)
             .populate("author", "fullname username profilePic")
             .sort({ date: -1 })
             .skip((page - 1) * limit)
             .limit(limit);
+            
         res.json(posts.map(post => ({
             ...post.toObject(),
             authorName: post.author?.fullname || post.author?.username || "",
@@ -103,6 +120,7 @@ router.get("/public/posts", async (req, res) => {
         res.status(500).json({ error: "Could not fetch posts." });
     }
 });
+
 router.post(
     "/public/article-tasks/:postId/complete",
     authenticate,
