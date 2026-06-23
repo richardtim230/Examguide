@@ -251,7 +251,27 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
     res.status(500).json({ error: 'Could not update user approval.' });
   }
 });
+router.get("/me", authenticate, async (req, res) => {
+  try {
+    const user = await Users.findById(req.user.id)
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .select("-password");
 
+    if (!user)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({
+      user: {
+        ...user.toObject(),
+        faculty: user.faculty?.name || "",
+        department: user.department?.name || ""
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 // GET user by id (for author lookup, with account/payment/contact details)
 router.get("/:id", async (req, res) => {
   try {
