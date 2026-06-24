@@ -311,7 +311,7 @@ router.post("/posts", authenticate, async (req, res) => {
         const { title, content, category, subject, topic, images, status = "Draft" } = req.body;
         if (!title || !content) return res.status(400).json({ error: "Title and content required" });
 
-        const allowedCategories = ["Campus Life", "Academics", "Tips & Hacks", "Opportunities", "Events", "General"];
+        const allowedCategories = ["Campus Life", "Academics", "Tips & Hacks", "Opportunities", "Scholarships", "Students Only", "Public", "Events", "General"];
         const safeCategory = allowedCategories.includes(category) ? category : "General";
 
         const newPost = new Post({
