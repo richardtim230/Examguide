@@ -103,18 +103,13 @@ const UserSchema = new Schema({
     index: true
   },
 
-      referredBy: {
+  referredBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
     default: null,
     set: v => {
-      // treat explicit empty/blank values as undefined
       if (v === '' || v === null || typeof v === 'undefined') return undefined;
-
-      // allow a proper 24-char hex string (ObjectId)
       if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
-
-      // if it's not a valid ObjectId (eg: referralCode like "EG54272972"), do not attempt cast
       return undefined;
     }
   },
@@ -141,6 +136,36 @@ const UserSchema = new Schema({
     type: Schema.Types.Mixed,
     ref: "Department",
     default: null
+  },
+
+  // ============================================
+  // USER TYPE (new)
+  // - Separates academic/account type (student/post_utme/alumni/staff/guest) from role/permissions
+  // ============================================
+  userType: {
+    type: String,
+    enum: ["student", "post_utme", "alumni", "staff", "guest"],
+    default: "student",
+    index: true
+  },
+
+  // ============================================
+  // INSTITUTION (new)
+  // - Reference to an Institution document to support multiple institutions
+  // ============================================
+  institution: {
+    type: Schema.Types.ObjectId,
+    ref: "Institution",
+    default: null,
+    index: true,
+    set: v => {
+      // Accept null/undefined/empty => undefined
+      if (v === '' || v === null || typeof v === 'undefined') return undefined;
+      // If looks like a 24-char ObjectId string, accept it
+      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+      // Otherwise leave it as-is (backend should validate), but do not try to cast unexpected formats
+      return v;
+    }
   },
 
   // ============================================
@@ -302,11 +327,6 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Listing"
   }],
-
-  institution: {
-    type: String,
-    default: ""
-  },
 
   points: {
     type: Number,
