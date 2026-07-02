@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.3.0",
-    "@google-cloud/vision": "^3.4.0",
+    "@google-cloud/vision": "4.x",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.3.0",
