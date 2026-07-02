@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import Institution from "./models/Institution.js";
 import DeviceRegistration from "./models/DeviceRegistration.js";
 import cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
@@ -824,10 +825,7 @@ app.get('/api/proxy', async (req, res) => {
   }
 });
 
-
-
-// Registration endpoint with auto-create for faculty/department
-// Registration endpoint with auto-create for faculty/department
+   
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     // DEVICE CHECK START
@@ -837,8 +835,6 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
     const regExists = await DeviceRegistration.findOne({ deviceId });
     if (regExists) {
-      // Optionally, you could even look up the user:
-      // await User.findById(regExists.userId)
       return res.status(403).json({ message: "This device has already been used to register an account. Multiple registrations per device are not permitted." });
     }
 
@@ -852,18 +848,35 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       faculty,
       department,
       fullname,
-      ref
+      ref,
+      institution, // new: expected from frontend (e.g., "OAU" or ObjectId)
+      userType // new: account type (student | post_utme | alumni | staff | guest)
     } = req.body;
 
-    if (!username || !password)
-      return res.status(400).json({message: "All fields required"});
-    if (username.length < 3)
-      return res.status(400).json({message: "Username must be at least 3 characters"});
-    const exists = await User.findOne({username});
-    if (exists)
-      return res.status(409).json({message: "Username already exists"});
+    // Basic validation
+    if (!username || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+    if (username.length < 3) {
+      return res.status(400).json({ message: "Username must be at least 3 characters" });
+    }
+
+    // Validate userType and set default
+    const ALLOWED_USER_TYPES = ["student", "post_utme", "alumni", "staff", "guest"];
+    const finalUserType = (typeof userType === "string" && ALLOWED_USER_TYPES.includes(userType)) ? userType : "student";
+
+    // Check username/email uniqueness
+    const exists = await User.findOne({ username });
+    if (exists) return res.status(409).json({ message: "Username already exists" });
+    if (email) {
+      const emailExists = await User.findOne({ email: (email || "").toLowerCase() });
+      if (emailExists) return res.status(409).json({ message: "Email already in use" });
+    }
+
+    // Hash password
     const hashed = await bcrypt.hash(password, 12);
 
+    // Profile picture handling
     let profilePicUrl = "";
     if (req.file) {
       profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
@@ -882,14 +895,14 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
 
     // --- PATCH: Auto-create faculty/department if string name given ---
-    function isObjectId(v) {
+    function looksLikeObjectId(v) {
       return typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
     }
     let facultyId = null;
     let departmentId = null;
 
     if (faculty && faculty !== "") {
-      if (isObjectId(faculty)) {
+      if (looksLikeObjectId(faculty)) {
         const fac = await Faculty.findById(faculty);
         if (!fac) return res.status(400).json({ message: "Faculty not found." });
         facultyId = faculty;
@@ -900,7 +913,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
     if (department && department !== "") {
-      if (isObjectId(department)) {
+      if (looksLikeObjectId(department)) {
         const dept = await Department.findById(department);
         if (!dept) return res.status(400).json({ message: "Department not found." });
         departmentId = department;
@@ -913,148 +926,136 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
+    // --- NEW: Resolve / create Institution if provided (accepts name or ObjectId) ---
+    let institutionDoc = null;
+    if (institution && institution !== "") {
+      if (looksLikeObjectId(institution)) {
+        institutionDoc = await Institution.findById(institution);
+        if (!institutionDoc) {
+          return res.status(400).json({ message: "Institution not found." });
+        }
+      } else if (typeof institution === "string") {
+        const instName = institution.trim();
+        if (instName.length > 0) {
+          // Prefer a static helper if available
+          if (typeof Institution.findOrCreateByName === "function") {
+            institutionDoc = await Institution.findOrCreateByName(instName);
+          } else {
+            // Fallback: case-insensitive find or create
+            institutionDoc = await Institution.findOne({ name: { $regex: `^${instName}$`, $options: "i" } }).collation({ locale: "en", strength: 2 }).exec();
+            if (!institutionDoc) {
+              institutionDoc = await Institution.create({ name: instName, abbreviation: instName.toUpperCase() });
+            }
+          }
+        }
+      }
+    } else {
+      // If frontend didn't provide institution, you may want to set a default here (optional).
+      // For now, we don't force a default; comment/uncomment below to assign a default automatically:
+      // institutionDoc = await Institution.findOne({ isDefault: true }) || null;
+    }
+
     // --- EMAIL VERIFICATION LOGIC ---
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
-    const user = new User({
-  username,
-  password: hashed,
-  role: role || "student",
-  faculty: facultyId,
-  department: departmentId,
-  email: email || "",
-  level: level || "",
-  phone: phone || "",
-  fullname: fullname || "",
-  profilePic: profilePicUrl,
+    const userPayload = {
+      username,
+      password: hashed,
+      role: role || "student",
+      faculty: facultyId,
+      department: departmentId,
+      email: email || "",
+      level: level || "",
+      phone: phone || "",
+      fullname: fullname || "",
+      profilePic: profilePicUrl,
+      // store referredBy as blank for now; referral resolution will populate actual ObjectId below
+      referredBy: undefined,
+      emailVerified: false,
+      emailVerificationToken: verificationToken,
+      userType: finalUserType,
+      institution: institutionDoc ? institutionDoc._id : undefined
+    };
 
-  referredBy: ref || "",
-
-  emailVerified: false,
-  emailVerificationToken: verificationToken
-});
+    const user = new User(userPayload);
     await user.save();
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
-// --- Safe referral resolution and credit (after user.save()) ---
-if (ref && typeof ref === "string" && ref.trim().length > 0) {
-  try {
-    const rawRef = ref.trim();
-    const looksLikeObjectId = v => typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
+    // --- Safe referral resolution and credit (after user.save()) ---
+    if (ref && typeof ref === "string" && ref.trim().length > 0) {
+      try {
+        const rawRef = ref.trim();
+        const looksLikeObjectId = v => typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
 
-    // Resolve the referrer user (try ID first, fallback to referralCode)
-    let referrer = null;
-    if (looksLikeObjectId(rawRef)) {
-      referrer = await User.findById(rawRef).exec();
-    }
-    if (!referrer) {
-      // referralCode in DB is uppercase; normalize
-      referrer = await User.findOne({ referralCode: rawRef.toUpperCase() }).exec();
-    }
+        // Resolve the referrer user (try ID first, fallback to referralCode)
+        let referrer = null;
+        if (looksLikeObjectId(rawRef)) {
+          referrer = await User.findById(rawRef).exec();
+        }
+        if (!referrer) {
+          // referralCode in DB is uppercase; normalize
+          referrer = await User.findOne({ referralCode: rawRef.toUpperCase() }).exec();
+        }
 
-    if (referrer && String(referrer._id) !== String(user._id)) {
-      // Atomically update the referrer if they don't already have this user in referrals
-      const updated = await User.findOneAndUpdate(
-        { _id: referrer._id, referrals: { $ne: user._id } },
-        {
-          $inc: { creditPoints: 10, totalReferrals: 1 },
-          $addToSet: { referrals: user._id },
-          $push: {
-            'rewardHistory.referrals': {
-              referredUser: user._id,
-              points: 10,
-              date: new Date()
-            }
+        if (referrer && String(referrer._id) !== String(user._id)) {
+          // Atomically update the referrer if they don't already have this user in referrals
+          const updated = await User.findOneAndUpdate(
+            { _id: referrer._id, referrals: { $ne: user._id } },
+            {
+              $inc: { creditPoints: 10, totalReferrals: 1 },
+              $addToSet: { referrals: user._id },
+              $push: {
+                'rewardHistory.referrals': {
+                  referredUser: user._id,
+                  points: 10,
+                  date: new Date()
+                }
+              }
+            },
+            { new: true }
+          ).exec();
+
+          if (updated) {
+            console.log(`Credited 10 points to referrer ${referrer._id}. New points: ${updated.creditPoints}`);
+          } else {
+            console.warn(`Referrer ${referrer._id} not updated (maybe already credited).`);
           }
-        },
-        { new: true }
-      ).exec();
 
-      if (updated) {
-        console.log(`Credited 10 points to referrer ${referrer._id}. New points: ${updated.creditPoints}`);
-      } else {
-        console.warn(`Referrer ${referrer._id} not updated (maybe already credited).`);
+          // Persist referredBy as the referrer's ObjectId (never the raw code)
+          if (!user.referredBy) {
+            user.referredBy = referrer._id;
+            try { await user.save(); } catch (err) { console.warn("Failed to persist user.referredBy:", err); }
+          }
+        } else {
+          if (!referrer) console.warn("Referral provided but no user found for:", rawRef);
+          else console.warn("Ignored self-referral attempt for user:", user._id);
+        }
+      } catch (err) {
+        console.error("Failed to credit referrer:", err);
+        // do not block registration flow
       }
-
-      // Persist referredBy as the referrer's ObjectId (never the raw code)
-      if (!user.referredBy) {
-        user.referredBy = referrer._id;
-        try { await user.save(); } catch (err) { console.warn("Failed to persist user.referredBy:", err); }
-      }
-    } else {
-      if (!referrer) console.warn("Referral provided but no user found for:", rawRef);
-      else console.warn("Ignored self-referral attempt for user:", user._id);
     }
-  } catch (err) {
-    console.error("Failed to credit referrer:", err);
-    // do not block registration flow
-  }
-}
+
+    // Send verification email if email provided
     if (email) {
       const verifyUrl = `https://oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
         await client.sendEmail({
-  From: "richardochuko@examguard.com.ng",
-  To: user.email,
-  Subject: "Verify your Email - Welcome to OAU ExamGuard",
-  HtmlBody: `
-<!DOCTYPE html>
-<html lang="en" style="background:#f3f7fb;">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Verify Your Email | OAU ExamGuard</title>
-  <style>
-    body {background:#f3f7fb;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
-    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px #276ef11a;padding:40px 24px 28px 24px;}
-    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px #276ef11a;background:#fff;}
-    .title {color:#276EF1;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
-    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
-    .button {display:block;margin:38px auto 15px auto;padding:16px 0;width:90%;max-width:330px;background:linear-gradient(90deg,#276EF1 60%,#003366 100%);color:#fff;text-align:center;text-decoration:none;font-size:1.13rem;font-weight:bold;border-radius:999px;letter-spacing:0.02em;box-shadow:0 2px 10px #276ef140;}
-    .button:hover {background:linear-gradient(90deg,#003366 60%,#276EF1 100%);}
-    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
-    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
-    .link {word-break:break-all;color:#276EF1;text-decoration:underline;}
-    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
-    .socials {text-align:center;margin-top:18px;}
-    .socials a {display:inline-block;margin:0 8px;}
-    .socials img {width:32px;height:32px;}
-    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <img class="logo" src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
-    <div class="title">Verify your Email Address</div>
-    <div class="subtitle">
-      Hi <b>${user.fullname || user.username},</b>
-    </div>
-    <div class="subtitle" style="font-size:1.01rem;">
-      Thank you for registering with <b>OAU ExamGuard Nigeria</b>!<br>
-      Please verify your email to activate your account and access all features.
-    </div>
-    <a href="${verifyUrl}" class="button" target="_blank">Verify My Email</a>
-    <div class="info">
-      If the button doesn't work, copy and paste this link into your browser:<br>
-      <span class="link">${verifyUrl}</span>
-    </div>
-    <div class="support">
-      Need help? <a class="link" style="color:#276EF1;" href="mailto:support@examguard.com.ng">Contact Support</a>
-    </div>
-    <div class="socials">
-      <a href="https://facebook.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
-      <a href="https://twitter.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
-      <a href="https://instagram.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
-    </div>
-    <div class="footer">
-      &copy; ${new Date().getFullYear()} OAU ExamGuard. All rights reserved.<br>
-      123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria
-    </div>
-  </div>
-</body>
-</html>
-`
-});
+          From: "richardochuko@examguard.com.ng",
+          To: user.email,
+          Subject: "Verify your Email - Welcome to OAU ExamGuard",
+          HtmlBody: `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+            <body>
+              <p>Hi ${user.fullname || user.username},</p>
+              <p>Please verify your email by clicking the link below:</p>
+              <p><a href="${verifyUrl}">Verify Email</a></p>
+            </body>
+            </html>
+          `
+        });
         console.log("Verification email sent to " + user.email);
       } catch (err) {
         console.error("Error sending verification email via Postmark:", err);
@@ -1067,9 +1068,9 @@ if (ref && typeof ref === "string" && ref.trim().length > 0) {
     });
   } catch (e) {
     console.error("Register error:", e);
-    res.status(500).json({message: "Server error"});
+    res.status(500).json({ message: "Server error" });
   }
-}); 
+});
 app.get('/api/og-preview', async (req, res) => {
     try {
         const { accessCode, courseCode, type } = req.query;
