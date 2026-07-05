@@ -521,6 +521,24 @@ UserSchema.virtual("socialMerged").get(function() {
   return this.social || {};
 });
 
+
+/**
+ * Indexes
+ */
+UserSchema.index(
+  { username: 1 },
+  { unique: true, background: true }
+);
+
+UserSchema.index(
+  { email: 1 },
+  { background: true }
+);
+
+UserSchema.index(
+  { referralCode: 1 },
+  { unique: true, sparse: true }
+);
 // ============================================
 // LECTURER DASHBOARD FIELDS
 // ============================================
@@ -576,23 +594,6 @@ results: [{
 }],
 
 totalSubmissions: { type: Number, default: 0 },
-averageScore: { type: Number, default: 0 }
-/**
- * Indexes
- */
-UserSchema.index(
-  { username: 1 },
-  { unique: true, background: true }
-);
-
-UserSchema.index(
-  { email: 1 },
-  { background: true }
-);
-
-UserSchema.index(
-  { referralCode: 1 },
-  { unique: true, sparse: true }
-);
+averageScore: { type: Number, default: 0 };
 
 export default model("User", UserSchema);
