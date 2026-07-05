@@ -419,7 +419,63 @@ const UserSchema = new Schema({
   meta: {
     type: Schema.Types.Mixed,
     default: {}
-  }
+  },
+  // ============================================
+// LECTURER DASHBOARD FIELDS
+// ============================================
+students: [{
+  type: Schema.Types.ObjectId,
+  ref: "User"
+}],
+
+courses: [{
+  _id: Schema.Types.ObjectId,
+  title: String,
+  code: String,
+  description: String,
+  level: String,
+  students: [Schema.Types.ObjectId],
+  questions: [Schema.Types.ObjectId],
+  createdAt: { type: Date, default: Date.now }
+}],
+
+questions: [{
+  _id: Schema.Types.ObjectId,
+  course: Schema.Types.ObjectId,
+  question: String,
+  type: String,
+  options: [String],
+  answer: String,
+  createdAt: { type: Date, default: Date.now }
+}],
+
+exams: [{
+  _id: Schema.Types.ObjectId,
+  course: Schema.Types.ObjectId,
+  title: String,
+  startDate: Date,
+  endDate: Date,
+  duration: Number,
+  levels: [String],
+  students: [Schema.Types.ObjectId],
+  questions: [Schema.Types.ObjectId],
+  status: String,
+  createdAt: { type: Date, default: Date.now }
+}],
+
+results: [{
+  _id: Schema.Types.ObjectId,
+  student: Schema.Types.ObjectId,
+  exam: Schema.Types.ObjectId,
+  score: Number,
+  grade: String,
+  submittedAt: Date,
+  duration: Number,
+  status: String
+}],
+
+totalSubmissions: { type: Number, default: 0 },
+averageScore: { type: Number, default: 0 },
 
 }, {
   timestamps: true
@@ -594,6 +650,6 @@ results: [{
 }],
 
 totalSubmissions: { type: Number, default: 0 },
-averageScore: { type: Number, default: 0 };
+averageScore: { type: Number, default: 0 }
 
 export default model("User", UserSchema);
