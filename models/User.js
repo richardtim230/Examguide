@@ -352,7 +352,6 @@ const UserSchema = new Schema({
   // REWARD HISTORY
   // ============================================
   rewardHistory: {
-
     practiced: [{
       key: String,
       points: Number,
@@ -420,62 +419,63 @@ const UserSchema = new Schema({
     type: Schema.Types.Mixed,
     default: {}
   },
+
   // ============================================
-// LECTURER DASHBOARD FIELDS
-// ============================================
-students: [{
-  type: Schema.Types.ObjectId,
-  ref: "User"
-}],
+  // LECTURER DASHBOARD FIELDS
+  // ============================================
+  students: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
 
-courses: [{
-  _id: Schema.Types.ObjectId,
-  title: String,
-  code: String,
-  description: String,
-  level: String,
-  students: [Schema.Types.ObjectId],
-  questions: [Schema.Types.ObjectId],
-  createdAt: { type: Date, default: Date.now }
-}],
+  courses: [{
+    _id: Schema.Types.ObjectId,
+    title: String,
+    code: String,
+    description: String,
+    level: String,
+    students: [Schema.Types.ObjectId],
+    questions: [Schema.Types.ObjectId],
+    createdAt: { type: Date, default: Date.now }
+  }],
 
-questions: [{
-  _id: Schema.Types.ObjectId,
-  course: Schema.Types.ObjectId,
-  question: String,
-  type: String,
-  options: [String],
-  answer: String,
-  createdAt: { type: Date, default: Date.now }
-}],
+  questions: [{
+    _id: Schema.Types.ObjectId,
+    course: Schema.Types.ObjectId,
+    question: String,
+    type: String,
+    options: [String],
+    answer: String,
+    createdAt: { type: Date, default: Date.now }
+  }],
 
-exams: [{
-  _id: Schema.Types.ObjectId,
-  course: Schema.Types.ObjectId,
-  title: String,
-  startDate: Date,
-  endDate: Date,
-  duration: Number,
-  levels: [String],
-  students: [Schema.Types.ObjectId],
-  questions: [Schema.Types.ObjectId],
-  status: String,
-  createdAt: { type: Date, default: Date.now }
-}],
+  exams: [{
+    _id: Schema.Types.ObjectId,
+    course: Schema.Types.ObjectId,
+    title: String,
+    startDate: Date,
+    endDate: Date,
+    duration: Number,
+    levels: [String],
+    students: [Schema.Types.ObjectId],
+    questions: [Schema.Types.ObjectId],
+    status: String,
+    createdAt: { type: Date, default: Date.now }
+  }],
 
-results: [{
-  _id: Schema.Types.ObjectId,
-  student: Schema.Types.ObjectId,
-  exam: Schema.Types.ObjectId,
-  score: Number,
-  grade: String,
-  submittedAt: Date,
-  duration: Number,
-  status: String
-}],
+  results: [{
+    _id: Schema.Types.ObjectId,
+    student: Schema.Types.ObjectId,
+    exam: Schema.Types.ObjectId,
+    score: Number,
+    grade: String,
+    submittedAt: Date,
+    duration: Number,
+    status: String
+  }],
 
-totalSubmissions: { type: Number, default: 0 },
-averageScore: { type: Number, default: 0 },
+  totalSubmissions: { type: Number, default: 0 },
+  averageScore: { type: Number, default: 0 }
 
 }, {
   timestamps: true
@@ -496,9 +496,7 @@ UserSchema.virtual("isAdmin").get(function () {
  * Auto Generate Referral Code
  */
 UserSchema.pre("save", function(next) {
-
   if (!this.referralCode) {
-
     this.referralCode =
       `EG${crypto.randomBytes(4)
         .toString("hex")
@@ -512,7 +510,6 @@ UserSchema.pre("save", function(next) {
  * Sanitize Output
  */
 UserSchema.methods.toJSON = function () {
-
   const obj = this.toObject({
     virtuals: true
   });
@@ -533,18 +530,14 @@ UserSchema.methods.toJSON = function () {
  */
 UserSchema.methods.comparePassword = function(candidate) {
   return new Promise((resolve, reject) => {
-
     bcrypt.compare(
       candidate,
       this.password,
       (err, isMatch) => {
-
         if (err) return reject(err);
-
         resolve(isMatch);
       }
     );
-
   });
 };
 
@@ -552,12 +545,8 @@ UserSchema.methods.comparePassword = function(candidate) {
  * Generate Email Verification Token
  */
 UserSchema.methods.generateEmailVerificationToken = function() {
-
-  const token =
-    crypto.randomBytes(24).toString("hex");
-
+  const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
-
   return token;
 };
 
@@ -565,7 +554,6 @@ UserSchema.methods.generateEmailVerificationToken = function() {
  * Backward Compatibility Social Merge
  */
 UserSchema.virtual("socialMerged").get(function() {
-
   const hasSocials =
     this.socials &&
     Object.keys(this.socials || {}).length > 0;
@@ -576,7 +564,6 @@ UserSchema.virtual("socialMerged").get(function() {
 
   return this.social || {};
 });
-
 
 /**
  * Indexes
@@ -595,61 +582,5 @@ UserSchema.index(
   { referralCode: 1 },
   { unique: true, sparse: true }
 );
-// ============================================
-// LECTURER DASHBOARD FIELDS
-// ============================================
-students: [{
-  type: Schema.Types.ObjectId,
-  ref: "User"
-}],
-
-courses: [{
-  _id: Schema.Types.ObjectId,
-  title: String,
-  code: String,
-  description: String,
-  level: String,
-  students: [Schema.Types.ObjectId],
-  questions: [Schema.Types.ObjectId],
-  createdAt: { type: Date, default: Date.now }
-}],
-
-questions: [{
-  _id: Schema.Types.ObjectId,
-  course: Schema.Types.ObjectId,
-  question: String,
-  type: String,
-  options: [String],
-  answer: String,
-  createdAt: { type: Date, default: Date.now }
-}],
-
-exams: [{
-  _id: Schema.Types.ObjectId,
-  course: Schema.Types.ObjectId,
-  title: String,
-  startDate: Date,
-  endDate: Date,
-  duration: Number,
-  levels: [String],
-  students: [Schema.Types.ObjectId],
-  questions: [Schema.Types.ObjectId],
-  status: String,
-  createdAt: { type: Date, default: Date.now }
-}],
-
-results: [{
-  _id: Schema.Types.ObjectId,
-  student: Schema.Types.ObjectId,
-  exam: Schema.Types.ObjectId,
-  score: Number,
-  grade: String,
-  submittedAt: Date,
-  duration: Number,
-  status: String
-}],
-
-totalSubmissions: { type: Number, default: 0 },
-averageScore: { type: Number, default: 0 }
 
 export default model("User", UserSchema);
