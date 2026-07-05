@@ -249,6 +249,7 @@ import studentsRouter from './routes/students.js';
 import assignmentsRouter from './routes/assignments.js';
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 // add near other imports
+import lecturerDashboardRoutes from "./routes/lecturerDashboard.js";
 import aiMaterialRoutes from "./routes/aiMaterial.js";
 import theoryAnswersRoutes from "./routes/theoryAnswers.js";
 import theoryAttemptsRoutes from "./routes/theoryAttempts.js";
@@ -3447,6 +3448,7 @@ app.use("/api/studypadi", studypadiRoutes);
 app.use("/api/resources", resourcesGridFSRoutes);
 app.use('/api', studentsRouter);
 app.use(globalLimiter);
+app.use("/api/lecturer", lecturerDashboardRoutes);
 
 // mount chatbot routes (these routes themselves use auth middleware)
 app.use("/api/chatbot", chatbotRoutes);
