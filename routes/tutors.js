@@ -11,6 +11,8 @@ import Notification from "../models/Notification.js";
 import TutorEarnings from "../models/TutorEarnings.js";
 import { v4 as uuidv4 } from "uuid";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+
 import Chat from "../models/Chat.js";
 const router = express.Router();
 
@@ -20,91 +22,225 @@ const router = express.Router();
 
 /* ============ Registration & Listing =============== */
 
+
 router.post("/register", async (req, res) => {
-  try {
-    const {
-      username,
-      password,
-      fullname,
-      email,
-      phone,
-      specialties,
-      about,
-      achievements,
-      avatar,
-      social
-    } = req.body;
+    try {
+        const {
+            // Basic Information
+            fullname,
+            username,
+            email,
+            password,
+            phone,
+            address,
+            location,
+            bio,
+            about,
+            religion,
 
-    if (!fullname || !email || !specialties) {
-      return res.status(400).json({ message: "Full name, email, and specialties are required." });
+            // Academic Information
+            institution,
+            faculty,
+            department,
+            level,
+            specialties = [],
+            achievements = [],
+
+            // Profile
+            profilePic,
+            ninSlip,
+
+            // Banking
+            bank,
+            accountName,
+            accountNumber,
+            idType,
+
+            // Socials
+            socials = {},
+
+            // Optional Settings
+            active = true,
+            approved = true,
+            verified = true,
+            emailVerified = true,
+            status = "active"
+        } = req.body;
+
+        // ===========================
+        // Validation
+        // ===========================
+
+        if (!fullname?.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Full name is required."
+            });
+        }
+
+        if (!username?.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Username is required."
+            });
+        }
+
+        if (!email?.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required."
+            });
+        }
+
+        if (!password || password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 6 characters."
+            });
+        }
+
+        // ===========================
+        // Check duplicates
+        // ===========================
+
+        const existingUser = await User.findOne({
+            $or: [
+                {
+                    username: username.trim()
+                },
+                {
+                    email: email.toLowerCase().trim()
+                }
+            ]
+        });
+
+        if (existingUser) {
+            if (
+                existingUser.username === username.trim()
+            ) {
+                return res.status(409).json({
+                    success: false,
+                    message: "Username already exists."
+                });
+            }
+
+            if (
+                existingUser.email === email.toLowerCase().trim()
+            ) {
+                return res.status(409).json({
+                    success: false,
+                    message: "Email already exists."
+                });
+            }
+        }
+
+        // ===========================
+        // Hash Password
+        // ===========================
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        // ===========================
+        // Create Tutor
+        // ===========================
+
+        const tutor = await User.create({
+
+            // Basic
+            fullname: fullname.trim(),
+            username: username.trim(),
+            email: email.toLowerCase().trim(),
+            password: hashedPassword,
+            phone: phone || "",
+            religion: religion || "",
+
+            address: address || "",
+            location: location || "",
+
+            bio: bio || "",
+            about: about || "",
+
+            // Academic
+            institution: institution || null,
+            faculty: faculty || null,
+            department: department || null,
+            level: level || "",
+
+            specialties: Array.isArray(specialties)
+                ? specialties
+                : [],
+
+            achievements: Array.isArray(achievements)
+                ? achievements
+                : [],
+
+            // Images
+            profilePic: profilePic || "",
+            ninSlip: ninSlip || "",
+
+            // Banking
+            bank: bank || "",
+            accountName: accountName || "",
+            accountNumber: accountNumber || "",
+            idType: idType || "",
+
+            // Social Links
+            socials: {
+                facebook: socials.facebook || "",
+                twitter: socials.twitter || "",
+                instagram: socials.instagram || "",
+                tiktok: socials.tiktok || "",
+                github: socials.github || "",
+                behance: socials.behance || "",
+                pinterest: socials.pinterest || "",
+                dribbble: socials.dribbble || "",
+                website: socials.website || ""
+            },
+
+            // Lecturer Settings
+            role: "tutor",
+            userType: "staff",
+
+            active,
+            approved,
+            verified,
+            emailVerified,
+
+            status,
+
+            // Dashboard Defaults
+            students: [],
+            courses: [],
+            questions: [],
+            exams: [],
+            results: [],
+
+            totalSubmissions: 0,
+            averageScore: 0
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Tutor created successfully.",
+            tutor
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        if (error.code === 11000) {
+            return res.status(409).json({
+                success: false,
+                message: "Username or email already exists."
+            });
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to create tutor.",
+            error: error.message
+        });
     }
-
-    const existing = await User.findOne({
-      $or: [
-        { email: (email || "").toLowerCase() },
-        ...(username ? [{ username: username }] : [])
-      ]
-    });
-    if (existing) {
-      if (existing.email && String(existing.email).toLowerCase() === String(email).toLowerCase()) {
-        return res.status(409).json({ message: "Email already registered" });
-      }
-      if (username && existing.username && existing.username === username) {
-        return res.status(409).json({ message: "Username already taken" });
-      }
-      return res.status(409).json({ message: "Account with provided email/username already exists" });
-    }
-
-    let finalPassword = password;
-    if (finalPassword) {
-      if (typeof finalPassword !== "string" || finalPassword.length < 6) {
-        return res.status(400).json({ message: "Password must be at least 6 characters long." });
-      }
-    } else {
-      finalPassword = uuidv4();
-    }
-
-    const newUser = await User.create({
-      fullname,
-      email: email || "",
-      phone: phone || "",
-      specialties,
-      about: about || "",
-      achievements: achievements || [],
-      profilePic: avatar || "",
-      socials: social || {},
-      username: username && username.trim().length ? username.trim() : (email || "").toLowerCase(),
-      password: finalPassword,
-      role: "tutor",
-      approved: true,
-      emailVerified: true
-    });
-
-    res.status(201).json({ message: "Tutor application received.", userId: newUser._id });
-  } catch (e) {
-    if (e.code === 11000) {
-      return res.status(409).json({ message: "Username or email already exists." });
-    }
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// Get all approved tutors
-router.get("/", async (req, res) => {
-  const tutors = await User.find({ role: "tutor", approved: true }).select("-password -emailVerificationToken").sort({ createdAt: -1 });
-  res.json(tutors);
-});
-
-// Get specific tutor by ID
-router.get("/:id([0-9a-fA-F]{24})", async (req, res) => {
-  try {
-    const tutor = await User.findOne({ _id: req.params.id, role: "tutor", approved: true })
-      .select("-password -emailVerificationToken");
-    if (!tutor) return res.status(404).json({ message: "Tutor not found" });
-    res.json(tutor);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
 });
 
 // Tutor updates their profile
