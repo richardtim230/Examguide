@@ -87,7 +87,7 @@ router.get("/questions/count", async (req, res) => {
   }
 });
 // Add questions in bulk to an existing set by id
-router.post("/:id/questions", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
+router.post("/:id/questions", authenticate, authorizeRole("admin", "tutor", "superadmin"), async (req, res) => {
   const { id } = req.params;
   const questions = req.body.questions;
   try {
@@ -144,7 +144,7 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
 });
 
 // General update for set (PUT or PATCH /:id)
-router.put("/:id", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
+router.put("/:id", authenticate, authorizeRole("admin", "tutor", "superadmin"), async (req, res) => {
   const { title, faculty, department, status } = req.body;
   try {
     const set = await QuestionSet.findById(req.params.id);
