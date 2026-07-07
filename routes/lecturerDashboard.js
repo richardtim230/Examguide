@@ -272,26 +272,76 @@ router.delete("/courses/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-// ============================================
-// 4. QUESTIONS MANAGEMENT
-// ============================================
-
 router.get("/questions", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
     const { course } = req.query;
 
-    let lecturer = await User.findById(lecturerId);
+    const lecturer = await User.findById(lecturerId);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    let questions = lecturer.questions || [];
+    const rawQuestions = lecturer.questions || [];
+    let questions = [];
 
+    // Helper: regex for 24-hex ObjectId strings
+    const idPattern = /^[0-9a-fA-F]{24}$/;
+
+    if (rawQuestions.length === 0) {
+      questions = [];
+    } else if (typeof rawQuestions[0] === 'string') {
+      // Strings: could be question text or question _id strings
+      const idStrings = rawQuestions.filter(s => idPattern.test(s));
+      const textStrings = rawQuestions.filter(s => !idPattern.test(s));
+
+      if (idStrings.length > 0) {
+        try {
+          const docs = await Questions.find({ _id: { $in: idStrings } }).lean();
+          questions = questions.concat(docs);
+        } catch (err) {
+          console.warn("Failed to resolve question IDs stored as strings:", err);
+        }
+      }
+
+      // keep plain text strings as simple objects (no course info)
+      questions = questions.concat(textStrings.map(t => ({
+        _id: null,
+        question: t,
+        type: "multiple_choice",
+        course: null,
+        options: [],
+        answer: ""
+      })));
+    } else if (rawQuestions[0] && typeof rawQuestions[0] === 'object' && rawQuestions[0]._id) {
+      // Already embedded subdocuments (or full objects)
+      questions = rawQuestions;
+    } else {
+      // Possibly array of ObjectId objects or mixed values -> try to coerce to string ids and resolve
+      const candidateIds = rawQuestions.map(r => {
+        try { return String(r); } catch { return null; }
+      }).filter(s => s && idPattern.test(s));
+
+      if (candidateIds.length > 0) {
+        try {
+          const docs = await Questions.find({ _id: { $in: candidateIds } }).lean();
+          questions = docs;
+        } catch (err) {
+          console.warn("Failed to resolve ObjectId-like entries in lecturer.questions:", err);
+          questions = rawQuestions;
+        }
+      } else {
+        questions = rawQuestions;
+      }
+    }
+
+    // Apply course filter after resolution
     if (course) {
       questions = questions.filter(q => {
         try {
-          return q.course?.toString() === course;
+          const qCourse = q.course;
+          if (!qCourse) return false;
+          return String(qCourse) === String(course);
         } catch {
           return false;
         }
@@ -301,12 +351,12 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
     res.json({
       count: questions.length,
       questions: questions.map(q => ({
-        _id: q._id,
-        question: q.question || q.text,
+        _id: q._id || null,
+        question: q.question || q.text || '',
         type: q.type || "multiple_choice",
-        course: q.course,
-        answer: q.answer || q.correctAnswer,
-        options: q.options?.length || 0,
+        course: q.course || null,
+        answer: q.answer || q.correctAnswer || '',
+        options: Array.isArray(q.options) ? q.options : [],
         createdAt: q.createdAt || q.createdAt || new Date()
       }))
     });
@@ -390,20 +440,42 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
     // Normalize instance names
     casterInstance = casterInstance ? String(casterInstance).toLowerCase() : null;
 
-    // 1) If schema expects strings -> store question text strings
-    if (casterInstance === 'string') {
-      const texts = builtQuestions.map(bq => bq.question);
-      lecturer.questions = lecturer.questions || [];
-      lecturer.questions.push(...texts);
-      await lecturer.save();
-      return res.status(201).json({
-        message: `${texts.length} questions saved as strings (fallback)`,
-        created: texts.length,
-        mode: "string-fallback",
-        warning: "User.questions is configured as array of strings in this deployment."
-      });
-    }
+    // --- inside router.post("/questions/bulk", ...) after building builtQuestions and determining casterInstance === 'string' ---
+if (casterInstance === 'string') {
+  try {
+    // create Question docs and save their ids as strings (so they fit the string-array field)
+    const createdQuestions = await Questions.insertMany(
+      builtQuestions.map(bq => ({
+        question: bq.question,
+        type: bq.type,
+        options: bq.options,
+        answer: bq.answer,
+        course: bq.course,
+        createdBy: lecturerId,
+        createdAt: bq.createdAt
+      }))
+    );
 
+    const idStrings = createdQuestions.map(qd => String(qd._id));
+    lecturer.questions = lecturer.questions || [];
+    lecturer.questions.push(...idStrings);
+    await lecturer.save();
+
+    return res.status(201).json({
+      message: `${idStrings.length} questions created in Question collection and linked (string-id fallback)`,
+      created: idStrings.length,
+      mode: "string-id-fallback",
+      warning: "User.questions is configured as array of strings in this deployment; storing question._id as string so it can be resolved later."
+    });
+  } catch (err) {
+    console.error("Failed to create Question documents for string-fallback:", err);
+    return res.status(500).json({
+      message: "Failed to save questions on fallback (creating Question docs)",
+      error: err.message
+    });
+  }
+}
+    
     // 2) If schema expects ObjectId -> create Question docs and store their _ids
     if (casterInstance === 'objectid' || casterInstance === 'objectid' || casterInstance === 'objectid') {
       try {
