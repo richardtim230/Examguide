@@ -288,7 +288,13 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
     let questions = lecturer.questions || [];
 
     if (course) {
-      questions = questions.filter(q => q.course?.toString() === course);
+      questions = questions.filter(q => {
+        try {
+          return q.course?.toString() === course;
+        } catch {
+          return false;
+        }
+      });
     }
 
     res.json({
@@ -300,7 +306,7 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
         course: q.course,
         answer: q.answer || q.correctAnswer,
         options: q.options?.length || 0,
-        createdAt: q.createdAt || new Date()
+        createdAt: q.createdAt || q.createdAt || new Date()
       }))
     });
   } catch (e) {
@@ -324,7 +330,7 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
 
     const newQuestion = {
       _id: new mongoose.Types.ObjectId(),
-      course: new mongoose.Types.ObjectId(course),
+      course: mongoose.Types.ObjectId.isValid(course) ? new mongoose.Types.ObjectId(course) : course,
       question,
       type: type || "multiple_choice",
       options: options || [],
@@ -346,21 +352,85 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-router.delete("/questions/:id", authenticate, isLecturer, async (req, res) => {
+// Updated bulk endpoint with robust fallback handling for schema mismatches
+router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
   try {
-    const { id } = req.params;
+    const { questions } = req.body;
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({ message: "No questions provided" });
+    }
 
     const lecturer = await User.findById(req.user.id);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    lecturer.questions = lecturer.questions?.filter(q => q._id?.toString() !== id) || [];
-    await lecturer.save();
+    // Build the intended subdocuments
+    const newQuestions = questions.map(q => {
+      const courseVal = q.course && mongoose.Types.ObjectId.isValid(q.course) ? new mongoose.Types.ObjectId(q.course) : q.course;
+      return {
+        _id: new mongoose.Types.ObjectId(),
+        question: q.question,
+        type: q.type || "multiple_choice",
+        options: Array.isArray(q.options) ? q.options.map(opt => ({ text: opt.text || "", image: opt.image || "" })) : [],
+        answer: q.answer || "",
+        course: courseVal,
+        createdAt: new Date()
+      };
+    });
 
-    res.json({ message: "Question deleted successfully" });
+    lecturer.questions = lecturer.questions || [];
+    lecturer.questions.push(...newQuestions);
+
+    try {
+      await lecturer.save();
+      return res.status(201).json({
+        message: `${newQuestions.length} questions added successfully`,
+        created: newQuestions.length
+      });
+    } catch (saveErr) {
+      // Save failed — attempt intelligent fallbacks, likely due to a schema mismatch
+      console.warn("Failed to save full question subdocuments; attempting fallback. Error:", saveErr.message);
+
+      // Inspect schema type for User.questions
+      const questionsPath = User.schema.path('questions');
+      const casterInstance = questionsPath && questionsPath.caster && questionsPath.caster.instance;
+      console.warn("User.schema.questions.caster.instance =", casterInstance);
+
+      // Reset lecturer.questions to previous state (without the pushed newQuestions)
+      // reload lecturer to be safe
+      const freshLecturer = await User.findById(req.user.id);
+      freshLecturer.questions = freshLecturer.questions || [];
+
+      if (casterInstance === 'String') {
+        // store question text strings as fallback
+        const texts = newQuestions.map(nq => nq.question);
+        freshLecturer.questions.push(...texts);
+        await freshLecturer.save();
+        return res.status(201).json({
+          message: `${texts.length} questions added as strings (fallback)`,
+          created: texts.length,
+          warning: "User.questions in this build is an array of strings; full subdocuments were not saved."
+        });
+      } else if (casterInstance === 'ObjectID') {
+        // store only ObjectIds (note: this does not create separate question documents)
+        const ids = newQuestions.map(nq => nq._id);
+        freshLecturer.questions.push(...ids);
+        await freshLecturer.save();
+        return res.status(201).json({
+          message: `${ids.length} questions added as ObjectIds (fallback)`,
+          created: ids.length,
+          warning: "User.questions in this build is an array of ObjectIds; no separate question documents were created."
+        });
+      } else {
+        // Unknown schema caster — return original save error
+        console.error("Unknown questions schema caster. Save error:", saveErr);
+        return res.status(500).json({ message: "Server error", error: saveErr.message });
+      }
+    }
   } catch (e) {
-    console.error("Delete question error:", e);
+    console.error("Bulk questions error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
@@ -429,7 +499,6 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
         source: 'questionset'
       };
       if (includeQuestions) {
-        // include the raw questions array from the QuestionSet document
         base.questions = qs.questions || [];
       }
       return base;
@@ -502,7 +571,7 @@ router.get("/question-sets", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-// POST /api/lecturer/exams (legacy) and PUT/DELETE remain unchanged — they operate on embedded lecturer.exams
+// POST /api/lecturer/exams (legacy) and PUT/DELETE operate on embedded lecturer.exams
 
 router.post("/exams", authenticate, isLecturer, async (req, res) => {
   try {
@@ -849,115 +918,6 @@ router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("
     streamifier.createReadStream(req.file.buffer).pipe(stream);
   } catch (e) {
     console.error("Avatar upload error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
-  }
-});
-
-// ============================================
-// 10. BULK OPERATIONS
-// ============================================
-
-router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
-  try {
-    const { questions } = req.body;
-
-    if (!Array.isArray(questions) || questions.length === 0) {
-      return res.status(400).json({ message: "No questions provided" });
-    }
-
-    const lecturer = await User.findById(req.user.id);
-    if (!lecturer) {
-      return res.status(404).json({ message: "Lecturer not found" });
-    }
-
-    const newQuestions = questions.map(q => ({
-      _id: new mongoose.Types.ObjectId(),
-      question: q.question,
-      type: q.type || "multiple_choice",
-      options: q.options || [],
-      answer: q.answer || "",
-      course: q.course,
-      createdAt: new Date()
-    }));
-
-    lecturer.questions = lecturer.questions || [];
-    lecturer.questions.push(...newQuestions);
-    await lecturer.save();
-
-    res.status(201).json({
-      message: `${newQuestions.length} questions added successfully`,
-      created: newQuestions.length
-    });
-  } catch (e) {
-    console.error("Bulk questions error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
-  }
-});
-
-// ============================================
-// 11. SEARCH & FILTER
-// ============================================
-
-router.get("/search", authenticate, isLecturer, async (req, res) => {
-  try {
-    const { q, type } = req.query;
-
-    if (!q) {
-      return res.status(400).json({ message: "Query parameter required" });
-    }
-
-    const lecturer = await User.findById(req.user.id);
-    if (!lecturer) {
-      return res.status(404).json({ message: "Lecturer not found" });
-    }
-
-    const queryLower = q.toLowerCase();
-    let results = [];
-
-    if (!type || type === "students") {
-      const students = lecturer.students || [];
-      results.push(
-        ...students
-          .filter(
-            s =>
-              (s.fullname && s.fullname.toLowerCase().includes(queryLower)) ||
-              (s.email && s.email.toLowerCase().includes(queryLower)) ||
-              (s.studentId && s.studentId.toLowerCase().includes(queryLower))
-          )
-          .map(s => ({ type: "student", ...s }))
-      );
-    }
-
-    if (!type || type === "courses") {
-      const courses = lecturer.courses || [];
-      results.push(
-        ...courses
-          .filter(c => (c.title && c.title.toLowerCase().includes(queryLower)) || (c.code && c.code.toLowerCase().includes(queryLower)))
-          .map(c => ({ type: "course", ...c }))
-      );
-    }
-
-    if (!type || type === "questions") {
-      const questions = lecturer.questions || [];
-      results.push(
-        ...questions
-          .filter(q => q.question && q.question.toLowerCase().includes(queryLower))
-          .map(q => ({ type: "question", ...q }))
-      );
-    }
-
-    if (!type || type === "exams") {
-      const exams = lecturer.exams || [];
-      results.push(...exams.filter(e => (e.title && e.title.toLowerCase().includes(queryLower))).map(e => ({ type: "exam", ...e })));
-    }
-
-    res.json({
-      query: q,
-      count: results.length,
-      results: results.slice(0, 50)
-    });
-  } catch (e) {
-    console.error("Search error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
