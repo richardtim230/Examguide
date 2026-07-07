@@ -64,22 +64,38 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
  * Query params: ?level=100&search=name
  * Returns: Array of students
  */
+/**
+ * GET /api/lecturer/students
+ * Query params: ?level=100&search=name
+ * Returns: Array of students in the same department as the lecturer
+ */
 router.get("/students", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
     const { level, search } = req.query;
 
-    let lecturer = await User.findById(lecturerId).populate("students");
+    // Fetch the lecturer to get their department
+    let lecturer = await User.findById(lecturerId);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    let students = lecturer.students || [];
+    // Build query to fetch all students in the same department
+    const query = {
+      department: lecturer.department,
+      userType: "student",
+      active: true
+    };
 
+    // Fetch all students in the department
+    let students = await User.find(query);
+
+    // Apply level filter if provided
     if (level) {
       students = students.filter(s => s.level === level);
     }
 
+    // Apply search filter if provided
     if (search) {
       const searchLower = search.toLowerCase();
       students = students.filter(s =>
@@ -96,7 +112,10 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
         name: s.fullname || s.username,
         matricNumber: s.studentId || "N/A",
         level: s.level || "N/A",
+        part: s.part || "N/A",
         email: s.email,
+        faculty: s.faculty,
+        department: s.department,
         status: s.active !== false ? "Active" : "Inactive",
         joinedDate: s.createdAt
       }))
