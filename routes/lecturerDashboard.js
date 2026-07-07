@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
-import QuestionSet from "../models/QuestionSet.js"; // <-- added import
+import QuestionSet from "../models/QuestionSet.js"; // QuestionSet model import
 
 // ============================================
 // LECTURER DASHBOARD API ROUTES
@@ -79,10 +79,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     }
 
     if (!lecturer.faculty) {
-      return res.json({
-        count: 0,
-        students: []
-      });
+      return res.json({ count: 0, students: [] });
     }
 
     const query = {
@@ -369,14 +366,23 @@ router.delete("/questions/:id", authenticate, isLecturer, async (req, res) => {
 });
 
 // ============================================
-// 5. EXAMS SCHEDULING - now also returns QuestionSet authored by lecturer
+// 5. EXAMS SCHEDULING - returns embedded exams and QuestionSet authored by lecturer
 // ============================================
 
+/**
+ * GET /api/lecturer/exams
+ * - Returns embedded lecturer.exams and QuestionSet documents authored by lecturer.
+ * - Query params:
+ *    - includeQuestions=true -> include full questions array for question-set items
+ *    - source=embedded|questionset|all -> filter returned items by source (default all)
+ */
 router.get("/exams", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
+    const includeQuestions = String(req.query.includeQuestions || '').toLowerCase() === 'true';
+    const sourceFilter = (req.query.source || 'all').toLowerCase(); // 'embedded' | 'questionset' | 'all'
 
-    let lecturer = await User.findById(lecturerId);
+    const lecturer = await User.findById(lecturerId);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
@@ -393,10 +399,11 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
       levels: e.levels || [],
       totalStudents: e.students?.length || 0,
       status: e.status || "scheduled",
-      questionsCount: e.questions?.length || 0
+      questionsCount: e.questions?.length || 0,
+      source: 'embedded'
     }));
 
-    // New: fetch QuestionSet documents created by this lecturer
+    // Fetch QuestionSet documents created by this lecturer
     let questionSets = [];
     try {
       questionSets = await QuestionSet.find({ createdBy: lecturerId }).lean();
@@ -405,23 +412,34 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
       questionSets = [];
     }
 
-    const mappedQuestionSets = questionSets.map(qs => ({
-      _id: qs._id,
-      course: qs.department || null,
-      title: qs.title,
-      startDate: qs.schedule?.start || null,
-      endDate: qs.schedule?.end || null,
-      duration: null,
-      levels: [], // not present on QuestionSet schema
-      totalStudents: 0,
-      status: qs.status || "INACTIVE",
-      questionsCount: Array.isArray(qs.questions) ? qs.questions.length : 0,
-      faculty: qs.faculty || null,
-      createdAt: qs.createdAt || qs.createdAt,
-      source: 'questionset' // flag to indicate origin
-    }));
+    const mappedQuestionSets = questionSets.map(qs => {
+      const base = {
+        _id: qs._id,
+        course: qs.department || null,
+        title: qs.title,
+        startDate: qs.schedule?.start || null,
+        endDate: qs.schedule?.end || null,
+        duration: null,
+        levels: [],
+        totalStudents: 0,
+        status: qs.status || "INACTIVE",
+        questionsCount: Array.isArray(qs.questions) ? qs.questions.length : 0,
+        faculty: qs.faculty || null,
+        createdAt: qs.createdAt || qs.createdAt,
+        source: 'questionset'
+      };
+      if (includeQuestions) {
+        // include the raw questions array from the QuestionSet document
+        base.questions = qs.questions || [];
+      }
+      return base;
+    });
 
-    const exams = mappedEmbedded.concat(mappedQuestionSets);
+    // Combine and optionally filter by source
+    let exams = [];
+    if (sourceFilter === 'embedded') exams = mappedEmbedded;
+    else if (sourceFilter === 'questionset') exams = mappedQuestionSets;
+    else exams = mappedEmbedded.concat(mappedQuestionSets);
 
     res.json({
       count: exams.length,
@@ -432,6 +450,59 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+
+/**
+ * GET /api/lecturer/question-sets
+ * - Returns QuestionSet documents createdBy the lecturer.
+ * - Query params:
+ *    - includeQuestions=true  -> include full questions array
+ *    - status=ACTIVE|INACTIVE  -> filter by status
+ *    - faculty, department      -> optional filters
+ */
+router.get("/question-sets", authenticate, isLecturer, async (req, res) => {
+  try {
+    const lecturerId = req.user.id;
+    const includeQuestions = String(req.query.includeQuestions || '').toLowerCase() === 'true';
+    const statusFilter = req.query.status;
+    const facultyFilter = req.query.faculty;
+    const departmentFilter = req.query.department;
+
+    const query = { createdBy: lecturerId };
+    if (statusFilter) query.status = statusFilter;
+    if (facultyFilter) query.faculty = facultyFilter;
+    if (departmentFilter) query.department = departmentFilter;
+
+    const sets = await QuestionSet.find(query).lean();
+
+    const mapped = sets.map(s => {
+      const out = {
+        _id: s._id,
+        title: s.title,
+        status: s.status,
+        faculty: s.faculty,
+        department: s.department,
+        questionsCount: Array.isArray(s.questions) ? s.questions.length : 0,
+        schedule: s.schedule || null,
+        createdBy: s.createdBy || null,
+        createdAt: s.createdAt,
+        updatedAt: s.updatedAt,
+        source: 'questionset'
+      };
+      if (includeQuestions) out.questions = s.questions || [];
+      return out;
+    });
+
+    res.json({
+      count: mapped.length,
+      questionSets: mapped
+    });
+  } catch (e) {
+    console.error("Get question-sets error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// POST /api/lecturer/exams (legacy) and PUT/DELETE remain unchanged — they operate on embedded lecturer.exams
 
 router.post("/exams", authenticate, isLecturer, async (req, res) => {
   try {
@@ -600,13 +671,7 @@ router.get("/grading/stats", authenticate, isLecturer, async (req, res) => {
         averageScore: 0,
         passRate: 0,
         totalSubmissions: 0,
-        gradeDistribution: {
-          A: 0,
-          B: 0,
-          C: 0,
-          D: 0,
-          F: 0
-        }
+        gradeDistribution: { A: 0, B: 0, C: 0, D: 0, F: 0 }
       });
     }
 
@@ -656,11 +721,7 @@ router.get("/reports", authenticate, isLecturer, async (req, res) => {
         totalStudents: lecturer.students?.length || 0,
         averageScore: lecturer.averageScore || 0,
         submissions: results.length,
-        data: results.map(r => ({
-          student: r.student,
-          score: r.score,
-          date: r.submittedAt
-        }))
+        data: results.map(r => ({ student: r.student, score: r.score, date: r.submittedAt }))
       });
     } else if (type === "grades") {
       const results = lecturer.results || [];
@@ -672,10 +733,7 @@ router.get("/reports", authenticate, isLecturer, async (req, res) => {
         F: results.filter(r => (r.score || 0) < 50).length
       };
 
-      res.json({
-        type: "Grade Distribution Report",
-        data: gradeDistribution
-      });
+      res.json({ type: "Grade Distribution Report", data: gradeDistribution });
     } else {
       res.json({
         type: "General Report",
