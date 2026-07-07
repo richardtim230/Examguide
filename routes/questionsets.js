@@ -11,7 +11,7 @@ const router = express.Router();
 // ===================== CRUD & ADMIN ========================
 
 // Create new set (topic)
-router.post("/", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
+router.post("/", authenticate, authorizeRole("admin", "tutor", "superadmin"), async (req, res) => {
   const { title, status, faculty, department, questions } = req.body;
   try {
     const qset = await QuestionSet.create({ title, status, faculty, department, questions, createdBy: req.user.id });
