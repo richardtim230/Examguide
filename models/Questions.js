@@ -5,7 +5,7 @@ const OptionSchema = new mongoose.Schema({
   image: { type: String, default: "" }
 }, { _id: false });
 
-const QuestionSchema = new mongoose.Schema({
+const QuestionsSchema = new mongoose.Schema({
   question: { type: String, required: true },
   options: { type: [OptionSchema], default: [] },
   answer: { type: String, default: "" },
