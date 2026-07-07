@@ -34,6 +34,10 @@ const uploadToMemory = multer({ storage: memStorage });
  * GET /api/lecturer/dashboard/stats
  * Returns: { studentCount, courseCount, questionCount, examCount }
  */
+/**
+ * GET /api/lecturer/dashboard/stats
+ * Returns: { studentCount, courseCount, questionCount, examCount }
+ */
 router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -48,7 +52,7 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
     if (lecturer.department) {
       studentCount = await User.countDocuments({
         department: lecturer.department,
-        userType: "student",
+        role: "student",
         active: true
       });
     }
@@ -68,7 +72,6 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-
 // ============================================
 // 2. STUDENTS MANAGEMENT
 // ============================================
