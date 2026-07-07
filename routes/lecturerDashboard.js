@@ -117,7 +117,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
 
     // Build query to fetch all students in the same department
     const query = {
-      department: lecturer.department,
+      department: lecturer.faculty,
       role: "student",
       active: true
     };
