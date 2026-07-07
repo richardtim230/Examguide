@@ -5,7 +5,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
-import Question from "../models/Question.js";
+import Questions from "../models/Questions.js";
 import streamifier from "streamifier";
 import QuestionSet from "../models/QuestionSet.js"; // QuestionSet model import
 
@@ -419,7 +419,7 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
         // Create Question docs in separate collection
         try {
           // InsertMany for performance; attach createdBy and createdAt already set
-          const createdQuestions = await Question.insertMany(
+          const createdQuestions = await Questions.insertMany(
             builtQuestions.map(bq => ({
               question: bq.question,
               type: bq.type,
