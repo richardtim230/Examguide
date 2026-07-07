@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
-import ExamSet from "../models/ExamSet.js"; // <-- added import
+import QuestionSet from "../models/QuestionSet.js"; // <-- added import
 
 // ============================================
 // LECTURER DASHBOARD API ROUTES
@@ -27,18 +27,6 @@ const uploadToMemory = multer({ storage: memStorage });
 // 1. DASHBOARD STATS
 // ============================================
 
-/**
- * GET /api/lecturer/dashboard/stats
- * Returns: { studentCount, courseCount, questionCount, examCount }
- */
-/**
- * GET /api/lecturer/dashboard/stats
- * Returns: { studentCount, courseCount, questionCount, examCount }
- */
-/**
- * GET /api/lecturer/dashboard/stats
- * Returns: { studentCount, courseCount, questionCount, examCount }
- */
 router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -48,7 +36,6 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    // Count students in the same faculty
     let studentCount = 0;
     if (lecturer.faculty) {
       studentCount = await User.countDocuments({
@@ -76,42 +63,21 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
     });
   }
 });
+
 // ============================================
 // 2. STUDENTS MANAGEMENT
 // ============================================
 
-/**
- * GET /api/lecturer/students
- * Query params: ?level=100&search=name
- * Returns: Array of students
- */
-/**
- * GET /api/lecturer/students
- * Query params: ?level=100&search=name
- * Returns: Array of students in the same department as the lecturer
- */
-/**
- * GET /api/lecturer/students
- * Query params: ?level=100&search=name
- * Returns: Array of students in the same department as the lecturer
- */
-/**
- * GET /api/lecturer/students
- * Query params: ?level=100&search=name
- * Returns: Array of students in the same department as the lecturer
- */
 router.get("/students", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
     const { level, search } = req.query;
 
-    // Fetch the lecturer to get their department
     let lecturer = await User.findById(lecturerId);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    // If lecturer has no department, return empty
     if (!lecturer.faculty) {
       return res.json({
         count: 0,
@@ -119,22 +85,18 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
       });
     }
 
-    // Build query to fetch all students in the same department
     const query = {
-  faculty: lecturer.faculty,
-  role: "student",
-  active: true
-};
+      faculty: lecturer.faculty,
+      role: "student",
+      active: true
+    };
 
-    // Fetch all students in the department
     let students = await User.find(query).lean();
 
-    // Apply level filter if provided
     if (level) {
       students = students.filter(s => s.level === level);
     }
 
-    // Apply search filter if provided
     if (search) {
       const searchLower = search.toLowerCase();
       students = students.filter(s =>
@@ -165,10 +127,6 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * GET /api/lecturer/students/:id
- * Returns: Single student details
- */
 router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const student = await User.findById(req.params.id);
@@ -200,10 +158,6 @@ router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
 // 3. COURSES MANAGEMENT
 // ============================================
 
-/**
- * GET /api/lecturer/courses
- * Returns: Array of lecturer's courses
- */
 router.get("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -234,11 +188,6 @@ router.get("/courses", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * POST /api/lecturer/courses
- * Body: { title, code, description, level }
- * Returns: Created course
- */
 router.post("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const { title, code, description, level } = req.body;
@@ -277,11 +226,6 @@ router.post("/courses", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * PUT /api/lecturer/courses/:id
- * Body: { title, code, description, level }
- * Returns: Updated course
- */
 router.put("/courses/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
@@ -311,10 +255,6 @@ router.put("/courses/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/lecturer/courses/:id
- * Returns: Success message
- */
 router.delete("/courses/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
@@ -338,11 +278,6 @@ router.delete("/courses/:id", authenticate, isLecturer, async (req, res) => {
 // 4. QUESTIONS MANAGEMENT
 // ============================================
 
-/**
- * GET /api/lecturer/questions
- * Query params: ?course=courseId
- * Returns: Array of questions
- */
 router.get("/questions", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -377,11 +312,6 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * POST /api/lecturer/questions
- * Body: { course, question, type, options, answer }
- * Returns: Created question
- */
 router.post("/questions", authenticate, isLecturer, async (req, res) => {
   try {
     const { course, question, type, options, answer } = req.body;
@@ -419,10 +349,6 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/lecturer/questions/:id
- * Returns: Success message
- */
 router.delete("/questions/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
@@ -443,20 +369,9 @@ router.delete("/questions/:id", authenticate, isLecturer, async (req, res) => {
 });
 
 // ============================================
-// 5. EXAMS SCHEDULING
+// 5. EXAMS SCHEDULING - now also returns QuestionSet authored by lecturer
 // ============================================
 
-/**
- * GET /api/lecturer/exams
- * Returns: Array of scheduled exams and exam sets created by lecturer
- *
- * NOTE:
- * - This endpoint now returns both:
- *   1) exams stored inside the lecturer document (legacy behavior), and
- *   2) ExamSet documents authored by the lecturer (from the ExamSet collection).
- *
- * The response `exams` array is a combination of both sources, mapped into a common shape.
- */
 router.get("/exams", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -466,7 +381,7 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    // Legacy: exams embedded in lecturer document
+    // Legacy embedded exams
     const embeddedExams = lecturer.exams || [];
     const mappedEmbedded = embeddedExams.map(e => ({
       _id: e._id,
@@ -478,38 +393,35 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
       levels: e.levels || [],
       totalStudents: e.students?.length || 0,
       status: e.status || "scheduled",
-      questionsCount: e.questions?.length || 0,
-      // preserve original structure for backwards compatibility
+      questionsCount: e.questions?.length || 0
     }));
 
-    // New: fetch ExamSet documents created by this lecturer
-    let examSets = [];
+    // New: fetch QuestionSet documents created by this lecturer
+    let questionSets = [];
     try {
-      examSets = await ExamSet.find({ createdBy: lecturerId }).lean();
+      questionSets = await QuestionSet.find({ createdBy: lecturerId }).lean();
     } catch (err) {
-      console.warn("Failed to fetch ExamSet documents:", err.message || err);
-      examSets = [];
+      console.warn("Failed to fetch QuestionSet documents:", err.message || err);
+      questionSets = [];
     }
 
-    const mappedExamSets = examSets.map(es => ({
-      _id: es._id,
-      course: es.subject || null, // ExamSet doesn't have course; expose subject here
-      title: es.title,
-      startDate: null,
-      endDate: null,
-      duration: es.duration || 0,
-      levels: [], // not present on ExamSet
+    const mappedQuestionSets = questionSets.map(qs => ({
+      _id: qs._id,
+      course: qs.department || null,
+      title: qs.title,
+      startDate: qs.schedule?.start || null,
+      endDate: qs.schedule?.end || null,
+      duration: null,
+      levels: [], // not present on QuestionSet schema
       totalStudents: 0,
-      status: 'examset',
-      questionsCount: 0,
-      examType: es.examType,
-      accessCode: es.accessCode,
-      tags: es.tags || [],
-      createdAt: es.createdAt
+      status: qs.status || "INACTIVE",
+      questionsCount: Array.isArray(qs.questions) ? qs.questions.length : 0,
+      faculty: qs.faculty || null,
+      createdAt: qs.createdAt || qs.createdAt,
+      source: 'questionset' // flag to indicate origin
     }));
 
-    // combine both sources; embedded first, then exam sets
-    const exams = mappedEmbedded.concat(mappedExamSets);
+    const exams = mappedEmbedded.concat(mappedQuestionSets);
 
     res.json({
       count: exams.length,
@@ -521,11 +433,6 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * POST /api/lecturer/exams
- * Body: { course, title, startDate, endDate, duration, levels }
- * Returns: Created exam schedule
- */
 router.post("/exams", authenticate, isLecturer, async (req, res) => {
   try {
     const { course, title, startDate, endDate, duration, levels } = req.body;
@@ -567,11 +474,6 @@ router.post("/exams", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * PUT /api/lecturer/exams/:id
- * Body: { title, startDate, endDate, duration, levels, status }
- * Returns: Updated exam
- */
 router.put("/exams/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
@@ -603,10 +505,6 @@ router.put("/exams/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/lecturer/exams/:id
- * Returns: Success message
- */
 router.delete("/exams/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
@@ -630,11 +528,6 @@ router.delete("/exams/:id", authenticate, isLecturer, async (req, res) => {
 // 6. RESULTS & SUBMISSIONS
 // ============================================
 
-/**
- * GET /api/lecturer/results
- * Query params: ?exam=examId
- * Returns: Array of student results
- */
 router.get("/results", authenticate, isLecturer, async (req, res) => {
   try {
     const { exam } = req.query;
@@ -670,10 +563,6 @@ router.get("/results", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * GET /api/lecturer/results/:id
- * Returns: Single result details
- */
 router.get("/results/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturer = await User.findById(req.user.id);
@@ -697,10 +586,6 @@ router.get("/results/:id", authenticate, isLecturer, async (req, res) => {
 // 7. GRADING & ANALYTICS
 // ============================================
 
-/**
- * GET /api/lecturer/grading/stats
- * Returns: { averageScore, passRate, totalSubmissions, gradeDistribution }
- */
 router.get("/grading/stats", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturer = await User.findById(req.user.id);
@@ -754,11 +639,6 @@ router.get("/grading/stats", authenticate, isLecturer, async (req, res) => {
 // 8. REPORTS
 // ============================================
 
-/**
- * GET /api/lecturer/reports
- * Query params: ?type=performance|grades|attendance
- * Returns: Report data
- */
 router.get("/reports", authenticate, isLecturer, async (req, res) => {
   try {
     const { type } = req.query;
@@ -811,11 +691,6 @@ router.get("/reports", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * POST /api/lecturer/reports/export
- * Body: { type, format }
- * Returns: Export URL or file
- */
 router.post("/reports/export", authenticate, isLecturer, async (req, res) => {
   try {
     const { type, format } = req.body;
@@ -835,10 +710,6 @@ router.post("/reports/export", authenticate, isLecturer, async (req, res) => {
 // 9. PROFILE & SETTINGS
 // ============================================
 
-/**
- * GET /api/lecturer/profile
- * Returns: Lecturer profile information
- */
 router.get("/profile", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturer = await User.findById(req.user.id);
@@ -863,11 +734,6 @@ router.get("/profile", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * PUT /api/lecturer/profile
- * Body: { name, email, phone, bio }
- * Returns: Updated profile
- */
 router.put("/profile", authenticate, isLecturer, async (req, res) => {
   try {
     const { name, email, phone, bio } = req.body;
@@ -899,11 +765,6 @@ router.put("/profile", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * POST /api/lecturer/profile/avatar
- * Multipart: { avatar (file) }
- * Returns: Updated avatar URL
- */
 router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("avatar"), async (req, res) => {
   try {
     if (!req.file) {
@@ -938,11 +799,6 @@ router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("
 // 10. BULK OPERATIONS
 // ============================================
 
-/**
- * POST /api/lecturer/questions/bulk
- * Body: { questions: [{ question, type, options, answer }] }
- * Returns: { created: count }
- */
 router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
   try {
     const { questions } = req.body;
@@ -984,11 +840,6 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
 // 11. SEARCH & FILTER
 // ============================================
 
-/**
- * GET /api/lecturer/search
- * Query params: ?q=query&type=students|courses|questions|exams
- * Returns: Search results
- */
 router.get("/search", authenticate, isLecturer, async (req, res) => {
   try {
     const { q, type } = req.query;
