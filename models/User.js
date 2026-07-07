@@ -154,19 +154,20 @@ const UserSchema = new Schema({
   // - Reference to an Institution document to support multiple institutions
   // ============================================
   institution: {
-    type: Schema.Types.ObjectId,
-    ref: "Institution",
-    default: null,
-    index: true,
-    set: v => {
-      // Accept null/undefined/empty => undefined
-      if (v === '' || v === null || typeof v === 'undefined') return undefined;
-      // If looks like a 24-char ObjectId string, accept it
-      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
-      // Otherwise leave it as-is (backend should validate), but do not try to cast unexpected formats
+  type: Schema.Types.ObjectId,
+  ref: "Institution",
+  default: new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382"),
+  index: true,
+  set: v => {
+    if (v === '' || v === null || typeof v === 'undefined') {
+      return new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382");
+    }
+    if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) {
       return v;
     }
-  },
+    return v;
+  }
+},
 
   // ============================================
   // ROLES & PERMISSIONS
