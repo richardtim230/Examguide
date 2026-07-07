@@ -108,7 +108,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     }
 
     // If lecturer has no department, return empty
-    if (!lecturer.department) {
+    if (!lecturer.faculty) {
       return res.json({
         count: 0,
         students: []
@@ -117,10 +117,10 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
 
     // Build query to fetch all students in the same department
     const query = {
-      department: lecturer.faculty,
-      role: "student",
-      active: true
-    };
+  faculty: lecturer.faculty,
+  role: "student",
+  active: true
+};
 
     // Fetch all students in the department
     let students = await User.find(query).lean();
