@@ -42,23 +42,23 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
 
-    let lecturer = await User.findById(lecturerId);
+    const lecturer = await User.findById(lecturerId);
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    // Count students in the same department
+    // Count students in the same faculty
     let studentCount = 0;
-    if (lecturer.department) {
+    if (lecturer.faculty) {
       studentCount = await User.countDocuments({
-        department: lecturer.department,
+        faculty: lecturer.faculty,
         role: "student",
         active: true
       });
     }
 
     const stats = {
-      studentCount: studentCount,
+      studentCount,
       courseCount: lecturer.courses?.length || 0,
       questionCount: lecturer.questions?.length || 0,
       examCount: lecturer.exams?.length || 0,
@@ -69,7 +69,10 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
     res.json(stats);
   } catch (e) {
     console.error("Dashboard stats error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
+    res.status(500).json({
+      message: "Server error",
+      error: e.message
+    });
   }
 });
 // ============================================
