@@ -365,7 +365,7 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
     const lecturer = await User.findById(lecturerId);
     if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
 
-    // Build canonical question objects we want to persist
+    // Build canonical question objects we want to persist (but don't attach yet)
     const builtQuestions = questions.map(q => ({
       _id: new mongoose.Types.ObjectId(),
       question: q.question || "",
@@ -377,7 +377,69 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
       createdBy: lecturerId
     }));
 
-    // Try the "ideal" path: append full subdocuments into lecturer.questions
+    // Inspect schema for User.questions BEFORE mutating lecturer
+    const questionsPath = User.schema.path('questions');
+    let casterInstance = null;
+    if (questionsPath) {
+      // common inspector patterns
+      if (questionsPath.caster && questionsPath.caster.instance) casterInstance = questionsPath.caster.instance;
+      else if (questionsPath.instance) casterInstance = questionsPath.instance;
+      else if (questionsPath.options && questionsPath.options.type === String) casterInstance = 'String';
+    }
+
+    // Normalize instance names
+    casterInstance = casterInstance ? String(casterInstance).toLowerCase() : null;
+
+    // 1) If schema expects strings -> store question text strings
+    if (casterInstance === 'string') {
+      const texts = builtQuestions.map(bq => bq.question);
+      lecturer.questions = lecturer.questions || [];
+      lecturer.questions.push(...texts);
+      await lecturer.save();
+      return res.status(201).json({
+        message: `${texts.length} questions saved as strings (fallback)`,
+        created: texts.length,
+        mode: "string-fallback",
+        warning: "User.questions is configured as array of strings in this deployment."
+      });
+    }
+
+    // 2) If schema expects ObjectId -> create Question docs and store their _ids
+    if (casterInstance === 'objectid' || casterInstance === 'objectid' || casterInstance === 'objectid') {
+      try {
+        const createdQuestions = await Questions.insertMany(
+          builtQuestions.map(bq => ({
+            question: bq.question,
+            type: bq.type,
+            options: bq.options,
+            answer: bq.answer,
+            course: bq.course,
+            createdBy: lecturerId,
+            createdAt: bq.createdAt
+          }))
+        );
+
+        const ids = createdQuestions.map(qd => qd._id);
+        lecturer.questions = lecturer.questions || [];
+        lecturer.questions.push(...ids);
+        await lecturer.save();
+
+        return res.status(201).json({
+          message: `${ids.length} questions created in Question collection and linked (fallback)`,
+          created: ids.length,
+          mode: "reference-fallback",
+          warning: "Questions stored as references (ObjectIds) in lecturer.questions."
+        });
+      } catch (createErr) {
+        console.error("Failed to create Question documents during fallback:", createErr);
+        return res.status(500).json({
+          message: "Failed to save questions on fallback (creating Question docs)",
+          error: createErr.message
+        });
+      }
+    }
+
+    // 3) Otherwise assume embedded subdocuments are allowed -> store full objects
     lecturer.questions = lecturer.questions || [];
     lecturer.questions.push(...builtQuestions);
 
@@ -389,21 +451,16 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
         mode: "embedded"
       });
     } catch (saveErr) {
-      // Save failed -> likely schema mismatch (string or ObjectId expected). We'll fallback.
-      console.warn("Bulk questions error: initial save failed:", saveErr.message);
+      console.warn("Bulk questions error: save of embedded attempt failed:", saveErr.message || saveErr);
+      // As a final step, try the safer fallbacks by reloading fresh doc
 
-      // reload fresh lecturer doc (undo our attempted push)
       const freshLecturer = await User.findById(lecturerId);
-      freshLecturer.questions = freshLecturer.questions || [];
+      const fallbackPath = User.schema.path('questions');
+      let fallbackCaster = fallbackPath && fallbackPath.caster && fallbackPath.caster.instance ? String(fallbackPath.caster.instance).toLowerCase() : null;
 
-      // Inspect schema caster for User.questions
-      const questionsPath = User.schema.path('questions');
-      const casterInstance = questionsPath && questionsPath.caster && questionsPath.caster.instance ? questionsPath.caster.instance : null;
-      console.warn("User.questions caster instance:", casterInstance);
-
-      // If schema expects strings -> store question texts
-      if (casterInstance === 'String') {
+      if (fallbackCaster === 'string') {
         const texts = builtQuestions.map(bq => bq.question);
+        freshLecturer.questions = freshLecturer.questions || [];
         freshLecturer.questions.push(...texts);
         await freshLecturer.save();
         return res.status(201).json({
@@ -414,11 +471,8 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
         });
       }
 
-      // If schema expects ObjectId -> create real Question documents and store their _ids
-      if (casterInstance === 'ObjectID' || casterInstance === 'ObjectId') {
-        // Create Question docs in separate collection
+      if (fallbackCaster === 'objectid') {
         try {
-          // InsertMany for performance; attach createdBy and createdAt already set
           const createdQuestions = await Questions.insertMany(
             builtQuestions.map(bq => ({
               question: bq.question,
@@ -432,6 +486,7 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
           );
 
           const ids = createdQuestions.map(qd => qd._id);
+          freshLecturer.questions = freshLecturer.questions || [];
           freshLecturer.questions.push(...ids);
           await freshLecturer.save();
 
@@ -450,10 +505,11 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
         }
       }
 
-      // If caster not recognized, return original save error to avoid silent corruption
-      console.error("Unrecognized User.questions caster; returning original save error.");
+      // unknown caster -> return save error
+      console.error("Unrecognized User.questions caster after failed embedded save; returning save error.");
       return res.status(500).json({ message: "Server error", error: saveErr.message });
     }
+
   } catch (e) {
     console.error("Bulk questions internal error:", e);
     return res.status(500).json({ message: "Server error", error: e.message });
