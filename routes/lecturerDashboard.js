@@ -30,6 +30,10 @@ const uploadToMemory = multer({ storage: memStorage });
  * GET /api/lecturer/dashboard/stats
  * Returns: { studentCount, courseCount, questionCount, examCount }
  */
+/**
+ * GET /api/lecturer/dashboard/stats
+ * Returns: { studentCount, courseCount, questionCount, examCount }
+ */
 router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -39,8 +43,18 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
+    // Count students in the same department
+    let studentCount = 0;
+    if (lecturer.department) {
+      studentCount = await User.countDocuments({
+        department: lecturer.department,
+        userType: "student",
+        active: true
+      });
+    }
+
     const stats = {
-      studentCount: lecturer.students?.length || 0,
+      studentCount: studentCount,
       courseCount: lecturer.courses?.length || 0,
       questionCount: lecturer.questions?.length || 0,
       examCount: lecturer.exams?.length || 0,
