@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
+import Question from "../models/Question.js";
 import streamifier from "streamifier";
 import QuestionSet from "../models/QuestionSet.js"; // QuestionSet model import
 
@@ -352,7 +353,6 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-// Updated bulk endpoint with robust fallback handling for schema mismatches
 router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
   try {
     const { questions } = req.body;
@@ -361,77 +361,102 @@ router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
       return res.status(400).json({ message: "No questions provided" });
     }
 
-    const lecturer = await User.findById(req.user.id);
-    if (!lecturer) {
-      return res.status(404).json({ message: "Lecturer not found" });
-    }
+    const lecturerId = req.user.id;
+    const lecturer = await User.findById(lecturerId);
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
 
-    // Build the intended subdocuments
-    const newQuestions = questions.map(q => {
-      const courseVal = q.course && mongoose.Types.ObjectId.isValid(q.course) ? new mongoose.Types.ObjectId(q.course) : q.course;
-      return {
-        _id: new mongoose.Types.ObjectId(),
-        question: q.question,
-        type: q.type || "multiple_choice",
-        options: Array.isArray(q.options) ? q.options.map(opt => ({ text: opt.text || "", image: opt.image || "" })) : [],
-        answer: q.answer || "",
-        course: courseVal,
-        createdAt: new Date()
-      };
-    });
+    // Build canonical question objects we want to persist
+    const builtQuestions = questions.map(q => ({
+      _id: new mongoose.Types.ObjectId(),
+      question: q.question || "",
+      type: q.type || "multiple_choice",
+      options: Array.isArray(q.options) ? q.options.map(o => ({ text: o.text || "", image: o.image || "" })) : [],
+      answer: q.answer || "",
+      course: q.course && mongoose.Types.ObjectId.isValid(q.course) ? new mongoose.Types.ObjectId(q.course) : (q.course || null),
+      createdAt: new Date(),
+      createdBy: lecturerId
+    }));
 
+    // Try the "ideal" path: append full subdocuments into lecturer.questions
     lecturer.questions = lecturer.questions || [];
-    lecturer.questions.push(...newQuestions);
+    lecturer.questions.push(...builtQuestions);
 
     try {
       await lecturer.save();
       return res.status(201).json({
-        message: `${newQuestions.length} questions added successfully`,
-        created: newQuestions.length
+        message: `${builtQuestions.length} questions added successfully as subdocuments`,
+        created: builtQuestions.length,
+        mode: "embedded"
       });
     } catch (saveErr) {
-      // Save failed — attempt intelligent fallbacks, likely due to a schema mismatch
-      console.warn("Failed to save full question subdocuments; attempting fallback. Error:", saveErr.message);
+      // Save failed -> likely schema mismatch (string or ObjectId expected). We'll fallback.
+      console.warn("Bulk questions error: initial save failed:", saveErr.message);
 
-      // Inspect schema type for User.questions
-      const questionsPath = User.schema.path('questions');
-      const casterInstance = questionsPath && questionsPath.caster && questionsPath.caster.instance;
-      console.warn("User.schema.questions.caster.instance =", casterInstance);
-
-      // Reset lecturer.questions to previous state (without the pushed newQuestions)
-      // reload lecturer to be safe
-      const freshLecturer = await User.findById(req.user.id);
+      // reload fresh lecturer doc (undo our attempted push)
+      const freshLecturer = await User.findById(lecturerId);
       freshLecturer.questions = freshLecturer.questions || [];
 
+      // Inspect schema caster for User.questions
+      const questionsPath = User.schema.path('questions');
+      const casterInstance = questionsPath && questionsPath.caster && questionsPath.caster.instance ? questionsPath.caster.instance : null;
+      console.warn("User.questions caster instance:", casterInstance);
+
+      // If schema expects strings -> store question texts
       if (casterInstance === 'String') {
-        // store question text strings as fallback
-        const texts = newQuestions.map(nq => nq.question);
+        const texts = builtQuestions.map(bq => bq.question);
         freshLecturer.questions.push(...texts);
         await freshLecturer.save();
         return res.status(201).json({
-          message: `${texts.length} questions added as strings (fallback)`,
+          message: `${texts.length} questions saved as strings (fallback)`,
           created: texts.length,
-          warning: "User.questions in this build is an array of strings; full subdocuments were not saved."
+          mode: "string-fallback",
+          warning: "User.questions is configured as array of strings in this deployment."
         });
-      } else if (casterInstance === 'ObjectID') {
-        // store only ObjectIds (note: this does not create separate question documents)
-        const ids = newQuestions.map(nq => nq._id);
-        freshLecturer.questions.push(...ids);
-        await freshLecturer.save();
-        return res.status(201).json({
-          message: `${ids.length} questions added as ObjectIds (fallback)`,
-          created: ids.length,
-          warning: "User.questions in this build is an array of ObjectIds; no separate question documents were created."
-        });
-      } else {
-        // Unknown schema caster — return original save error
-        console.error("Unknown questions schema caster. Save error:", saveErr);
-        return res.status(500).json({ message: "Server error", error: saveErr.message });
       }
+
+      // If schema expects ObjectId -> create real Question documents and store their _ids
+      if (casterInstance === 'ObjectID' || casterInstance === 'ObjectId') {
+        // Create Question docs in separate collection
+        try {
+          // InsertMany for performance; attach createdBy and createdAt already set
+          const createdQuestions = await Question.insertMany(
+            builtQuestions.map(bq => ({
+              question: bq.question,
+              type: bq.type,
+              options: bq.options,
+              answer: bq.answer,
+              course: bq.course,
+              createdBy: lecturerId,
+              createdAt: bq.createdAt
+            }))
+          );
+
+          const ids = createdQuestions.map(qd => qd._id);
+          freshLecturer.questions.push(...ids);
+          await freshLecturer.save();
+
+          return res.status(201).json({
+            message: `${ids.length} questions created in Question collection and linked (fallback)`,
+            created: ids.length,
+            mode: "reference-fallback",
+            warning: "Questions stored as references (ObjectIds) in lecturer.questions."
+          });
+        } catch (createErr) {
+          console.error("Failed to create Question documents during fallback:", createErr);
+          return res.status(500).json({
+            message: "Failed to save questions on fallback (creating Question docs)",
+            error: createErr.message
+          });
+        }
+      }
+
+      // If caster not recognized, return original save error to avoid silent corruption
+      console.error("Unrecognized User.questions caster; returning original save error.");
+      return res.status(500).json({ message: "Server error", error: saveErr.message });
     }
   } catch (e) {
-    console.error("Bulk questions error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
+    console.error("Bulk questions internal error:", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
   }
 });
 
