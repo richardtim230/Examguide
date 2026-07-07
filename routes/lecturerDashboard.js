@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
+import ExamSet from "../models/ExamSet.js"; // <-- added import
 
 // ============================================
 // LECTURER DASHBOARD API ROUTES
@@ -447,7 +448,14 @@ router.delete("/questions/:id", authenticate, isLecturer, async (req, res) => {
 
 /**
  * GET /api/lecturer/exams
- * Returns: Array of scheduled exams
+ * Returns: Array of scheduled exams and exam sets created by lecturer
+ *
+ * NOTE:
+ * - This endpoint now returns both:
+ *   1) exams stored inside the lecturer document (legacy behavior), and
+ *   2) ExamSet documents authored by the lecturer (from the ExamSet collection).
+ *
+ * The response `exams` array is a combination of both sources, mapped into a common shape.
  */
 router.get("/exams", authenticate, isLecturer, async (req, res) => {
   try {
@@ -458,22 +466,54 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    const exams = lecturer.exams || [];
+    // Legacy: exams embedded in lecturer document
+    const embeddedExams = lecturer.exams || [];
+    const mappedEmbedded = embeddedExams.map(e => ({
+      _id: e._id,
+      course: e.course,
+      title: e.title || "Exam",
+      startDate: e.startDate,
+      endDate: e.endDate,
+      duration: e.duration || 0,
+      levels: e.levels || [],
+      totalStudents: e.students?.length || 0,
+      status: e.status || "scheduled",
+      questionsCount: e.questions?.length || 0,
+      // preserve original structure for backwards compatibility
+    }));
+
+    // New: fetch ExamSet documents created by this lecturer
+    let examSets = [];
+    try {
+      examSets = await ExamSet.find({ createdBy: lecturerId }).lean();
+    } catch (err) {
+      console.warn("Failed to fetch ExamSet documents:", err.message || err);
+      examSets = [];
+    }
+
+    const mappedExamSets = examSets.map(es => ({
+      _id: es._id,
+      course: es.subject || null, // ExamSet doesn't have course; expose subject here
+      title: es.title,
+      startDate: null,
+      endDate: null,
+      duration: es.duration || 0,
+      levels: [], // not present on ExamSet
+      totalStudents: 0,
+      status: 'examset',
+      questionsCount: 0,
+      examType: es.examType,
+      accessCode: es.accessCode,
+      tags: es.tags || [],
+      createdAt: es.createdAt
+    }));
+
+    // combine both sources; embedded first, then exam sets
+    const exams = mappedEmbedded.concat(mappedExamSets);
 
     res.json({
       count: exams.length,
-      exams: exams.map(e => ({
-        _id: e._id,
-        course: e.course,
-        title: e.title || "Exam",
-        startDate: e.startDate,
-        endDate: e.endDate,
-        duration: e.duration || 0,
-        levels: e.levels || [],
-        totalStudents: e.students?.length || 0,
-        status: e.status || "scheduled",
-        questionsCount: e.questions?.length || 0
-      }))
+      exams
     });
   } catch (e) {
     console.error("Get exams error:", e);
