@@ -65,10 +65,6 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-// ============================================
-// 2. STUDENTS MANAGEMENT
-// ============================================
-
 router.get("/students", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -366,6 +362,7 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
   }
 });
 
+// Replace the existing router.post("/questions", ...) handler with this:
 router.post("/questions", authenticate, isLecturer, async (req, res) => {
   try {
     const { course, question, type, options, answer } = req.body;
@@ -379,30 +376,136 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    const newQuestion = {
-      _id: new mongoose.Types.ObjectId(),
-      course: mongoose.Types.ObjectId.isValid(course) ? new mongoose.Types.ObjectId(course) : course,
-      question,
+    // Build canonical question data (not yet attached to lecturer)
+    const newQuestionData = {
+      question: question,
       type: type || "multiple_choice",
-      options: options || [],
+      options: Array.isArray(options) ? options.map(o => ({ text: o.text || "", image: o.image || "" })) : [],
       answer: answer || "",
+      course: mongoose.Types.ObjectId.isValid(course) ? new mongoose.Types.ObjectId(course) : course,
+      createdBy: lecturer._id,
       createdAt: new Date()
     };
 
-    lecturer.questions = lecturer.questions || [];
-    lecturer.questions.push(newQuestion);
-    await lecturer.save();
+    // Inspect User.questions schema BEFORE mutating lecturer
+    const questionsPath = User.schema.path('questions');
+    let casterInstance = null;
+    if (questionsPath) {
+      if (questionsPath.caster && questionsPath.caster.instance) casterInstance = questionsPath.caster.instance;
+      else if (questionsPath.instance) casterInstance = questionsPath.instance;
+    }
+    const caster = casterInstance ? String(casterInstance).toLowerCase() : null;
 
-    res.status(201).json({
-      message: "Question added successfully",
-      question: newQuestion
-    });
+    // CASE A: User.questions is array of strings -> create a Questions doc and store its _id as string
+    if (caster === 'string') {
+      try {
+        const created = await Questions.create({
+          question: newQuestionData.question,
+          type: newQuestionData.type,
+          options: newQuestionData.options,
+          answer: newQuestionData.answer,
+          course: newQuestionData.course,
+          createdBy: newQuestionData.createdBy,
+          createdAt: newQuestionData.createdAt
+        });
+
+        lecturer.questions = lecturer.questions || [];
+        lecturer.questions.push(String(created._id)); // store as string to satisfy schema
+        await lecturer.save();
+
+        return res.status(201).json({
+          message: "Question created and linked (string-id fallback)",
+          question: created
+        });
+      } catch (err) {
+        console.error("Failed to create Question document for string-fallback:", err);
+        return res.status(500).json({ message: "Server error", error: err.message });
+      }
+    }
+
+    // CASE B: User.questions is array of ObjectId refs -> create Questions doc and push ObjectId
+    if (/objectid/i.test(caster) || caster === 'objectid') {
+      try {
+        const created = await Questions.create({
+          question: newQuestionData.question,
+          type: newQuestionData.type,
+          options: newQuestionData.options,
+          answer: newQuestionData.answer,
+          course: newQuestionData.course,
+          createdBy: newQuestionData.createdBy,
+          createdAt: newQuestionData.createdAt
+        });
+
+        lecturer.questions = lecturer.questions || [];
+        lecturer.questions.push(created._id); // store as ObjectId reference
+        await lecturer.save();
+
+        return res.status(201).json({
+          message: "Question created and linked (ObjectId reference)",
+          question: created
+        });
+      } catch (err) {
+        console.error("Failed to create Question and link as ObjectId:", err);
+        return res.status(500).json({ message: "Server error", error: err.message });
+      }
+    }
+
+    // CASE C: assume embedded subdocuments allowed -> push the full object
+    // Build an embedded subdocument structure (match what your UI/clients expect)
+    const embeddedQ = {
+      _id: new mongoose.Types.ObjectId(),
+      question: newQuestionData.question,
+      type: newQuestionData.type,
+      options: newQuestionData.options,
+      answer: newQuestionData.answer,
+      course: newQuestionData.course,
+      createdAt: newQuestionData.createdAt
+    };
+
+    lecturer.questions = lecturer.questions || [];
+    lecturer.questions.push(embeddedQ);
+
+    try {
+      await lecturer.save();
+      return res.status(201).json({
+        message: "Question added successfully as subdocument",
+        question: embeddedQ
+      });
+    } catch (saveErr) {
+      console.error("Failed to save as embedded subdocument:", saveErr);
+
+      // final fallback: create Questions doc and store its id as string if nothing else works
+      try {
+        const created = await Questions.create({
+          question: newQuestionData.question,
+          type: newQuestionData.type,
+          options: newQuestionData.options,
+          answer: newQuestionData.answer,
+          course: newQuestionData.course,
+          createdBy: newQuestionData.createdBy,
+          createdAt: newQuestionData.createdAt
+        });
+        const freshLecturer = await User.findById(lecturer._id);
+        freshLecturer.questions = freshLecturer.questions || [];
+        // try to store as string to be safe
+        freshLecturer.questions.push(String(created._id));
+        await freshLecturer.save();
+
+        return res.status(201).json({
+          message: "Question created and linked (final fallback: stored id as string)",
+          question: created
+        });
+      } catch (finalErr) {
+        console.error("Final fallback failed:", finalErr);
+        return res.status(500).json({ message: "Server error", error: finalErr.message });
+      }
+    }
+
   } catch (e) {
     console.error("Create question error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-
 router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
   try {
     const { questions } = req.body;
