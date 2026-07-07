@@ -88,6 +88,11 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
  * Query params: ?level=100&search=name
  * Returns: Array of students in the same department as the lecturer
  */
+/**
+ * GET /api/lecturer/students
+ * Query params: ?level=100&search=name
+ * Returns: Array of students in the same department as the lecturer
+ */
 router.get("/students", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -110,7 +115,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     // Build query to fetch all students in the same department
     const query = {
       department: lecturer.department,
-      userType: "student",
+      role: "student",
       active: true
     };
 
