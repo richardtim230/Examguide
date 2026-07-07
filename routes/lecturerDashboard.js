@@ -506,6 +506,390 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+// ============================================
+// EXAM SET CREATION WITH QUESTIONS
+// ============================================
+
+/**
+ * POST /api/lecturer/exam-sets/create
+ * Create a new exam set with questions for a specific course
+ * 
+ * Request body:
+ * {
+ *   "title": "Chemistry Final Exam Set 1",
+ *   "courseId": "507f1f77bcf86cd799439011",
+ *   "faculty": "Science",
+ *   "department": "Chemistry",
+ *   "status": "ACTIVE",
+ *   "schedule": {
+ *     "start": "2024-12-15T08:00:00Z",
+ *     "end": "2024-12-15T10:00:00Z"
+ *   },
+ *   "questions": [
+ *     {
+ *       "id": 1,
+ *       "question": "What is the molecular weight of H2O?",
+ *       "options": [
+ *         { "text": "18g/mol" },
+ *         { "text": "20g/mol" },
+ *         { "text": "16g/mol" },
+ *         { "text": "22g/mol" }
+ *       ],
+ *       "answer": "18g/mol",
+ *       "explanation": "Molecular weight = 2(1) + 16 = 18",
+ *       "questionImage": ""
+ *     }
+ *   ]
+ * }
+ */
+router.post("/exam-sets/create", authenticate, isLecturer, async (req, res) => {
+  try {
+    const {
+      title,
+      courseId,
+      faculty,
+      department,
+      status = "INACTIVE",
+      schedule,
+      questions = []
+    } = req.body;
+
+    // Validation
+    if (!title || !courseId || !faculty || !department) {
+      return res.status(400).json({
+        message: "Missing required fields: title, courseId, faculty, department"
+      });
+    }
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({
+        message: "At least one question is required"
+      });
+    }
+
+    const lecturerId = req.user.id;
+
+    // Get lecturer
+    const lecturer = await User.findById(lecturerId);
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    // Verify course exists in lecturer's courses
+    const courseExists = lecturer.courses?.some(c =>
+      c._id?.toString() === courseId || c._id === courseId
+    );
+
+    if (!courseExists) {
+      return res.status(403).json({
+        message: "Course not found in your courses or access denied"
+      });
+    }
+
+    // Validate question structure
+    const validatedQuestions = questions.map((q, idx) => {
+      if (!q.question || !Array.isArray(q.options) || !q.answer) {
+        throw new Error(
+          `Question ${idx + 1} is missing required fields: question, options, answer`
+        );
+      }
+
+      return {
+        id: q.id || idx + 1,
+        question: q.question.trim(),
+        options: q.options.map(opt => ({
+          text: opt.text?.trim() || "",
+          image: opt.image || ""
+        })),
+        answer: q.answer.trim(),
+        explanation: q.explanation || "",
+        questionImage: q.questionImage || ""
+      };
+    });
+
+    // Create the QuestionSet document
+    const newQuestionSet = new QuestionSet({
+      title: title.trim(),
+      faculty: faculty.trim(),
+      department: department.trim(),
+      status: status === "ACTIVE" ? "ACTIVE" : "INACTIVE",
+      questions: validatedQuestions,
+      schedule: {
+        start: schedule?.start ? new Date(schedule.start) : null,
+        end: schedule?.end ? new Date(schedule.end) : null
+      },
+      createdBy: lecturerId
+    });
+
+    // Save the QuestionSet
+    const savedQuestionSet = await newQuestionSet.save();
+
+    // Add reference to lecturer's courses (optional - for tracking)
+    const course = lecturer.courses.find(c =>
+      c._id?.toString() === courseId || c._id === courseId
+    );
+
+    if (course) {
+      if (!course.questionSets) course.questionSets = [];
+      course.questionSets.push(savedQuestionSet._id);
+      await lecturer.save();
+    }
+
+    res.status(201).json({
+      message: "Exam set created successfully with all questions",
+      examSet: {
+        _id: savedQuestionSet._id,
+        title: savedQuestionSet.title,
+        faculty: savedQuestionSet.faculty,
+        department: savedQuestionSet.department,
+        status: savedQuestionSet.status,
+        questionsCount: savedQuestionSet.questions.length,
+        schedule: savedQuestionSet.schedule,
+        createdAt: savedQuestionSet.createdAt,
+        createdBy: savedQuestionSet.createdBy
+      },
+      totalQuestions: validatedQuestions.length
+    });
+  } catch (e) {
+    console.error("Create exam set error:", e);
+    res.status(500).json({
+      message: "Failed to create exam set",
+      error: e.message
+    });
+  }
+});
+
+/**
+ * GET /api/lecturer/exam-sets/:examSetId
+ * Retrieve full exam set with all questions
+ */
+router.get("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+
+    const questionSet = await QuestionSet.findById(examSetId).populate(
+      "createdBy",
+      "fullname email"
+    );
+
+    if (!questionSet) {
+      return res.status(404).json({ message: "Exam set not found" });
+    }
+
+    // Verify lecturer is the creator
+    if (questionSet.createdBy._id.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. You are not the creator of this exam set"
+      });
+    }
+
+    res.json({
+      _id: questionSet._id,
+      title: questionSet.title,
+      faculty: questionSet.faculty,
+      department: questionSet.department,
+      status: questionSet.status,
+      schedule: questionSet.schedule,
+      questions: questionSet.questions,
+      questionsCount: questionSet.questions.length,
+      createdAt: questionSet.createdAt,
+      updatedAt: questionSet.updatedAt
+    });
+  } catch (e) {
+    console.error("Get exam set error:", e);
+    res.status(500).json({
+      message: "Failed to retrieve exam set",
+      error: e.message
+    });
+  }
+});
+
+/**
+ * PUT /api/lecturer/exam-sets/:examSetId
+ * Update exam set and/or questions
+ */
+router.put("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+    const { title, status, schedule, questions } = req.body;
+
+    const questionSet = await QuestionSet.findById(examSetId);
+
+    if (!questionSet) {
+      return res.status(404).json({ message: "Exam set not found" });
+    }
+
+    // Verify lecturer is the creator
+    if (questionSet.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. You are not the creator of this exam set"
+      });
+    }
+
+    // Update fields
+    if (title) questionSet.title = title.trim();
+    if (status) questionSet.status = status === "ACTIVE" ? "ACTIVE" : "INACTIVE";
+    if (schedule) {
+      questionSet.schedule = {
+        start: schedule.start ? new Date(schedule.start) : questionSet.schedule?.start,
+        end: schedule.end ? new Date(schedule.end) : questionSet.schedule?.end
+      };
+    }
+
+    // Update questions if provided
+    if (Array.isArray(questions) && questions.length > 0) {
+      const validatedQuestions = questions.map((q, idx) => {
+        if (!q.question || !Array.isArray(q.options) || !q.answer) {
+          throw new Error(
+            `Question ${idx + 1} is missing required fields`
+          );
+        }
+
+        return {
+          id: q.id || idx + 1,
+          question: q.question.trim(),
+          options: q.options.map(opt => ({
+            text: opt.text?.trim() || "",
+            image: opt.image || ""
+          })),
+          answer: q.answer.trim(),
+          explanation: q.explanation || "",
+          questionImage: q.questionImage || ""
+        };
+      });
+
+      questionSet.questions = validatedQuestions;
+    }
+
+    const updated = await questionSet.save();
+
+    res.json({
+      message: "Exam set updated successfully",
+      examSet: {
+        _id: updated._id,
+        title: updated.title,
+        faculty: updated.faculty,
+        department: updated.department,
+        status: updated.status,
+        questionsCount: updated.questions.length,
+        schedule: updated.schedule,
+        updatedAt: updated.updatedAt
+      }
+    });
+  } catch (e) {
+    console.error("Update exam set error:", e);
+    res.status(500).json({
+      message: "Failed to update exam set",
+      error: e.message
+    });
+  }
+});
+
+/**
+ * DELETE /api/lecturer/exam-sets/:examSetId
+ * Delete an exam set
+ */
+router.delete("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+
+    const questionSet = await QuestionSet.findById(examSetId);
+
+    if (!questionSet) {
+      return res.status(404).json({ message: "Exam set not found" });
+    }
+
+    // Verify lecturer is the creator
+    if (questionSet.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. You are not the creator of this exam set"
+      });
+    }
+
+    await QuestionSet.findByIdAndDelete(examSetId);
+
+    res.json({
+      message: "Exam set deleted successfully"
+    });
+  } catch (e) {
+    console.error("Delete exam set error:", e);
+    res.status(500).json({
+      message: "Failed to delete exam set",
+      error: e.message
+    });
+  }
+});
+
+/**
+ * POST /api/lecturer/exam-sets/:examSetId/add-questions
+ * Add additional questions to an existing exam set
+ */
+router.post("/exam-sets/:examSetId/add-questions", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+    const { questions } = req.body;
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({
+        message: "No questions provided"
+      });
+    }
+
+    const questionSet = await QuestionSet.findById(examSetId);
+
+    if (!questionSet) {
+      return res.status(404).json({ message: "Exam set not found" });
+    }
+
+    // Verify lecturer is the creator
+    if (questionSet.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. You are not the creator of this exam set"
+      });
+    }
+
+    // Validate and prepare new questions
+    const newQuestions = questions.map((q, idx) => {
+      if (!q.question || !Array.isArray(q.options) || !q.answer) {
+        throw new Error(`Question ${idx + 1} is missing required fields`);
+      }
+
+      const nextId = Math.max(...questionSet.questions.map(qst => qst.id || 0)) + 1;
+
+      return {
+        id: q.id || nextId + idx,
+        question: q.question.trim(),
+        options: q.options.map(opt => ({
+          text: opt.text?.trim() || "",
+          image: opt.image || ""
+        })),
+        answer: q.answer.trim(),
+        explanation: q.explanation || "",
+        questionImage: q.questionImage || ""
+      };
+    });
+
+    questionSet.questions.push(...newQuestions);
+    const updated = await questionSet.save();
+
+    res.json({
+      message: `${newQuestions.length} question(s) added successfully`,
+      examSet: {
+        _id: updated._id,
+        title: updated.title,
+        questionsCount: updated.questions.length,
+        addedQuestions: newQuestions.length,
+        updatedAt: updated.updatedAt
+      }
+    });
+  } catch (e) {
+    console.error("Add questions error:", e);
+    res.status(500).json({
+      message: "Failed to add questions",
+      error: e.message
+    });
+  }
+});
 router.post("/questions/bulk", authenticate, isLecturer, async (req, res) => {
   try {
     const { questions } = req.body;
