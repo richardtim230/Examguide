@@ -441,14 +441,26 @@ const UserSchema = new Schema({
   }],
 
   questions: [{
-    _id: Schema.Types.ObjectId,
-    course: Schema.Types.ObjectId,
-    question: String,
-    type: String,
-    options: [String],
-    answer: String,
-    createdAt: { type: Date, default: Date.now }
+  _id: Schema.Types.ObjectId,
+  course: Schema.Types.ObjectId,
+  question: String,
+  type: String,
+  options: [{
+    text: {
+      type: String,
+      default: ""
+    },
+    image: {
+      type: String,
+      default: ""
+    }
   }],
+  answer: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+}],
 
   exams: [{
     _id: Schema.Types.ObjectId,
