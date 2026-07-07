@@ -69,6 +69,11 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
  * Query params: ?level=100&search=name
  * Returns: Array of students in the same department as the lecturer
  */
+/**
+ * GET /api/lecturer/students
+ * Query params: ?level=100&search=name
+ * Returns: Array of students in the same department as the lecturer
+ */
 router.get("/students", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -80,6 +85,14 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
+    // If lecturer has no department, return empty
+    if (!lecturer.department) {
+      return res.json({
+        count: 0,
+        students: []
+      });
+    }
+
     // Build query to fetch all students in the same department
     const query = {
       department: lecturer.department,
@@ -88,7 +101,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     };
 
     // Fetch all students in the department
-    let students = await User.find(query);
+    let students = await User.find(query).lean();
 
     // Apply level filter if provided
     if (level) {
