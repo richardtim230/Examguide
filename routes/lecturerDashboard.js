@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import Questions from "../models/Questions.js";
+import QuestionSet from "../models/QuestionSet.js"; 
+import Result from "../models/Result.js";
 import streamifier from "streamifier";
 import QuestionSet from "../models/QuestionSet.js"; // QuestionSet model import
 
@@ -654,6 +656,57 @@ router.post("/exam-sets/create", authenticate, isLecturer, async (req, res) => {
     console.error("Create exam set error:", e);
     res.status(500).json({
       message: "Failed to create exam set",
+      error: e.message
+    });
+  }
+});
+/**
+ * GET /api/lecturer/exam-sets/:examSetId/submissions
+ * Fetch all student submissions (Results) for a specific Exam Set
+ */
+router.get("/exam-sets/:examSetId/submissions", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+
+    // 1. Verify the exam set exists
+    const questionSet = await QuestionSet.findById(examSetId);
+    if (!questionSet) {
+      return res.status(404).json({ message: "Exam set not found" });
+    }
+
+    // 2. Verify the lecturer requesting this actually created the exam set
+    if (questionSet.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. You are not the creator of this exam set"
+      });
+    }
+
+    // 3. Fetch all results linked to this exam set
+    // Populate the 'user' reference to get the student's name and matric number
+    const results = await Result.find({ examSet: examSetId })
+      .populate("user", "fullname username studentId matricNumber")
+      .sort({ submittedAt: -1 }) // Newest submissions first
+      .lean();
+
+    // 4. Map the data into the exact format expected by the submissions.html frontend
+    const submissions = results.map(r => ({
+      _id: r._id,
+      studentName: r.user ? (r.user.fullname || r.user.username || "Anonymous") : "Unknown Student",
+      matric: r.user ? (r.user.studentId || r.user.matricNumber || "N/A") : "N/A",
+      score: r.score || 0,
+      timeTaken: Math.round((r.timeTaken || 0) / 60), // Assuming DB stores seconds, UI expects mins. Remove "/ 60" if DB is already in minutes.
+      submittedAt: r.submittedAt
+    }));
+
+    res.json({
+      count: submissions.length,
+      submissions: submissions
+    });
+
+  } catch (e) {
+    console.error("Get submissions error:", e);
+    res.status(500).json({
+      message: "Failed to retrieve submissions",
       error: e.message
     });
   }
