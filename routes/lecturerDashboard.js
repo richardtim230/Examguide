@@ -532,20 +532,20 @@ router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, r
         score: result.score,
         timeTaken: result.timeTaken,
         submittedAt: result.submittedAt,
-        // Include raw answers object as an extra layer of safety for the UI
         rawAnswers: result.answers || {},
-        // Correctly map questions sequentially using the index parameters
-        questions: (result.questions || []).map((q, index) => {
-          const sequentialKey = String(index + 1);
+        // Map questions by tracking their unique structural ID properties
+        questions: (result.questions || []).map((q) => {
           
-          // Match by database question ID first, fallback to the sequential string number key
-          const studentAnswer = result.answers[q._id] || result.answers[sequentialKey] || "No answer";
+          // DEFINITIVE FIX: Lookup the answer using the unique question id (q.id)
+          // This ensures accurate mapping regardless of how the array reshuffled.
+          const lookupKey = q.id !== undefined ? String(q.id) : String(q._id);
+          const studentAnswer = result.answers[lookupKey] || "No answer";
           
-          // Execute standard loose comparison checking to ensure fairness against raw syntax noise
           const isAnswerSkipped = studentAnswer === "No answer" || normalizeText(studentAnswer) === 'no answer';
           const isCorrectMatch = !isAnswerSkipped && (normalizeText(studentAnswer) === normalizeText(q.answer));
 
           return {
+            id: q.id,
             question: q.question,
             options: q.options,
             correctAnswer: q.answer, 
