@@ -517,6 +517,13 @@ router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, r
     if (!result) {
       return res.status(404).json({ message: "Submission not found" });
     }
+
+    // Helper to strip HTML tags and normalize text variations for an accurate match
+    const normalizeText = (str) => {
+      if (!str) return '';
+      return String(str).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    };
+
     res.json({
       submission: {
         _id: result._id,
@@ -525,14 +532,27 @@ router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, r
         score: result.score,
         timeTaken: result.timeTaken,
         submittedAt: result.submittedAt,
-        // The detailed question-by-question breakdown
-        questions: result.questions.map(q => ({
-          question: q.question,
-          options: q.options,
-          correctAnswer: q.answer, // The original correct answer
-          selectedAnswer: result.answers[q._id] || "No answer", // The student's answer
-          isCorrect: result.answers[q._id] === q.answer
-        }))
+        // Include raw answers object as an extra layer of safety for the UI
+        rawAnswers: result.answers || {},
+        // Correctly map questions sequentially using the index parameters
+        questions: (result.questions || []).map((q, index) => {
+          const sequentialKey = String(index + 1);
+          
+          // Match by database question ID first, fallback to the sequential string number key
+          const studentAnswer = result.answers[q._id] || result.answers[sequentialKey] || "No answer";
+          
+          // Execute standard loose comparison checking to ensure fairness against raw syntax noise
+          const isAnswerSkipped = studentAnswer === "No answer" || normalizeText(studentAnswer) === 'no answer';
+          const isCorrectMatch = !isAnswerSkipped && (normalizeText(studentAnswer) === normalizeText(q.answer));
+
+          return {
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.answer, 
+            selectedAnswer: studentAnswer,
+            isCorrect: isCorrectMatch
+          };
+        })
       }
     });
   } catch (e) {
