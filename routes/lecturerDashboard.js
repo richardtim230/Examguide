@@ -9,7 +9,6 @@ import Questions from "../models/Questions.js";
 import QuestionSet from "../models/QuestionSet.js"; 
 import Result from "../models/Result.js";
 import streamifier from "streamifier";
-import QuestionSet from "../models/QuestionSet.js"; // QuestionSet model import
 
 // ============================================
 // LECTURER DASHBOARD API ROUTES
