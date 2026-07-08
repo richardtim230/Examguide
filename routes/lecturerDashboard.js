@@ -387,8 +387,6 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
       createdBy: lecturer._id,
       createdAt: new Date()
     };
-
-    // Inspect User.questions schema BEFORE mutating lecturer
     const questionsPath = User.schema.path('questions');
     let casterInstance = null;
     if (questionsPath) {
@@ -474,8 +472,6 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
       });
     } catch (saveErr) {
       console.error("Failed to save as embedded subdocument:", saveErr);
-
-      // final fallback: create Questions doc and store its id as string if nothing else works
       try {
         const created = await Questions.create({
           question: newQuestionData.question,
@@ -507,42 +503,44 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-// ============================================
-// EXAM SET CREATION WITH QUESTIONS
-// ============================================
 
-/**
- * POST /api/lecturer/exam-sets/create
- * Create a new exam set with questions for a specific course
- * 
- * Request body:
- * {
- *   "title": "Chemistry Final Exam Set 1",
- *   "courseId": "507f1f77bcf86cd799439011",
- *   "faculty": "Science",
- *   "department": "Chemistry",
- *   "status": "ACTIVE",
- *   "schedule": {
- *     "start": "2024-12-15T08:00:00Z",
- *     "end": "2024-12-15T10:00:00Z"
- *   },
- *   "questions": [
- *     {
- *       "id": 1,
- *       "question": "What is the molecular weight of H2O?",
- *       "options": [
- *         { "text": "18g/mol" },
- *         { "text": "20g/mol" },
- *         { "text": "16g/mol" },
- *         { "text": "22g/mol" }
- *       ],
- *       "answer": "18g/mol",
- *       "explanation": "Molecular weight = 2(1) + 16 = 18",
- *       "questionImage": ""
- *     }
- *   ]
- * }
- */
+router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { submissionId } = req.params;
+
+    // Fetch the result and populate student info
+    const result = await Result.findById(submissionId)
+      .populate("user", "fullname username studentId matricNumber email")
+      .populate("examSet", "title")
+      .lean();
+
+    if (!result) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+    res.json({
+      submission: {
+        _id: result._id,
+        student: result.user,
+        examTitle: result.examSetTitle || (result.examSet ? result.examSet.title : "Practice Assessment"),
+        score: result.score,
+        timeTaken: result.timeTaken,
+        submittedAt: result.submittedAt,
+        // The detailed question-by-question breakdown
+        questions: result.questions.map(q => ({
+          question: q.question,
+          options: q.options,
+          correctAnswer: q.answer, // The original correct answer
+          selectedAnswer: result.answers[q._id] || "No answer", // The student's answer
+          isCorrect: result.answers[q._id] === q.answer
+        }))
+      }
+    });
+  } catch (e) {
+    console.error("Get individual submission error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
 router.post("/exam-sets/create", authenticate, isLecturer, async (req, res) => {
   try {
     const {
