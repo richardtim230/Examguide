@@ -24,7 +24,7 @@ import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
 import OneSignal from "onesignal-node";
-// index.js (snippet)
+import studentRouter from "./routes/studentDashboard.js";
 import chatbotRoutes from "./routes/chatbot.js";
 import authMiddleware from "./middleware/auth.js";
 
@@ -3448,6 +3448,7 @@ app.use("/api/studypadi", studypadiRoutes);
 app.use("/api/resources", resourcesGridFSRoutes);
 app.use('/api', studentsRouter);
 app.use(globalLimiter);
+app.use("/api/student", studentRouter);
 app.use("/api/lecturer", lecturerDashboardRoutes);
 
 // mount chatbot routes (these routes themselves use auth middleware)
