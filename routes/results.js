@@ -7,97 +7,127 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
+// Global utility helper to strip HTML tags and normalize spaces for accurate evaluation
+const normalizeText = (str) => {
+  if (!str) return '';
+  return String(str).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+};
+
 // Get all student results (admin only) — with pagination
 router.get("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  // Parse pagination params, with defaults
-  const page = parseInt(req.query.page) > 0 ? parseInt(req.query.page) : 1;
-  const limit = parseInt(req.query.limit) > 0 ? parseInt(req.query.limit) : 20;
-  const skip = (page - 1) * limit;
+  try {
+    // Parse pagination params, with defaults
+    const page = parseInt(req.query.page) > 0 ? parseInt(req.query.page) : 1;
+    const limit = parseInt(req.query.limit) > 0 ? parseInt(req.query.limit) : 20;
+    const skip = (page - 1) * limit;
 
-  // Query total count for frontend pagination
-  const total = await Result.countDocuments();
+    // Query total count for frontend pagination
+    const total = await Result.countDocuments();
 
-  // Fetch paginated results
-  const results = await Result.find()
-    .populate("user", "username faculty department")
-    .populate("examSet", "title")
-    .sort({ submittedAt: -1 })
-    .skip(skip)
-    .limit(limit);
+    // Fetch paginated results
+    const results = await Result.find()
+      .populate("user", "username fullname faculty department")
+      .populate("examSet", "title")
+      .sort({ submittedAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-  res.json({
-    total,       // total number of results in the collection
-    page,        // current page
-    limit,       // results per page
-    results      // paginated list
-  });
+    res.json({
+      total,       // total number of results in the collection
+      page,        // current page
+      limit,       // results per page
+      results      // paginated list
+    });
+  } catch (e) {
+    console.error("Error fetching all results:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
 });
+
 // Get results for a specific examSet (admin only)
 router.get("/exam/:examSet", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const results = await Result.find({ examSet: req.params.examSet })
-    .populate("user", "username")
-    .populate("examSet", "title");
-  res.json(results);
+  try {
+    const results = await Result.find({ examSet: req.params.examSet })
+      .populate("user", "username fullname")
+      .populate("examSet", "title");
+    res.json(results);
+  } catch (e) {
+    console.error("Error fetching exam results:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
 });
 
 // Get all results for a specific student (that student, admin, or superadmin)
 router.get("/user/:userId", authenticate, async (req, res) => {
-  // Only the user themselves or admin/superadmin can access
-  if (
-    req.user.role !== "admin" &&
-    req.user.role !== "superadmin" &&
-    req.user.id !== req.params.userId
-  ) {
-    return res.status(403).json({ error: "Forbidden" });
+  try {
+    // Only the user themselves or admin/superadmin can access
+    if (
+      req.user.role !== "admin" &&
+      req.user.role !== "superadmin" &&
+      req.user.id !== req.params.userId
+    ) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    const results = await Result.find({ user: req.params.userId })
+      .populate("user", "username fullname")
+      .populate("examSet", "title");
+    res.json(results);
+  } catch (e) {
+    console.error("Error fetching user results:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
   }
-  const results = await Result.find({ user: req.params.userId })
-    .populate("user", "username")
-    .populate("examSet", "title");
-  res.json(results);
 });
 
 // Save a result for the logged-in user
 router.post("/", authenticate, async (req, res) => {
-  const { examSet, answers, score, timeTaken, questions } = req.body;
+  try {
+    const { examSet, answers, score, timeTaken, questions } = req.body;
 
-  // Prevent duplicate results for same user/examSet
-  let result = await Result.findOne({ user: req.user.id, examSet });
-  if (result) {
-    // Optionally update it instead of failing
-    result.answers = answers;
-    result.score = score;
-    result.timeTaken = timeTaken;
-    result.questions = questions;
-    result.submittedAt = new Date();
+    // Prevent duplicate results for same user/examSet
+    let result = await Result.findOne({ user: req.user.id, examSet });
+    if (result) {
+      result.answers = answers;
+      result.score = score;
+      result.timeTaken = timeTaken;
+      result.questions = questions;
+      result.submittedAt = new Date();
+      await result.save();
+      return res.json({ message: "Result updated", result });
+    }
+
+    // Create new result
+    result = new Result({
+      user: req.user.id,
+      examSet,
+      answers,
+      score,
+      timeTaken,
+      questions,
+      submittedAt: new Date()
+    });
+
     await result.save();
-    return res.json({ message: "Result updated", result });
+    res.status(201).json({ message: "Result saved", result });
+  } catch (e) {
+    console.error("Error saving result:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
   }
-
-  // Create new result
-  result = new Result({
-    user: req.user.id,
-    examSet,
-    answers,
-    score,
-    timeTaken,
-    questions,
-    submittedAt: new Date()
-  });
-
-  await result.save();
-  res.status(201).json({ message: "Result saved", result });
 });
 
 // Get the result for the logged-in user for a given examSet
 router.get("/me", authenticate, async (req, res) => {
-  // /api/results/me?examSet=xxxx
-  const { examSet } = req.query;
-  if (!examSet) return res.status(400).json({ error: "Missing examSet" });
-  const result = await Result.findOne({ user: req.user.id, examSet })
-    .populate("user", "username")
-    .populate("examSet", "title");
-  if (!result) return res.status(404).json({ error: "No result found" });
-  res.json({ result });
+  try {
+    const { examSet } = req.query;
+    if (!examSet) return res.status(400).json({ error: "Missing examSet" });
+    const result = await Result.findOne({ user: req.user.id, examSet })
+      .populate("user", "username fullname")
+      .populate("examSet", "title");
+    if (!result) return res.status(404).json({ error: "No result found" });
+    res.json({ result });
+  } catch (e) {
+    console.error("Error fetching my result:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
 });
 
 // Leaderboard endpoint: Returns top students by total cumulative score.
@@ -139,71 +169,75 @@ router.get("/leaderboard/top", authenticate, async (req, res) => {
 
 // Get result by resultId (for admin/student)
 router.get("/:resultId", authenticate, async (req, res) => {
-  const { resultId } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(resultId)) {
-    return res.status(400).json({ message: "Invalid result id" });
-  }
+  try {
+    const { resultId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(resultId)) {
+      return res.status(400).json({ message: "Invalid result id" });
+    }
 
-  // Populate examSet's questions for reconstruction
-  const result = await Result.findById(resultId)
-    .populate("user", "username fullname faculty department")
-    .populate({
-      path: "examSet",
-      select: "title questions"
+    const result = await Result.findById(resultId)
+      .populate("user", "username fullname faculty department")
+      .populate({
+        path: "examSet",
+        select: "title questions"
+      });
+
+    if (!result) return res.status(404).json({ message: "Result not found" });
+
+    if (
+      req.user.role !== "admin" &&
+      req.user.role !== "superadmin" &&
+      req.user.id !== String(result.user._id)
+    ) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    // Reconstruct questionsAnswered array cleanly with resilient key mapping
+    let questionsAnswered = [];
+    if (result.examSet && Array.isArray(result.examSet.questions)) {
+      let answers = result.answers;
+      if (answers instanceof Map) answers = Object.fromEntries(answers);
+      answers = answers || {};
+      
+      questionsAnswered = result.examSet.questions.map(q => {
+        // Resolve target tracking key based securely on individual database structural id parameters
+        const lookupKey = q.id !== undefined ? String(q.id) : String(q._id);
+        const studentAnswer = answers[lookupKey] || "No answer";
+
+        const isAnswerSkipped = studentAnswer === "No answer" || normalizeText(studentAnswer) === 'no answer';
+        const isCorrect = !isAnswerSkipped && (normalizeText(studentAnswer) === normalizeText(q.answer));
+
+        return {
+          id: q.id || q._id,
+          questionText: q.question,
+          studentAnswer: studentAnswer,
+          correctAnswer: q.answer,
+          isCorrect: isCorrect
+        };
+      });
+    }
+
+    res.json({
+      ...result.toObject(),
+      questionsAnswered
     });
-
-  if (!result) return res.status(404).json({ message: "Result not found" });
-
-  if (
-    req.user.role !== "admin" &&
-    req.user.role !== "superadmin" &&
-    req.user.id !== String(result.user._id)
-  ) {
-    return res.status(403).json({ message: "Forbidden" });
+  } catch (e) {
+    console.error("Error in individual result lookup:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
   }
-
-  // Reconstruct questionsAnswered array
-  let questionsAnswered = [];
-  if (result.examSet && Array.isArray(result.examSet.questions)) {
-    // answers can be a Map, convert to plain object for safety
-    let answers = result.answers;
-    if (answers instanceof Map) answers = Object.fromEntries(answers);
-    answers = answers || {};
-    questionsAnswered = result.examSet.questions.map(q => ({
-      questionText: q.question,
-      studentAnswer: answers[String(q.id)] ?? "",
-      correctAnswer: q.answer,
-      isCorrect: answers[String(q.id)] === q.answer
-    }));
-  }
-
-  res.json({
-    ...result.toObject(),
-    questionsAnswered
-  });
 });
 
-// REVIEW ENDPOINT: Improved answer key matching for correct "selected" answers
+// REVIEW ENDPOINT: Unified answer tracker ignoring array indices variations
 router.get("/:sessionId/review", authenticate, async (req, res) => {
-  function findAnswer(answers, id) {
-    // Try various possible representations of an id as key
-    if (answers[id] !== undefined) return answers[id];
-    if (answers[String(id)] !== undefined) return answers[String(id)];
-    if (typeof id === "object" && id?.toString) {
-      if (answers[id.toString()] !== undefined) return answers[id.toString()];
-    }
-    // For numeric id fallback
-    if (!isNaN(id) && answers[Number(id)] !== undefined) return answers[Number(id)];
-    return "";
-  }
-
   try {
     const { sessionId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(sessionId)) {
       return res.status(400).json({ message: "Invalid session id" });
     }
+    
     const result = await Result.findById(sessionId);
     if (!result) return res.status(404).json({ message: "Result not found" });
+    
     if (
       req.user.role !== "admin" &&
       req.user.role !== "superadmin" &&
@@ -211,20 +245,32 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     ) {
       return res.status(403).json({ message: "Forbidden" });
     }
-    // Use the snapshot of questions
+    
     const sessionQuestions = Array.isArray(result.questions) ? result.questions : [];
-    let answers = result.answers || {};
+    
+    let answers = result.answers;
+    if (answers instanceof Map) answers = Object.fromEntries(answers);
+    answers = answers || {};
 
-    // Compose review questions exactly as shown in-session (in order)
-    const questions = sessionQuestions.map(q => ({
-      id: q.id,
-      question: q.question,
-      options: q.options,
-      correct: q.answer,
-      selected: findAnswer(answers, q.id),
-      explanation: q.explanation || "",
-      questionImage: q.questionImage || null
-    }));
+    // Map through the snapshot of questions exactly as shown during their session
+    const questions = sessionQuestions.map(q => {
+      const lookupKey = q.id !== undefined ? String(q.id) : String(q._id);
+      const studentAnswer = answers[lookupKey] || "No answer";
+
+      const isAnswerSkipped = studentAnswer === "No answer" || normalizeText(studentAnswer) === 'no answer';
+      const isCorrect = !isAnswerSkipped && (normalizeText(studentAnswer) === normalizeText(q.answer || q.correctAnswer));
+
+      return {
+        id: q.id || q._id,
+        question: q.question,
+        options: q.options,
+        correct: q.answer || q.correctAnswer,
+        selected: studentAnswer,
+        isCorrect: isCorrect, // Exposed to keep frontend components performant
+        explanation: q.explanation || "",
+        questionImage: q.questionImage || null
+      };
+    });
 
     res.json({
       sessionId: result._id,
@@ -232,29 +278,36 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
       questions
     });
   } catch (e) {
-    console.log("Error in review endpoint:", e);
+    console.error("Error in review endpoint:", e);
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
 
 router.post("/practice", authenticate, async (req, res) => {
-  const { answers, score, timeTaken, questions, subject, year, courseCode } = req.body;
-  // Save a result for practice mode
-  const result = new Result({
-    user: mongoose.Types.ObjectId(req.user.id),
-    answers,
-    score,
-    timeTaken,
-    questions,
-    subject,
-    year,
-    courseCode,
-    type: "practice",
-    examSetTitle: `${subject || ''} ${courseCode || ''} ${year || ''}`.trim(),
-    submittedAt: new Date()
-  });
-  await result.save();
-  res.status(201).json({ message: "Practice result saved", result });
+  try {
+    const { answers, score, timeTaken, questions, subject, year, courseCode } = req.body;
+    
+    // Modernized instantiation using standard "new" keyword syntax
+    const result = new Result({
+      user: new mongoose.Types.ObjectId(req.user.id),
+      answers,
+      score,
+      timeTaken,
+      questions,
+      subject,
+      year,
+      courseCode,
+      type: "practice",
+      examSetTitle: `${subject || ''} ${courseCode || ''} ${year || ''}`.trim(),
+      submittedAt: new Date()
+    });
+    
+    await result.save();
+    res.status(201).json({ message: "Practice result saved", result });
+  } catch (e) {
+    console.error("Error saving practice session:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
 });
 
 export default router;
