@@ -181,7 +181,7 @@ router.post("/courses/:courseId/enroll", authenticate, isStudent, async (req, re
 });
 
 // ===========================================
-// 5. ENTER COURSE WORKSPACE
+// 5. ENTER COURSE WORKSPACE (UPDATED)
 // ===========================================
 
 router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, res) => {
@@ -189,33 +189,43 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
     const { courseId } = req.params;
     const studentId = req.user.id;
 
-    // Find the lecturer holding this course
+    // 1. Find the lecturer holding this course
     const lecturer = await User.findOne(
       { "courses._id": courseId },
-      "fullname email courses questions exams"
+      "fullname email courses exams" // No need to fetch raw question IDs here anymore
     );
 
     if (!lecturer) {
       return res.status(404).json({ message: "Course not found." });
     }
 
-    // Extract the specific course
+    // 2. Extract the specific course
     const course = lecturer.courses.find(c => c._id.toString() === courseId);
 
-    // Verify the student is enrolled
+    // 3. Verify the student is registered
     if (!course.students.includes(studentId)) {
-        return res.status(403).json({ message: "Access denied. You must enroll in this course first." });
+        return res.status(403).json({ message: "Access denied. You must register for this course first." });
     }
 
-    // Filter exams mapped to this specific course
-    const activeExams = lecturer.exams.filter(exam => 
+    // 4. Fetch Modern Exam Sets (Querying the QuestionSet collection directly)
+    // We look for QuestionSets created by this lecturer that match the course department/faculty or are explicitly linked
+    let activeExamSets = [];
+    if (course.questionSets && course.questionSets.length > 0) {
+        activeExamSets = await QuestionSet.find({
+            _id: { $in: course.questionSets },
+            status: "ACTIVE"
+        }).select("-questions"); // Exclude questions so students can't cheat by inspecting network tabs before starting
+    }
+
+    // 5. Fetch Legacy Embedded Exams (Fallback just in case)
+    const activeLegacyExams = (lecturer.exams || []).filter(exam => 
       exam.course && exam.course.toString() === courseId && exam.status === "active"
     );
-    
-    // Filter assignments/questions mapped to this specific course
-    const activeQuestions = lecturer.questions.filter(q =>
-      q.course && q.course.toString() === courseId
-    );
+
+    // 6. Fetch Assignments/Questions (Querying the Questions collection directly)
+    const activeQuestions = await Questions.find({ 
+        course: courseId 
+    }).select("-answer"); // Hide the correct answers from the payload
 
     res.json({ 
         course: {
@@ -226,7 +236,8 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
           lecturer: lecturer.fullname,
           lecturerEmail: lecturer.email
         },
-        activeExams,
+        activeExamSets,
+        activeLegacyExams,
         activeQuestions,
         message: "Welcome to the course workspace" 
     });
