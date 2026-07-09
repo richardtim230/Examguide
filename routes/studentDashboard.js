@@ -9,6 +9,7 @@ import AssignmentSubmission from "../models/AssignmentSubmission.js";
 import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
+const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
 
 
