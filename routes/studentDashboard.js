@@ -208,15 +208,13 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
         return res.status(403).json({ message: "Access denied. You must register for this course first." });
     }
 
-    // 4. Fetch Modern Exam Sets (Querying the QuestionSet collection directly)
-    // We look for QuestionSets created by this lecturer that match the course department/faculty or are explicitly linked
-    let activeExamSets = [];
-    if (course.questionSets && course.questionSets.length > 0) {
-        activeExamSets = await QuestionSet.find({
-            _id: { $in: course.questionSets },
-            status: "ACTIVE"
-        }).select("-questions"); // Exclude questions so students can't cheat by inspecting network tabs before starting
-    }
+    // 4. Fetch Modern Exam Sets
+const activeExamSets = await QuestionSet.find({
+    createdBy: lecturer._id,
+    status: "ACTIVE"
+})
+.select("-questions")
+.lean();
 
     // 5. Fetch Legacy Embedded Exams (Fallback just in case)
     const activeLegacyExams = (lecturer.exams || []).filter(exam => 
