@@ -315,7 +315,7 @@ router.post(
   "/assignments/:assignmentId/submit",
   authenticate,
   isStudent,
-  uploadToMemory.array("files", 10),
+  uploadToMemory.single("file"),
   async (req, res) => {
     try {
       const { assignmentId } = req.params;
@@ -366,33 +366,31 @@ router.post(
 
       let attachments = [];
 
-      if (req.files?.length) {
-        attachments = await Promise.all(
-          req.files.map(file => {
-            return new Promise((resolve, reject) => {
-              const stream = cloudinary.v2.uploader.upload_stream(
-                {
-                  folder: "assignment-submissions",
-                  resource_type: "auto"
-                },
-                (err, result) => {
-                  if (err) return reject(err);
+if (req.file) {
+  const attachment = await new Promise((resolve, reject) => {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: "assignment-submissions",
+        resource_type: "auto"
+      },
+      (err, result) => {
+        if (err) return reject(err);
 
-                  resolve({
-                    url: result.secure_url,
-                    publicId: result.public_id,
-                    originalName: file.originalname,
-                    mimeType: file.mimetype,
-                    size: file.size
-                  });
-                }
-              );
-
-              streamifier.createReadStream(file.buffer).pipe(stream);
-            });
-          })
-        );
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+          originalName: req.file.originalname,
+          mimeType: req.file.mimetype,
+          size: req.file.size
+        });
       }
+    );
+
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  });
+
+  attachments.push(attachment);
+}
 
       const submission = await AssignmentSubmission.create({
         assignment: assignment._id,
