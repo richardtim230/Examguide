@@ -220,7 +220,7 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
 
     // 5. Fetch Legacy Embedded Exams (Fallback just in case)
     const activeLegacyExams = (lecturer.exams || []).filter(exam => 
-      exam.course && exam.course.toString() === courseId && exam.status === "active"
+      exam.course && exam.course.toString() === courseId && exam.status === "ACTIVE"
     );
 
     // 6. Fetch Assignments/Questions (Querying the Questions collection directly)
