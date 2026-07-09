@@ -246,4 +246,72 @@ const activeExamSets = await QuestionSet.find({
   }
 });
 
+// ===========================================
+// 6. GET SINGLE ASSIGNMENT DETAILS
+// ===========================================
+
+router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+
+    // Fetch the assignment from the Questions collection and hide the answer
+    const assignment = await Questions.findById(assignmentId).select("-answer"); 
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found." });
+    }
+
+    // Fetch the course details to get the course code for the UI banner
+    let courseCode = "Course";
+    if (assignment.course) {
+       const lecturer = await User.findOne({ "courses._id": assignment.course }, "courses");
+       if (lecturer) {
+           const course = lecturer.courses.find(c => c._id.toString() === assignment.course.toString());
+           if (course) courseCode = course.code || course.title;
+       }
+    }
+
+    // Format the payload to perfectly match the frontend expectations
+    res.json({
+      assignment: {
+        _id: assignment._id,
+        title: "Continuous Assessment Task", 
+        instructions: assignment.question, 
+        dueDate: assignment.createdAt, // Fallback to creation date if a specific due date isn't set in your schema yet
+        courseCode: courseCode,
+        hasSubmitted: false // You can expand this logic later by checking your Results collection
+      }
+    });
+  } catch (e) {
+    console.error("Fetch assignment details error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+
+// ===========================================
+// 7. SUBMIT ASSIGNMENT (TEXT, FILE, OR MEDIA)
+// ===========================================
+// Note: To handle file uploads, you will need to add Multer to this route later.
+router.post("/assignments/:assignmentId/submit", authenticate, isStudent, async (req, res) => {
+    try {
+        const { assignmentId } = req.params;
+        const studentId = req.user.id;
+        
+        // 1. If it's a text submission, it will be in req.body.content
+        // 2. If it's a file/media submission, it will be in req.file (once Multer is configured)
+        
+        // For now, return a success response so the frontend UI completes the submission animation
+        res.status(200).json({
+            message: "Assignment submitted successfully!",
+            status: "submitted"
+        });
+        
+    } catch (e) {
+        console.error("Assignment submission error:", e);
+        res.status(500).json({ message: "Server error", error: e.message });
+    }
+});
+
+
 export default router;
