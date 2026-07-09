@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import Questions from "../models/Questions.js";
 import QuestionSet from "../models/QuestionSet.js";
 const router = express.Router();
+import AssignmentSubmission from "../models/AssignmentSubmission.js";
 
 // ===========================================
 // MIDDLEWARE
@@ -289,29 +290,121 @@ router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, re
 });
 
 
-// ===========================================
-// 7. SUBMIT ASSIGNMENT (TEXT, FILE, OR MEDIA)
-// ===========================================
-// Note: To handle file uploads, you will need to add Multer to this route later.
-router.post("/assignments/:assignmentId/submit", authenticate, isStudent, async (req, res) => {
+router.post(
+  "/assignments/:assignmentId/submit",
+  authenticate,
+  isStudent,
+  uploadToMemory.array("files", 10),
+  async (req, res) => {
     try {
-        const { assignmentId } = req.params;
-        const studentId = req.user.id;
-        
-        // 1. If it's a text submission, it will be in req.body.content
-        // 2. If it's a file/media submission, it will be in req.file (once Multer is configured)
-        
-        // For now, return a success response so the frontend UI completes the submission animation
-        res.status(200).json({
-            message: "Assignment submitted successfully!",
-            status: "submitted"
+      const { assignmentId } = req.params;
+      const studentId = req.user.id;
+      const { content } = req.body;
+
+      const assignment = await Questions.findById(assignmentId);
+
+      if (!assignment || assignment.type !== "assignment") {
+        return res.status(404).json({
+          message: "Assignment not found."
         });
-        
+      }
+
+      const lecturer = await User.findOne({
+        "courses._id": assignment.course
+      });
+
+      if (!lecturer) {
+        return res.status(404).json({
+          message: "Course not found."
+        });
+      }
+
+      const course = lecturer.courses.id(assignment.course);
+
+      if (
+        !course ||
+        !course.students.some(
+          id => id.toString() === studentId.toString()
+        )
+      ) {
+        return res.status(403).json({
+          message: "You are not enrolled in this course."
+        });
+      }
+
+      const existingSubmission = await AssignmentSubmission.findOne({
+        assignment: assignmentId,
+        student: studentId
+      });
+
+      if (existingSubmission) {
+        return res.status(409).json({
+          message: "You have already submitted this assignment."
+        });
+      }
+
+      let attachments = [];
+
+      if (req.files?.length) {
+        attachments = await Promise.all(
+          req.files.map(file => {
+            return new Promise((resolve, reject) => {
+              const stream = cloudinary.v2.uploader.upload_stream(
+                {
+                  folder: "assignment-submissions",
+                  resource_type: "auto"
+                },
+                (err, result) => {
+                  if (err) return reject(err);
+
+                  resolve({
+                    url: result.secure_url,
+                    publicId: result.public_id,
+                    originalName: file.originalname,
+                    mimeType: file.mimetype,
+                    size: file.size
+                  });
+                }
+              );
+
+              streamifier.createReadStream(file.buffer).pipe(stream);
+            });
+          })
+        );
+      }
+
+      const submission = await AssignmentSubmission.create({
+        assignment: assignment._id,
+        course: assignment.course,
+        lecturer: lecturer._id,
+        student: studentId,
+        submissionType:
+          attachments.length > 0 && content
+            ? "mixed"
+            : attachments.length > 0
+            ? "file"
+            : "text",
+        textSubmission: content || "",
+        attachments,
+        submittedAt: new Date(),
+        status: "submitted"
+      });
+
+      res.status(201).json({
+        message: "Assignment submitted successfully.",
+        submission
+      });
+
     } catch (e) {
-        console.error("Assignment submission error:", e);
-        res.status(500).json({ message: "Server error", error: e.message });
+      console.error("Assignment submission error:", e);
+
+      res.status(500).json({
+        message: "Server error",
+        error: e.message
+      });
     }
-});
+  }
+);
 
 
 export default router;
