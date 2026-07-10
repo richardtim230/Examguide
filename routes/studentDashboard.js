@@ -230,10 +230,32 @@ const activeExamSets = await QuestionSet.find({
     );
 
     // 6. Fetch Assignments/Questions (Querying the Questions collection directly)
-    const activeQuestions = await Questions.find({ 
-        course: courseId 
-    }).select("-answer"); // Hide the correct answers from the payload
+    // Fetch assignments
+const questions = await Questions.find({
+    course: courseId
+}).select("-answer").lean();
 
+// Get all submissions made by this student
+const submissions = await AssignmentSubmission.find({
+    student: studentId,
+    assignment: {
+        $in: questions.map(q => q._id)
+    }
+}).select("assignment status submittedAt grade");
+
+// Create lookup table
+const submissionMap = {};
+
+submissions.forEach(sub => {
+    submissionMap[sub.assignment.toString()] = sub;
+});
+
+// Merge submission status into each assignment
+const activeQuestions = questions.map(question => ({
+    ...question,
+    hasSubmitted: !!submissionMap[question._id.toString()],
+    submission: submissionMap[question._id.toString()] || null
+}));
     res.json({ 
         course: {
           _id: course._id,
