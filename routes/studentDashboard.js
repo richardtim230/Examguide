@@ -93,13 +93,16 @@ const uploadFileToGridFS = (file) => {
       }
     });
 
-    uploadStream.on('finish', (file) => {
+    uploadStream.on('finish', () => {
+      // Get the file ID from the upload stream
+      const fileId = uploadStream.id;
+      
       resolve({
-        fileId: file._id.toString(),
-        url: `/api/student/files/${file._id.toString()}/download`,
-        originalName: file.filename,
-        mimeType: file.metadata.mimeType,
-        size: file.length,
+        fileId: fileId.toString(),
+        url: `/api/student/files/${fileId.toString()}/download`,
+        originalName: file.originalname,
+        mimeType: file.mimetype,
+        size: file.length || file.size,
         storageType: 'gridfs'
       });
     });
