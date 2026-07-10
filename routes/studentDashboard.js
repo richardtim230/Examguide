@@ -619,7 +619,137 @@ router.get("/files/:fileId/download", async (req, res) => {
     }
   }
 });
+// ===========================================
+// 8. GET ASSIGNMENT RESULT
+// ===========================================
 
+router.get(
+  "/assignments/:assignmentId/result",
+  authenticate,
+  isStudent,
+  async (req, res) => {
+    try {
+      const { assignmentId } = req.params;
+      const studentId = req.user.id;
+
+      const assignment = await Questions.findById(assignmentId)
+        .select("-answer")
+        .lean();
+
+      if (!assignment) {
+        return res.status(404).json({
+          message: "Assignment not found."
+        });
+      }
+
+      const submission = await AssignmentSubmission.findOne({
+        assignment: assignmentId,
+        student: studentId
+      }).lean();
+
+      if (!submission) {
+        return res.status(404).json({
+          message: "You have not submitted this assignment."
+        });
+      }
+
+      const lecturer = await User.findOne(
+        {
+          "courses._id": assignment.course
+        },
+        "fullname courses"
+      );
+
+      let courseTitle = "";
+      let courseCode = "";
+
+      if (lecturer) {
+        const course = lecturer.courses.find(
+          c => c._id.toString() === assignment.course.toString()
+        );
+
+        if (course) {
+          courseTitle = course.title;
+          courseCode = course.code;
+        }
+      }
+
+      res.json({
+        assignment: {
+          _id: assignment._id,
+          title: assignment.title || "Continuous Assessment",
+          question: assignment.question,
+          course: assignment.course,
+          courseTitle,
+          courseCode
+        },
+
+        submission: {
+          _id: submission._id,
+
+          status: submission.status,
+
+          score: submission.grade?.score ?? null,
+
+          maxScore:
+            submission.grade?.maxScore ??
+            assignment.maxScore ??
+            100,
+
+          percentage:
+            submission.grade?.score != null
+              ? Math.round(
+                  (submission.grade.score /
+                    (submission.grade.maxScore ||
+                      assignment.maxScore ||
+                      100)) *
+                    100
+                )
+              : null,
+
+          feedback:
+            submission.grade?.feedback ||
+            submission.feedback ||
+            "",
+
+          feedbackAttachments:
+            submission.grade?.attachments ||
+            submission.feedbackAttachments ||
+            [],
+
+          gradedBy:
+            submission.grade?.gradedBy ||
+            lecturer?.fullname ||
+            "",
+
+          gradedAt:
+            submission.grade?.gradedAt ||
+            submission.updatedAt,
+
+          submittedAt:
+            submission.submittedAt,
+
+          submissionType:
+            submission.submissionType,
+
+          textSubmission:
+            submission.textSubmission,
+
+          attachments:
+            submission.attachments || []
+        }
+      });
+
+    } catch (e) {
+      console.error("Fetch assignment result error:", e);
+
+      res.status(500).json({
+        message: "Server error",
+        error: e.message
+      });
+    }
+  }
+);
 // ===========================================
 // 9. DELETE SUBMISSION FILE (CLEANUP FROM GRIDFS)
 // ===========================================
