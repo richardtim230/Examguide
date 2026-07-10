@@ -115,7 +115,7 @@ const uploadFileToGridFS = (file) => {
       
       resolve({
         fileId: fileId.toString(),
-        url: `/api/student/files/${fileId.toString()}/download`,
+        url: `https://examguide.onrender.com/api/student/files/${fileId.toString()}/download`,
         originalName: file.originalname,
         mimeType: file.mimetype,
         size: file.length || file.size,
