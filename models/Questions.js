@@ -1,3 +1,10 @@
+import mongoose from "mongoose";
+
+const OptionSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  image: { type: String, default: "" }
+}, { _id: false });
+
 const QuestionsSchema = new mongoose.Schema({
   title: {
     type: String,
