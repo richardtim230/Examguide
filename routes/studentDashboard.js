@@ -685,59 +685,45 @@ router.get(
         },
 
         submission: {
-          _id: submission._id,
+  _id: submission._id,
 
-          status: submission.status,
+  status: submission.status,
 
-          score: submission.grade?.score ?? null,
+  score: submission.score,
 
-          maxScore:
-            submission.grade?.maxScore ??
-            assignment.maxScore ??
-            100,
+  maxScore: assignment.maxScore ?? 100,
 
-          percentage:
-            submission.grade?.score != null
-              ? Math.round(
-                  (submission.grade.score /
-                    (submission.grade.maxScore ||
-                      assignment.maxScore ||
-                      100)) *
-                    100
-                )
-              : null,
+  percentage:
+    submission.score != null
+      ? Math.round(
+          (submission.score /
+            (assignment.maxScore ?? 100)) * 100
+        )
+      : null,
 
-          feedback:
-            submission.grade?.feedback ||
-            submission.feedback ||
-            "",
+  feedback: submission.feedback || "",
 
-          feedbackAttachments:
-            submission.grade?.attachments ||
-            submission.feedbackAttachments ||
-            [],
+  feedbackAttachments:
+    submission.feedbackAttachments || [],
 
-          gradedBy:
-            submission.grade?.gradedBy ||
-            lecturer?.fullname ||
-            "",
+  gradedBy:
+    lecturer?.fullname || "",
 
-          gradedAt:
-            submission.grade?.gradedAt ||
-            submission.updatedAt,
+  gradedAt:
+    submission.gradedAt,
 
-          submittedAt:
-            submission.submittedAt,
+  submittedAt:
+    submission.submittedAt,
 
-          submissionType:
-            submission.submissionType,
+  submissionType:
+    submission.submissionType,
 
-          textSubmission:
-            submission.textSubmission,
+  textSubmission:
+    submission.textSubmission,
 
-          attachments:
-            submission.attachments || []
-        }
+  attachments:
+    submission.attachments || []
+}
       });
 
     } catch (e) {
