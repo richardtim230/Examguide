@@ -551,7 +551,7 @@ router.post(
 // 8. DOWNLOAD FILE FROM GRIDFS
 // ===========================================
 
-router.get("/files/:fileId/download", authenticate, isStudent, async (req, res) => {
+router.get("/files/:fileId/download", async (req, res) => {
   try {
     const { fileId } = req.params;
 
