@@ -4,6 +4,7 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
 import multer from "multer";
+import AssignmentSubmission from "../models/AssignmentSubmission.js";
 import cloudinary from "cloudinary";
 import Questions from "../models/Questions.js";
 import QuestionSet from "../models/QuestionSet.js"; 
