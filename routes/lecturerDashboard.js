@@ -368,8 +368,19 @@ router.get("/questions", authenticate, isLecturer, async (req, res) => {
 // Replace the existing router.post("/questions", ...) handler with this:
 router.post("/questions", authenticate, isLecturer, async (req, res) => {
   try {
-    const { course, question, type, options, answer } = req.body;
-
+    const {
+    course,
+    title,
+    description,
+    question,
+    instructions,
+    dueDate,
+    maxScore,
+    type,
+    options,
+    answer
+} = req.body;
+    
     if (!question || !course) {
       return res.status(400).json({ message: "Question and course are required" });
     }
@@ -379,16 +390,31 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    // Build canonical question data (not yet attached to lecturer)
-    const newQuestionData = {
-      question: question,
-      type: type || "multiple_choice",
-      options: Array.isArray(options) ? options.map(o => ({ text: o.text || "", image: o.image || "" })) : [],
-      answer: answer || "",
-      course: mongoose.Types.ObjectId.isValid(course) ? new mongoose.Types.ObjectId(course) : course,
-      createdBy: lecturer._id,
-      createdAt: new Date()
-    };
+const newQuestionData = {
+    title: title || "",
+    description: description || "",
+    question,
+    instructions: instructions || "",
+    dueDate: dueDate || null,
+    maxScore: maxScore || 100,
+
+    type: type || "multiple_choice",
+    options: Array.isArray(options)
+        ? options.map(o => ({
+              text: o.text || "",
+              image: o.image || ""
+          }))
+        : [],
+    answer: answer || "",
+
+    course: mongoose.Types.ObjectId.isValid(course)
+        ? new mongoose.Types.ObjectId(course)
+        : course,
+
+    createdBy: lecturer._id,
+    createdAt: new Date()
+};
+
     const questionsPath = User.schema.path('questions');
     let casterInstance = null;
     if (questionsPath) {
@@ -400,15 +426,7 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
     // CASE A: User.questions is array of strings -> create a Questions doc and store its _id as string
     if (caster === 'string') {
       try {
-        const created = await Questions.create({
-          question: newQuestionData.question,
-          type: newQuestionData.type,
-          options: newQuestionData.options,
-          answer: newQuestionData.answer,
-          course: newQuestionData.course,
-          createdBy: newQuestionData.createdBy,
-          createdAt: newQuestionData.createdAt
-        });
+        const created = await Questions.create(newQuestionData);
 
         lecturer.questions = lecturer.questions || [];
         lecturer.questions.push(String(created._id)); // store as string to satisfy schema
@@ -427,15 +445,7 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
     // CASE B: User.questions is array of ObjectId refs -> create Questions doc and push ObjectId
     if (/objectid/i.test(caster) || caster === 'objectid') {
       try {
-        const created = await Questions.create({
-          question: newQuestionData.question,
-          type: newQuestionData.type,
-          options: newQuestionData.options,
-          answer: newQuestionData.answer,
-          course: newQuestionData.course,
-          createdBy: newQuestionData.createdBy,
-          createdAt: newQuestionData.createdAt
-        });
+        const created = await Questions.create(newQuestionData);
 
         lecturer.questions = lecturer.questions || [];
         lecturer.questions.push(created._id); // store as ObjectId reference
@@ -475,15 +485,7 @@ router.post("/questions", authenticate, isLecturer, async (req, res) => {
     } catch (saveErr) {
       console.error("Failed to save as embedded subdocument:", saveErr);
       try {
-        const created = await Questions.create({
-          question: newQuestionData.question,
-          type: newQuestionData.type,
-          options: newQuestionData.options,
-          answer: newQuestionData.answer,
-          course: newQuestionData.course,
-          createdBy: newQuestionData.createdBy,
-          createdAt: newQuestionData.createdAt
-        });
+        const created = await Questions.create(newQuestionData);
         const freshLecturer = await User.findById(lecturer._id);
         freshLecturer.questions = freshLecturer.questions || [];
         // try to store as string to be safe
