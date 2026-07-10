@@ -27,8 +27,29 @@ const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
 
 // ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+/**
+ * Strip HTML tags from text
+ */
+const stripHtmlTags = (html) => {
+  if (!html) return '';
+  return String(html).replace(/<[^>]*>/g, '').trim();
+};
+
+/**
+ * Normalize text for comparison
+ */
+const normalizeText = (str) => {
+  if (!str) return '';
+  return String(str).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+};
+
+// ============================================
 // 1. DASHBOARD STATS
 // ============================================
+
 // ============================================
 // ASSIGNMENT SUBMISSIONS GRADING ENDPOINTS
 // ============================================
@@ -114,28 +135,30 @@ router.get("/assignments/:assignmentId/submissions", authenticate, isLecturer, a
       })
       .sort({ submittedAt: -1 });
 
-    // Format response
-    const formattedSubmissions = submissions.map(sub => ({
-      _id: sub._id,
-      student: {
-        _id: sub.student._id,
-        fullname: sub.student.fullname,
-        studentId: sub.student.studentId,
-        email: sub.student.email
-      },
-      textSubmission: sub.textSubmission,
-      submissionType: sub.submissionType,
-      attachments: sub.attachments,
-      submittedAt: sub.submittedAt,
-      status: sub.status,
-      score: sub.score,
-      feedback: sub.feedback,
-      privateNotes: sub.privateNotes,
-      gradedBy: sub.gradedBy,
-      gradedAt: sub.gradedAt,
-      isLate: sub.isLate,
-      attempt: sub.attempt
-    }));
+    // Format response - handle deleted students
+    const formattedSubmissions = submissions
+      .filter(sub => sub.student) // Filter out submissions with deleted students
+      .map(sub => ({
+        _id: sub._id,
+        student: {
+          _id: sub.student._id,
+          fullname: sub.student.fullname || "Unknown Student",
+          studentId: sub.student.studentId || "N/A",
+          email: sub.student.email || "N/A"
+        },
+        textSubmission: sub.textSubmission,
+        submissionType: sub.submissionType,
+        attachments: sub.attachments,
+        submittedAt: sub.submittedAt,
+        status: sub.status,
+        score: sub.score,
+        feedback: sub.feedback,
+        privateNotes: sub.privateNotes,
+        gradedBy: sub.gradedBy,
+        gradedAt: sub.gradedAt,
+        isLate: sub.isLate,
+        attempt: sub.attempt
+      }));
 
     res.json({
       message: "Submissions fetched successfully",
@@ -170,12 +193,22 @@ router.post("/submissions/:submissionId/grade", authenticate, isLecturer, async 
       return res.status(400).json({ message: "Score must be a number between 0 and 100" });
     }
 
-    if (!feedback || feedback.trim() === '') {
+    if (!feedback) {
       return res.status(400).json({ message: "Feedback is required" });
     }
 
-    // Find submission
-    const submission = await AssignmentSubmission.findById(submissionId);
+    // Strip HTML and validate feedback
+    const cleanFeedback = stripHtmlTags(feedback);
+    if (!cleanFeedback) {
+      return res.status(400).json({ message: "Feedback cannot be empty or contain only HTML tags" });
+    }
+
+    // Find submission with student populated
+    const submission = await AssignmentSubmission.findById(submissionId)
+      .populate({
+        path: "student",
+        select: "fullname studentId email"
+      });
 
     if (!submission) {
       return res.status(404).json({ message: "Submission not found" });
@@ -200,6 +233,7 @@ router.post("/submissions/:submissionId/grade", authenticate, isLecturer, async 
       message: "Submission graded successfully",
       submission: {
         _id: submission._id,
+        student: submission.student,
         score: submission.score,
         feedback: submission.feedback,
         status: submission.status,
@@ -243,12 +277,12 @@ router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, r
     res.json({
       submission: {
         _id: submission._id,
-        student: {
+        student: submission.student ? {
           _id: submission.student._id,
           fullname: submission.student.fullname,
           studentId: submission.student.studentId,
           email: submission.student.email
-        },
+        } : { fullname: "Deleted Student", studentId: "N/A", email: "N/A" },
         textSubmission: submission.textSubmission,
         submissionType: submission.submissionType,
         attachments: submission.attachments,
@@ -257,7 +291,7 @@ router.get("/submissions/:submissionId", authenticate, isLecturer, async (req, r
         score: submission.score,
         feedback: submission.feedback,
         privateNotes: submission.privateNotes,
-        gradedBy: submission.gradedBy?.fullname,
+        gradedBy: submission.gradedBy?.fullname || null,
         gradedAt: submission.gradedAt,
         isLate: submission.isLate,
         attempt: submission.attempt
@@ -280,7 +314,11 @@ router.put("/submissions/:submissionId", authenticate, isLecturer, async (req, r
     const lecturerId = req.user.id;
     const { score, feedback, privateNotes } = req.body;
 
-    const submission = await AssignmentSubmission.findById(submissionId);
+    const submission = await AssignmentSubmission.findById(submissionId)
+      .populate({
+        path: "student",
+        select: "fullname studentId email"
+      });
 
     if (!submission) {
       return res.status(404).json({ message: "Submission not found" });
@@ -299,7 +337,12 @@ router.put("/submissions/:submissionId", authenticate, isLecturer, async (req, r
     }
 
     if (feedback) {
-      submission.feedback = feedback;
+      const cleanFeedback = stripHtmlTags(feedback);
+      if (cleanFeedback) {
+        submission.feedback = feedback;
+      } else {
+        return res.status(400).json({ message: "Feedback cannot be empty or contain only HTML tags" });
+      }
     }
 
     if (privateNotes !== undefined) {
@@ -316,7 +359,14 @@ router.put("/submissions/:submissionId", authenticate, isLecturer, async (req, r
 
     res.json({
       message: "Submission updated successfully",
-      submission
+      submission: {
+        _id: submission._id,
+        student: submission.student,
+        score: submission.score,
+        feedback: submission.feedback,
+        status: submission.status,
+        gradedAt: submission.gradedAt
+      }
     });
 
   } catch (error) {
@@ -355,7 +405,7 @@ router.get("/assignments/:assignmentId/statistics", authenticate, isLecturer, as
     });
 
     const gradedSubmissions = submissions.filter(s => s.status === 'graded');
-    const scores = gradedSubmissions.map(s => s.score);
+    const scores = gradedSubmissions.map(s => s.score).filter(s => s !== null && s !== undefined);
 
     const stats = {
       total: submissions.length,
@@ -380,6 +430,81 @@ router.get("/assignments/:assignmentId/statistics", authenticate, isLecturer, as
 });
 
 /**
+ * GET /api/lecturer/courses/:courseId/submissions
+ * Fetch all submissions for a course with assignment details
+ */
+router.get("/courses/:courseId/submissions", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const lecturerId = req.user.id;
+
+    // Verify lecturer owns this course
+    const lecturer = await User.findOne({
+      _id: lecturerId,
+      "courses._id": courseId
+    });
+
+    if (!lecturer) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    // Get all assignments for this course
+    const assignments = await Questions.find({ course: courseId });
+    const assignmentIds = assignments.map(a => a._id);
+
+    // Get all submissions for these assignments
+    const submissions = await AssignmentSubmission.find({
+      assignment: { $in: assignmentIds },
+      lecturer: lecturerId
+    })
+      .populate({
+        path: "student",
+        select: "fullname studentId email"
+      })
+      .populate({
+        path: "assignment",
+        select: "title"
+      })
+      .sort({ submittedAt: -1 });
+
+    // Format and filter submissions
+    const formattedSubmissions = submissions
+      .filter(sub => sub.student && sub.assignment) // Filter out deleted references
+      .map(sub => ({
+        _id: sub._id,
+        student: {
+          _id: sub.student._id,
+          fullname: sub.student.fullname,
+          studentId: sub.student.studentId,
+          email: sub.student.email
+        },
+        assignment: {
+          _id: sub.assignment._id,
+          title: sub.assignment.title
+        },
+        submissionType: sub.submissionType,
+        submittedAt: sub.submittedAt,
+        status: sub.status,
+        score: sub.score,
+        gradedAt: sub.gradedAt,
+        isLate: sub.isLate
+      }));
+
+    res.json({
+      message: "Course submissions fetched successfully",
+      submissions: formattedSubmissions,
+      total: formattedSubmissions.length,
+      graded: formattedSubmissions.filter(s => s.status === 'graded').length,
+      pending: formattedSubmissions.filter(s => s.status === 'submitted').length
+    });
+
+  } catch (error) {
+    console.error("Fetch course submissions error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+/**
  * POST /api/lecturer/submissions/bulk-grade
  * Grade multiple submissions at once
  */
@@ -399,10 +524,30 @@ router.post("/submissions/bulk-grade", authenticate, isLecturer, async (req, res
       const { submissionId, score, feedback } = gradeData;
 
       try {
+        // Validate required fields
         if (!submissionId || score === undefined || !feedback) {
           errors.push({
             submissionId,
-            error: "Missing required fields"
+            error: "Missing required fields (submissionId, score, feedback)"
+          });
+          continue;
+        }
+
+        // Validate score
+        if (typeof score !== 'number' || score < 0 || score > 100) {
+          errors.push({
+            submissionId,
+            error: "Score must be a number between 0 and 100"
+          });
+          continue;
+        }
+
+        // Validate feedback
+        const cleanFeedback = stripHtmlTags(feedback);
+        if (!cleanFeedback) {
+          errors.push({
+            submissionId,
+            error: "Feedback cannot be empty or contain only HTML tags"
           });
           continue;
         }
@@ -420,7 +565,7 @@ router.post("/submissions/bulk-grade", authenticate, isLecturer, async (req, res
         if (submission.lecturer.toString() !== lecturerId) {
           errors.push({
             submissionId,
-            error: "Access denied"
+            error: "Access denied - not your submission"
           });
           continue;
         }
@@ -460,4 +605,132 @@ router.post("/submissions/bulk-grade", authenticate, isLecturer, async (req, res
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+/**
+ * DELETE /api/lecturer/submissions/:submissionId
+ * Delete a submission (soft delete - set to draft)
+ */
+router.delete("/submissions/:submissionId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { submissionId } = req.params;
+    const lecturerId = req.user.id;
+
+    const submission = await AssignmentSubmission.findById(submissionId);
+
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    if (submission.lecturer.toString() !== lecturerId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    // Soft delete - set status to draft
+    submission.status = 'draft';
+    await submission.save();
+
+    res.json({
+      message: "Submission deleted successfully",
+      submissionId
+    });
+
+  } catch (error) {
+    console.error("Delete submission error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+/**
+ * GET /api/lecturer/submissions/:submissionId/download
+ * Download submission attachments
+ */
+router.get("/submissions/:submissionId/download/:attachmentIndex", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { submissionId, attachmentIndex } = req.params;
+    const lecturerId = req.user.id;
+
+    const submission = await AssignmentSubmission.findById(submissionId);
+
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    if (submission.lecturer.toString() !== lecturerId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const index = parseInt(attachmentIndex);
+    if (isNaN(index) || !submission.attachments[index]) {
+      return res.status(404).json({ message: "Attachment not found" });
+    }
+
+    const attachment = submission.attachments[index];
+    res.json({
+      message: "Attachment URL retrieved",
+      attachment: {
+        url: attachment.url,
+        originalName: attachment.originalName,
+        mimeType: attachment.mimeType,
+        size: attachment.size
+      }
+    });
+
+  } catch (error) {
+    console.error("Download submission error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+/**
+ * GET /api/lecturer/dashboard/overview
+ * Get lecturer dashboard overview stats
+ */
+router.get("/dashboard/overview", authenticate, isLecturer, async (req, res) => {
+  try {
+    const lecturerId = req.user.id;
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    const courseIds = lecturer.courses.map(c => c._id);
+
+    // Get all assignments
+    const assignments = await Questions.find({
+      course: { $in: courseIds }
+    });
+
+    const assignmentIds = assignments.map(a => a._id);
+
+    // Get all submissions
+    const submissions = await AssignmentSubmission.find({
+      assignment: { $in: assignmentIds },
+      lecturer: lecturerId
+    });
+
+    const gradedSubmissions = submissions.filter(s => s.status === 'graded');
+    const scores = gradedSubmissions.map(s => s.score).filter(s => s !== null && s !== undefined);
+
+    const overview = {
+      totalCourses: lecturer.courses.length,
+      totalAssignments: assignments.length,
+      totalSubmissions: submissions.length,
+      gradedSubmissions: gradedSubmissions.length,
+      pendingSubmissions: submissions.filter(s => s.status === 'submitted').length,
+      averageScore: scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(2) : 0
+    };
+
+    res.json({
+      message: "Dashboard overview retrieved",
+      overview
+    });
+
+  } catch (error) {
+    console.error("Dashboard overview error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 export default router;
