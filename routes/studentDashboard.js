@@ -13,11 +13,27 @@ import { GridFSBucket } from "mongodb";
 
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
-
 // GridFS bucket for file storage
 let gfsBucket;
-mongoose.connection.once('open', () => {
-  gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+
+// Initialize GridFS when connection is ready
+const initializeGridFS = () => {
+  if (mongoose.connection.readyState === 1) {
+    gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+  }
+};
+
+// Call this after your routes are defined or in your main server file
+mongoose.connection.on('connected', () => {
+  initializeGridFS();
+});
+
+// Also initialize on first request if not ready
+router.use((req, res, next) => {
+  if (!gfsBucket && mongoose.connection.readyState === 1) {
+    initializeGridFS();
+  }
+  next();
 });
 
 // ===========================================
@@ -560,35 +576,47 @@ router.get("/files/:fileId/download", async (req, res) => {
       return res.status(400).json({ message: "Invalid file ID" });
     }
 
-    // Check if file exists and user has access
-    const submission = await AssignmentSubmission.findOne({
-      "attachments.fileId": fileId,
-      student: req.user.id
-    });
-
-    if (!submission) {
-      return res.status(403).json({ message: "Access denied. File not found." });
+    // Initialize GridFS bucket if not already done
+    if (!gfsBucket) {
+      gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
     }
-
-    const attachment = submission.attachments.find(a => a.fileId === fileId);
 
     // Download file from GridFS
     const downloadStream = gfsBucket.openDownloadStream(
       new mongoose.Types.ObjectId(fileId)
     );
 
-    downloadStream.on('error', (err) => {
-      console.error("Download error:", err);
-      res.status(500).json({ message: "Error downloading file" });
+    // Get file metadata
+    const filesCollection = mongoose.connection.collection('uploads.files');
+    const fileData = await filesCollection.findOne({
+      _id: new mongoose.Types.ObjectId(fileId)
     });
 
-    res.setHeader('Content-Type', attachment.mimeType);
-    res.setHeader('Content-Disposition', `attachment; filename="${attachment.originalName}"`);
+    if (!fileData) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    const mimeType = fileData.metadata?.mimeType || 'application/octet-stream';
+    const originalName = fileData.filename || 'download';
+
+    res.setHeader('Content-Type', mimeType);
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(originalName)}"`);
+    res.setHeader('Content-Length', fileData.length);
+
+    downloadStream.on('error', (err) => {
+      console.error("Download error:", err);
+      if (!res.headersSent) {
+        res.status(500).json({ message: "Error downloading file" });
+      }
+    });
+
     downloadStream.pipe(res);
 
   } catch (e) {
     console.error("File download error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
+    if (!res.headersSent) {
+      res.status(500).json({ message: "Server error", error: e.message });
+    }
   }
 });
 
