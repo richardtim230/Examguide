@@ -9,21 +9,107 @@ import AssignmentSubmission from "../models/AssignmentSubmission.js";
 import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
+import { GridFSBucket } from "mongodb";
+
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
 
-
+// GridFS bucket for file storage
+let gfsBucket;
+mongoose.connection.once('open', () => {
+  gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+});
 
 // ===========================================
 // MIDDLEWARE
 // ===========================================
 
 const isStudent = (req, res, next) => {
-  // Accommodate your userType schema logic
   if (req.user.userType !== "student" && req.user.role !== "student") {
     return res.status(403).json({ message: "Access denied. Student role required." });
   }
   next();
+};
+
+// Helper function to check if file is an image
+const isImage = (mimeType) => {
+  return mimeType.startsWith('image/');
+};
+
+// Helper function to check if file is document
+const isDocument = (mimeType) => {
+  const documentTypes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'text/plain',
+    'application/zip',
+    'application/x-zip-compressed'
+  ];
+  return documentTypes.includes(mimeType);
+};
+
+// Helper function to check if file is media (video/audio)
+const isMedia = (mimeType) => {
+  return mimeType.startsWith('video/') || mimeType.startsWith('audio/');
+};
+
+// Upload image to Cloudinary
+const uploadImageToCloudinary = (file) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: "assignment-submissions/images",
+        resource_type: "auto"
+      },
+      (err, result) => {
+        if (err) return reject(err);
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+          originalName: file.originalname,
+          mimeType: file.mimetype,
+          size: file.size,
+          storageType: 'cloudinary'
+        });
+      }
+    );
+    streamifier.createReadStream(file.buffer).pipe(stream);
+  });
+};
+
+// Upload file to GridFS
+const uploadFileToGridFS = (file) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = gfsBucket.openUploadStream(file.originalname, {
+      metadata: {
+        mimeType: file.mimetype,
+        uploadedAt: new Date(),
+        originalSize: file.size
+      }
+    });
+
+    uploadStream.on('finish', (file) => {
+      resolve({
+        fileId: file._id.toString(),
+        url: `/api/student/files/${file._id.toString()}/download`,
+        originalName: file.filename,
+        mimeType: file.metadata.mimeType,
+        size: file.length,
+        storageType: 'gridfs'
+      });
+    });
+
+    uploadStream.on('error', (err) => {
+      reject(err);
+    });
+
+    streamifier.createReadStream(file.buffer).pipe(uploadStream);
+  });
 };
 
 // ===========================================
@@ -34,7 +120,6 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
   try {
     const studentId = req.user.id;
 
-    // Find all users (lecturers) who have this student in any of their courses or results
     const lecturers = await User.find({
       $or: [
         { "courses.students": studentId },
@@ -46,7 +131,6 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
     let totalScore = 0;
     let resultCount = 0;
 
-    // Calculate totals across all lecturers
     lecturers.forEach(lecturer => {
       lecturer.courses.forEach(course => {
         if (course.students.includes(studentId)) {
@@ -68,8 +152,8 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
       message: "Dashboard stats retrieved successfully",
       stats: {
         enrolledCourses: enrolledCount,
-        pendingTasks: 0, // Implement based on your assignment/question deadline logic
-        upcomingExams: 0, // Implement based on exam startDate
+        pendingTasks: 0,
+        upcomingExams: 0,
         averageScore: averageScore
       }
     });
@@ -80,14 +164,13 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
 });
 
 // ===========================================
-// 2. COURSE CATALOG (View all available courses)
+// 2. COURSE CATALOG
 // ===========================================
 
 router.get("/courses/catalog", authenticate, isStudent, async (req, res) => {
   try {
     const studentId = req.user.id;
 
-    // Find all users who have at least one course created
     const lecturers = await User.find(
       { "courses.0": { $exists: true } }, 
       "fullname title courses"
@@ -95,7 +178,6 @@ router.get("/courses/catalog", authenticate, isStudent, async (req, res) => {
 
     const catalog = [];
 
-    // Flatten courses from all lecturers into a single catalog array
     lecturers.forEach(lecturer => {
       lecturer.courses.forEach(course => {
         const isEnrolled = course.students.some(sId => sId.toString() === studentId);
@@ -120,14 +202,13 @@ router.get("/courses/catalog", authenticate, isStudent, async (req, res) => {
 });
 
 // ===========================================
-// 3. MY ENROLLMENTS (View registered courses)
+// 3. MY ENROLLMENTS
 // ===========================================
 
 router.get("/courses/enrolled", authenticate, isStudent, async (req, res) => {
   try {
     const studentId = req.user.id;
     
-    // Find lecturers where this student is inside the courses.students array
     const lecturers = await User.find(
       { "courses.students": studentId },
       "fullname courses"
@@ -166,8 +247,6 @@ router.post("/courses/:courseId/enroll", authenticate, isStudent, async (req, re
     const { courseId } = req.params;
     const studentId = req.user.id;
 
-    // Verify course exists and add the student to the course's students array
-    // using MongoDB's $ (positional) operator and $addToSet to prevent duplicates
     const updatedLecturer = await User.findOneAndUpdate(
       { "courses._id": courseId },
       { $addToSet: { "courses.$.students": studentId } },
@@ -190,7 +269,7 @@ router.post("/courses/:courseId/enroll", authenticate, isStudent, async (req, re
 });
 
 // ===========================================
-// 5. ENTER COURSE WORKSPACE (UPDATED)
+// 5. ENTER COURSE WORKSPACE
 // ===========================================
 
 router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, res) => {
@@ -198,64 +277,55 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
     const { courseId } = req.params;
     const studentId = req.user.id;
 
-    // 1. Find the lecturer holding this course
     const lecturer = await User.findOne(
       { "courses._id": courseId },
-      "fullname email courses exams" // No need to fetch raw question IDs here anymore
+      "fullname email courses exams"
     );
 
     if (!lecturer) {
       return res.status(404).json({ message: "Course not found." });
     }
 
-    // 2. Extract the specific course
     const course = lecturer.courses.find(c => c._id.toString() === courseId);
 
-    // 3. Verify the student is registered
     if (!course.students.includes(studentId)) {
         return res.status(403).json({ message: "Access denied. You must register for this course first." });
     }
 
-    // 4. Fetch Modern Exam Sets
-const activeExamSets = await QuestionSet.find({
-    createdBy: lecturer._id,
-    status: "ACTIVE"
-})
-.select("-questions")
-.lean();
+    const activeExamSets = await QuestionSet.find({
+        createdBy: lecturer._id,
+        status: "ACTIVE"
+    })
+    .select("-questions")
+    .lean();
 
-    // 5. Fetch Legacy Embedded Exams (Fallback just in case)
     const activeLegacyExams = (lecturer.exams || []).filter(exam => 
       exam.course && exam.course.toString() === courseId && exam.status === "ACTIVE"
     );
 
-    // 6. Fetch Assignments/Questions (Querying the Questions collection directly)
-    // Fetch assignments
-const questions = await Questions.find({
-    course: courseId
-}).select("-answer").lean();
+    const questions = await Questions.find({
+        course: courseId
+    }).select("-answer").lean();
 
-// Get all submissions made by this student
-const submissions = await AssignmentSubmission.find({
-    student: studentId,
-    assignment: {
-        $in: questions.map(q => q._id)
-    }
-}).select("assignment status submittedAt grade");
+    const submissions = await AssignmentSubmission.find({
+        student: studentId,
+        assignment: {
+            $in: questions.map(q => q._id)
+        }
+    }).select("assignment status submittedAt grade");
 
-// Create lookup table
-const submissionMap = {};
+    const submissionMap = {};
 
-submissions.forEach(sub => {
-    submissionMap[sub.assignment.toString()] = sub;
-});
+    submissions.forEach(sub => {
+        submissionMap[sub.assignment.toString()] = sub;
+    });
 
-// Merge submission status into each assignment
-const activeQuestions = questions.map(question => ({
-    ...question,
-    hasSubmitted: !!submissionMap[question._id.toString()],
-    submission: submissionMap[question._id.toString()] || null
-}));
+    const activeQuestions = questions.map(question => ({
+        ...question,
+        hasSubmitted: !!submissionMap[question._id.toString()],
+        submission: submissionMap[question._id.toString()] || null
+    }));
+
     res.json({ 
         course: {
           _id: course._id,
@@ -275,6 +345,10 @@ const activeQuestions = questions.map(question => ({
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+
+// ===========================================
+// 6. GET ASSIGNMENT DETAILS
+// ===========================================
 
 router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, res) => {
     try {
@@ -332,6 +406,9 @@ router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, re
     }
 });
 
+// ===========================================
+// 7. SUBMIT ASSIGNMENT (WITH GRIDFS & CLOUDINARY)
+// ===========================================
 
 router.post(
   "/assignments/:assignmentId/submit",
@@ -388,43 +465,58 @@ router.post(
 
       let attachments = [];
 
-if (req.file) {
-  const attachment = await new Promise((resolve, reject) => {
-    const stream = cloudinary.v2.uploader.upload_stream(
-      {
-        folder: "assignment-submissions",
-        resource_type: "auto"
-      },
-      (err, result) => {
-        if (err) return reject(err);
+      // Process file upload if provided
+      if (req.file) {
+        try {
+          let attachment;
 
-        resolve({
-          url: result.secure_url,
-          publicId: result.public_id,
-          originalName: req.file.originalname,
-          mimeType: req.file.mimetype,
-          size: req.file.size
+          if (isImage(req.file.mimetype)) {
+            // Upload images to Cloudinary
+            attachment = await uploadImageToCloudinary(req.file);
+          } else if (isDocument(req.file.mimetype) || isMedia(req.file.mimetype)) {
+            // Upload documents and media to GridFS
+            attachment = await uploadFileToGridFS(req.file);
+          } else {
+            return res.status(400).json({
+              message: "Unsupported file type. Please upload images, documents (PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX), or media files (MP4, MP3, WebM)."
+            });
+          }
+
+          attachments.push(attachment);
+        } catch (uploadError) {
+          console.error("File upload error:", uploadError);
+          return res.status(500).json({
+            message: "Failed to upload file",
+            error: uploadError.message
+          });
+        }
+      }
+
+      // Validate submission
+      const hasText = content && content.trim() !== "";
+      const hasFile = attachments.length > 0;
+
+      if (!hasText && !hasFile) {
+        return res.status(400).json({
+          message: "Please provide either text content or upload a file."
         });
       }
-    );
 
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
-  });
-
-  attachments.push(attachment);
-}
+      // Determine submission type
+      let submissionType = "text";
+      if (hasFile && hasText) {
+        submissionType = "mixed";
+      } else if (hasFile) {
+        submissionType = attachments[0].storageType === 'cloudinary' ? "file" : 
+                        (attachments[0].mimeType.startsWith('video/') || attachments[0].mimeType.startsWith('audio/')) ? "media" : "file";
+      }
 
       const submission = await AssignmentSubmission.create({
         assignment: assignment._id,
         course: assignment.course,
         lecturer: lecturer._id,
         student: studentId,
-        submissionType:
-          attachments.length > 0 && content
-            ? "mixed"
-            : attachments.length > 0
-            ? "file"
-            : "text",
+        submissionType,
         textSubmission: content || "",
         attachments,
         submittedAt: new Date(),
@@ -433,12 +525,17 @@ if (req.file) {
 
       res.status(201).json({
         message: "Assignment submitted successfully.",
-        submission
+        submission: {
+          _id: submission._id,
+          submissionType: submission.submissionType,
+          attachments: submission.attachments,
+          status: submission.status,
+          submittedAt: submission.submittedAt
+        }
       });
 
     } catch (e) {
       console.error("Assignment submission error:", e);
-
       res.status(500).json({
         message: "Server error",
         error: e.message
@@ -447,5 +544,86 @@ if (req.file) {
   }
 );
 
+// ===========================================
+// 8. DOWNLOAD FILE FROM GRIDFS
+// ===========================================
+
+router.get("/files/:fileId/download", authenticate, isStudent, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(fileId)) {
+      return res.status(400).json({ message: "Invalid file ID" });
+    }
+
+    // Check if file exists and user has access
+    const submission = await AssignmentSubmission.findOne({
+      "attachments.fileId": fileId,
+      student: req.user.id
+    });
+
+    if (!submission) {
+      return res.status(403).json({ message: "Access denied. File not found." });
+    }
+
+    const attachment = submission.attachments.find(a => a.fileId === fileId);
+
+    // Download file from GridFS
+    const downloadStream = gfsBucket.openDownloadStream(
+      new mongoose.Types.ObjectId(fileId)
+    );
+
+    downloadStream.on('error', (err) => {
+      console.error("Download error:", err);
+      res.status(500).json({ message: "Error downloading file" });
+    });
+
+    res.setHeader('Content-Type', attachment.mimeType);
+    res.setHeader('Content-Disposition', `attachment; filename="${attachment.originalName}"`);
+    downloadStream.pipe(res);
+
+  } catch (e) {
+    console.error("File download error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 9. DELETE SUBMISSION FILE (CLEANUP FROM GRIDFS)
+// ===========================================
+
+router.delete("/files/:fileId", authenticate, isStudent, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(fileId)) {
+      return res.status(400).json({ message: "Invalid file ID" });
+    }
+
+    // Verify ownership
+    const submission = await AssignmentSubmission.findOne({
+      "attachments.fileId": fileId,
+      student: req.user.id
+    });
+
+    if (!submission) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    // Delete from GridFS
+    await gfsBucket.delete(new mongoose.Types.ObjectId(fileId));
+
+    // Remove from submission
+    submission.attachments = submission.attachments.filter(a => a.fileId !== fileId);
+    await submission.save();
+
+    res.json({ message: "File deleted successfully" });
+
+  } catch (e) {
+    console.error("File deletion error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 
 export default router;
