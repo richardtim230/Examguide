@@ -9,6 +9,8 @@ import Questions from "../models/Questions.js";
 import QuestionSet from "../models/QuestionSet.js"; 
 import Result from "../models/Result.js";
 import streamifier from "streamifier";
+import AssignmentSubmission from "../models/AssignmentSubmission.js";
+
 
 // ============================================
 // LECTURER DASHBOARD API ROUTES
@@ -1478,7 +1480,398 @@ router.get("/grading/stats", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+// ===========================================
+// 1. GET ASSIGNMENT DETAILS
+// ===========================================
 
+router.get("/assignments/:assignmentId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+    const lecturerId = req.user.id;
+
+    const assignment = await Questions.findById(assignmentId)
+      .select("title question description dueDate course createdAt type");
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+    const courseExists = lecturer.courses.some(c => c._id.toString() === assignment.course.toString());
+
+    if (!courseExists) {
+      return res.status(403).json({ message: "Access denied. You do not own this assignment." });
+    }
+
+    const course = lecturer.courses.id(assignment.course);
+
+    res.json({
+      assignment: {
+        _id: assignment._id,
+        title: assignment.title || "Assignment",
+        question: assignment.question,
+        description: assignment.description,
+        dueDate: assignment.dueDate,
+        courseCode: course.code,
+        courseName: course.title,
+        type: assignment.type,
+        createdAt: assignment.createdAt
+      }
+    });
+
+  } catch (e) {
+    console.error("Fetch assignment error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 2. GET ALL SUBMISSIONS FOR AN ASSIGNMENT
+// ===========================================
+
+router.get("/assignments/:assignmentId/submissions", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+    const lecturerId = req.user.id;
+
+    const assignment = await Questions.findById(assignmentId).select("course");
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+    const courseExists = lecturer.courses.some(c => c._id.toString() === assignment.course.toString());
+
+    if (!courseExists) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const submissions = await AssignmentSubmission.find({ assignment: assignmentId })
+      .populate('student', 'fullname studentId email')
+      .select('_id student textSubmission submissionType attachments attempt isLate status score feedback privateNotes gradedBy gradedAt submittedAt')
+      .sort({ submittedAt: -1 })
+      .lean();
+
+    const enrichedSubmissions = submissions.map(sub => ({
+      _id: sub._id,
+      student: {
+        _id: sub.student._id,
+        fullname: sub.student.fullname,
+        studentId: sub.student.studentId,
+        email: sub.student.email
+      },
+      textSubmission: sub.textSubmission,
+      submissionType: sub.submissionType,
+      attachments: sub.attachments,
+      attempt: sub.attempt,
+      isLate: sub.isLate,
+      status: sub.status,
+      score: sub.score,
+      feedback: sub.feedback,
+      privateNotes: sub.privateNotes,
+      gradedBy: sub.gradedBy,
+      gradedAt: sub.gradedAt,
+      submittedAt: sub.submittedAt
+    }));
+
+    res.json({
+      message: "Submissions retrieved successfully",
+      submissions: enrichedSubmissions,
+      total: enrichedSubmissions.length,
+      graded: enrichedSubmissions.filter(s => s.status === 'graded').length,
+      pending: enrichedSubmissions.filter(s => s.status === 'submitted').length
+    });
+
+  } catch (e) {
+    console.error("Fetch submissions error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 3. GET SINGLE SUBMISSION DETAILS
+// ===========================================
+
+router.get("/submission/:submissionId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { submissionId } = req.params;
+    const lecturerId = req.user.id;
+
+    const submission = await AssignmentSubmission.findById(submissionId)
+      .populate('student', 'fullname studentId email')
+      .populate('gradedBy', 'fullname');
+
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    if (submission.lecturer.toString() !== lecturerId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    res.json({
+      submission: {
+        _id: submission._id,
+        student: {
+          _id: submission.student._id,
+          fullname: submission.student.fullname,
+          studentId: submission.student.studentId,
+          email: submission.student.email
+        },
+        textSubmission: submission.textSubmission,
+        submissionType: submission.submissionType,
+        attachments: submission.attachments,
+        attempt: submission.attempt,
+        isLate: submission.isLate,
+        status: submission.status,
+        score: submission.score,
+        feedback: submission.feedback,
+        privateNotes: submission.privateNotes,
+        gradedBy: submission.gradedBy?.fullname || 'System',
+        gradedAt: submission.gradedAt,
+        submittedAt: submission.submittedAt
+      }
+    });
+
+  } catch (e) {
+    console.error("Fetch submission error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 4. GRADE A SUBMISSION
+// ===========================================
+
+router.post("/submission/:submissionId/grade", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { submissionId } = req.params;
+    const lecturerId = req.user.id;
+    const { score, feedback, privateNotes } = req.body;
+
+    if (score === undefined || score === null) {
+      return res.status(400).json({ message: "Score is required" });
+    }
+
+    if (isNaN(score) || score < 0 || score > 100) {
+      return res.status(400).json({ message: "Score must be between 0 and 100" });
+    }
+
+    if (!feedback || feedback.trim() === "") {
+      return res.status(400).json({ message: "Feedback is required" });
+    }
+
+    const submission = await AssignmentSubmission.findById(submissionId);
+
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    if (submission.lecturer.toString() !== lecturerId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    submission.score = score;
+    submission.feedback = feedback;
+    submission.privateNotes = privateNotes || "";
+    submission.status = "graded";
+    submission.gradedBy = lecturerId;
+    submission.gradedAt = new Date();
+
+    await submission.save();
+
+    res.json({
+      message: "Grade submitted successfully",
+      submission: {
+        _id: submission._id,
+        score: submission.score,
+        feedback: submission.feedback,
+        privateNotes: submission.privateNotes,
+        status: submission.status,
+        gradedAt: submission.gradedAt
+      }
+    });
+
+  } catch (e) {
+    console.error("Grade submission error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 5. GET SUBMISSION STATISTICS
+// ===========================================
+
+router.get("/assignments/:assignmentId/statistics", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+    const lecturerId = req.user.id;
+
+    const assignment = await Questions.findById(assignmentId).select("course");
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+    const courseExists = lecturer.courses.some(c => c._id.toString() === assignment.course.toString());
+
+    if (!courseExists) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const submissions = await AssignmentSubmission.find({ assignment: assignmentId })
+      .select('score status submittedAt')
+      .lean();
+
+    const total = submissions.length;
+    const graded = submissions.filter(s => s.status === 'graded').length;
+    const pending = submissions.filter(s => s.status === 'submitted').length;
+    const scores = submissions.filter(s => s.score !== null && s.score !== undefined).map(s => s.score);
+
+    const average = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+    const highest = scores.length > 0 ? Math.max(...scores) : 0;
+    const lowest = scores.length > 0 ? Math.min(...scores) : 0;
+
+    const distribution = {
+      excellent: scores.filter(s => s >= 80).length,
+      good: scores.filter(s => s >= 70 && s < 80).length,
+      satisfactory: scores.filter(s => s >= 60 && s < 70).length,
+      fair: scores.filter(s => s >= 50 && s < 60).length,
+      poor: scores.filter(s => s < 50).length
+    };
+
+    res.json({
+      statistics: {
+        total,
+        graded,
+        pending,
+        average: average.toFixed(2),
+        highest,
+        lowest,
+        distribution
+      }
+    });
+
+  } catch (e) {
+    console.error("Fetch statistics error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 6. BULK EXPORT SUBMISSIONS
+// ===========================================
+
+router.get("/assignments/:assignmentId/export", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+    const lecturerId = req.user.id;
+
+    const assignment = await Questions.findById(assignmentId).select("title course");
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+    const courseExists = lecturer.courses.some(c => c._id.toString() === assignment.course.toString());
+
+    if (!courseExists) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const submissions = await AssignmentSubmission.find({ assignment: assignmentId })
+      .populate('student', 'fullname studentId email')
+      .select('student score status feedback submittedAt')
+      .sort({ submittedAt: -1 })
+      .lean();
+
+    const csvData = submissions.map(sub => ({
+      studentName: sub.student.fullname,
+      studentId: sub.student.studentId,
+      email: sub.student.email,
+      score: sub.score || 'Not Graded',
+      status: sub.status,
+      submittedAt: new Date(sub.submittedAt).toLocaleString(),
+      feedback: normalizeText(sub.feedback)
+    }));
+
+    res.json({
+      assignment: assignment.title,
+      exportDate: new Date().toISOString(),
+      totalSubmissions: submissions.length,
+      data: csvData
+    });
+
+  } catch (e) {
+    console.error("Export submissions error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// ===========================================
+// 7. SEARCH SUBMISSIONS
+// ===========================================
+
+router.post("/assignments/:assignmentId/search", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+    const lecturerId = req.user.id;
+    const { query, status, minScore, maxScore } = req.body;
+
+    const assignment = await Questions.findById(assignmentId).select("course");
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    const lecturer = await User.findById(lecturerId).select("courses");
+    const courseExists = lecturer.courses.some(c => c._id.toString() === assignment.course.toString());
+
+    if (!courseExists) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    let filter = { assignment: assignmentId };
+
+    if (status) {
+      filter.status = status;
+    }
+
+    if (minScore !== undefined || maxScore !== undefined) {
+      filter.score = {};
+      if (minScore !== undefined) filter.score.$gte = minScore;
+      if (maxScore !== undefined) filter.score.$lte = maxScore;
+    }
+
+    let submissions = await AssignmentSubmission.find(filter)
+      .populate('student', 'fullname studentId email')
+      .select('_id student textSubmission submissionType attachments status score feedback submittedAt')
+      .lean();
+
+    if (query) {
+      const lowerQuery = query.toLowerCase();
+      submissions = submissions.filter(sub =>
+        sub.student.fullname.toLowerCase().includes(lowerQuery) ||
+        sub.student.studentId.toLowerCase().includes(lowerQuery) ||
+        sub.student.email.toLowerCase().includes(lowerQuery) ||
+        normalizeText(sub.textSubmission).includes(lowerQuery)
+      );
+    }
+
+    res.json({
+      message: "Search completed",
+      total: submissions.length,
+      submissions
+    });
+
+  } catch (e) {
+    console.error("Search submissions error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 // ============================================
 // 8. REPORTS
 // ============================================
