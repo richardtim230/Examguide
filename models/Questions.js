@@ -64,3 +64,5 @@ const QuestionsSchema = new mongoose.Schema({
     ref: "User"
   }
 }, { timestamps: true });
+
+export default mongoose.models.Questions || mongoose.model("Questions", QuestionsSchema);
