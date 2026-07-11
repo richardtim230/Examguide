@@ -151,7 +151,7 @@ router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-router.get("/courses", authenticate, isLecturer, async (req, res) => {
+router.get("/courses", async (req, res) => {
   try {
     const lecturerId = req.user.id;
 
