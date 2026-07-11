@@ -155,10 +155,8 @@ router.get("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
 
-    let lecturer = await User.findById(lecturerId).populate({
-      path: 'courses.students',
-      select: 'fullname studentId level email active'
-    });
+    // Fetch lecturer without nested populate first
+    const lecturer = await User.findById(lecturerId);
     
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
@@ -166,18 +164,54 @@ router.get("/courses", authenticate, isLecturer, async (req, res) => {
 
     const courses = lecturer.courses || [];
 
+    // For each course, fetch the full student details separately
+    const enrichedCourses = await Promise.all(
+      courses.map(async (c) => {
+        let studentObjects = [];
+        
+        // If course has student IDs, fetch full student details
+        if (Array.isArray(c.students) && c.students.length > 0) {
+          try {
+            const studentIds = c.students.filter(id => {
+              // Validate that it looks like an ObjectId
+              return mongoose.Types.ObjectId.isValid(id);
+            });
+            
+            if (studentIds.length > 0) {
+              const students = await User.find({ _id: { $in: studentIds } })
+                .select('fullname studentId level email active')
+                .lean();
+              
+              studentObjects = students.map(s => ({
+                _id: s._id,
+                name: s.fullname || "Unknown",
+                matricNumber: s.studentId || "N/A",
+                level: s.level || "N/A",
+                email: s.email,
+                status: s.active !== false ? "Active" : "Inactive"
+              }));
+            }
+          } catch (err) {
+            console.warn(`Failed to fetch students for course ${c._id}:`, err.message);
+          }
+        }
+
+        return {
+          _id: c._id || `course-${idx}`,
+          title: c.title || "Unknown Course",
+          code: c.code || "N/A",
+          description: c.description || "",
+          level: c.level || "N/A",
+          students: studentObjects,
+          questions: c.questions?.length || 0,
+          createdAt: c.createdAt || new Date()
+        };
+      })
+    );
+
     res.json({
-      count: courses.length,
-      courses: courses.map((c, idx) => ({
-        _id: c._id || `course-${idx}`,
-        title: c.title || c.name || c,
-        code: c.code || "N/A",
-        description: c.description || "",
-        level: c.level || "N/A",
-        students: Array.isArray(c.students) ? c.students : [],  // ← NOW returns full objects
-        questions: c.questions?.length || 0,
-        createdAt: c.createdAt || new Date()
-      }))
+      count: enrichedCourses.length,
+      courses: enrichedCourses
     });
   } catch (e) {
     console.error("Get courses error:", e);
@@ -1790,6 +1824,11 @@ router.get("/assignments/:assignmentId/export", authenticate, isLecturer, async 
       .sort({ submittedAt: -1 })
       .lean();
 
+    const normalizeText = (str) => {
+      if (!str) return '';
+      return String(str).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    };
+
     const csvData = submissions.map(sub => ({
       studentName: sub.student.fullname,
       studentId: sub.student.studentId,
@@ -1854,6 +1893,11 @@ router.post("/assignments/:assignmentId/search", authenticate, isLecturer, async
       .lean();
 
     if (query) {
+      const normalizeText = (str) => {
+        if (!str) return '';
+        return String(str).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+      };
+
       const lowerQuery = query.toLowerCase();
       submissions = submissions.filter(sub =>
         sub.student.fullname.toLowerCase().includes(lowerQuery) ||
