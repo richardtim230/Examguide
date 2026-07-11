@@ -435,7 +435,10 @@ const UserSchema = new Schema({
     code: String,
     description: String,
     level: String,
-    students: [Schema.Types.ObjectId],
+    students: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+}],
     questions: [Schema.Types.ObjectId],
     createdAt: { type: Date, default: Date.now }
   }],
