@@ -131,7 +131,126 @@ const uploadFileToGridFS = (file) => {
   });
 };
 
-// ===========================================
+// ✅ Helper function: Convert date to relative time string
+function getRelativeTime(date) {
+  const now = new Date();
+  const diffMs = now - new Date(date);
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+  
+  return new Date(date).toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric'
+  });
+}
+
+// ✅ Generate dynamic announcements from new assignments and exams
+async function generateDynamicAnnouncements(studentId, enrolledCourseIds) {
+  try {
+    const announcements = [];
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+    if (enrolledCourseIds.length === 0) {
+      return announcements;
+    }
+
+    // Fetch new assignments created in the last 30 days for enrolled courses
+    const newAssignments = await Questions.find({
+      course: { $in: enrolledCourseIds },
+      type: "assignment",
+      createdAt: { $gte: thirtyDaysAgo }
+    })
+      .select("title dueDate createdAt course")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Fetch new exam sets created in the last 30 days
+    const newExamSets = await QuestionSet.find({
+      createdAt: { $gte: thirtyDaysAgo },
+      status: "ACTIVE"
+    })
+      .select("title status createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Get course details for assignments
+    const courseMap = new Map();
+    
+    // Fetch lecturers and their courses
+    const lecturers = await User.find(
+      { "courses._id": { $in: enrolledCourseIds } },
+      "courses"
+    );
+
+    lecturers.forEach(lecturer => {
+      lecturer.courses.forEach(course => {
+        if (enrolledCourseIds.includes(course._id.toString())) {
+          courseMap.set(course._id.toString(), {
+            code: course.code,
+            title: course.title
+          });
+        }
+      });
+    });
+
+    // Create announcements for new assignments
+    newAssignments.forEach(assignment => {
+      const courseId = assignment.course._id ? assignment.course._id.toString() : assignment.course.toString();
+      const courseInfo = courseMap.get(courseId) || { code: "Course", title: "Unknown" };
+      
+      if (assignment.dueDate) {
+        const dueDateObj = new Date(assignment.dueDate);
+        const dueDateStr = dueDateObj.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric',
+          year: 'numeric'
+        });
+
+        announcements.push({
+          _id: `assignment-${assignment._id}`,
+          type: "assignment",
+          title: `New Assignment: ${assignment.title}`,
+          message: `📝 A new assignment "${assignment.title}" has been posted in ${courseInfo.code}. Due date: ${dueDateStr}`,
+          date: getRelativeTime(assignment.createdAt),
+          course: courseInfo.code,
+          icon: "ph-clipboard-text"
+        });
+      }
+    });
+
+    // Create announcements for new exam sets
+    newExamSets.forEach(examSet => {
+      announcements.push({
+        _id: `exam-${examSet._id}`,
+        type: "exam",
+        title: `New Exam Available: ${examSet.title}`,
+        message: `📋 A new exam "${examSet.title}" is now available for you to take.`,
+        date: getRelativeTime(examSet.createdAt),
+        icon: "ph-exam"
+      });
+    });
+
+    // Sort by date (newest first) and limit to 5 announcements
+    return announcements
+      .sort((a, b) => {
+        const timeA = new Date(a.date);
+        const timeB = new Date(b.date);
+        return timeB - timeA;
+      })
+      .slice(0, 5);
+
+  } catch (e) {
+    console.error("Error generating announcements:", e);
+    return [];
+  }
+}
+
 // ===========================================
 // 1. DASHBOARD OVERVIEW & STATS
 // ===========================================
@@ -140,7 +259,7 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
   try {
     const studentId = req.user.id;
 
-    // Fetch all data needed for stats
+    // ✅ Fetch lecturers and courses
     const lecturers = await User.find({
       $or: [
         { "courses.students": studentId },
@@ -148,7 +267,7 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
       ]
     }, "courses results");
 
-    // Get assignment submissions for this student
+    // ✅ Get assignment submissions for this student
     const submissions = await AssignmentSubmission.find({
       student: studentId
     }).select("status submittedAt");
@@ -163,7 +282,7 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
       lecturer.courses.forEach(course => {
         if (course.students.includes(studentId)) {
           enrolledCount++;
-          enrolledCourseIds.push(course._id);
+          enrolledCourseIds.push(course._id.toString());
         }
       });
 
@@ -198,150 +317,7 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
   }
 });
 
-// ✅ NEW FUNCTION: Generate dynamic announcements
-async function generateDynamicAnnouncements(studentId, enrolledCourseIds) {
-  try {
-    const announcements = [];
-    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-
-    if (enrolledCourseIds.length === 0) {
-      return announcements;
-    }
-
-    // Fetch new assignments created in the last 30 days for enrolled courses
-    const newAssignments = await Questions.find({
-      course: { $in: enrolledCourseIds },
-      type: "assignment",
-      createdAt: { $gte: thirtyDaysAgo }
-    })
-      .populate("course", "_id")
-      .select("title dueDate createdAt course")
-      .sort({ createdAt: -1 })
-      .limit(10);
-
-    // Fetch new exam sets created in the last 30 days for enrolled courses
-    const newExamSets = await QuestionSet.find({
-      createdBy: { $in: await User.find({ "courses._id": { $in: enrolledCourseIds } }).select("_id") },
-      status: "ACTIVE",
-      createdAt: { $gte: thirtyDaysAgo }
-    })
-      .select("title status createdAt")
-      .sort({ createdAt: -1 })
-      .limit(10);
-
-    // Get course details for assignments
-    const courseMap = new Map();
-    for (const courseId of enrolledCourseIds) {
-      const lecturer = await User.findOne(
-        { "courses._id": courseId },
-        "courses"
-      );
-      if (lecturer) {
-        const course = lecturer.courses.find(c => c._id.toString() === courseId.toString());
-        if (course) {
-          courseMap.set(courseId.toString(), {
-            code: course.code,
-            title: course.title
-          });
-        }
-      }
-    }
-
-    // Create announcements for new assignments
-    newAssignments.forEach(assignment => {
-      const courseId = assignment.course._id.toString();
-      const courseInfo = courseMap.get(courseId) || { code: "Course", title: "Unknown" };
-      
-      const dueDateObj = new Date(assignment.dueDate);
-      const dueDateStr = dueDateObj.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric',
-        year: 'numeric'
-      });
-
-      announcements.push({
-        _id: `assignment-${assignment._id}`,
-        type: "assignment",
-        title: `New Assignment: ${assignment.title}`,
-        message: `📝 A new assignment "${assignment.title}" has been posted in ${courseInfo.code}. Due date: ${dueDateStr}`,
-        date: getRelativeTime(assignment.createdAt),
-        course: courseInfo.code,
-        icon: "ph-clipboard-text"
-      });
-    });
-
-    // Create announcements for new exam sets
-    newExamSets.forEach(examSet => {
-      announcements.push({
-        _id: `exam-${examSet._id}`,
-        type: "exam",
-        title: `New Exam Available: ${examSet.title}`,
-        message: `📋 A new exam "${examSet.title}" is now available for you to take.`,
-        date: getRelativeTime(examSet.createdAt),
-        icon: "ph-exam"
-      });
-    });
-
-    // Sort by date (newest first) and limit to 5 announcements
-    return announcements
-      .sort((a, b) => {
-        const timeA = parseRelativeTime(a.date);
-        const timeB = parseRelativeTime(b.date);
-        return timeA - timeB;
-      })
-      .slice(0, 5);
-
-  } catch (e) {
-    console.error("Error generating announcements:", e);
-    return [];
-  }
-}
-
-// Helper function: Convert date to relative time string
-function getRelativeTime(date) {
-  const now = new Date();
-  const diffMs = now - new Date(date);
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return "just now";
-  if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-  
-  return new Date(date).toLocaleDateString('en-US', { 
-    month: 'short', 
-    day: 'numeric'
-  });
-}
-
-// Helper function: Parse relative time back to milliseconds for sorting
-function parseRelativeTime(timeStr) {
-  const now = new Date().getTime();
-  
-  if (timeStr === "just now") return now;
-  
-  const match = timeStr.match(/(\d+)\s+(\w+)\s+ago/);
-  if (!match) return now;
-  
-  const [, value, unit] = match;
-  const val = parseInt(value);
-  
-  switch (unit) {
-    case "min":
-    case "mins":
-      return now - val * 60000;
-    case "hour":
-    case "hours":
-      return now - val * 3600000;
-    case "day":
-    case "days":
-      return now - val * 86400000;
-    default:
-      return now;
-  }
-}
+// Rest of the routes remain the same...
 // ===========================================
 // 2. COURSE CATALOG
 // ===========================================
@@ -525,19 +501,21 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
   }
 });
 
+// ===========================================
+// 6. GET ASSIGNMENT DETAILS
+// ===========================================
+
 router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, res) => {
     try {
         const { assignmentId } = req.params;
         const studentId = req.user.id;
 
-        // Fetch full assignment with all fields needed
         const assignment = await Questions.findById(assignmentId);
 
         if (!assignment) {
             return res.status(404).json({ message: "Assignment not found." });
         }
 
-        // Verify this is actually an assignment (type should be 'assignment')
         if (assignment.type !== "assignment") {
             return res.status(400).json({ message: "This question is not an assignment." });
         }
@@ -790,8 +768,9 @@ router.get("/files/:fileId/download", async (req, res) => {
     }
   }
 });
+
 // ===========================================
-// 8. GET ASSIGNMENT RESULT
+// 9. GET ASSIGNMENT RESULT
 // ===========================================
 
 router.get(
@@ -856,45 +835,33 @@ router.get(
         },
 
         submission: {
-  _id: submission._id,
-
-  status: submission.status,
-
-  score: submission.score,
-
-  maxScore: assignment.maxScore ?? 100,
-
-  percentage:
-    submission.score != null
-      ? Math.round(
-          (submission.score /
-            (assignment.maxScore ?? 100)) * 100
-        )
-      : null,
-
-  feedback: submission.feedback || "",
-
-  feedbackAttachments:
-    submission.feedbackAttachments || [],
-
-  gradedBy:
-    lecturer?.fullname || "",
-
-  gradedAt:
-    submission.gradedAt,
-
-  submittedAt:
-    submission.submittedAt,
-
-  submissionType:
-    submission.submissionType,
-
-  textSubmission:
-    submission.textSubmission,
-
-  attachments:
-    submission.attachments || []
-}
+          _id: submission._id,
+          status: submission.status,
+          score: submission.score,
+          maxScore: assignment.maxScore ?? 100,
+          percentage:
+            submission.score != null
+              ? Math.round(
+                  (submission.score /
+                    (assignment.maxScore ?? 100)) * 100
+                )
+              : null,
+          feedback: submission.feedback || "",
+          feedbackAttachments:
+            submission.feedbackAttachments || [],
+          gradedBy:
+            lecturer?.fullname || "",
+          gradedAt:
+            submission.gradedAt,
+          submittedAt:
+            submission.submittedAt,
+          submissionType:
+            submission.submissionType,
+          textSubmission:
+            submission.textSubmission,
+          attachments:
+            submission.attachments || []
+        }
       });
 
     } catch (e) {
@@ -907,8 +874,9 @@ router.get(
     }
   }
 );
+
 // ===========================================
-// 9. DELETE SUBMISSION FILE (CLEANUP FROM GRIDFS)
+// 10. DELETE SUBMISSION FILE (CLEANUP FROM GRIDFS)
 // ===========================================
 
 router.delete("/files/:fileId", authenticate, isStudent, async (req, res) => {
