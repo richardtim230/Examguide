@@ -365,22 +365,25 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
   }
 });
 
-// ===========================================
-// 6. GET ASSIGNMENT DETAILS
-// ===========================================
-
 router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, res) => {
     try {
         const { assignmentId } = req.params;
         const studentId = req.user.id;
 
-        const assignment = await Questions.findById(assignmentId).select("-answer");
+        // Fetch full assignment with all fields needed
+        const assignment = await Questions.findById(assignmentId);
 
         if (!assignment) {
             return res.status(404).json({ message: "Assignment not found." });
         }
 
+        // Verify this is actually an assignment (type should be 'assignment')
+        if (assignment.type !== "assignment") {
+            return res.status(400).json({ message: "This question is not an assignment." });
+        }
+
         let courseCode = "Course";
+        let courseName = "Course";
 
         if (assignment.course) {
             const lecturer = await User.findOne(
@@ -395,6 +398,7 @@ router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, re
 
                 if (course) {
                     courseCode = course.code || course.title;
+                    courseName = course.title || "Course";
                 }
             }
         }
@@ -402,15 +406,22 @@ router.get("/assignments/:assignmentId", authenticate, isStudent, async (req, re
         const submission = await AssignmentSubmission.findOne({
             assignment: assignmentId,
             student: studentId
-        }).select("status submittedAt grade");
+        }).select("status submittedAt grade score");
 
+        // Build response with ALL fields from the Questions model
         res.json({
             assignment: {
                 _id: assignment._id,
                 title: assignment.title || "Continuous Assessment Task",
-                instructions: assignment.question,
-                dueDate: assignment.createdAt,
-                courseCode,
+                description: assignment.description || "",
+                question: assignment.question || "",
+                instructions: assignment.instructions || "",  // ✅ Include instructions field
+                dueDate: assignment.dueDate || new Date(),    // ✅ Include actual dueDate
+                maxScore: assignment.maxScore || 100,
+                courseCode: courseCode,
+                courseName: courseName,
+                type: assignment.type,
+                createdAt: assignment.createdAt,
                 hasSubmitted: !!submission,
                 submission: submission || null
             }
