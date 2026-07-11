@@ -1997,6 +1997,73 @@ router.put("/profile", authenticate, isLecturer, async (req, res) => {
   }
 });
 
+// Add this route to lecturerDashboard.js
+router.get("/courses/:courseId/overview", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const lecturerId = req.user.id;
+
+    // Find the lecturer's course
+    const lecturer = await User.findById(lecturerId);
+    
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    const course = lecturer.courses.id(courseId);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    // Count enrolled students
+    const enrolledCount = course.students ? course.students.length : 0;
+
+    // Count active assignments
+    const assignments = await Questions.countDocuments({
+      course: courseId,
+      type: "assignment"
+    });
+
+    // Count active exam sets
+    const examSets = await QuestionSet.countDocuments({
+      createdBy: lecturerId,
+      status: "ACTIVE"
+    });
+
+    // Calculate average performance (if results exist)
+    const results = lecturer.results || [];
+    const courseResults = results.filter(r => 
+      r.course && r.course.toString() === courseId
+    );
+    
+    let averagePerformance = 0;
+    if (courseResults.length > 0) {
+      const totalScore = courseResults.reduce((sum, r) => sum + (r.score || 0), 0);
+      averagePerformance = Math.round(totalScore / courseResults.length);
+    }
+
+    res.json({
+      message: "Course overview retrieved successfully",
+      overview: {
+        courseId: course._id,
+        courseCode: course.code,
+        courseTitle: course.title,
+        courseDescription: course.description,
+        level: course.level,
+        totalEnrolled: enrolledCount,
+        activeAssignments: assignments,
+        activeExams: examSets,
+        averagePerformance: averagePerformance
+      }
+    });
+
+  } catch (e) {
+    console.error("Fetch course overview error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
 router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("avatar"), async (req, res) => {
   try {
     if (!req.file) {
