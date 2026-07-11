@@ -151,15 +151,15 @@ router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-// ============================================
-// 3. COURSES MANAGEMENT
-// ============================================
-
 router.get("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
 
-    let lecturer = await User.findById(lecturerId);
+    let lecturer = await User.findById(lecturerId).populate({
+      path: 'courses.students',
+      select: 'fullname studentId level email active'
+    });
+    
     if (!lecturer) {
       return res.status(404).json({ message: "Lecturer not found" });
     }
@@ -174,7 +174,7 @@ router.get("/courses", authenticate, isLecturer, async (req, res) => {
         code: c.code || "N/A",
         description: c.description || "",
         level: c.level || "N/A",
-        students: c.students?.length || 0,
+        students: Array.isArray(c.students) ? c.students : [],  // ← NOW returns full objects
         questions: c.questions?.length || 0,
         createdAt: c.createdAt || new Date()
       }))
