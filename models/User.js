@@ -429,20 +429,37 @@ const UserSchema = new Schema({
     ref: "User"
   }],
 
-  courses: [{
-    _id: Schema.Types.ObjectId,
-    title: String,
-    code: String,
-    description: String,
-    level: String,
+    courses: [{
+    _id: { type: Schema.Types.ObjectId, required: true },
+    title: { type: String, default: "" },
+    code: { type: String, default: "" },
+    description: { type: String, default: "" },
+    level: { type: String, default: "" },
     students: [{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-}],
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }],
     questions: [Schema.Types.ObjectId],
+    resources: [
+      {
+        _id: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+        name: { type: String, default: "" },        // original filename or display name
+        label: { type: String, default: "" },       // user-provided label
+        mimeType: { type: String, default: "" },
+        size: { type: Number, default: 0 },         // bytes
+        url: { type: String, default: "" },         // public URL or download endpoint
+        storageType: {                                // where file is stored
+          type: String,
+          enum: ["gridfs", "cloudinary", "local", "other"],
+          default: "gridfs"
+        },
+        publicId: { type: String, default: null },  // cloudinary public_id if applicable
+        fileId: { type: String, default: null },    // GridFS fileId string if applicable
+        uploadedAt: { type: Date, default: Date.now }
+      }
+    ],
     createdAt: { type: Date, default: Date.now }
   }],
-
   questions: [{
   _id: Schema.Types.ObjectId,
   course: Schema.Types.ObjectId,
