@@ -422,11 +422,9 @@ router.post("/courses/:courseId/enroll", authenticate, isStudent, async (req, re
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-
 // ===========================================
-// 5. ENTER COURSE WORKSPACE
+// 5. ENTER COURSE WORKSPACE (include resources)
 // ===========================================
-
 router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, res) => {
   try {
     const { courseId } = req.params;
@@ -443,7 +441,11 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
 
     const course = lecturer.courses.find(c => c._id.toString() === courseId);
 
-    if (!course.students.includes(studentId)) {
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    if (!course.students || !course.students.some(id => id.toString() === studentId.toString())) {
         return res.status(403).json({ message: "Access denied. You must register for this course first." });
     }
 
@@ -454,7 +456,7 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
     .select("-questions")
     .lean();
 
-    const activeLegacyExams = (lecturer.exams || []).filter(exam => 
+    const activeLegacyExams = (lecturer.exams || []).filter(exam =>
       exam.course && exam.course.toString() === courseId && exam.status === "ACTIVE"
     );
 
@@ -470,7 +472,6 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
     }).select("assignment status submittedAt grade");
 
     const submissionMap = {};
-
     submissions.forEach(sub => {
         submissionMap[sub.assignment.toString()] = sub;
     });
@@ -481,19 +482,24 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
         submission: submissionMap[question._id.toString()] || null
     }));
 
-    res.json({ 
+    // Include resources embedded on the course (if any)
+    const resources = Array.isArray(course.resources) ? course.resources : [];
+
+    res.json({
         course: {
           _id: course._id,
           code: course.code,
           title: course.title,
           description: course.description,
           lecturer: lecturer.fullname,
-          lecturerEmail: lecturer.email
+          lecturerEmail: lecturer.email,
+          level: course.level,
+          resources // <-- added here
         },
         activeExamSets,
         activeLegacyExams,
         activeQuestions,
-        message: "Welcome to the course workspace" 
+        message: "Welcome to the course workspace"
     });
   } catch (e) {
     console.error("Fetch workspace error:", e);
