@@ -1056,8 +1056,8 @@ router.post("/courses/:courseId/resources", authenticate, isLecturer, uploadToMe
   }
 });
 
-// GET: download a GridFS resource by fileId (protected)
-router.get("/courses/resources/:fileId/download", authenticate, isLecturer, async (req, res) => {
+// PUBLIC download endpoint (no authentication) for GridFS-stored resources
+router.get("/courses/resources/:fileId/download", async (req, res) => {
   try {
     const { fileId } = req.params;
 
@@ -1065,6 +1065,7 @@ router.get("/courses/resources/:fileId/download", authenticate, isLecturer, asyn
       return res.status(400).json({ message: "Invalid file ID" });
     }
 
+    // Initialize GridFS bucket if not already
     if (!gfsBucket) {
       gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
     }
@@ -1079,9 +1080,11 @@ router.get("/courses/resources/:fileId/download", authenticate, isLecturer, asyn
     const mimeType = fileData.metadata?.mimeType || 'application/octet-stream';
     const originalName = fileData.filename || 'download';
 
+    // Set headers for download
     res.setHeader('Content-Type', mimeType);
     res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(originalName)}"`);
     res.setHeader('Content-Length', fileData.length);
+    res.setHeader('Accept-Ranges', 'bytes');
 
     const readStream = gfsBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
     readStream.on('error', (err) => {
