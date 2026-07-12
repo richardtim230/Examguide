@@ -10,13 +10,27 @@ import QuestionSet from "../models/QuestionSet.js";
 import Result from "../models/Result.js";
 import streamifier from "streamifier";
 import AssignmentSubmission from "../models/AssignmentSubmission.js";
+import { GridFSBucket } from "mongodb";
 
+let gfsBucket;
 
-// ============================================
-// LECTURER DASHBOARD API ROUTES
-// ============================================
+const initializeGridFS = () => {
+  if (mongoose.connection.readyState === 1 && !gfsBucket) {
+    gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+  }
+};
 
-// Middleware to ensure user is a lecturer
+mongoose.connection.on('connected', () => {
+  initializeGridFS();
+});
+
+router.use((req, res, next) => {
+  if (!gfsBucket && mongoose.connection.readyState === 1) {
+    initializeGridFS();
+  }
+  next();
+});
+
 const isLecturer = (req, res, next) => {
   if (req.user.role !== "lecturer" && req.user.role !== "tutor" && req.user.role !== "admin") {
     return res.status(403).json({ message: "Access denied. Lecturer role required." });
@@ -27,9 +41,79 @@ const isLecturer = (req, res, next) => {
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
 
-// ============================================
-// 1. DASHBOARD STATS
-// ============================================
+const isImage = (mime) => mime && mime.startsWith('image/');
+const isDocument = (mime) => {
+  const types = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'text/plain',
+    'application/zip',
+    'application/x-zip-compressed'
+  ];
+  return types.includes(mime);
+};
+const isMedia = (mime) => mime && (mime.startsWith('video/') || mime.startsWith('audio/'));
+
+const uploadImageToCloudinary = (file, folder = "course-resources/images") => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder,
+        resource_type: "auto"
+      },
+      (err, result) => {
+        if (err) return reject(err);
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+          originalName: file.originalname,
+          mimeType: file.mimetype,
+          size: file.size,
+          storageType: 'cloudinary'
+        });
+      }
+    );
+    streamifier.createReadStream(file.buffer).pipe(stream);
+  });
+};
+
+// Upload arbitrary file (documents/media) to GridFS
+const uploadFileToGridFS = (file) => {
+  return new Promise((resolve, reject) => {
+    if (!gfsBucket) {
+      return reject(new Error("GridFS bucket not initialized"));
+    }
+
+    const uploadStream = gfsBucket.openUploadStream(file.originalname, {
+      metadata: {
+        mimeType: file.mimetype,
+        uploadedAt: new Date(),
+        originalName: file.originalname
+      }
+    });
+
+    uploadStream.on('finish', () => {
+      const fileId = uploadStream.id;
+      resolve({
+        fileId: fileId.toString(),
+        url: `/api/lecturer/courses/resources/${fileId.toString()}/download`,
+        originalName: file.originalname,
+        mimeType: file.mimetype,
+        size: file.length || file.size,
+        storageType: 'gridfs'
+      });
+    });
+
+    uploadStream.on('error', (err) => reject(err));
+
+    streamifier.createReadStream(file.buffer).pipe(uploadStream);
+  });
+};
 
 router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   try {
@@ -893,11 +977,172 @@ router.delete("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res
     });
   }
 });
+// ============================
+// Course resources endpoints
+// ============================
 
-/**
- * POST /api/lecturer/exam-sets/:examSetId/add-questions
- * Add additional questions to an existing exam set
- */
+// GET: list resources for a course
+router.get("/courses/:courseId/resources", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const lecturer = await User.findById(req.user.id).select("courses");
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
+
+    const course = lecturer.courses.id(courseId);
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    // Normalize resources array name - use course.resources
+    const resources = Array.isArray(course.resources) ? course.resources : [];
+    res.json({ count: resources.length, resources });
+  } catch (e) {
+    console.error("Fetch course resources error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// POST: upload a resource file for a course
+router.post("/courses/:courseId/resources", authenticate, isLecturer, uploadToMemory.single("file"), async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const label = req.body.label || (req.file && req.file.originalname) || "resource";
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const lecturer = await User.findById(req.user.id);
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
+
+    const course = lecturer.courses.id(courseId);
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    let attachmentMeta;
+
+    // Image -> Cloudinary; documents/media -> GridFS
+    if (isImage(req.file.mimetype)) {
+      attachmentMeta = await uploadImageToCloudinary(req.file, `course-resources/${String(courseId)}`);
+      // Keep a reference to label and uploadedAt
+      attachmentMeta.label = label;
+      attachmentMeta.uploadedAt = new Date();
+    } else if (isDocument(req.file.mimetype) || isMedia(req.file.mimetype)) {
+      attachmentMeta = await uploadFileToGridFS(req.file);
+      attachmentMeta.label = label;
+      attachmentMeta.uploadedAt = new Date();
+    } else {
+      return res.status(400).json({ message: "Unsupported file type" });
+    }
+
+    // Ensure course.resources exists
+    course.resources = course.resources || [];
+    const resourceRecord = {
+      _id: new mongoose.Types.ObjectId(),
+      name: attachmentMeta.originalName || label,
+      label: attachmentMeta.label || label,
+      mimeType: attachmentMeta.mimeType || req.file.mimetype,
+      size: attachmentMeta.size || req.file.size,
+      url: attachmentMeta.url,
+      storageType: attachmentMeta.storageType,
+      publicId: attachmentMeta.publicId || null,
+      fileId: attachmentMeta.fileId || null, // gridfs id
+      uploadedAt: attachmentMeta.uploadedAt || new Date()
+    };
+
+    course.resources.push(resourceRecord);
+    await lecturer.save();
+
+    res.status(201).json({ message: "Resource uploaded", resource: resourceRecord });
+  } catch (e) {
+    console.error("Upload resource error:", e);
+    res.status(500).json({ message: "Upload failed", error: e.message });
+  }
+});
+
+// GET: download a GridFS resource by fileId (protected)
+router.get("/courses/resources/:fileId/download", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(fileId)) {
+      return res.status(400).json({ message: "Invalid file ID" });
+    }
+
+    if (!gfsBucket) {
+      gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+    }
+
+    const filesColl = mongoose.connection.collection('uploads.files');
+    const fileData = await filesColl.findOne({ _id: new mongoose.Types.ObjectId(fileId) });
+
+    if (!fileData) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    const mimeType = fileData.metadata?.mimeType || 'application/octet-stream';
+    const originalName = fileData.filename || 'download';
+
+    res.setHeader('Content-Type', mimeType);
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(originalName)}"`);
+    res.setHeader('Content-Length', fileData.length);
+
+    const readStream = gfsBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    readStream.on('error', (err) => {
+      console.error("GridFS download error:", err);
+      if (!res.headersSent) res.status(500).json({ message: "Error downloading file" });
+    });
+    readStream.pipe(res);
+  } catch (e) {
+    console.error("Resource download error:", e);
+    if (!res.headersSent) res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// DELETE: delete a resource (gridfs or cloudinary) and remove metadata from course
+router.delete("/courses/resources/:fileId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const lecturer = await User.findById(req.user.id);
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
+
+    // Find resource across all courses (or you can restrict by course if you prefer)
+    let found = null;
+    let course = null;
+    for (const c of lecturer.courses) {
+      const r = (c.resources || []).find(rsc => rsc.fileId === fileId || String(rsc.fileId) === fileId || String(rsc._id) === fileId);
+      if (r) { found = r; course = c; break; }
+      // Also allow matching by publicId (cloudinary) or by resource._id string
+      const r2 = (c.resources || []).find(rsc => rsc.publicId === fileId || String(rsc._id) === fileId);
+      if (r2) { found = r2; course = c; break; }
+    }
+
+    if (!found || !course) {
+      return res.status(404).json({ message: "Resource not found or not owned by you" });
+    }
+
+    // Delete from storage if necessary
+    if (found.storageType === 'gridfs' && found.fileId) {
+      if (!gfsBucket) gfsBucket = new GridFSBucket(mongoose.connection.db, { bucketName: 'uploads' });
+      try {
+        await gfsBucket.delete(new mongoose.Types.ObjectId(found.fileId));
+      } catch (err) {
+        console.warn("Could not delete GridFS file (it might have been already removed):", err.message || err);
+      }
+    } else if (found.storageType === 'cloudinary' && found.publicId) {
+      try {
+        await cloudinary.v2.uploader.destroy(found.publicId, { resource_type: "auto" });
+      } catch (err) {
+        console.warn("Cloudinary deletion warning:", err.message || err);
+      }
+    }
+
+    // Remove from course.resources and save
+    course.resources = (course.resources || []).filter(rsc => String(rsc._id) !== String(found._id) && String(rsc.fileId) !== String(fileId) && String(rsc.publicId) !== String(fileId));
+    await lecturer.save();
+
+    res.json({ message: "Resource deleted successfully" });
+  } catch (e) {
+    console.error("Delete resource error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.post("/exam-sets/:examSetId/add-questions", authenticate, isLecturer, async (req, res) => {
   try {
     const { examSetId } = req.params;
