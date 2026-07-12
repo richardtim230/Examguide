@@ -506,7 +506,40 @@ router.get("/courses/:courseId/workspace", authenticate, isStudent, async (req, 
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+// ===========================================
+// STUDENT: GET course resources (only for enrolled students)
+// ===========================================
+router.get("/courses/:courseId/resources", authenticate, isStudent, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const studentId = req.user.id;
 
+    const lecturer = await User.findOne(
+      { "courses._id": courseId },
+      "courses"
+    );
+
+    if (!lecturer) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    const course = lecturer.courses.find(c => c._id.toString() === courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    // Verify the student is enrolled
+    if (!course.students || !course.students.some(id => id.toString() === studentId.toString())) {
+      return res.status(403).json({ message: "Access denied. You are not enrolled in this course." });
+    }
+
+    const resources = Array.isArray(course.resources) ? course.resources : [];
+    return res.json({ resources });
+  } catch (e) {
+    console.error("Fetch course resources error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 // ===========================================
 // 6. GET ASSIGNMENT DETAILS
 // ===========================================
