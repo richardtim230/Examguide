@@ -2064,7 +2064,55 @@ router.get("/assignments/:assignmentId/export", authenticate, isLecturer, async 
 // ===========================================
 // 7. SEARCH SUBMISSIONS
 // ===========================================
+/**
+ * DELETE /api/lecturer/questions/:questionId
+ * Delete a specific question/assignment
+ */
+router.delete("/questions/:questionId", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { questionId } = req.params;
+    const lecturerId = req.user.id;
 
+    // Find the lecturer
+    const lecturer = await User.findById(lecturerId);
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    // Check if question exists and belongs to this lecturer
+    const question = await Questions.findById(questionId);
+    if (!question) {
+      return res.status(404).json({ message: "Question not found" });
+    }
+
+    // Verify ownership (check if question is in lecturer's questions array)
+    const questionExists = lecturer.questions?.some(q => {
+      const qId = q._id ? String(q._id) : String(q);
+      return qId === String(questionId);
+    });
+
+    if (!questionExists) {
+      return res.status(403).json({ message: "Access denied. You do not own this question." });
+    }
+
+    // Remove question from lecturer's questions array
+    lecturer.questions = (lecturer.questions || []).filter(q => {
+      const qId = q._id ? String(q._id) : String(q);
+      return qId !== String(questionId);
+    });
+
+    await lecturer.save();
+
+    // Delete the question document from Questions collection
+    await Questions.findByIdAndDelete(questionId);
+
+    res.json({ message: "Question deleted successfully" });
+
+  } catch (e) {
+    console.error("Delete question error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.post("/assignments/:assignmentId/search", authenticate, isLecturer, async (req, res) => {
   try {
     const { assignmentId } = req.params;
