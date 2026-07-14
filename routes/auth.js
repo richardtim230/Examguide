@@ -112,7 +112,7 @@ router.post("/register", uploadMultiple, async (req, res) => {
       }
     }
 
-    const faceFiles = req.files?.faceImage || [];
+    const faceFiles = req.files?.faceImages || [];
     if (faceFiles.length === 0) return res.status(400).json({ message: "At least one face capture (faceImage) is required for secure enrollment." });
 
     const faceDir = path.join(process.cwd(), "uploads/faces");
