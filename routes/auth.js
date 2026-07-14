@@ -13,6 +13,7 @@ import { descriptorFromBuffer, loadFaceModels } from "../lib/face-verify-setup.j
 import { euclideanDistance, averageDescriptors, encryptDescriptor, decryptDescriptor } from "../lib/face-verify-helpers.js";
 import { uploadMultiple } from "../middleware/multer.js";
 import authMiddleware from "../middleware/auth.js";
+import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 
 const router = express.Router();
 const DIST_THRESHOLD = Number(process.env.FACE_VERIFY_DISTANCE_THRESHOLD || 0.6);
@@ -216,7 +217,16 @@ router.get("/me", authMiddleware, async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
-
+app.get("/me", authenticate, async (req, res) => {
+  try {
+    // Fetch full user info by ID
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ user });
+  } catch (e) {
+    res.status(500).json({ message: "Could not fetch user info" });
+  }
+});
 router.post("/verify-face", authMiddleware, uploadMultiple, async (req, res) => {
   try {
     const userObj = req.user;
