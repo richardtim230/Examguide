@@ -118,6 +118,21 @@ const theoryAnswersFilter = (req, file, cb) => {
     cb(new Error("Only image (JPEG, PNG, WebP) and PDF files allowed for theory answers!"));
   }
 };
+const uploadMultiple = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files allowed'));
+    }
+  }
+}).fields([
+  { name: 'profilePic', maxCount: 1 },
+  { name: 'faceImage', maxCount: 1 }
+]);
 export const uploadTheoryAnswers = multer({
   storage: theoryAnswersStorage,
   fileFilter: theoryAnswersFilter,
@@ -833,7 +848,7 @@ app.get('/api/proxy', async (req, res) => {
 });
 
    
-app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
+  app.post("/api/auth/register", uploadMultiple, async (req, res) => {
   try {
     // DEVICE CHECK START
     const deviceId = req.cookies.device_id;
@@ -856,11 +871,11 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       department,
       fullname,
       ref,
-      institution, // new: expected from frontend (e.g., "OAU" or ObjectId)
-      userType // new: account type (student | post_utme | alumni | staff | guest)
+      institution,
+      userType,
+      faceDescriptor
     } = req.body;
 
-    // Basic validation
     if (!username || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
@@ -868,11 +883,9 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       return res.status(400).json({ message: "Username must be at least 3 characters" });
     }
 
-    // Validate userType and set default
     const ALLOWED_USER_TYPES = ["student", "post_utme", "alumni", "staff", "guest"];
     const finalUserType = (typeof userType === "string" && ALLOWED_USER_TYPES.includes(userType)) ? userType : "student";
 
-    // Check username/email uniqueness
     const exists = await User.findOne({ username });
     if (exists) return res.status(409).json({ message: "Username already exists" });
     if (email) {
@@ -880,31 +893,71 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       if (emailExists) return res.status(409).json({ message: "Email already in use" });
     }
 
-    // Hash password
     const hashed = await bcrypt.hash(password, 12);
 
     // Profile picture handling
     let profilePicUrl = "";
-    if (req.file) {
-      profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
-    }
-    if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
+    if (req.files?.profilePic?.[0]) {
+      const profileFile = req.files.profilePic[0];
+      const profileDir = path.join(process.cwd(), 'uploads/profilepics');
+      
+      if (!fs.existsSync(profileDir)) {
+        fs.mkdirSync(profileDir, { recursive: true });
+      }
+
+      const profileFileName = `profile_${Date.now()}_${Math.round(Math.random() * 1e9)}${path.extname(profileFile.originalname)}`;
+      const profileFilePath = path.join(profileDir, profileFileName);
+      
+      fs.writeFileSync(profileFilePath, profileFile.buffer);
+      profilePicUrl = `/uploads/profilepics/${profileFileName}`;
+    } else if (req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
       const matches = req.body.profilePic.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
       if (matches) {
         const ext = matches[1];
         const data = matches[2];
         const buffer = Buffer.from(data, 'base64');
         const filename = `profile_${Date.now()}.${ext}`;
-        const filePath = path.join(profilePicsDir, filename);
+        const filePath = path.join(path.join(process.cwd(), 'uploads/profilepics'), filename);
         fs.writeFileSync(filePath, buffer);
         profilePicUrl = `/uploads/profilepics/${filename}`;
       }
     }
 
-    // --- PATCH: Auto-create faculty/department if string name given ---
+    // Face image handling
+    let faceImageUrl = "";
+    if (req.files?.faceImage?.[0]) {
+      const faceFile = req.files.faceImage[0];
+      const faceDir = path.join(process.cwd(), 'uploads/faces');
+      
+      if (!fs.existsSync(faceDir)) {
+        fs.mkdirSync(faceDir, { recursive: true });
+      }
+
+      const faceFileName = `face_${Date.now()}_${Math.round(Math.random() * 1e9)}${path.extname(faceFile.originalname)}`;
+      const faceFilePath = path.join(faceDir, faceFileName);
+      
+      fs.writeFileSync(faceFilePath, faceFile.buffer);
+      faceImageUrl = `/uploads/faces/${faceFileName}`;
+    }
+
+    // Parse face descriptor
+    let parsedFaceDescriptor = [];
+    if (faceDescriptor) {
+      try {
+        parsedFaceDescriptor = JSON.parse(faceDescriptor);
+        if (!Array.isArray(parsedFaceDescriptor)) {
+          parsedFaceDescriptor = [];
+        }
+      } catch (e) {
+        console.error('Face descriptor parse error:', e);
+        parsedFaceDescriptor = [];
+      }
+    }
+
     function looksLikeObjectId(v) {
       return typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
     }
+
     let facultyId = null;
     let departmentId = null;
 
@@ -919,6 +972,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
         facultyId = fac._id;
       }
     }
+
     if (department && department !== "") {
       if (looksLikeObjectId(department)) {
         const dept = await Department.findById(department);
@@ -933,7 +987,6 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
-    // --- NEW: Resolve / create Institution if provided (accepts name or ObjectId) ---
     let institutionDoc = null;
     if (institution && institution !== "") {
       if (looksLikeObjectId(institution)) {
@@ -944,11 +997,9 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       } else if (typeof institution === "string") {
         const instName = institution.trim();
         if (instName.length > 0) {
-          // Prefer a static helper if available
           if (typeof Institution.findOrCreateByName === "function") {
             institutionDoc = await Institution.findOrCreateByName(instName);
           } else {
-            // Fallback: case-insensitive find or create
             institutionDoc = await Institution.findOne({ name: { $regex: `^${instName}$`, $options: "i" } }).collation({ locale: "en", strength: 2 }).exec();
             if (!institutionDoc) {
               institutionDoc = await Institution.create({ name: instName, abbreviation: instName.toUpperCase() });
@@ -956,13 +1007,8 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
           }
         }
       }
-    } else {
-      // If frontend didn't provide institution, you may want to set a default here (optional).
-      // For now, we don't force a default; comment/uncomment below to assign a default automatically:
-      // institutionDoc = await Institution.findOne({ isDefault: true }) || null;
     }
 
-    // --- EMAIL VERIFICATION LOGIC ---
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
     const userPayload = {
@@ -976,7 +1022,9 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       phone: phone || "",
       fullname: fullname || "",
       profilePic: profilePicUrl,
-      // store referredBy as blank for now; referral resolution will populate actual ObjectId below
+      faceImage: faceImageUrl,
+      faceDescriptor: parsedFaceDescriptor,
+      faceVerified: parsedFaceDescriptor.length > 0,
       referredBy: undefined,
       emailVerified: false,
       emailVerificationToken: verificationToken,
@@ -988,24 +1036,19 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     await user.save();
     await DeviceRegistration.create({ deviceId, userId: user._id });
 
-    // --- Safe referral resolution and credit (after user.save()) ---
     if (ref && typeof ref === "string" && ref.trim().length > 0) {
       try {
         const rawRef = ref.trim();
-        const looksLikeObjectId = v => typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
 
-        // Resolve the referrer user (try ID first, fallback to referralCode)
         let referrer = null;
         if (looksLikeObjectId(rawRef)) {
           referrer = await User.findById(rawRef).exec();
         }
         if (!referrer) {
-          // referralCode in DB is uppercase; normalize
           referrer = await User.findOne({ referralCode: rawRef.toUpperCase() }).exec();
         }
 
         if (referrer && String(referrer._id) !== String(user._id)) {
-          // Atomically update the referrer if they don't already have this user in referrals
           const updated = await User.findOneAndUpdate(
             { _id: referrer._id, referrals: { $ne: user._id } },
             {
@@ -1024,11 +1067,8 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
 
           if (updated) {
             console.log(`Credited 10 points to referrer ${referrer._id}. New points: ${updated.creditPoints}`);
-          } else {
-            console.warn(`Referrer ${referrer._id} not updated (maybe already credited).`);
           }
 
-          // Persist referredBy as the referrer's ObjectId (never the raw code)
           if (!user.referredBy) {
             user.referredBy = referrer._id;
             try { await user.save(); } catch (err) { console.warn("Failed to persist user.referredBy:", err); }
@@ -1039,11 +1079,9 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
         }
       } catch (err) {
         console.error("Failed to credit referrer:", err);
-        // do not block registration flow
       }
     }
 
-    // Send verification email if email provided
     if (email) {
       const verifyUrl = `https://oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
@@ -1055,27 +1093,33 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
             <!DOCTYPE html>
             <html lang="en">
             <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-            <body>
+            <body style="font-family: Arial, sans-serif;">
+              <h2>Welcome to OAU ExamGuard!</h2>
               <p>Hi ${user.fullname || user.username},</p>
-              <p>Please verify your email by clicking the link below:</p>
-              <p><a href="${verifyUrl}">Verify Email</a></p>
+              <p>Thank you for registering. Please verify your email by clicking the link below:</p>
+              <p><a href="${verifyUrl}" style="background-color: #276EF1; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
+              <p>Or paste this link: ${verifyUrl}</p>
+              <hr>
+              <p><small>If you didn't create this account, please ignore this email.</small></p>
             </body>
             </html>
           `
         });
         console.log("Verification email sent to " + user.email);
       } catch (err) {
-        console.error("Error sending verification email via Postmark:", err);
+        console.error("Error sending verification email:", err);
       }
     }
 
     res.status(201).json({
-      message: "Registration successful. Please check your email for a verification link. You can proceed log in but ensure to verify yourself before the expiration of the link",
-      profilePic: profilePicUrl
+      message: "Registration successful. Please check your email for a verification link. You can proceed to log in.",
+      profilePic: profilePicUrl,
+      faceRegistered: faceImageUrl ? true : false
     });
+
   } catch (e) {
     console.error("Register error:", e);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: e.message });
   }
 });
 app.get('/api/og-preview', async (req, res) => {
