@@ -194,22 +194,21 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     }
 
     res.json({
-      count: students.length,
-      students: students.map(s => ({
-        _id: s._id,
-        name: s.fullname || s.username,
-        matricNumber: s.studentId || "N/A",
-        level: s.level || "N/A",
-        part: s.part || "N/A",
-        email: s.email,
-        faculty: s.faculty,
-        department: s.department,
-        status: s.active !== false ? "Active" : "Inactive",
-        joinedDate: s.createdAt
-      }))
+      _id: student._id,
+      name: student.fullname || student.username,
+      email: student.email,
+      phone: student.phone,
+      matricNumber: student.studentId,
+      level: student.level,
+      department: student.department?.name || student.department || "—",
+      faculty: student.faculty?.name || student.faculty || "—",
+      status: student.active !== false ? "Active" : "Inactive",
+      joinedDate: student.createdAt,
+      examAttempts: student.examAttempts || 0,
+      averageScore: student.averageScore || 0
     });
   } catch (e) {
-    console.error("Get students error:", e);
+    console.error("Get student error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
