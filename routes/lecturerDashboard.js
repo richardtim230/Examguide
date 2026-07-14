@@ -152,67 +152,31 @@ router.get("/dashboard/stats", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-router.get("/students", authenticate, isLecturer, async (req, res) => {
+router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   try {
-    const lecturerId = req.user.id;
-    const { level, search } = req.query;
-
-    let lecturer = await User.findById(lecturerId);
-    if (!lecturer) {
-      return res.status(404).json({ message: "Lecturer not found" });
-    }
-
-    let query = {
-      role: "student",
-      active: true
-    };
-
-    if (search) {
-      const searchLower = search.toLowerCase().trim();
-      const isObjectId = /^[0-9a-fA-F]{24}$/.test(searchLower);
-      const searchConditions = [
-        { fullname: { $regex: searchLower, $options: 'i' } },
-        { studentId: { $regex: searchLower, $options: 'i' } },
-        { username: { $regex: searchLower, $options: 'i' } },
-        { email: { $regex: searchLower, $options: 'i' } }
-      ];
-      if (isObjectId) {
-        searchConditions.push({ _id: new mongoose.Types.ObjectId(searchLower) });
-      }
-      query.$or = searchConditions;
-    } else {
-      if (!lecturer.faculty) {
-        return res.json({ count: 0, students: [] });
-      }
-      query.faculty = lecturer.faculty;
-    }
-
-    let students = await User.find(query)
+    const student = await User.findById(req.params.id)
       .populate('faculty', 'name')
       .populate('department', 'name')
       .lean();
-
-    if (level) {
-      students = students.filter(s => s.level === level);
+    
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
     }
 
     res.json({
-      count: students.length,
-      students: students.map(s => ({
-        _id: s._id,
-        name: s.fullname || s.username,
-        matricNumber: s.studentId || "N/A",
-        level: s.level || "N/A",
-        part: s.part || "N/A",
-        email: s.email,
-        faculty: s.faculty?.name || s.faculty || "N/A",
-        department: s.department?.name || s.department || "N/A",
-        status: s.active !== false ? "Active" : "Inactive",
-        joinedDate: s.createdAt
-      }))
+      _id: student._id,
+      name: student.fullname || student.username,
+      email: student.email,
+      phone: student.phone,
+      matricNumber: student.studentId,
+      level: student.level,
+      department: student.department?.name || "—",
+      faculty: student.faculty?.name || "—",
+      status: student.active !== false ? "Active" : "Inactive",
+      joinedDate: student.createdAt
     });
   } catch (e) {
-    console.error("Get students error:", e);
+    console.error("Get student error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
