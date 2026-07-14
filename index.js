@@ -27,6 +27,11 @@ import OneSignal from "onesignal-node";
 import studentRouter from "./routes/studentDashboard.js";
 import chatbotRoutes from "./routes/chatbot.js";
 import authMiddleware from "./middleware/auth.js";
+import authRouter from './routes/auth.js';
+import { loadFaceModels } from './lib/face-verify-setup.js';
+
+
+
 
 // apply global limiter if desired:
 import { globalLimiter } from "./middleware/rateLimitUser.js";
@@ -3494,8 +3499,11 @@ app.get("/api/listings/count", async (req, res) => {
 
 const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/liveclass" });
 setupLiveClassSocket(io);
-server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
+await loadFaceModels(); // ensures the face-api models are loaded once at startup
 
+
+server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
+app.use('/api/auth', authRouter);
 app.use("/api/ai", aiMaterialRoutes);
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
