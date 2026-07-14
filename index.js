@@ -807,7 +807,7 @@ app.patch('/api/auth/me', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
-router.post('/auth/verify-face', async (req, res) => {
+router.post('/aut/verify-face', async (req, res) => {
   try {
     const { userId, faceDescriptor } = req.body;
 
@@ -913,7 +913,7 @@ app.get('/api/proxy', async (req, res) => {
 });
 
    
-  app.post("/api/auth/register", uploadMultiple, async (req, res) => {
+  app.post("/api/authregister", uploadMultiple, async (req, res) => {
   try {
     // DEVICE CHECK START
     const deviceId = req.cookies.device_id;
@@ -1340,7 +1340,7 @@ app.get("/api/auth/verify-email", async (req, res) => {
 });
 // --- LOGIN ENDPOINT: BLOCK NON-VERIFIED EMAILS ---
 // In routes/auth.js or index.js
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/aut/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password)
