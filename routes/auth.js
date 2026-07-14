@@ -13,7 +13,7 @@ import { descriptorFromBuffer, loadFaceModels } from "../lib/face-verify-setup.j
 import { euclideanDistance, averageDescriptors, encryptDescriptor, decryptDescriptor } from "../lib/face-verify-helpers.js";
 import { uploadMultiple } from "../middleware/multer.js";
 import authMiddleware from "../middleware/auth.js";
-import { authenticate, authorizeRole } from "./middleware/authenticate.js";
+import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 const DIST_THRESHOLD = Number(process.env.FACE_VERIFY_DISTANCE_THRESHOLD || 0.6);
