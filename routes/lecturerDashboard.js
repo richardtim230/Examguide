@@ -187,28 +187,32 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
       query.faculty = lecturer.faculty;
     }
 
-    let students = await User.find(query).lean();
+    let students = await User.find(query)
+      .populate('faculty', 'name')
+      .populate('department', 'name')
+      .lean();
 
     if (level) {
       students = students.filter(s => s.level === level);
     }
 
     res.json({
-      _id: student._id,
-      name: student.fullname || student.username,
-      email: student.email,
-      phone: student.phone,
-      matricNumber: student.studentId,
-      level: student.level,
-      department: student.department?.name || student.department || "—",
-      faculty: student.faculty?.name || student.faculty || "—",
-      status: student.active !== false ? "Active" : "Inactive",
-      joinedDate: student.createdAt,
-      examAttempts: student.examAttempts || 0,
-      averageScore: student.averageScore || 0
+      count: students.length,
+      students: students.map(s => ({
+        _id: s._id,
+        name: s.fullname || s.username,
+        matricNumber: s.studentId || "N/A",
+        level: s.level || "N/A",
+        part: s.part || "N/A",
+        email: s.email,
+        faculty: s.faculty?.name || s.faculty || "N/A",
+        department: s.department?.name || s.department || "N/A",
+        status: s.active !== false ? "Active" : "Inactive",
+        joinedDate: s.createdAt
+      }))
     });
   } catch (e) {
-    console.error("Get student error:", e);
+    console.error("Get students error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
