@@ -128,7 +128,12 @@ router.post("/register", uploadMultiple, async (req, res) => {
     }
 
     let faceImageUrl = faceImageUrls[0] || "";
-    if (!profilePicUrl && faceImageUrl) profilePicUrl = faceImageUrl;
+
+// Use the captured face image as the profile picture if none was uploaded.
+if (!profilePicUrl && faceImageUrl) {
+    profilePicUrl = faceImageUrl;
+    profileBuffer = faceBuffers[0];
+}
 
     await loadFaceModels();
 
