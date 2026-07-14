@@ -802,6 +802,66 @@ app.patch('/api/auth/me', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
+router.post('/auth/verify-face', async (req, res) => {
+  try {
+    const { userId, faceDescriptor } = req.body;
+
+    if (!userId || !faceDescriptor) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user || !user.faceDescriptor || user.faceDescriptor.length === 0) {
+      return res.status(400).json({ message: 'User face not registered' });
+    }
+
+    const storedDescriptor = new Float32Array(user.faceDescriptor);
+    const currentDescriptor = new Float32Array(faceDescriptor);
+
+    const distance = euclideanDistance(storedDescriptor, currentDescriptor);
+    const isMatch = distance < 0.5;
+
+    if (isMatch) {
+      user.faceVerificationAttempts = 0;
+      await user.save();
+      
+      res.json({
+        match: true,
+        distance,
+        message: 'Face verified successfully'
+      });
+    } else {
+      user.faceVerificationAttempts += 1;
+      await user.save();
+
+      if (user.faceVerificationAttempts > 5) {
+        return res.status(400).json({
+          match: false,
+          message: 'Too many failed attempts. Please try again later.'
+        });
+      }
+
+      res.json({
+        match: false,
+        distance,
+        attempts: user.faceVerificationAttempts,
+        message: 'Face did not match'
+      });
+    }
+  } catch (err) {
+    console.error('Face verification error:', err);
+    res.status(500).json({ message: 'Verification failed', error: err.message });
+  }
+});
+
+function euclideanDistance(a, b) {
+  let sum = 0;
+  for (let i = 0; i < a.length; i++) {
+    sum += Math.pow(a[i] - b[i], 2);
+  }
+  return Math.sqrt(sum);
+}
 app.patch('/users/:id', authenticate, async (req, res) => {
   if (req.user.id !== req.params.id) return res.status(403).json({ error: "Forbidden" });
   const user = await User.findById(req.params.id);
