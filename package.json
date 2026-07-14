@@ -17,8 +17,10 @@
   "dependencies": {
     "@google/generative-ai": "^0.3.0",
     "@google-cloud/vision": "4.x",
+    "@vladmandic/face-api": "^1.0.0",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
+    "canvas": "^2.11.2",
     "cloudinary": "^2.3.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
