@@ -217,16 +217,7 @@ router.get("/me", authMiddleware, async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
-app.get("/me", authenticate, async (req, res) => {
-  try {
-    // Fetch full user info by ID
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json({ user });
-  } catch (e) {
-    res.status(500).json({ message: "Could not fetch user info" });
-  }
-});
+
 router.post("/verify-face", authMiddleware, uploadMultiple, async (req, res) => {
   try {
     const userObj = req.user;
