@@ -162,29 +162,35 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
       return res.status(404).json({ message: "Lecturer not found" });
     }
 
-    if (!lecturer.faculty) {
-      return res.json({ count: 0, students: [] });
-    }
-
-    const query = {
-      faculty: lecturer.faculty,
+    let query = {
       role: "student",
       active: true
     };
+
+    if (search) {
+      const searchLower = search.toLowerCase().trim();
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(searchLower);
+      const searchConditions = [
+        { fullname: { $regex: searchLower, $options: 'i' } },
+        { studentId: { $regex: searchLower, $options: 'i' } },
+        { username: { $regex: searchLower, $options: 'i' } },
+        { email: { $regex: searchLower, $options: 'i' } }
+      ];
+      if (isObjectId) {
+        searchConditions.push({ _id: new mongoose.Types.ObjectId(searchLower) });
+      }
+      query.$or = searchConditions;
+    } else {
+      if (!lecturer.faculty) {
+        return res.json({ count: 0, students: [] });
+      }
+      query.faculty = lecturer.faculty;
+    }
 
     let students = await User.find(query).lean();
 
     if (level) {
       students = students.filter(s => s.level === level);
-    }
-
-    if (search) {
-      const searchLower = search.toLowerCase();
-      students = students.filter(s =>
-        (s.fullname && s.fullname.toLowerCase().includes(searchLower)) ||
-        (s.studentId && s.studentId.toLowerCase().includes(searchLower)) ||
-        (s.username && s.username.toLowerCase().includes(searchLower))
-      );
     }
 
     res.json({
