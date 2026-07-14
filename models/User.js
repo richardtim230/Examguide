@@ -93,6 +93,28 @@ const UserSchema = new Schema({
     default: ""
   },
 
+    // ============================================
+  // FACE RECOGNITION
+  // ============================================
+  faceImage: {
+    type: String,
+    default: ""
+  },
+
+  faceDescriptor: {
+    type: [Number],
+    default: []
+  },
+
+  faceVerified: {
+    type: Boolean,
+    default: false
+  },
+
+  faceVerificationAttempts: {
+    type: Number,
+    default: 0
+  },
   // ============================================
   // REFERRAL SYSTEM
   // ============================================
