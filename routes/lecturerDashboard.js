@@ -944,6 +944,66 @@ router.put("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res) =
 });
 
 /**
+ * POST /api/lecturer/courses/:courseId/enroll
+ * Enroll a student in a course
+ */
+router.post("/courses/:courseId/enroll", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { studentId } = req.body;
+    const lecturerId = req.user.id;
+
+    if (!studentId) {
+      return res.status(400).json({ message: "Student ID is required" });
+    }
+
+    // Find the lecturer
+    const lecturer = await User.findById(lecturerId);
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    // Find the course
+    const course = lecturer.courses?.id(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    // Check if student exists
+    const student = await User.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Check if student is already enrolled
+    if (course.students && course.students.some(s => s.toString() === studentId)) {
+      return res.status(400).json({ message: "Student is already enrolled in this course" });
+    }
+
+    // Add student to course
+    if (!course.students) {
+      course.students = [];
+    }
+    course.students.push(new mongoose.Types.ObjectId(studentId));
+
+    await lecturer.save();
+
+    res.json({
+      message: "Student enrolled successfully",
+      course: {
+        _id: course._id,
+        title: course.title,
+        studentsCount: course.students.length
+      }
+    });
+
+  } catch (e) {
+    console.error("Enroll student error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+/**
  * DELETE /api/lecturer/exam-sets/:examSetId
  * Delete an exam set
  */
