@@ -241,7 +241,46 @@ router.get("/courses", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+router.post("/courses/:courseId/unenroll", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { studentId } = req.body;
+    const lecturerId = req.user.id;
 
+    if (!studentId) {
+      return res.status(400).json({ message: "Student ID is required" });
+    }
+
+    const lecturer = await User.findById(lecturerId);
+    if (!lecturer) {
+      return res.status(404).json({ message: "Lecturer not found" });
+    }
+
+    const course = lecturer.courses?.id(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    if (!course.students || !course.students.some(s => s.toString() === studentId)) {
+      return res.status(400).json({ message: "Student is not enrolled in this course" });
+    }
+
+    course.students = course.students.filter(s => s.toString() !== studentId);
+    await lecturer.save();
+
+    res.json({
+      message: "Student unenrolled successfully",
+      course: {
+        _id: course._id,
+        title: course.title,
+        studentsCount: course.students.length
+      }
+    });
+  } catch (e) {
+    console.error("Unenroll student error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.post("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const { title, code, description, level } = req.body;
