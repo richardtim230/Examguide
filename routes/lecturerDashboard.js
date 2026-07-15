@@ -236,7 +236,32 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
 
+    res.json({
+      _id: student._id,
+      name: student.fullname || student.username,
+      email: student.email,
+      phone: student.phone,
+      matricNumber: student.studentId,
+      level: student.level,
+      department: student.department,
+      faculty: student.faculty,
+      status: student.active !== false ? "Active" : "Inactive",
+      joinedDate: student.createdAt,
+      examAttempts: student.examAttempts || 0,
+      averageScore: student.averageScore || 0
+    });
+  } catch (e) {
+    console.error("Get student error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.get("/courses", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
