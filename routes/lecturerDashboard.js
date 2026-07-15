@@ -236,6 +236,96 @@ router.get("/student", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+// Helper to escape user-provided regex strings
+const escapeRegExp = (string = '') => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+router.get("/students", authenticate, isLecturer, async (req, res) => {
+  try {
+    const lecturerId = req.user.id;
+    const { level, search } = req.query;
+
+    // Ensure lecturer exists (we need lecturer for fallback faculty-scoped behaviour)
+    const lecturer = await User.findById(lecturerId).select("faculty");
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
+
+    // Base query always restricts to students who are active and role=student
+    let query = { role: "student", active: true };
+
+    if (level) {
+      query.level = level;
+    }
+
+    if (search && String(search).trim() !== "") {
+      const s = String(search).trim();
+      const idPattern = /^[0-9a-fA-F]{24}$/;
+      const isEmail = s.includes("@");
+
+      // When search present -> broaden to global search across users
+      if (isEmail) {
+        // exact-ish case-insensitive email match
+        query.email = new RegExp("^" + escapeRegExp(s) + "$", "i");
+      } else if (idPattern.test(s)) {
+        // search by Mongo _id
+        try {
+          query.$or = [
+            { _id: new mongoose.Types.ObjectId(s) },
+            { studentId: new RegExp(escapeRegExp(s), "i") },
+            { username: new RegExp(escapeRegExp(s), "i") },
+            { fullname: new RegExp(escapeRegExp(s), "i") }
+          ];
+        } catch {
+          query.$or = [
+            { studentId: new RegExp(escapeRegExp(s), "i") },
+            { username: new RegExp(escapeRegExp(s), "i") },
+            { fullname: new RegExp(escapeRegExp(s), "i") }
+          ];
+        }
+      } else {
+        // general text search: name, username, studentId, email
+        const re = new RegExp(escapeRegExp(s), "i");
+        query.$or = [
+          { fullname: re },
+          { username: re },
+          { studentId: re },
+          { email: re }
+        ];
+      }
+      // NOTE: do NOT restrict by lecturer.faculty when a search is present
+    } else {
+      // No search -> keep legacy behaviour: limit to lecturer's faculty if available
+      if (lecturer.faculty) {
+        query.faculty = lecturer.faculty;
+      }
+    }
+
+    // Execute query and populate faculty/department names for convenience
+    const students = await User.find(query)
+      .select("fullname username studentId level part email faculty department active createdAt")
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .lean();
+
+    res.json({
+      count: students.length,
+      students: students.map(s => ({
+        _id: s._id,
+        name: s.fullname || s.username,
+        matricNumber: s.studentId || "N/A",
+        level: s.level || "N/A",
+        part: s.part || "N/A",
+        email: s.email,
+        faculty: s.faculty ? s.faculty.name || s.faculty : s.faculty,
+        department: s.department ? s.department.name || s.department : s.department,
+        status: s.active !== false ? "Active" : "Inactive",
+        joinedDate: s.createdAt
+      }))
+    });
+
+  } catch (e) {
+    console.error("Get students error (global-search-friendly):", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const student = await User.findById(req.params.id);
