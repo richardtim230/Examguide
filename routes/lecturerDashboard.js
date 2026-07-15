@@ -181,7 +181,7 @@ router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-router.get("/students", authenticate, isLecturer, async (req, res) => {
+router.get("/student", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
     const { level, search } = req.query;
