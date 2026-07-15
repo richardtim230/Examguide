@@ -455,7 +455,7 @@ router.put("/courses/:id", authenticate, isLecturer, async (req, res) => {
 router.post("/courses/:courseId/unenroll", authenticate, isLecturer, async (req, res) => {
   try {
     const { courseId } = req.params;
-    const { studentId } = req.body;
+    let { studentId } = req.body;
     if (!studentId) return res.status(400).json({ message: "Student ID is required" });
 
     const lecturer = await User.findById(req.user.id);
@@ -464,7 +464,25 @@ router.post("/courses/:courseId/unenroll", authenticate, isLecturer, async (req,
     const course = lecturer.courses?.id(courseId);
     if (!course) return res.status(404).json({ message: "Course not found" });
 
-    const sid = String(studentId);
+    studentId = String(studentId).trim();
+    const escapeRegExp = s => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    let targetUser = null;
+    if (/^[0-9a-fA-F]{24}$/.test(studentId)) {
+      try { targetUser = await User.findById(studentId).select("_id"); } catch(e) {}
+    }
+    if (!targetUser) {
+      targetUser = await User.findOne({
+        $or: [
+          { studentId: studentId },
+          { username: studentId },
+          { email: new RegExp("^" + escapeRegExp(studentId) + "$", "i") }
+        ]
+      }).select("_id");
+    }
+    if (!targetUser) return res.status(404).json({ message: "Student not found" });
+
+    const sid = String(targetUser._id);
     const students = course.students || [];
     const exists = students.some(s => {
       try { return String(s._id || s) === sid; } catch { return String(s) === sid; }
@@ -477,10 +495,7 @@ router.post("/courses/:courseId/unenroll", authenticate, isLecturer, async (req,
 
     await lecturer.save();
 
-    res.json({
-      message: "Student unenrolled successfully",
-      course: { _id: course._id, title: course.title, studentsCount: course.students.length }
-    });
+    res.json({ message: "Student unenrolled successfully", course: { _id: course._id, title: course.title, studentsCount: course.students.length } });
   } catch (e) {
     console.error("Unenroll student error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
