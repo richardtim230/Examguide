@@ -452,7 +452,40 @@ router.put("/courses/:id", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+router.post("/courses/:courseId/unenroll", authenticate, isLecturer, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { studentId } = req.body;
+    if (!studentId) return res.status(400).json({ message: "Student ID is required" });
 
+    const lecturer = await User.findById(req.user.id);
+    if (!lecturer) return res.status(404).json({ message: "Lecturer not found" });
+
+    const course = lecturer.courses?.id(courseId);
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    const sid = String(studentId);
+    const students = course.students || [];
+    const exists = students.some(s => {
+      try { return String(s._id || s) === sid; } catch { return String(s) === sid; }
+    });
+    if (!exists) return res.status(404).json({ message: "Student not enrolled in this course" });
+
+    course.students = students.filter(s => {
+      try { return String(s._id || s) !== sid; } catch { return String(s) !== sid; }
+    });
+
+    await lecturer.save();
+
+    res.json({
+      message: "Student unenrolled successfully",
+      course: { _id: course._id, title: course.title, studentsCount: course.students.length }
+    });
+  } catch (e) {
+    console.error("Unenroll student error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 router.delete("/courses/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const { id } = req.params;
