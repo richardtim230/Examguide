@@ -335,7 +335,7 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
 // ============================================
 
 // Get all live sessions for a course
-router.get('/courses/:courseId/live-sessions', isLecturer, async (req, res) => {
+router.get('/courses/:courseId/live-sessions', authenticate, isLecturer, async (req, res) => {
     try {
         const { courseId } = req.params;
         const userId = req.user.id;
@@ -373,7 +373,7 @@ router.get('/courses/:courseId/live-sessions', isLecturer, async (req, res) => {
 });
 
 // Get single live session with attendance details
-router.get('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+router.get('/live-sessions/:sessionId', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -423,7 +423,7 @@ router.get('/live-sessions/:sessionId', isLecturer, async (req, res) => {
 });
 
 // Create new live session
-router.post('/courses/:courseId/live-sessions', isLecturer, async (req, res) => {
+router.post('/courses/:courseId/live-sessions', authenticate, isLecturer, async (req, res) => {
     try {
         const { courseId } = req.params;
         const userId = req.user.id;
@@ -510,7 +510,7 @@ router.post('/courses/:courseId/live-sessions', isLecturer, async (req, res) => 
 });
 
 // Update live session
-router.put('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+router.put('/live-sessions/:sessionId', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -593,7 +593,7 @@ router.put('/live-sessions/:sessionId', isLecturer, async (req, res) => {
 });
 
 // Delete live session
-router.delete('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+router.delete('/live-sessions/:sessionId', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -675,7 +675,7 @@ router.post('/live-sessions/:sessionId/attendance', async (req, res) => {
 });
 
 // Get attendance for a session
-router.get('/live-sessions/:sessionId/attendance', isLecturer, async (req, res) => {
+router.get('/live-sessions/:sessionId/attendance', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -717,7 +717,7 @@ router.get('/live-sessions/:sessionId/attendance', isLecturer, async (req, res) 
 });
 
 // End session (mark as completed)
-router.post('/live-sessions/:sessionId/end', isLecturer, async (req, res) => {
+router.post('/live-sessions/:sessionId/end', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -766,7 +766,7 @@ router.post('/live-sessions/:sessionId/end', isLecturer, async (req, res) => {
 });
 
 // Start session (mark as active)
-router.post('/live-sessions/:sessionId/start', isLecturer, async (req, res) => {
+router.post('/live-sessions/:sessionId/start', authenticate,  isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -2128,17 +2128,6 @@ if (casterInstance === 'string') {
   }
 });
 
-// ============================================
-// 5. EXAMS SCHEDULING - returns embedded exams and QuestionSet authored by lecturer
-// ============================================
-
-/**
- * GET /api/lecturer/exams
- * - Returns embedded lecturer.exams and QuestionSet documents authored by lecturer.
- * - Query params:
- *    - includeQuestions=true -> include full questions array for question-set items
- *    - source=embedded|questionset|all -> filter returned items by source (default all)
- */
 router.get("/exams", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -2213,14 +2202,6 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
   }
 });
 
-/**
- * GET /api/lecturer/question-sets
- * - Returns QuestionSet documents createdBy the lecturer.
- * - Query params:
- *    - includeQuestions=true  -> include full questions array
- *    - status=ACTIVE|INACTIVE  -> filter by status
- *    - faculty, department      -> optional filters
- */
 router.get("/question-sets", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
