@@ -86,14 +86,7 @@ const uploadImageToCloudinary = (file, folder = "course-resources/images") => {
     streamifier.createReadStream(file.buffer).pipe(stream);
   });
 };
-// ============================================
-// HELPER FUNCTION FOR NOTIFICATIONS
-// ============================================
 
-const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
-// ============================================
-// HELPER FUNCTION FOR NOTIFICATIONS
-// ============================================
 
 const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
     // Implement using node-schedule or bull
