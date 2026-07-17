@@ -11,6 +11,10 @@ import Result from "../models/Result.js";
 import streamifier from "streamifier";
 import AssignmentSubmission from "../models/AssignmentSubmission.js";
 import { GridFSBucket } from "mongodb";
+import LiveSession from '../models/LiveSession.js';
+import SessionAttendance from '../models/SessionAttendance.js';
+import Notification from '../models/Notification.js';
+
 
 let gfsBucket;
 
@@ -326,6 +330,508 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+// ============================================
+// LIVE SESSIONS ENDPOINTS
+// ============================================
+
+// Get all live sessions for a course
+router.get('/courses/:courseId/live-sessions', isLecturer, async (req, res) => {
+    try {
+        const { courseId } = req.params;
+        const userId = req.user.id;
+
+        // Verify lecturer owns this course
+        const course = await Course.findOne({ _id: courseId, createdBy: userId });
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        const sessions = await LiveSession.find({ course: courseId })
+            .sort({ scheduledAt: -1 })
+            .lean();
+
+        // Calculate attendance for each session
+        const sessionsWithAttendance = await Promise.all(
+            sessions.map(async (session) => {
+                const attendance = await SessionAttendance.countDocuments({
+                    session: session._id,
+                    attended: true
+                });
+                return {
+                    ...session,
+                    attendanceCount: attendance
+                };
+            })
+        );
+
+        res.json({ sessions: sessionsWithAttendance });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Get single live session with attendance details
+router.get('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+
+        const session = await LiveSession.findById(sessionId)
+            .populate('course', 'title code')
+            .lean();
+
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session's course
+        const course = await Course.findOne({ _id: session.course._id, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        // Get attendance details
+        const attendanceList = await SessionAttendance.find({
+            session: sessionId,
+            attended: true
+        })
+            .populate('student', 'fullname studentId')
+            .lean();
+
+        const formattedAttendance = attendanceList.map(att => ({
+            studentName: att.student.fullname,
+            studentId: att.student.studentId,
+            joinedAt: att.joinedAt,
+            leftAt: att.leftAt,
+            duration: att.duration || 0
+        }));
+
+        res.json({
+            session: {
+                ...session,
+                attendanceList: formattedAttendance,
+                totalEnrolled: course.enrolledStudents?.length || 0
+            }
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Create new live session
+router.post('/courses/:courseId/live-sessions', isLecturer, async (req, res) => {
+    try {
+        const { courseId } = req.params;
+        const userId = req.user.id;
+        const {
+            title,
+            description,
+            scheduledAt,
+            duration,
+            platform,
+            link,
+            status,
+            allowRecording,
+            requireAttendance,
+            notifyStudents,
+            notificationTime,
+            meetingId,
+            passcode
+        } = req.body;
+
+        // Validate required fields
+        if (!title || !platform || !link || !scheduledAt) {
+            return res.status(400).json({
+                message: 'Missing required fields: title, platform, link, scheduledAt'
+            });
+        }
+
+        // Verify lecturer owns this course
+        const course = await Course.findOne({ _id: courseId, createdBy: userId });
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Validate platform
+        const validPlatforms = ['youtube', 'zoom', 'google_meet', 'microsoft_teams', 'custom'];
+        if (!validPlatforms.includes(platform)) {
+            return res.status(400).json({ message: 'Invalid platform' });
+        }
+
+        // Validate URL
+        try {
+            new URL(link);
+        } catch (e) {
+            return res.status(400).json({ message: 'Invalid streaming URL' });
+        }
+
+        const newSession = new LiveSession({
+            title,
+            description,
+            course: courseId,
+            scheduledAt: new Date(scheduledAt),
+            duration: duration || 60,
+            platform,
+            link,
+            status: status || 'scheduled',
+            allowRecording: allowRecording !== false,
+            requireAttendance: requireAttendance !== false,
+            notifyStudents: notifyStudents !== false,
+            notificationTime: notificationTime || 15,
+            meetingId,
+            passcode,
+            createdBy: userId
+        });
+
+        await newSession.save();
+
+        // Send notifications to enrolled students if enabled
+        if (notifyStudents && course.enrolledStudents?.length > 0) {
+            const notificationTime_ms = (notificationTime || 15) * 60 * 1000;
+            const notificationDate = new Date(new Date(scheduledAt).getTime() - notificationTime_ms);
+
+            // Schedule notification job (implement with bull/node-schedule)
+            scheduleSessionNotification(newSession._id, course.enrolledStudents, notificationDate);
+        }
+
+        res.status(201).json({
+            message: 'Live session created successfully',
+            session: newSession
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Update live session
+router.put('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+        const {
+            title,
+            description,
+            scheduledAt,
+            duration,
+            platform,
+            link,
+            status,
+            allowRecording,
+            requireAttendance,
+            notifyStudents,
+            notificationTime,
+            meetingId,
+            passcode,
+            recordingUrl
+        } = req.body;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session
+        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        // Update fields
+        if (title) session.title = title;
+        if (description) session.description = description;
+        if (scheduledAt) session.scheduledAt = new Date(scheduledAt);
+        if (duration) session.duration = duration;
+        if (platform) {
+            const validPlatforms = ['youtube', 'zoom', 'google_meet', 'microsoft_teams', 'custom'];
+            if (!validPlatforms.includes(platform)) {
+                return res.status(400).json({ message: 'Invalid platform' });
+            }
+            session.platform = platform;
+        }
+        if (link) {
+            try {
+                new URL(link);
+                session.link = link;
+            } catch (e) {
+                return res.status(400).json({ message: 'Invalid streaming URL' });
+            }
+        }
+        if (status) session.status = status;
+        if (allowRecording !== undefined) session.allowRecording = allowRecording;
+        if (requireAttendance !== undefined) session.requireAttendance = requireAttendance;
+        if (notifyStudents !== undefined) session.notifyStudents = notifyStudents;
+        if (notificationTime) session.notificationTime = notificationTime;
+        if (meetingId) session.meetingId = meetingId;
+        if (passcode) session.passcode = passcode;
+        if (recordingUrl) {
+            try {
+                new URL(recordingUrl);
+                session.recordingUrl = recordingUrl;
+            } catch (e) {
+                return res.status(400).json({ message: 'Invalid recording URL' });
+            }
+        }
+
+        session.updatedAt = new Date();
+        await session.save();
+
+        res.json({
+            message: 'Live session updated successfully',
+            session
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Delete live session
+router.delete('/live-sessions/:sessionId', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session
+        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        // Can only delete scheduled sessions
+        if (session.status !== 'scheduled') {
+            return res.status(400).json({
+                message: 'Can only delete scheduled sessions'
+            });
+        }
+
+        await LiveSession.findByIdAndDelete(sessionId);
+        await SessionAttendance.deleteMany({ session: sessionId });
+
+        res.json({ message: 'Live session deleted successfully' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Mark student attendance for a session
+router.post('/live-sessions/:sessionId/attendance', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { studentId } = req.body;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Check if session is active
+        if (session.status !== 'active') {
+            return res.status(400).json({ message: 'Session is not currently active' });
+        }
+
+        // Check if student already joined
+        let attendance = await SessionAttendance.findOne({
+            session: sessionId,
+            student: studentId
+        });
+
+        if (!attendance) {
+            attendance = new SessionAttendance({
+                session: sessionId,
+                student: studentId,
+                joined_at: new Date(),
+                attended: true
+            });
+        } else if (!attendance.attended) {
+            attendance.joinedAt = new Date();
+            attendance.attended = true;
+        }
+
+        await attendance.save();
+
+        res.json({
+            message: 'Attendance recorded',
+            attendance
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Get attendance for a session
+router.get('/live-sessions/:sessionId/attendance', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session
+        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        const attendance = await SessionAttendance.find({ session: sessionId })
+            .populate('student', 'fullname studentId email')
+            .sort({ joinedAt: -1 })
+            .lean();
+
+        const enrolledCount = course.enrolledStudents?.length || 0;
+        const attendedCount = attendance.filter(a => a.attended).length;
+
+        res.json({
+            totalEnrolled: enrolledCount,
+            attended: attendedCount,
+            attendance: attendance.map(a => ({
+                ...a,
+                attendanceDuration: a.leftAt ? 
+                    Math.round((a.leftAt - a.joinedAt) / 60000) : 
+                    Math.round((new Date() - a.joinedAt) / 60000)
+            }))
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// End session (mark as completed)
+router.post('/live-sessions/:sessionId/end', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+        const { recordingUrl } = req.body;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session
+        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        session.status = 'completed';
+        session.endedAt = new Date();
+
+        if (recordingUrl) {
+            try {
+                new URL(recordingUrl);
+                session.recordingUrl = recordingUrl;
+            } catch (e) {
+                return res.status(400).json({ message: 'Invalid recording URL' });
+            }
+        }
+
+        // Calculate final attendance duration
+        await SessionAttendance.updateMany(
+            { session: sessionId, attended: true, leftAt: null },
+            { leftAt: new Date() }
+        );
+
+        await session.save();
+
+        res.json({
+            message: 'Session ended successfully',
+            session
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Start session (mark as active)
+router.post('/live-sessions/:sessionId/start', isLecturer, async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const userId = req.user.id;
+
+        const session = await LiveSession.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: 'Session not found' });
+        }
+
+        // Verify lecturer owns this session
+        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        if (!course) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        session.status = 'active';
+        session.startedAt = new Date();
+        await session.save();
+
+        res.json({
+            message: 'Session started successfully',
+            session
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// ============================================
+// HELPER FUNCTION FOR NOTIFICATIONS
+// ============================================
+
+const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
+    // Implement using node-schedule or bull
+    // This is a placeholder - you should integrate with your notification system
+    
+    const schedule = require('node-schedule');
+    
+    schedule.scheduleJob(notificationDate, async () => {
+        try {
+            const session = await LiveSession.findById(sessionId);
+            if (!session) return;
+
+            // Send notifications to students
+            for (const studentId of studentIds) {
+                await Notification.create({
+                    recipient: studentId,
+                    type: 'live_session_reminder',
+                    title: `${session.title} starting soon`,
+                    message: `Your live class session "${session.title}" starts in ${session.notificationTime} minutes`,
+                    data: {
+                        sessionId,
+                        link: session.link
+                    },
+                    read: false
+                });
+            }
+        } catch (err) {
+            console.error('Error sending session notifications:', err);
+        }
+    });
+};
+
 router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
   try {
     const student = await User.findById(req.params.id);
@@ -2613,6 +3119,73 @@ router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("
     console.error("Avatar upload error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
+});
+// Get notifications for current user
+router.get('/notifications', async (req, res) => {
+    try {
+        const userId = req.user.id;
+        
+        const notifications = await Notification.find({ recipient: userId })
+            .sort({ createdAt: -1 })
+            .limit(50)
+            .lean();
+
+        const unreadCount = await Notification.countDocuments({
+            recipient: userId,
+            read: false
+        });
+
+        res.json({
+            notifications,
+            unreadCount
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Mark notification as read
+router.patch('/notifications/:notificationId/read', async (req, res) => {
+    try {
+        const { notificationId } = req.params;
+        const userId = req.user.id;
+
+        const notification = await Notification.findOneAndUpdate(
+            { _id: notificationId, recipient: userId },
+            { read: true, readAt: new Date() },
+            { new: true }
+        );
+
+        if (!notification) {
+            return res.status(404).json({ message: 'Notification not found' });
+        }
+
+        res.json({ notification });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Mark all notifications as read
+router.patch('/notifications/mark-all-read', async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        await Notification.updateMany(
+            { recipient: userId, read: false },
+            { read: true, readAt: new Date() }
+        );
+
+        res.json({ message: 'All notifications marked as read' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
 });
 
 export default router;
