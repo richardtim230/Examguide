@@ -85,7 +85,40 @@ const uploadImageToCloudinary = (file, folder = "course-resources/images") => {
     streamifier.createReadStream(file.buffer).pipe(stream);
   });
 };
+// ============================================
+// HELPER FUNCTION FOR NOTIFICATIONS
+// ============================================
 
+const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
+    // Implement using node-schedule or bull
+    // This is a placeholder - you should integrate with your notification system
+    
+    const schedule = require('node-schedule');
+    
+    schedule.scheduleJob(notificationDate, async () => {
+        try {
+            const session = await LiveSession.findById(sessionId);
+            if (!session) return;
+
+            // Send notifications to students
+            for (const studentId of studentIds) {
+                await Notification.create({
+                    recipient: studentId,
+                    type: 'live_session_reminder',
+                    title: `${session.title} starting soon`,
+                    message: `Your live class session "${session.title}" starts in ${session.notificationTime} minutes`,
+                    data: {
+                        sessionId,
+                        link: session.link
+                    },
+                    read: false
+                });
+            }
+        } catch (err) {
+            console.error('Error sending session notifications:', err);
+        }
+    });
+};
 // Upload arbitrary file (documents/media) to GridFS
 const uploadFileToGridFS = (file) => {
   return new Promise((resolve, reject) => {
