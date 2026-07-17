@@ -14,6 +14,7 @@ import { GridFSBucket } from "mongodb";
 import LiveSession from '../models/LiveSession.js';
 import SessionAttendance from '../models/SessionAttendance.js';
 import Notification from '../models/Notification.js';
+import schedule from 'node-schedule';
 
 
 let gfsBucket;
@@ -90,10 +91,13 @@ const uploadImageToCloudinary = (file, folder = "course-resources/images") => {
 // ============================================
 
 const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
+// ============================================
+// HELPER FUNCTION FOR NOTIFICATIONS
+// ============================================
+
+const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
     // Implement using node-schedule or bull
     // This is a placeholder - you should integrate with your notification system
-    
-    const schedule = require('node-schedule');
     
     schedule.scheduleJob(notificationDate, async () => {
         try {
