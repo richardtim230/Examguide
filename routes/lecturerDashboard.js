@@ -330,10 +330,32 @@ router.get("/students", authenticate, isLecturer, async (req, res) => {
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-// ============================================
-// LIVE SESSIONS ENDPOINTS
-// ============================================
+router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
 
+    res.json({
+      _id: student._id,
+      name: student.fullname || student.username,
+      email: student.email,
+      phone: student.phone,
+      matricNumber: student.studentId,
+      level: student.level,
+      department: student.department,
+      faculty: student.faculty,
+      status: student.active !== false ? "Active" : "Inactive",
+      joinedDate: student.createdAt,
+      examAttempts: student.examAttempts || 0,
+      averageScore: student.averageScore || 0
+    });
+  } catch (e) {
+    console.error("Get student error:", e);
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
 // Get all live sessions for a course
 router.get('/courses/:courseId/live-sessions', authenticate, isLecturer, async (req, res) => {
     try {
@@ -341,7 +363,12 @@ router.get('/courses/:courseId/live-sessions', authenticate, isLecturer, async (
         const userId = req.user.id;
 
         // Verify lecturer owns this course
-        const course = await Course.findOne({ _id: courseId, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(courseId);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -387,7 +414,12 @@ router.get('/live-sessions/:sessionId', authenticate, isLecturer, async (req, re
         }
 
         // Verify lecturer owns this session's course
-        const course = await Course.findOne({ _id: session.course._id, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course._id);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -412,7 +444,7 @@ router.get('/live-sessions/:sessionId', authenticate, isLecturer, async (req, re
             session: {
                 ...session,
                 attendanceList: formattedAttendance,
-                totalEnrolled: course.enrolledStudents?.length || 0
+                totalEnrolled: course.students?.length || 0
             }
         });
 
@@ -451,7 +483,12 @@ router.post('/courses/:courseId/live-sessions', authenticate, isLecturer, async 
         }
 
         // Verify lecturer owns this course
-        const course = await Course.findOne({ _id: courseId, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(courseId);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -490,12 +527,12 @@ router.post('/courses/:courseId/live-sessions', authenticate, isLecturer, async 
         await newSession.save();
 
         // Send notifications to enrolled students if enabled
-        if (notifyStudents && course.enrolledStudents?.length > 0) {
+        if (notifyStudents && course.students?.length > 0) {
             const notificationTime_ms = (notificationTime || 15) * 60 * 1000;
             const notificationDate = new Date(new Date(scheduledAt).getTime() - notificationTime_ms);
 
             // Schedule notification job (implement with bull/node-schedule)
-            scheduleSessionNotification(newSession._id, course.enrolledStudents, notificationDate);
+            scheduleSessionNotification(newSession._id, course.students, notificationDate);
         }
 
         res.status(201).json({
@@ -537,7 +574,12 @@ router.put('/live-sessions/:sessionId', authenticate, isLecturer, async (req, re
         }
 
         // Verify lecturer owns this session
-        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -604,7 +646,12 @@ router.delete('/live-sessions/:sessionId', authenticate, isLecturer, async (req,
         }
 
         // Verify lecturer owns this session
-        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -627,53 +674,6 @@ router.delete('/live-sessions/:sessionId', authenticate, isLecturer, async (req,
     }
 });
 
-// Mark student attendance for a session
-router.post('/live-sessions/:sessionId/attendance', async (req, res) => {
-    try {
-        const { sessionId } = req.params;
-        const { studentId } = req.body;
-
-        const session = await LiveSession.findById(sessionId);
-        if (!session) {
-            return res.status(404).json({ message: 'Session not found' });
-        }
-
-        // Check if session is active
-        if (session.status !== 'active') {
-            return res.status(400).json({ message: 'Session is not currently active' });
-        }
-
-        // Check if student already joined
-        let attendance = await SessionAttendance.findOne({
-            session: sessionId,
-            student: studentId
-        });
-
-        if (!attendance) {
-            attendance = new SessionAttendance({
-                session: sessionId,
-                student: studentId,
-                joined_at: new Date(),
-                attended: true
-            });
-        } else if (!attendance.attended) {
-            attendance.joinedAt = new Date();
-            attendance.attended = true;
-        }
-
-        await attendance.save();
-
-        res.json({
-            message: 'Attendance recorded',
-            attendance
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error', error: err.message });
-    }
-});
-
 // Get attendance for a session
 router.get('/live-sessions/:sessionId/attendance', authenticate, isLecturer, async (req, res) => {
     try {
@@ -686,7 +686,12 @@ router.get('/live-sessions/:sessionId/attendance', authenticate, isLecturer, asy
         }
 
         // Verify lecturer owns this session
-        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -696,7 +701,7 @@ router.get('/live-sessions/:sessionId/attendance', authenticate, isLecturer, asy
             .sort({ joinedAt: -1 })
             .lean();
 
-        const enrolledCount = course.enrolledStudents?.length || 0;
+        const enrolledCount = course.students?.length || 0;
         const attendedCount = attendance.filter(a => a.attended).length;
 
         res.json({
@@ -729,7 +734,12 @@ router.post('/live-sessions/:sessionId/end', authenticate, isLecturer, async (re
         }
 
         // Verify lecturer owns this session
-        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -766,7 +776,7 @@ router.post('/live-sessions/:sessionId/end', authenticate, isLecturer, async (re
 });
 
 // Start session (mark as active)
-router.post('/live-sessions/:sessionId/start', authenticate,  isLecturer, async (req, res) => {
+router.post('/live-sessions/:sessionId/start', authenticate, isLecturer, async (req, res) => {
     try {
         const { sessionId } = req.params;
         const userId = req.user.id;
@@ -777,7 +787,12 @@ router.post('/live-sessions/:sessionId/start', authenticate,  isLecturer, async 
         }
 
         // Verify lecturer owns this session
-        const course = await Course.findOne({ _id: session.course, createdBy: userId });
+        const lecturer = await User.findById(userId);
+        if (!lecturer) {
+            return res.status(404).json({ message: 'Lecturer not found' });
+        }
+
+        const course = lecturer.courses?.id(session.course);
         if (!course) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -795,68 +810,6 @@ router.post('/live-sessions/:sessionId/start', authenticate,  isLecturer, async 
         console.error(err);
         res.status(500).json({ message: 'Server error', error: err.message });
     }
-});
-
-// ============================================
-// HELPER FUNCTION FOR NOTIFICATIONS
-// ============================================
-
-const scheduleSessionNotification = (sessionId, studentIds, notificationDate) => {
-    // Implement using node-schedule or bull
-    // This is a placeholder - you should integrate with your notification system
-    
-    const schedule = require('node-schedule');
-    
-    schedule.scheduleJob(notificationDate, async () => {
-        try {
-            const session = await LiveSession.findById(sessionId);
-            if (!session) return;
-
-            // Send notifications to students
-            for (const studentId of studentIds) {
-                await Notification.create({
-                    recipient: studentId,
-                    type: 'live_session_reminder',
-                    title: `${session.title} starting soon`,
-                    message: `Your live class session "${session.title}" starts in ${session.notificationTime} minutes`,
-                    data: {
-                        sessionId,
-                        link: session.link
-                    },
-                    read: false
-                });
-            }
-        } catch (err) {
-            console.error('Error sending session notifications:', err);
-        }
-    });
-};
-
-router.get("/students/:id", authenticate, isLecturer, async (req, res) => {
-  try {
-    const student = await User.findById(req.params.id);
-    if (!student) {
-      return res.status(404).json({ message: "Student not found" });
-    }
-
-    res.json({
-      _id: student._id,
-      name: student.fullname || student.username,
-      email: student.email,
-      phone: student.phone,
-      matricNumber: student.studentId,
-      level: student.level,
-      department: student.department,
-      faculty: student.faculty,
-      status: student.active !== false ? "Active" : "Inactive",
-      joinedDate: student.createdAt,
-      examAttempts: student.examAttempts || 0,
-      averageScore: student.averageScore || 0
-    });
-  } catch (e) {
-    console.error("Get student error:", e);
-    res.status(500).json({ message: "Server error", error: e.message });
-  }
 });
 router.get("/courses", authenticate, isLecturer, async (req, res) => {
   try {
@@ -2128,6 +2081,17 @@ if (casterInstance === 'string') {
   }
 });
 
+// ============================================
+// 5. EXAMS SCHEDULING - returns embedded exams and QuestionSet authored by lecturer
+// ============================================
+
+/**
+ * GET /api/lecturer/exams
+ * - Returns embedded lecturer.exams and QuestionSet documents authored by lecturer.
+ * - Query params:
+ *    - includeQuestions=true -> include full questions array for question-set items
+ *    - source=embedded|questionset|all -> filter returned items by source (default all)
+ */
 router.get("/exams", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -2202,6 +2166,14 @@ router.get("/exams", authenticate, isLecturer, async (req, res) => {
   }
 });
 
+/**
+ * GET /api/lecturer/question-sets
+ * - Returns QuestionSet documents createdBy the lecturer.
+ * - Query params:
+ *    - includeQuestions=true  -> include full questions array
+ *    - status=ACTIVE|INACTIVE  -> filter by status
+ *    - faculty, department      -> optional filters
+ */
 router.get("/question-sets", authenticate, isLecturer, async (req, res) => {
   try {
     const lecturerId = req.user.id;
@@ -3100,73 +3072,6 @@ router.post("/profile/avatar", authenticate, isLecturer, uploadToMemory.single("
     console.error("Avatar upload error:", e);
     res.status(500).json({ message: "Server error", error: e.message });
   }
-});
-// Get notifications for current user
-router.get('/notifications', async (req, res) => {
-    try {
-        const userId = req.user.id;
-        
-        const notifications = await Notification.find({ recipient: userId })
-            .sort({ createdAt: -1 })
-            .limit(50)
-            .lean();
-
-        const unreadCount = await Notification.countDocuments({
-            recipient: userId,
-            read: false
-        });
-
-        res.json({
-            notifications,
-            unreadCount
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error', error: err.message });
-    }
-});
-
-// Mark notification as read
-router.patch('/notifications/:notificationId/read', async (req, res) => {
-    try {
-        const { notificationId } = req.params;
-        const userId = req.user.id;
-
-        const notification = await Notification.findOneAndUpdate(
-            { _id: notificationId, recipient: userId },
-            { read: true, readAt: new Date() },
-            { new: true }
-        );
-
-        if (!notification) {
-            return res.status(404).json({ message: 'Notification not found' });
-        }
-
-        res.json({ notification });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error', error: err.message });
-    }
-});
-
-// Mark all notifications as read
-router.patch('/notifications/mark-all-read', async (req, res) => {
-    try {
-        const userId = req.user.id;
-
-        await Notification.updateMany(
-            { recipient: userId, read: false },
-            { read: true, readAt: new Date() }
-        );
-
-        res.json({ message: 'All notifications marked as read' });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error', error: err.message });
-    }
 });
 
 export default router;
