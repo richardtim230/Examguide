@@ -1474,10 +1474,73 @@ router.get("/exam-sets/:examSetId/submissions", authenticate, isLecturer, async 
   }
 });
 
-/**
- * GET /api/lecturer/exam-sets/:examSetId
- * Retrieve full exam set with all questions
- */
+// Get notifications for current user
+router.get('/notifications', async (req, res) => {
+    try {
+        const userId = req.user.id;
+        
+        const notifications = await Notification.find({ recipient: userId })
+            .sort({ createdAt: -1 })
+            .limit(50)
+            .lean();
+
+        const unreadCount = await Notification.countDocuments({
+            recipient: userId,
+            read: false
+        });
+
+        res.json({
+            notifications,
+            unreadCount
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Mark notification as read
+router.patch('/notifications/:notificationId/read', async (req, res) => {
+    try {
+        const { notificationId } = req.params;
+        const userId = req.user.id;
+
+        const notification = await Notification.findOneAndUpdate(
+            { _id: notificationId, recipient: userId },
+            { read: true, readAt: new Date() },
+            { new: true }
+        );
+
+        if (!notification) {
+            return res.status(404).json({ message: 'Notification not found' });
+        }
+
+        res.json({ notification });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Mark all notifications as read
+router.patch('/notifications/mark-all-read', async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        await Notification.updateMany(
+            { recipient: userId, read: false },
+            { read: true, readAt: new Date() }
+        );
+
+        res.json({ message: 'All notifications marked as read' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
 router.get("/exam-sets/:examSetId", authenticate, isLecturer, async (req, res) => {
   try {
     const { examSetId } = req.params;
