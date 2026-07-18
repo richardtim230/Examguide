@@ -317,10 +317,38 @@ router.get("/dashboard/stats", authenticate, isStudent, async (req, res) => {
   }
 });
 
-// Rest of the routes remain the same...
-// ===========================================
-// 2. COURSE CATALOG
-// ===========================================
+router.get("/courses/:courseId/live-sessions", authenticate, isStudent, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const studentId = req.user.id;
+
+    // Verify student is enrolled in this course
+    const lecturer = await User.findOne(
+      { "courses._id": courseId },
+      "courses"
+    );
+
+    if (!lecturer) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    const course = lecturer.courses.find(c => c._id.toString() === courseId);
+    if (!course || !course.students.some(id => id.toString() === studentId.toString())) {
+      return res.status(403).json({ message: "Access denied. You are not enrolled in this course." });
+    }
+
+    // Fetch live sessions for this course
+    const sessions = await LiveSession.find({ course: courseId })
+      .sort({ scheduledAt: -1 })
+      .lean();
+
+    res.json({ sessions: sessions || [] });
+
+  } catch (err) {
+    console.error('Error fetching live sessions:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
 
 router.get("/courses/catalog", authenticate, isStudent, async (req, res) => {
   try {
