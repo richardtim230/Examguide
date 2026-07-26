@@ -13,67 +13,112 @@ router.use(authenticate);
 
 router.get("/chats", async (req, res) => {
   try {
-    const directChats = await Chat.find({ participants: req.user.id })
-      .populate({ path: "participants", select: "username fullname profilePicture" })
-      .populate({ path: "lastMessage" })
-      .sort("-updatedAt")
-      .exec();
+    const currentUserId = String(req.user._id || req.user.id);
 
-    const chats = await Promise.all(
-      directChats.map(async (chat) => {
-        const otherUser = chat.participants.find((u) => u._id.toString() !== req.user.id);
-        const unreadCount = await Message.countDocuments({
-          chat: chat._id,
-          isGroup: false,
-          from: { $ne: req.user.id },
-          readBy: { $ne: req.user.id }
-        });
-        return {
-          _id: chat._id,
-          username: otherUser?.username,
-          fullname: otherUser?.fullname,
-          avatar: otherUser?.profilePicture,
-          lastMessageText: chat.lastMessage?.text,
-          lastMessageTime: chat.lastMessage?.createdAt,
-          unreadCount,
-          isGroup: false,
-          type: "direct"
-        };
+    const directChats = await Chat.find({
+      participants: currentUserId
+    })
+      .populate({
+        path: "participants",
+        select: "username fullname profilePicture"
       })
-    );
-
-    const groupChats = await GroupChat.find({ members: req.user.id })
-      .populate({ path: "lastMessage" })
-      .sort("-updatedAt")
-      .exec();
-
-    const groups = await Promise.all(
-      groupChats.map(async (group) => {
-        const unreadCount = await Message.countDocuments({
-          chat: group._id,
-          isGroup: true,
-          readBy: { $ne: req.user.id }
-        });
-        return {
-          _id: group._id,
-          name: group.name,
-          description: group.description || "",
-          avatar: group.avatar,
-          lastMessageText: group.lastMessage?.text,
-          lastMessageTime: group.lastMessage?.createdAt,
-          unreadCount,
-          isGroup: true,
-          type: group.type || "forum",
-          isPublic: group.isPublic,
-          memberCount: group.members.length,
-          createdBy: group.createdBy
-        };
+      .populate({
+        path: "lastMessage"
       })
-    );
+      .sort({ updatedAt: -1 });
 
-    res.json({ chats, groups });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+    const chats = [];
+
+    for (const chat of directChats) {
+      // Find the other participant
+      const otherUser = (chat.participants || []).find(
+        (user) => String(user._id) !== currentUserId
+      );
+
+      // Skip malformed chats
+      if (!otherUser) {
+        console.warn(`Skipping invalid chat ${chat._id}:`, chat.participants);
+        continue;
+      }
+
+      const unreadCount = await Message.countDocuments({
+        chat: chat._id,
+        isGroup: false,
+        from: { $ne: currentUserId },
+        readBy: { $ne: currentUserId }
+      });
+
+      chats.push({
+        // IMPORTANT: This is now the OTHER USER'S ID
+        _id: otherUser._id,
+
+        // Preserve the actual chat ID
+        chatId: chat._id,
+
+        username: otherUser.username || "",
+        fullname: otherUser.fullname || otherUser.username || "Unknown",
+        avatar: otherUser.profilePicture || "",
+
+        lastMessageText:
+          chat.lastMessage?.text ||
+          chat.lastMessageText ||
+          "",
+
+        lastMessageTime:
+          chat.lastMessage?.createdAt ||
+          chat.lastMessageAt ||
+          null,
+
+        unreadCount,
+        isGroup: false,
+        type: "direct"
+      });
+    }
+
+    const groupChats = await GroupChat.find({
+      members: currentUserId
+    })
+      .populate("lastMessage")
+      .sort({ updatedAt: -1 });
+
+    const groups = [];
+
+    for (const group of groupChats) {
+      const unreadCount = await Message.countDocuments({
+        chat: group._id,
+        isGroup: true,
+        readBy: { $ne: currentUserId }
+      });
+
+      groups.push({
+        _id: group._id,
+        name: group.name,
+        description: group.description || "",
+        avatar: group.avatar || "",
+        lastMessageText:
+          group.lastMessage?.text || "",
+        lastMessageTime:
+          group.lastMessage?.createdAt || null,
+        unreadCount,
+        isGroup: true,
+        type: group.type || "forum",
+        isPublic: group.isPublic,
+        memberCount: group.members?.length || 0,
+        createdBy: group.createdBy
+      });
+    }
+
+    res.json({
+      chats,
+      groups
+    });
+
+  } catch (err) {
+    console.error("GET /chats error:", err);
+    res.status(500).json({
+      error: "Failed to load chats.",
+      details: err.message
+    });
   }
 });
 
