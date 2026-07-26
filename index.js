@@ -3502,10 +3502,7 @@ app.get("/api/listings/count", async (req, res) => {
 
 await loadFaceModels(); // ensures the face-api models are loaded once at startup
 
-
-const server = http.createServer(app);
-
-const allowedOrigins = (process.env.CORS_ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
+const allowedOrigins = Array.from(new Set([...rawOrigins, ...devOrigins]));
 
 const io = new IOServer(server, {
   cors: {
