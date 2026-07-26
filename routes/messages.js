@@ -446,24 +446,53 @@ router.get("/search", async (req, res) => {
   try {
     const { q, limit = 20 } = req.query;
 
-    if (!q || q.length < 2) return res.status(400).json({ error: "Search term must be at least 2 characters" });
+    if (!q || q.trim().length < 2) {
+      return res.status(400).json({
+        error: "Search term must be at least 2 characters."
+      });
+    }
 
-    const userChats = await Chat.find({ participants: req.user.id }).select("_id");
-    const userGroups = await GroupChat.find({ members: req.user.id }).select("_id");
-
-    const chatIds = [...userChats.map((c) => c._id), ...userGroups.map((g) => g._id)];
-
-    const messages = await Message.find({
-      chat: { $in: chatIds },
-      text: { $regex: q, $options: "i" }
+    const users = await User.find({
+      _id: { $ne: req.user.id },
+      $or: [
+        { fullname: { $regex: q.trim(), $options: "i" } },
+        { username: { $regex: q.trim(), $options: "i" } },
+        { email: { $regex: q.trim(), $options: "i" } }
+      ]
     })
-      .populate("from", "username fullname profilePicture")
-      .sort("-createdAt")
-      .limit(parseInt(limit));
+      .select("_id username fullname profilePicture department level")
+      .limit(Number(limit));
 
-    res.json(messages);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+    const results = await Promise.all(
+      users.map(async (user) => {
+        const chat = await Chat.findOne({
+          participants: {
+            $all: [req.user.id, user._id],
+            $size: 2
+          },
+          type: "direct"
+        }).select("_id");
+
+        return {
+          _id: user._id,
+          username: user.username,
+          fullname: user.fullname,
+          profilePicture: user.profilePicture,
+          department: user.department,
+          level: user.level,
+          hasChat: !!chat,
+          chatId: chat?._id || null
+        };
+      })
+    );
+
+    res.json(results);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: err.message
+    });
   }
 });
 
