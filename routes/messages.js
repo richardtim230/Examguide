@@ -75,8 +75,12 @@ router.get("/chats", async (req, res) => {
       });
     }
 
+    // Include groups that user is a member of OR public groups (visible to everyone)
     const groupChats = await GroupChat.find({
-      members: currentUserId
+      $or: [
+        { members: currentUserId },
+        { isPublic: true }
+      ]
     })
       .populate("lastMessage")
       .sort({ updatedAt: -1 });
@@ -84,27 +88,32 @@ router.get("/chats", async (req, res) => {
     const groups = [];
 
     for (const group of groupChats) {
-      const unreadCount = await Message.countDocuments({
-        chat: group._id,
-        isGroup: true,
-        readBy: { $ne: currentUserId }
-      });
+      const isMember = (group.members || []).map(x => String(x)).includes(currentUserId);
+
+      // Only count unread messages if the user is a member (otherwise show 0)
+      let unreadCount = 0;
+      if (isMember) {
+        unreadCount = await Message.countDocuments({
+          chat: group._id,
+          isGroup: true,
+          readBy: { $ne: currentUserId }
+        });
+      }
 
       groups.push({
         _id: group._id,
         name: group.name,
         description: group.description || "",
         avatar: group.avatar || "",
-        lastMessageText:
-          group.lastMessage?.text || "",
-        lastMessageTime:
-          group.lastMessage?.createdAt || null,
+        lastMessageText: group.lastMessage?.text || "",
+        lastMessageTime: group.lastMessage?.createdAt || null,
         unreadCount,
         isGroup: true,
         type: group.type || "forum",
-        isPublic: group.isPublic,
+        isPublic: !!group.isPublic,
         memberCount: group.members?.length || 0,
-        createdBy: group.createdBy
+        createdBy: group.createdBy,
+        isMember // new flag so frontend can indicate join/request state
       });
     }
 
@@ -366,10 +375,75 @@ router.post("/group/:groupId/join", async (req, res) => {
     }
 
     group.members.push(req.user.id);
+    group.admins = group.admins || [];
+    // avoid duplicates (sanity)
+    group.admins = Array.from(new Set(group.admins.map(String)));
     await group.save();
 
     res.json({ success: true, message: "Joined group successfully" });
   } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// New: request to join a group. For public groups this will auto-join the user and mark the request approved.
+// For private groups this records a pending request (admins can review later).
+router.post("/group/:groupId/request", async (req, res) => {
+  try {
+    const group = await GroupChat.findById(req.params.groupId);
+    if (!group) return res.status(404).json({ error: "Group not found" });
+
+    const currentUserId = String(req.user.id);
+
+    if (group.members.map((x) => x.toString()).includes(currentUserId)) {
+      return res.json({ success: true, message: "Already a member" });
+    }
+
+    // Check if a previous join request exists
+    const existingRequest = (group.joinRequests || []).find(jr => String(jr.user) === currentUserId);
+    if (existingRequest) {
+      // If already approved (shouldn't happen since members were checked) or pending, return status
+      return res.json({ success: true, message: `Request already ${existingRequest.status}` });
+    }
+
+    if (group.isPublic) {
+      // Auto-approve: add as member and record approved joinRequest
+      group.members.push(req.user.id);
+      group.joinRequests.push({
+        user: req.user.id,
+        status: "approved",
+        requestedAt: new Date(),
+        processedAt: new Date()
+      });
+      group.updatedAt = Date.now();
+      await group.save();
+
+      // Emit socket event notifying group membership change if io present
+      try {
+        const io = req.app.get("io");
+        if (io) {
+          io.to(`group_${group._id}`).emit("group:member:joined", { groupId: group._id, userId: req.user.id });
+        }
+      } catch (emitErr) {
+        console.warn("Socket emit failed (group join request - public):", emitErr && emitErr.message);
+      }
+
+      return res.json({ success: true, message: "Request approved - you have joined the group", isMember: true });
+    } else {
+      // Private group: create a pending request entry
+      group.joinRequests.push({
+        user: req.user.id,
+        status: "pending",
+        requestedAt: new Date()
+      });
+      group.updatedAt = Date.now();
+      await group.save();
+
+      // Could notify admins here via socket/email; for now, respond with success
+      return res.json({ success: true, message: "Join request submitted and is pending approval", isMember: false });
+    }
+  } catch (e) {
+    console.error("POST /group/:groupId/request error:", e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -510,6 +584,56 @@ router.get("/search", async (req, res) => {
     res.status(500).json({
       error: err.message
     });
+  }
+});
+
+// New: list groups visible to the user (members + public groups)
+router.get("/groups", async (req, res) => {
+  try {
+    const currentUserId = String(req.user.id);
+
+    const groupsList = await GroupChat.find({
+      $or: [
+        { members: currentUserId },
+        { isPublic: true }
+      ]
+    })
+      .populate("lastMessage")
+      .sort({ updatedAt: -1 });
+
+    const groups = await Promise.all(groupsList.map(async (group) => {
+      const isMember = (group.members || []).map(x => String(x)).includes(currentUserId);
+
+      let unreadCount = 0;
+      if (isMember) {
+        unreadCount = await Message.countDocuments({
+          chat: group._id,
+          isGroup: true,
+          readBy: { $ne: currentUserId }
+        });
+      }
+
+      return {
+        _id: group._id,
+        name: group.name,
+        description: group.description || "",
+        avatar: group.avatar || "",
+        lastMessageText: group.lastMessage?.text || "",
+        lastMessageTime: group.lastMessage?.createdAt || null,
+        unreadCount,
+        isGroup: true,
+        type: group.type || "forum",
+        isPublic: !!group.isPublic,
+        memberCount: group.members?.length || 0,
+        createdBy: group.createdBy,
+        isMember
+      };
+    }));
+
+    res.json(groups);
+  } catch (e) {
+    console.error("GET /groups error:", e);
+    res.status(500).json({ error: e.message });
   }
 });
 
