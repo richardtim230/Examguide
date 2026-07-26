@@ -8,7 +8,7 @@ import streamifier from "streamifier";
 import Discussion from "../models/Discussion.js";
 import Reply from "../models/Reply.js";
 import User from "../models/User.js";
-import Group from "../models/Group.js";
+import Group from "../models/GroupChat.js";
 import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
