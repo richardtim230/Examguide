@@ -23,12 +23,14 @@ import postmark from "postmark";
 import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
 import { Server } from 'socket.io';
 import http from "http";
+import { Server as IOServer } from "socket.io";
 import OneSignal from "onesignal-node";
 import studentRouter from "./routes/studentDashboard.js";
 import chatbotRoutes from "./routes/chatbot.js";
 import authMiddleware from "./middleware/auth.js";
 import authRouter from './routes/auth.js';
 import { loadFaceModels } from './lib/face-verify-setup.js';
+
 
 
 
@@ -3497,10 +3499,89 @@ app.get("/api/listings/count", async (req, res) => {
   }
 });
 
-const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/liveclass" });
-setupLiveClassSocket(io);
+
 await loadFaceModels(); // ensures the face-api models are loaded once at startup
 
+
+const server = http.createServer(app);
+
+const allowedOrigins = (process.env.CORS_ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
+
+const io = new IOServer(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.length === 0) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Origin not allowed"), false);
+    },
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  pingTimeout: 30000,
+  pingInterval: 25000
+});
+
+app.set("io", io);
+
+function extractUserIdFromToken(token) {
+  if (!token) return null;
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    return payload?.id || payload?._id || payload?.user?.id || payload?.user?._id || null;
+  } catch (err) {
+    return null;
+  }
+}
+
+io.use((socket, next) => {
+  const token = socket.handshake.auth && socket.handshake.auth.token;
+  const userId = extractUserIdFromToken(token);
+  if (!userId) return next(new Error("Unauthorized"));
+  socket.userId = userId;
+  return next();
+});
+
+io.on("connection", (socket) => {
+  socket.join(`user_${socket.userId}`);
+
+  socket.on("join", (data) => {
+    if (!data) return;
+    if (data.room) socket.join(data.room);
+    else if (data.roomType === "group" && data.id) socket.join(`group_${data.id}`);
+    else if (data.roomType === "user" && data.id) socket.join(`user_${data.id}`);
+  });
+
+  socket.on("leave", (data) => {
+    if (!data) return;
+    if (data.room) socket.leave(data.room);
+    else if (data.roomType === "group" && data.id) socket.leave(`group_${data.id}`);
+    else if (data.roomType === "user" && data.id) socket.leave(`user_${data.id}`);
+  });
+
+  socket.on("disconnect", (reason) => {
+    // no-op; connection closed
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  // server ready
+});
+
+function gracefulShutdown() {
+  try {
+    io.close();
+  } catch (err) {}
+  try {
+    server.close(() => process.exit(0));
+  } catch (err) {
+    process.exit(1);
+  }
+}
+
+process.on("SIGINT", gracefulShutdown);
+process.on("SIGTERM", gracefulShutdown);
 
 server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
 app.use('/api/auth', authRouter);
