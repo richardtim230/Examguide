@@ -404,9 +404,7 @@ router.get("/similar-users", async (req, res) => {
     }
 
     const filter = {
-      _id: { $ne: req.user.id },
-      department: me.department,
-      level: me.level
+      _id: { $ne: req.user.id }
     };
 
     // Apply search only when the user has typed something
