@@ -3561,10 +3561,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  // server ready
-});
-
 function gracefulShutdown() {
   try {
     io.close();
