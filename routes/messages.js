@@ -394,19 +394,38 @@ router.post("/group/:groupId/leave", async (req, res) => {
 
 router.get("/similar-users", async (req, res) => {
   try {
-    const me = await User.findById(req.user.id);
-    if (!me) return res.status(404).json({ error: "User not found" });
+    const { q = "", limit = 50 } = req.query;
 
-    const users = await User.find({
+    const search = q.trim();
+
+    const me = await User.findById(req.user.id);
+    if (!me) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const filter = {
       _id: { $ne: req.user.id },
       department: me.department,
       level: me.level
-    })
+    };
+
+    // Apply search only when the user has typed something
+    if (search.length >= 2) {
+      filter.$or = [
+        { fullname: { $regex: search, $options: "i" } },
+        { username: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    const users = await User.find(filter)
       .select("_id username fullname profilePicture department level")
-      .limit(50);
+      .sort({ fullname: 1 })
+      .limit(Number(limit));
 
     res.json(users);
+
   } catch (e) {
+    console.error(e);
     res.status(500).json({ error: e.message });
   }
 });
