@@ -1,13 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const ChatSchema = new mongoose.Schema({
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }],
-  title: { type: String, default: '' },
-  lastMessageAt: { type: Date, default: Date.now },
-  createdAt: { type: Date, default: Date.now }
+const { Schema } = mongoose;
+
+const ChatSchema = new Schema({
+  participants: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+  title: { type: String, default: "" },
+
+  lastMessage: { type: Schema.Types.ObjectId, ref: "Message", default: null },
+  lastMessageText: { type: String, default: "" },
+  lastMessageAt: { type: Date, default: null },
+
+  type: { type: String, enum: ["direct", "chat", "forum", "group"], default: "chat" },
+
+}, {
+  timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" }
 });
 
-// Ensure we can search by participants
 ChatSchema.index({ participants: 1 });
+ChatSchema.index({ lastMessageAt: -1 });
 
-export default mongoose.models.Chat || mongoose.model('Chat', ChatSchema);
+export default mongoose.models.Chat || mongoose.model("Chat", ChatSchema);
