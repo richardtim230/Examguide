@@ -18,7 +18,7 @@ const DiscussionSchema = new Schema({
   tags: [{ type: String }],
 
   // Optional Group
-  group: { type: Schema.Types.ObjectId, ref: "Group", default: null },
+  group: { type: Schema.Types.ObjectId, ref: "GroupChat", default: null },
 
   // Optional banner/cover image for the discussion
   coverImage: { type: String, default: "" },
