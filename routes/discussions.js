@@ -1,3 +1,4 @@
+// routes/discussions.js
 import express from "express";
 import path from "path";
 import fs from "fs";
@@ -52,17 +53,11 @@ router.get("/", async (req, res) => {
 
     const total = await Discussion.countDocuments(query);
 
-    // Calculate whether current user bookmarked or liked each discussion (only if authenticated)
+    // Calculate whether current user bookmarked or liked each discussion
+    const userIdStr = req.user.id;
     const discussionsForClient = discussions.map((d) => {
-      let liked = false;
-      let bookmarked = false;
-      
-      if (req.user) {
-        const userIdStr = req.user.id;
-        liked = d.likes.some((u) => u.toString() === userIdStr);
-        bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
-      }
-      
+      const liked = d.likes.some((u) => u.toString() === userIdStr);
+      const bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
       return {
         ...d.toObject(),
         liked,
@@ -84,6 +79,39 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.use(authenticate);
+
+router.post("/", async (req, res) => {
+  try {
+    const { title, description, category = "general", tags = [], content = "", groupId } = req.body;
+
+    if (!title || !description)
+      return res.status(400).json({ error: "Title and description required" });
+
+    const discussion = await Discussion.create({
+      title,
+      description,
+      content,
+      category,
+      tags,
+      author: req.user.id,
+      group: groupId || null,
+    });
+
+    await discussion.populate("author", "fullname username profilePicture");
+    if (discussion.group) await discussion.populate("group", "name slug coverImage");
+
+    res.status(201).json({ success: true, discussion });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * GET /api/discussions/:id
+ * Get a single discussion with replies (replies paginated)
+ * Query: replyPage, replyLimit, replySort (newest/mostLiked)
+ */
 router.get("/:id", async (req, res) => {
   try {
     const {
@@ -152,33 +180,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.use(authenticate);
-
-router.post("/", async (req, res) => {
-  try {
-    const { title, description, category = "general", tags = [], content = "", groupId } = req.body;
-
-    if (!title || !description)
-      return res.status(400).json({ error: "Title and description required" });
-
-    const discussion = await Discussion.create({
-      title,
-      description,
-      content,
-      category,
-      tags,
-      author: req.user.id,
-      group: groupId || null,
-    });
-
-    await discussion.populate("author", "fullname username profilePicture");
-    if (discussion.group) await discussion.populate("group", "name slug coverImage");
-
-    res.status(201).json({ success: true, discussion });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
+/**
+ * POST /api/discussions/:id/reply
+ * Reply to a discussion. Accepts attachments (images/GIF) via multipart/form-data
+ * fields:
+ * - content (text)
+ * - attachments[] (files) (optional)
+ *
+ * This version uploads files directly to Cloudinary (streaming from memory).
+ */
 router.post("/:id/reply", uploadToMemory.array("attachments", 5), async (req, res) => {
   try {
     const { content = "" } = req.body;
