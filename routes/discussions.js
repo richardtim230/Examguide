@@ -31,6 +31,11 @@ function uploadBufferToCloudinary(buffer, options = {}) {
   });
 }
 
+/**
+ * GET /api/discussions
+ * Get all discussions (paginated) - PUBLIC ENDPOINT
+ * ?category=&page=1&limit=20&sort=newest
+ */
 router.get("/", async (req, res) => {
   try {
     const { category, page = 1, limit = 20, sort = "newest" } = req.query;
@@ -53,11 +58,17 @@ router.get("/", async (req, res) => {
 
     const total = await Discussion.countDocuments(query);
 
-    // Calculate whether current user bookmarked or liked each discussion
-    const userIdStr = req.user.id;
+    // Calculate whether current user bookmarked or liked each discussion (only if authenticated)
     const discussionsForClient = discussions.map((d) => {
-      const liked = d.likes.some((u) => u.toString() === userIdStr);
-      const bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
+      let liked = false;
+      let bookmarked = false;
+      
+      if (req.user) {
+        const userIdStr = req.user.id;
+        liked = d.likes.some((u) => u.toString() === userIdStr);
+        bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
+      }
+      
       return {
         ...d.toObject(),
         liked,
@@ -79,8 +90,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+// All routes below require authentication
 router.use(authenticate);
 
+/**
+ * POST /api/discussions
+ * Create a new discussion
+ * { title, description, category?, tags?, content?, groupId?, coverImage? }
+ */
 router.post("/", async (req, res) => {
   try {
     const { title, description, category = "general", tags = [], content = "", groupId } = req.body;
