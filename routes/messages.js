@@ -9,6 +9,56 @@ import { nanoid } from "nanoid";
 
 const router = express.Router();
 
+// New: list groups visible to the user (members + public groups)
+router.get("/groups", async (req, res) => {
+  try {
+    const currentUserId = String(req.user.id);
+
+    const groupsList = await GroupChat.find({
+      $or: [
+        { members: currentUserId },
+        { isPublic: true }
+      ]
+    })
+      .populate("lastMessage")
+      .sort({ updatedAt: -1 });
+
+    const groups = await Promise.all(groupsList.map(async (group) => {
+      const isMember = (group.members || []).map(x => String(x)).includes(currentUserId);
+
+      let unreadCount = 0;
+      if (isMember) {
+        unreadCount = await Message.countDocuments({
+          chat: group._id,
+          isGroup: true,
+          readBy: { $ne: currentUserId }
+        });
+      }
+
+      return {
+        _id: group._id,
+        name: group.name,
+        description: group.description || "",
+        avatar: group.avatar || "",
+        lastMessageText: group.lastMessage?.text || "",
+        lastMessageTime: group.lastMessage?.createdAt || null,
+        unreadCount,
+        isGroup: true,
+        type: group.type || "forum",
+        isPublic: !!group.isPublic,
+        memberCount: group.members?.length || 0,
+        createdBy: group.createdBy,
+        isMember
+      };
+    }));
+
+    res.json(groups);
+  } catch (e) {
+    console.error("GET /groups error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 router.use(authenticate);
 
 router.get("/chats", async (req, res) => {
@@ -587,54 +637,5 @@ router.get("/search", async (req, res) => {
   }
 });
 
-// New: list groups visible to the user (members + public groups)
-router.get("/groups", async (req, res) => {
-  try {
-    const currentUserId = String(req.user.id);
-
-    const groupsList = await GroupChat.find({
-      $or: [
-        { members: currentUserId },
-        { isPublic: true }
-      ]
-    })
-      .populate("lastMessage")
-      .sort({ updatedAt: -1 });
-
-    const groups = await Promise.all(groupsList.map(async (group) => {
-      const isMember = (group.members || []).map(x => String(x)).includes(currentUserId);
-
-      let unreadCount = 0;
-      if (isMember) {
-        unreadCount = await Message.countDocuments({
-          chat: group._id,
-          isGroup: true,
-          readBy: { $ne: currentUserId }
-        });
-      }
-
-      return {
-        _id: group._id,
-        name: group.name,
-        description: group.description || "",
-        avatar: group.avatar || "",
-        lastMessageText: group.lastMessage?.text || "",
-        lastMessageTime: group.lastMessage?.createdAt || null,
-        unreadCount,
-        isGroup: true,
-        type: group.type || "forum",
-        isPublic: !!group.isPublic,
-        memberCount: group.members?.length || 0,
-        createdBy: group.createdBy,
-        isMember
-      };
-    }));
-
-    res.json(groups);
-  } catch (e) {
-    console.error("GET /groups error:", e);
-    res.status(500).json({ error: e.message });
-  }
-});
 
 export default router;
