@@ -13,8 +13,6 @@ import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-router.use(authenticate);
-
 // ---- Multer memory storage for in-memory uploads (used with Cloudinary stream) ----
 const memoryStorage = multer.memoryStorage();
 const uploadToMemory = multer({
@@ -35,7 +33,7 @@ function uploadBufferToCloudinary(buffer, options = {}) {
 
 /**
  * GET /api/discussions
- * Get all discussions (paginated)
+ * Get all discussions (paginated) - PUBLIC ENDPOINT
  * ?category=&page=1&limit=20&sort=newest
  */
 router.get("/", async (req, res) => {
@@ -60,11 +58,17 @@ router.get("/", async (req, res) => {
 
     const total = await Discussion.countDocuments(query);
 
-    // Calculate whether current user bookmarked or liked each discussion
-    const userIdStr = req.user.id;
+    // Calculate whether current user bookmarked or liked each discussion (only if authenticated)
     const discussionsForClient = discussions.map((d) => {
-      const liked = d.likes.some((u) => u.toString() === userIdStr);
-      const bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
+      let liked = false;
+      let bookmarked = false;
+      
+      if (req.user) {
+        const userIdStr = req.user.id;
+        liked = d.likes.some((u) => u.toString() === userIdStr);
+        bookmarked = (d.bookmarks || []).some((u) => u.toString() === userIdStr);
+      }
+      
       return {
         ...d.toObject(),
         liked,
@@ -85,6 +89,9 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+// All routes below require authentication
+router.use(authenticate);
 
 /**
  * POST /api/discussions
