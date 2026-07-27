@@ -1,4 +1,3 @@
-// routes/discussions.js
 import express from "express";
 import path from "path";
 import fs from "fs";
@@ -31,11 +30,6 @@ function uploadBufferToCloudinary(buffer, options = {}) {
   });
 }
 
-/**
- * GET /api/discussions
- * Get all discussions (paginated) - PUBLIC ENDPOINT
- * ?category=&page=1&limit=20&sort=newest
- */
 router.get("/", async (req, res) => {
   try {
     const { category, page = 1, limit = 20, sort = "newest" } = req.query;
@@ -90,45 +84,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// All routes below require authentication
-router.use(authenticate);
-
-/**
- * POST /api/discussions
- * Create a new discussion
- * { title, description, category?, tags?, content?, groupId?, coverImage? }
- */
-router.post("/", async (req, res) => {
-  try {
-    const { title, description, category = "general", tags = [], content = "", groupId } = req.body;
-
-    if (!title || !description)
-      return res.status(400).json({ error: "Title and description required" });
-
-    const discussion = await Discussion.create({
-      title,
-      description,
-      content,
-      category,
-      tags,
-      author: req.user.id,
-      group: groupId || null,
-    });
-
-    await discussion.populate("author", "fullname username profilePicture");
-    if (discussion.group) await discussion.populate("group", "name slug coverImage");
-
-    res.status(201).json({ success: true, discussion });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-/**
- * GET /api/discussions/:id
- * Get a single discussion with replies (replies paginated)
- * Query: replyPage, replyLimit, replySort (newest/mostLiked)
- */
 router.get("/:id", async (req, res) => {
   try {
     const {
@@ -197,15 +152,33 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/**
- * POST /api/discussions/:id/reply
- * Reply to a discussion. Accepts attachments (images/GIF) via multipart/form-data
- * fields:
- * - content (text)
- * - attachments[] (files) (optional)
- *
- * This version uploads files directly to Cloudinary (streaming from memory).
- */
+router.use(authenticate);
+
+router.post("/", async (req, res) => {
+  try {
+    const { title, description, category = "general", tags = [], content = "", groupId } = req.body;
+
+    if (!title || !description)
+      return res.status(400).json({ error: "Title and description required" });
+
+    const discussion = await Discussion.create({
+      title,
+      description,
+      content,
+      category,
+      tags,
+      author: req.user.id,
+      group: groupId || null,
+    });
+
+    await discussion.populate("author", "fullname username profilePicture");
+    if (discussion.group) await discussion.populate("group", "name slug coverImage");
+
+    res.status(201).json({ success: true, discussion });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 router.post("/:id/reply", uploadToMemory.array("attachments", 5), async (req, res) => {
   try {
     const { content = "" } = req.body;
