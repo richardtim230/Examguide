@@ -33,6 +33,7 @@ import { loadFaceModels } from './lib/face-verify-setup.js';
 
 
 
+import resourceRoutes from "./routes/resourceRoutes.js";
 
 
 // apply global limiter if desired:
@@ -364,7 +365,18 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+// parse form fields
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded files (make sure UPLOAD_DIR matches middleware/upload.js — default is ./uploads)
+const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads");
+app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "100d" }));
+
+// Mount API
+app.use("/api/resources", resourceRoutes);
+
+
 app.use("/api/forms", formsRoutes);
 app.use("/api/credit", creditRoutes);
 app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts")));
