@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs/promises";
 import { uploadPaths, editorUpload } from "../middleware/upload.js";
 import { createResource, uploadEditorImage } from "../controllers/resourceController.js";
-import Resources from "../models/Resource.js";
+import Resources from "../models/Resources.js";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
