@@ -374,7 +374,7 @@ const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads")
 app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "100d" }));
 
 // Mount API
-app.use("/api/resources", resourceRoutes);
+app.use("/api/resource", resourceRoutes);
 
 
 app.use("/api/forms", formsRoutes);
