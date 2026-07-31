@@ -246,6 +246,147 @@ router.delete("/:id", async (req, res) => {
   await Resources.deleteOne({ _id: id });
   res.json({ success: true });
 });
+router.get("/resources/:resourceId", async (req, res, next) => {
+  try {
+    const id = req.params.resourceId;
+    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
+    const resource = await Resources.findById(id).lean();
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    res.json({ success: true, resource });
+  } catch (err) { next(err); }
+});
+
+router.put("/resources/:resourceId", async (req, res, next) => {
+  try {
+    const id = req.params.resourceId;
+    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
+    const allowed = ["resourceType","title","subtitle","authors","coauthors","publisher","edition","isbn10","isbn13","language","publicationYear","pages","format","faculty","department","level","semester","courseCode","courseTitle","lecturer","description","introduction","files","cover","tags","visibility","allowPreview","enableDownload","published","publishDate"];
+    const update = {};
+    allowed.forEach(k => { if (typeof req.body[k] !== "undefined") update[k] = req.body[k]; });
+    const resource = await Resources.findByIdAndUpdate(id, update, { new: true, runValidators: true });
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    res.json({ success: true, resource });
+  } catch (err) { next(err); }
+});
+
+router.delete("/resources/:resourceId", async (req, res, next) => {
+  try {
+    const id = req.params.resourceId;
+    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
+    const resource = await Resources.findByIdAndDelete(id);
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    await ResourceChapter.deleteMany({ resource: id }).catch(()=>{});
+    await Bookmark.deleteMany({ resource: id }).catch(()=>{});
+    await Progress.deleteMany({ resource: id }).catch(()=>{});
+    res.json({ success: true, message: "Resource and related data removed", resourceId: id });
+  } catch (err) { next(err); }
+});
+
+router.get("/resources/:resourceId/chapters", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+    const resource = await Resources.findById(resourceId).select("_id");
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    const page = Math.max(1, parseInt(req.query.page || "1", 10));
+    const limit = Math.min(200, Math.max(1, parseInt(req.query.limit || "50", 10)));
+    const skip = (page - 1) * limit;
+    const sort = req.query.sort || "chapterNumber";
+    const [chapters, total] = await Promise.all([
+      ResourceChapter.find({ resource: resourceId }).sort(sort).skip(skip).limit(limit).lean(),
+      ResourceChapter.countDocuments({ resource: resourceId })
+    ]);
+    res.json({ success: true, page, limit, total, chapters });
+  } catch (err) { next(err); }
+});
+
+router.post("/resources/:resourceId/chapters", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+    const resource = await Resources.findById(resourceId).select("_id");
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    const payload = {
+      resource: resourceId,
+      chapterNumber: req.body.chapterNumber,
+      title: req.body.title,
+      slug: req.body.slug || "",
+      description: req.body.description || "",
+      contentHtml: req.body.contentHtml || "",
+      isLocked: req.body.isLocked || false,
+      allowComments: typeof req.body.allowComments === "boolean" ? req.body.allowComments : true,
+      status: req.body.status || "draft",
+      publishedAt: req.body.publishedAt || null,
+      lastEditedBy: req.body.lastEditedBy || null
+    };
+    const chapter = new ResourceChapter(payload);
+    await chapter.save();
+    await refreshResourceStats(resourceId);
+    res.status(201).json({ success: true, chapter });
+  } catch (err) {
+    if (err && err.code === 11000) return res.status(409).json({ error: "Chapter number already exists for this resource" });
+    next(err);
+  }
+});
+
+router.get("/resources/:resourceId/chapters/latest", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+    const resource = await Resources.findById(resourceId).select("_id");
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    let chapter = await ResourceChapter.findOne({ resource: resourceId, status: "published" }).sort({ chapterNumber: -1 }).lean();
+    if (!chapter) chapter = await ResourceChapter.findOne({ resource: resourceId }).sort({ chapterNumber: -1 }).lean();
+    if (!chapter) return res.status(404).json({ error: "No chapters found" });
+    res.json({ success: true, chapter });
+  } catch (err) { next(err); }
+});
+
+router.get("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapterId = req.params.chapterId;
+    if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
+    const chapter = await ResourceChapter.findOne({ _id: chapterId, resource: resourceId }).lean();
+    if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+    res.json({ success: true, chapter });
+  } catch (err) { next(err); }
+});
+
+router.put("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapterId = req.params.chapterId;
+    if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
+    const chapter = await ResourceChapter.findOne({ _id: chapterId, resource: resourceId });
+    if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+    const allowed = ["chapterNumber","title","slug","description","contentHtml","isLocked","allowComments","status","publishedAt","lastEditedBy"];
+    allowed.forEach(k => { if (typeof req.body[k] !== "undefined") chapter[k] = req.body[k]; });
+    await chapter.save();
+    await refreshResourceStats(resourceId);
+    res.json({ success: true, chapter });
+  } catch (err) {
+    if (err && err.code === 11000) return res.status(409).json({ error: "Chapter number conflict" });
+    next(err);
+  }
+});
+
+router.delete("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapterId = req.params.chapterId;
+    if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
+    const chapter = await ResourceChapter.findOneAndDelete({ _id: chapterId, resource: resourceId });
+    if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+    const remaining = await ResourceChapter.find({ resource: resourceId }).sort({ chapterNumber: 1 }).lean();
+    for (let i = 0; i < remaining.length; i++) {
+      const desired = i + 1;
+      if (remaining[i].chapterNumber !== desired) await ResourceChapter.updateOne({ _id: remaining[i]._id }, { chapterNumber: desired });
+    }
+    await refreshResourceStats(resourceId);
+    res.json({ success: true, message: "Chapter deleted", chapterId });
+  } catch (err) { next(err); }
+});
 
 router.post("/uploads/editor", (req, res, next) => {
   // editorUpload was previously a middleware; now use the same memory multer instance to accept the file
