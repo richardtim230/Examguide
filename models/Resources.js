@@ -149,22 +149,17 @@ const ResourcesSchema = new Schema({
     default: ""
   },
 
-  course: {
+  description: {
     type: String,
     default: ""
-  },
+},
 
-  week: {
+introduction: {
     type: String,
     default: ""
-  },
+},
 
   lecturer: {
-    type: String,
-    default: ""
-  },
-
-  contentHtml: {
     type: String,
     default: ""
   },
