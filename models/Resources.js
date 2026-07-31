@@ -8,7 +8,10 @@ const fileSchema = new Schema({
   mimeType: { type: String, default: "" },
   size: { type: Number, default: 0 },
   url: { type: String, default: "" },
-  storageType: { type: String, enum: ["local","gridfs","cloudinary","other"], default: "local" },
+  // storageType now includes 'supabase'
+  storageType: { type: String, enum: ["local", "gridfs", "cloudinary", "supabase", "other"], default: "local" },
+  // bucket & publicId/fileId help identify Supabase objects
+  bucket: { type: String, default: null },
   publicId: { type: String, default: null },
   fileId: { type: String, default: null },
   uploadedAt: { type: Date, default: Date.now }
@@ -44,7 +47,10 @@ const ResourcesSchema = new Schema({
   cover: {
     url: { type: String, default: "" },
     mimeType: { type: String, default: "" },
-    size: { type: Number, default: 0 }
+    size: { type: Number, default: 0 },
+    storageType: { type: String, enum: ["local", "supabase", "other"], default: "local" },
+    bucket: { type: String, default: null },
+    publicId: { type: String, default: null }
   },
 
   tags: { type: [String], default: [] },
