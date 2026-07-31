@@ -1,4 +1,3 @@
-// controllers/resourceController.js
 import Resources from "../models/Resources.js";
 import path from "path";
 import sanitizeHtml from "sanitize-html";
@@ -140,7 +139,7 @@ export async function createResource(req, res) {
     const title = (req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 
-    // Review Point 1 & 2: Added resourceType and notebook-specific fields
+    // Build resource object (note: removed contentHtml handling here per request)
     const resource = {
       title,
       resourceType: req.body.resourceType || "textbook",
@@ -162,18 +161,12 @@ export async function createResource(req, res) {
       courseCode: req.body.courseCode || req.body.textbookCourseCode || "",
       courseTitle: req.body.courseTitle || req.body.textbookCourseTitle || "",
 
-      // Notebook-specific fields
+      // Notebook-specific fields (kept, but no chapter logic)
       course: req.body.course || req.body.notebookCourse || "",
       week: req.body.week || req.body.notebookWeek || "",
       lecturer: req.body.lecturer || req.body.notebookLecturer || "",
 
-      contentHtml: sanitizeHtml(req.body.contentHtml || req.body.notebookContent || req.body.content || "", {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        allowedAttributes: {
-          ...sanitizeHtml.defaults.allowedAttributes,
-          img: ['src', 'alt', 'width', 'height', 'style']
-        }
-      }),
+      // Note: contentHtml removed from createResource payload per request.
       tags: parseListField(req.body.tags || req.body.tagInput || req.body.tagsJson || ""),
       copyrightHolder: req.body.copyrightHolder || "",
       licenseType: req.body.licenseType || req.body.copyrightLicense || "All Rights Reserved",
@@ -186,36 +179,7 @@ export async function createResource(req, res) {
       files: []
     };
 
-    // === Resolve uploader robustly ===
-    // Accept common shapes from auth middleware: req.user._id, req.user.id, req.user.sub, or req.user (string)
-    // If the authenticated user is logged in, allow specifying req.body.uploader to create on behalf of someone else.
-    let uploaderId = null;
-    if (req.user) {
-      if (req.user._id) uploaderId = req.user._id;
-      else if (req.user.id) uploaderId = req.user.id;
-      else if (req.user.sub) uploaderId = req.user.sub;
-      else if (typeof req.user === "string") uploaderId = req.user;
-    }
-
-    // Allow logged-in users to optionally provide an explicit uploader id in the request body.
-    // NOTE: This will accept the provided uploader value only when req.user exists (i.e., user is authenticated).
-    // If you want to restrict setting uploader to the authenticated user's id only, remove this override.
-    if (!uploaderId && req.user && req.body.uploader) {
-      uploaderId = req.body.uploader;
-    }
-
-    // Debug info in non-production environments
-    if (process.env.NODE_ENV !== "production") {
-      // eslint-disable-next-line no-console
-      console.log("createResource - req.user:", req.user, "resolved uploaderId:", uploaderId);
-    }
-
-    if (uploaderId) {
-      resource.uploader = uploaderId;
-    }
-    // === end uploader resolution ===
-
-    // Review Point 3 & 4: Strictly separate main files from cover image
+    // Separate main files and cover file from incoming request
     let mainFilesCandidates = [];
     let coverFileCandidate = req.coverFile || null;
 
@@ -261,26 +225,16 @@ export async function createResource(req, res) {
       }
     }
 
-    // Review Point 8: Add validation requirements
+    // Validation: textbooks must have at least one file attached
     if (resource.resourceType === "textbook" && resource.files.length === 0) {
       await cleanupUploadedFiles(uploadedFilesToCleanup);
       return res.status(400).json({ error: "A textbook requires at least one file attachment." });
     }
 
-    if (
-    resource.resourceType === "notebook" &&
-    !resource.description?.trim() &&
-    !resource.introduction?.trim() &&
-    resource.files.length === 0
-) {
-    await cleanupUploadedFiles(uploadedFilesToCleanup);
-
-    return res.status(400).json({
-        error: "Please provide a description, introduction, or attach a document."
-    });
-}
+    // Note: Removed notebook-specific contentHtml requirement so notebooks are created without chapter logic
 
     if (resource.published) resource.publishDate = new Date();
+    if (req.user && req.user._id) resource.uploader = req.user._id;
 
     const doc = await Resources.create(resource);
     return res.status(201).json({ success: true, resource: doc });
