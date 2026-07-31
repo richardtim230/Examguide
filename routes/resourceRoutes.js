@@ -2,8 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { uploadPaths, editorUpload } from "../middleware/upload.js";
-import { createResource, uploadEditorImage } from "../controllers/resourceController.js";
+import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
 import { fileURLToPath } from "url";
 
@@ -34,17 +33,8 @@ function sanitizeBaseName(name) {
   return { base, ext };
 }
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (file.fieldname === "coverFile") return cb(null, uploadPaths.covers);
-    return cb(null, uploadPaths.resources);
-  },
-  filename: (req, file, cb) => {
-    const { base, ext } = sanitizeBaseName(file.originalname);
-    const uniq = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${base}-${uniq}${ext}`);
-  }
-});
+// Use memoryStorage — we'll upload buffers to Supabase in the controller
+const storage = multer.memoryStorage();
 
 function fileFilter(req, file, cb) {
   if (file.fieldname === "coverFile") {
@@ -66,12 +56,18 @@ async function removeFilesSafely(files = []) {
   const arr = Array.isArray(files) ? files : [files];
   await Promise.all(arr.map(async (f) => {
     if (!f) return;
-    const p = typeof f === "string" ? f : f.path || f.url || f;
-    if (!p) return;
+    // If file is a multer memory file (no path) but has supabase metadata
+    if (typeof f === "object" && f.bucket && (f.publicId || f.fileId || f.key)) {
+      const key = f.publicId || f.fileId || f.key;
+      await deleteSupabaseFile(f.bucket, key).catch(() => {});
+      return;
+    }
+    // If it looks like a stored DB file reference (url starting with /uploads/) try unlink
     try {
-      let fp = p;
-      if (typeof p === "string" && p.startsWith("/uploads/")) fp = path.join(process.cwd(), p.slice(1));
-      await fs.unlink(fp).catch(() => {});
+      let p = typeof f === "string" ? f : f.path || f.url || f;
+      if (!p) return;
+      if (typeof p === "string" && p.startsWith("/uploads/")) p = path.join(process.cwd(), p.slice(1));
+      await fs.unlink(p).catch(() => {});
     } catch (e) {}
   }));
 }
@@ -116,6 +112,7 @@ router.post(
     try {
       await createResource(req, res);
     } catch (err) {
+      // Attempt to remove any uploaded supabase objects referenced on req
       await removeFilesSafely([req.file, req.coverFile]);
       next(err);
     }
@@ -170,33 +167,51 @@ router.put(
       return res.status(404).json({ error: "Not found" });
     }
     const up = {};
-    const fields = ["title","subtitle","authors","coauthors","publisher","edition","isbn10","isbn13","language","publicationYear","pages","format","faculty","department","level","semester","courseCode","courseTitle","contentHtml","copyrightHolder","licenseType","visibility"];
+    const fields = ["title","subtitle","authors","coauthors","publisher","edition","isbn10","isbn13","language","publicationYear","pages","format","faculty","department","level","semester","courseCode","courseTitle","contentHtml","copyrightHolder","licenseType","visibility","allowPreview","allowComments","enableDownload","published"];
     fields.forEach(f => {
       if (typeof req.body[f] !== "undefined" && req.body[f] !== null) up[f] = req.body[f];
     });
     if (req.body.tags) {
       try { up.tags = typeof req.body.tags === "string" ? JSON.parse(req.body.tags) : req.body.tags; } catch(e){ up.tags = req.body.tags; }
     }
-    if (req.file) {
-      const fileObj = {
-        name: req.file.originalname,
-        label: req.body.fileLabel || req.file.originalname,
-        mimeType: req.file.mimetype,
-        size: req.file.size,
-        url: req.file.path ? (() => { const rel = path.relative(process.cwd(), req.file.path); return "/" + rel.split(path.sep).join("/"); })() : req.file.filename,
-        storageType: "local",
-        uploadedAt: new Date()
-      };
-      doc.files = doc.files || [];
-      doc.files.push(fileObj);
+
+    // If new main file present in req.file, let controller/schema handle Supabase upload patterns.
+    // We'll mirror previous behavior but persist supabase metadata on the resource document.
+    try {
+      if (req.file) {
+        // Let controller-style upload — reuse createResource's helpers? Simpler: add a files entry compatible with new schema
+        // If req.file has bucket/key/publicUrl (middleware uploaded), use that; else content is in memory buffer and controller helpers would handle.
+        const f = req.file;
+        const fileObj = {
+          name: f.originalname || f.name,
+          label: req.body.fileLabel || f.originalname || f.fieldname,
+          mimeType: f.mimetype,
+          size: f.size || (f.buffer ? f.buffer.length : 0),
+          url: f.publicUrl || (f.path ? (() => { const rel = path.relative(process.cwd(), f.path); return "/" + rel.split(path.sep).join("/"); })() : f.filename || ""),
+          storageType: f.bucket ? "supabase" : "local",
+          bucket: f.bucket || null,
+          publicId: f.key || f.publicId || f.fileId || null,
+          fileId: f.key || f.publicId || f.fileId || null,
+          uploadedAt: new Date()
+        };
+        doc.files = doc.files || [];
+        doc.files.push(fileObj);
+      }
+      if (req.coverFile) {
+        const cf = req.coverFile;
+        doc.cover = {
+          url: cf.publicUrl || (cf.path ? (() => { const rel = path.relative(process.cwd(), cf.path); return "/" + rel.split(path.sep).join("/"); })() : cf.filename || ""),
+          mimeType: cf.mimetype,
+          size: cf.size || (cf.buffer ? cf.buffer.length : 0),
+          storageType: cf.bucket ? "supabase" : "local",
+          bucket: cf.bucket || null,
+          publicId: cf.key || cf.publicId || cf.fileId || null
+        };
+      }
+    } catch (e) {
+      console.warn("Error processing incoming files on update:", e);
     }
-    if (req.coverFile) {
-      doc.cover = {
-        url: req.coverFile.path ? (() => { const rel = path.relative(process.cwd(), req.coverFile.path); return "/" + rel.split(path.sep).join("/"); })() : req.coverFile.filename,
-        mimeType: req.coverFile.mimetype,
-        size: req.coverFile.size
-      };
-    }
+
     Object.assign(doc, up);
     await doc.save();
     res.json({ success: true, resource: doc });
@@ -208,32 +223,42 @@ router.delete("/:id", async (req, res) => {
   if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ error: "Invalid id" });
   const doc = await Resources.findById(id);
   if (!doc) return res.status(404).json({ error: "Not found" });
-  const filePaths = [];
+
+  // Delete supabase objects where applicable
+  const deleteOps = [];
   if (Array.isArray(doc.files)) {
     doc.files.forEach(f => {
-      if (f && f.url && typeof f.url === "string" && f.url.startsWith("/uploads/")) {
-        filePaths.push(path.join(process.cwd(), f.url.slice(1)));
+      if (f && f.storageType === "supabase" && f.bucket && (f.publicId || f.fileId)) {
+        deleteOps.push(deleteSupabaseFile(f.bucket, f.publicId || f.fileId));
+      } else if (f && f.url && typeof f.url === "string" && f.url.startsWith("/uploads/")) {
+        const p = path.join(process.cwd(), f.url.slice(1));
+        deleteOps.push(fs.unlink(p).catch(() => {}));
       }
     });
   }
-  if (doc.cover && doc.cover.url && typeof doc.cover.url === "string" && doc.cover.url.startsWith("/uploads/")) {
-    filePaths.push(path.join(process.cwd(), doc.cover.url.slice(1)));
+  if (doc.cover && doc.cover.storageType === "supabase" && doc.cover.bucket && doc.cover.publicId) {
+    deleteOps.push(deleteSupabaseFile(doc.cover.bucket, doc.cover.publicId));
+  } else if (doc.cover && doc.cover.url && typeof doc.cover.url === "string" && doc.cover.url.startsWith("/uploads/")) {
+    deleteOps.push(fs.unlink(path.join(process.cwd(), doc.cover.url.slice(1))).catch(() => {}));
   }
+
+  await Promise.all(deleteOps);
   await Resources.deleteOne({ _id: id });
-  await Promise.all(filePaths.map(p => fs.unlink(p).catch(() => {})));
   res.json({ success: true });
 });
 
 router.post("/uploads/editor", (req, res, next) => {
-  if (!editorUpload || typeof editorUpload.single !== "function") return res.status(500).json({ error: "Editor upload middleware missing" });
-  const uploader = editorUpload.single("image");
+  // editorUpload was previously a middleware; now use the same memory multer instance to accept the file
+  if (!upload || typeof upload.single !== "function") return res.status(500).json({ error: "Editor upload middleware missing" });
+  const uploader = upload.single("image");
   uploader(req, res, async (err) => {
     if (err instanceof multer.MulterError) return res.status(413).json({ error: "Editor image too large or invalid" });
     if (err) return res.status(500).json({ error: "Editor image upload error" });
     try {
       await uploadEditorImage(req, res);
     } catch (e) {
-      if (req.file && req.file.path) await fs.unlink(req.file.path).catch(() => {});
+      // no local file to delete; if req.file contains supabase metadata attempt to remove it
+      await removeFilesSafely(req.file).catch(() => {});
       next(e);
     }
   });
