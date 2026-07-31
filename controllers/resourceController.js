@@ -267,10 +267,18 @@ export async function createResource(req, res) {
       return res.status(400).json({ error: "A textbook requires at least one file attachment." });
     }
 
-    if (resource.resourceType === "notebook" && !resource.contentHtml && resource.files.length === 0) {
-      await cleanupUploadedFiles(uploadedFilesToCleanup);
-      return res.status(400).json({ error: "Notebook content or attached document is required." });
-    }
+    if (
+    resource.resourceType === "notebook" &&
+    !resource.description?.trim() &&
+    !resource.introduction?.trim() &&
+    resource.files.length === 0
+) {
+    await cleanupUploadedFiles(uploadedFilesToCleanup);
+
+    return res.status(400).json({
+        error: "Please provide a description, introduction, or attach a document."
+    });
+}
 
     if (resource.published) resource.publishDate = new Date();
 
