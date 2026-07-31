@@ -14,7 +14,7 @@ const fileSchema = new Schema({
   uploadedAt: { type: Date, default: Date.now }
 }, { _id: false });
 
-const ResourceSchema = new Schema({
+const ResourcesSchema = new Schema({
   title: { type: String, required: true, trim: true },
   subtitle: { type: String, default: "" },
   authors: { type: [String], default: [] },
@@ -66,4 +66,4 @@ const ResourceSchema = new Schema({
 
 }, { timestamps: true });
 
-export default model("Resources", ResourceSchema);
+export default model("Resources", ResourcesSchema);
