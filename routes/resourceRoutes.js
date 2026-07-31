@@ -246,7 +246,7 @@ router.delete("/:id", async (req, res) => {
   await Resources.deleteOne({ _id: id });
   res.json({ success: true });
 });
-router.get("/resources/:resourceId", async (req, res, next) => {
+router.get("/:resourceId", async (req, res, next) => {
   try {
     const id = req.params.resourceId;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
@@ -256,7 +256,7 @@ router.get("/resources/:resourceId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.put("/resources/:resourceId", async (req, res, next) => {
+router.put("/:resourceId", async (req, res, next) => {
   try {
     const id = req.params.resourceId;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
@@ -269,7 +269,7 @@ router.put("/resources/:resourceId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.delete("/resources/:resourceId", async (req, res, next) => {
+router.delete("/:resourceId", async (req, res, next) => {
   try {
     const id = req.params.resourceId;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
@@ -282,7 +282,7 @@ router.delete("/resources/:resourceId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.get("/resources/:resourceId/chapters", async (req, res, next) => {
+router.get("/:resourceId/chapters", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
@@ -300,7 +300,7 @@ router.get("/resources/:resourceId/chapters", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.post("/resources/:resourceId/chapters", async (req, res, next) => {
+router.post("/:resourceId/chapters", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
@@ -342,7 +342,7 @@ router.get("/resources/:resourceId/chapters/latest", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.get("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+router.get("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
@@ -353,7 +353,7 @@ router.get("/resources/:resourceId/chapters/:chapterId", async (req, res, next) 
   } catch (err) { next(err); }
 });
 
-router.put("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+router.put("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
@@ -371,7 +371,7 @@ router.put("/resources/:resourceId/chapters/:chapterId", async (req, res, next) 
   }
 });
 
-router.delete("/resources/:resourceId/chapters/:chapterId", async (req, res, next) => {
+router.delete("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
