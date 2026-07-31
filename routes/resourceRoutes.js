@@ -7,34 +7,8 @@ import Resources from "../models/Resources.js";
 import ResourceChapter from "../models/ResourceChapter.js";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import { authenticate } from "../middleware/auth.js";
 
-export async function authenticate(req, res, next) {
-    try {
-        const auth = req.headers.authorization;
-
-        if (!auth) {
-            return res.status(401).json({ message: "No token provided" });
-        }
-
-        const token = auth.split(" ")[1];
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const user = await User.findById(decoded.id || decoded._id);
-
-        if (!user) {
-            return res.status(401).json({ message: "User not found" });
-        }
-
-        req.user = user;
-
-        next();
-    } catch (err) {
-        return res.status(401).json({ message: "Invalid token" });
-    }
-}
 function isValidId(id) {
   return mongoose.Types.ObjectId.isValid(String(id));
 }
@@ -66,7 +40,6 @@ function sanitizeBaseName(name) {
   return { base, ext };
 }
 
-// Use memoryStorage — we'll upload buffers to Supabase in the controller
 const storage = multer.memoryStorage();
 
 function fileFilter(req, file, cb) {
@@ -83,6 +56,7 @@ const upload = multer({
   fileFilter,
   limits: { fileSize: MAX_RESOURCE_SIZE }
 });
+
 async function refreshResourceStats(resourceId) {
   const total = await ResourceChapter.countDocuments({
     resource: resourceId
@@ -141,13 +115,11 @@ async function removeFilesSafely(files = []) {
   const arr = Array.isArray(files) ? files : [files];
   await Promise.all(arr.map(async (f) => {
     if (!f) return;
-    // If file is a multer memory file (no path) but has supabase metadata
     if (typeof f === "object" && f.bucket && (f.publicId || f.fileId || f.key)) {
       const key = f.publicId || f.fileId || f.key;
       await deleteSupabaseFile(f.bucket, key).catch(() => {});
       return;
     }
-    // If it looks like a stored DB file reference (url starting with /uploads/) try unlink
     try {
       let p = typeof f === "string" ? f : f.path || f.url || f;
       if (!p) return;
@@ -236,6 +208,7 @@ router.get("/:id", async (req, res) => {
 
 router.put(
   "/:id",
+  authenticate,
   multerMiddleware([
     { name: "mainFile", maxCount: 1 },
     { name: "coverFile", maxCount: 1 }
@@ -260,12 +233,8 @@ router.put(
       try { up.tags = typeof req.body.tags === "string" ? JSON.parse(req.body.tags) : req.body.tags; } catch(e){ up.tags = req.body.tags; }
     }
 
-    // If new main file present in req.file, let controller/schema handle Supabase upload patterns.
-    // We'll mirror previous behavior but persist supabase metadata on the resource document.
     try {
       if (req.file) {
-        // Let controller-style upload — reuse createResource's helpers? Simpler: add a files entry compatible with new schema
-        // If req.file has bucket/key/publicUrl (middleware uploaded), use that; else content is in memory buffer and controller helpers would handle.
         const f = req.file;
         const fileObj = {
           name: f.originalname || f.name,
@@ -303,13 +272,12 @@ router.put(
   }
 );
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   const id = req.params.id;
   if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ error: "Invalid id" });
   const doc = await Resources.findById(id);
   if (!doc) return res.status(404).json({ error: "Not found" });
 
-  // Delete supabase objects where applicable
   const deleteOps = [];
   if (Array.isArray(doc.files)) {
     doc.files.forEach(f => {
@@ -331,6 +299,7 @@ router.delete("/:id", async (req, res) => {
   await Resources.deleteOne({ _id: id });
   res.json({ success: true });
 });
+
 router.get("/:resourceId", async (req, res, next) => {
   try {
     const id = req.params.resourceId;
@@ -341,7 +310,7 @@ router.get("/:resourceId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.put("/:resourceId", async (req, res, next) => {
+router.put("/:resourceId", authenticate, async (req, res, next) => {
   try {
     const id = req.params.resourceId;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
@@ -354,7 +323,7 @@ router.put("/:resourceId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.delete("/:resourceId", async (req, res, next) => {
+router.delete("/:resourceId", authenticate, async (req, res, next) => {
   try {
     const id = req.params.resourceId;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
@@ -385,7 +354,7 @@ router.get("/:resourceId/chapters", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.post("/:resourceId/chapters", async (req, res, next) => {
+router.post("/:resourceId/chapters", authenticate, async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
@@ -438,7 +407,7 @@ router.get("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.put("/:resourceId/chapters/:chapterId", async (req, res, next) => {
+router.put("/:resourceId/chapters/:chapterId", authenticate, async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
@@ -456,7 +425,7 @@ router.put("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   }
 });
 
-router.delete("/:resourceId/chapters/:chapterId", async (req, res, next) => {
+router.delete("/:resourceId/chapters/:chapterId", authenticate, async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
@@ -473,8 +442,7 @@ router.delete("/:resourceId/chapters/:chapterId", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.post("/uploads/editor", (req, res, next) => {
-  // editorUpload was previously a middleware; now use the same memory multer instance to accept the file
+router.post("/uploads/editor", authenticate, (req, res, next) => {
   if (!upload || typeof upload.single !== "function") return res.status(500).json({ error: "Editor upload middleware missing" });
   const uploader = upload.single("image");
   uploader(req, res, async (err) => {
@@ -483,7 +451,6 @@ router.post("/uploads/editor", (req, res, next) => {
     try {
       await uploadEditorImage(req, res);
     } catch (e) {
-      // no local file to delete; if req.file contains supabase metadata attempt to remove it
       await removeFilesSafely(req.file).catch(() => {});
       next(e);
     }
