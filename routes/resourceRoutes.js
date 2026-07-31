@@ -5,6 +5,11 @@ import fs from "fs/promises";
 import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
+
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(String(id));
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,7 +55,23 @@ const upload = multer({
   fileFilter,
   limits: { fileSize: MAX_RESOURCE_SIZE }
 });
+async function refreshResourceStats(resourceId) {
+  const total = await ResourceChapter.countDocuments({
+    resource: resourceId
+  });
 
+  const lastChapter = await ResourceChapter.findOne({
+    resource: resourceId
+  })
+    .sort({ chapterNumber: -1 })
+    .select("chapterNumber")
+    .lean();
+
+  await Resources.findByIdAndUpdate(resourceId, {
+    totalChapters: total,
+    lastChapterNumber: lastChapter ? lastChapter.chapterNumber : 0
+  });
+  }
 async function removeFilesSafely(files = []) {
   if (!files) return;
   const arr = Array.isArray(files) ? files : [files];
