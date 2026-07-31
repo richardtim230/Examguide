@@ -5,11 +5,10 @@ import fs from "fs/promises";
 import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
 import ResourceChapter from "../models/ResourceChapter.js";
+import User from "../models/User.js";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
-
 export async function authenticate(req, res, next) {
     try {
         const auth = req.headers.authorization;
@@ -34,7 +33,7 @@ export async function authenticate(req, res, next) {
     } catch (err) {
         return res.status(401).json({ message: "Invalid token" });
     }
-}
+                }
 function isValidId(id) {
   return mongoose.Types.ObjectId.isValid(String(id));
 }
@@ -185,6 +184,18 @@ function multerMiddleware(fieldsSpec) {
   };
 }
 
+router.get("/users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!isValidId(id)) return res.status(400).json({ error: "Invalid user id" });
+    const user = await User.findById(id).select("fullName profilePicture faculty department level bio institution").lean();
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 router.post(
   "/",
   authenticate,
@@ -210,6 +221,9 @@ router.get("/", async (req, res) => {
   if (req.query.faculty) filter.faculty = req.query.faculty;
   if (req.query.department) filter.department = req.query.department;
   if (req.query.uploader) filter.uploader = req.query.uploader;
+  if (req.query.published !== undefined) {
+    filter.published = req.query.published === "true";
+  }
   if (q) filter.$or = [
     { title: new RegExp(q, "i") },
     { subtitle: new RegExp(q, "i") },
@@ -218,7 +232,12 @@ router.get("/", async (req, res) => {
   ];
   const skip = (page - 1) * limit;
   const [items, total] = await Promise.all([
-    Resources.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    Resources.find(filter)
+      .populate("uploader", "fullName avatar faculty department level")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean(),
     Resources.countDocuments(filter)
   ]);
   res.json({ items, total, page, limit });
@@ -289,7 +308,6 @@ router.put(
         };
       }
     } catch (e) {
-      console.warn("Error processing incoming files on update:", e);
     }
 
     Object.assign(doc, up);
