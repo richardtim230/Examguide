@@ -3,45 +3,57 @@ import path from "path";
 import sanitizeHtml from "sanitize-html";
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase client (server-side key recommended)
+// Supabase client initialization
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
+
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   throw new Error("Missing Supabase configuration. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY).");
 }
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
-// Buckets (configurable via env)
+// Buckets configuration
 const RESOURCES_BUCKET = process.env.SUPABASE_RESOURCES_BUCKET || "resources";
 const COVERS_BUCKET = process.env.SUPABASE_COVERS_BUCKET || "covers";
 const EDITOR_BUCKET = process.env.SUPABASE_EDITOR_BUCKET || "editor";
 
-// Helpers
+// --- HELPERS ---
+
 function sanitizeFilename(filename) {
   return filename.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_\-\.]/g, "");
 }
-function makeKey(prefix, originalName) {
+
+function makeKey(originalName, folderPrefix = "") {
   const ext = path.extname(originalName) || "";
   const base = path.basename(originalName, ext);
-  const name = sanitizeFilename(base).slice(0, 100);
+  const name = sanitizeFilename(base).slice(0, 100) || "file";
   const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  return `${prefix}/${name}-${unique}${ext}`;
+  return folderPrefix ? `${folderPrefix}/${name}-${unique}${ext}` : `${name}-${unique}${ext}`;
 }
 
 async function uploadBufferToSupabase(buffer, bucket, destinationPath, contentType) {
-  // supabase-js upload accepts Buffer
   const { data, error } = await supabase.storage.from(bucket).upload(destinationPath, buffer, {
     contentType,
     cacheControl: "3600",
     upsert: false
   });
   if (error) throw error;
-  // get public url
+
   const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(destinationPath);
   return {
     path: data?.path || destinationPath,
     publicUrl: publicData?.publicUrl || `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(destinationPath)}`
   };
+}
+
+export async function deleteSupabaseFile(bucket, key) {
+  if (!bucket || !key) return;
+  try {
+    await supabase.storage.from(bucket).remove([key]);
+  } catch (e) {
+    console.warn("deleteSupabaseFile error:", e);
+  }
 }
 
 function parseListField(v) {
@@ -51,15 +63,15 @@ function parseListField(v) {
     const parsed = JSON.parse(v);
     if (Array.isArray(parsed)) return parsed.map(String).map(s => s.trim()).filter(Boolean);
   } catch (e) {
-    // not JSON
+    // not valid JSON string
   }
-  return v.split(",").map(s => s.trim()).filter(Boolean);
+  return String(v).split(",").map(s => s.trim()).filter(Boolean);
 }
 
 function parseBool(v, fallback = false) {
   if (typeof v === "boolean") return v;
   if (typeof v === "string") {
-    return ["1","true","on","yes"].includes(v.toLowerCase());
+    return ["1", "true", "on", "yes"].includes(v.toLowerCase());
   }
   return fallback;
 }
@@ -69,25 +81,68 @@ function parseIntSafe(v) {
   return Number.isFinite(n) ? n : 0;
 }
 
-function buildPublicFileUrlFromSupabase(bucket, key, publicUrl) {
-  if (publicUrl) return publicUrl;
-  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(key)}`;
+// Single file upload worker helper
+async function processIncomingFile(f, targetBucket, cleanupTracker = []) {
+  if (!f) return null;
+
+  // Already uploaded by upstream middleware
+  if (f.bucket && f.key) {
+    const url = f.publicUrl || `${SUPABASE_URL}/storage/v1/object/public/${f.bucket}/${encodeURIComponent(f.key)}`;
+    return {
+      name: f.originalname || f.name || "",
+      label: f.fieldname || f.label || "",
+      mimeType: f.mimetype || f.type || "",
+      size: f.size || 0,
+      url,
+      storageType: "supabase",
+      bucket: f.bucket,
+      publicId: f.key,
+      fileId: f.key,
+      uploadedAt: new Date()
+    };
+  }
+
+  // Handle Multer memoryStorage Buffer
+  if (f.buffer && Buffer.isBuffer(f.buffer)) {
+    const key = makeKey(f.originalname || "file");
+    const { path: uploadedPath, publicUrl } = await uploadBufferToSupabase(f.buffer, targetBucket, key, f.mimetype || undefined);
+
+    cleanupTracker.push({ bucket: targetBucket, key: uploadedPath });
+
+    return {
+      name: f.originalname || f.name || "",
+      label: f.fieldname || f.label || "",
+      mimeType: f.mimetype || f.type || "",
+      size: f.size || f.buffer.length,
+      url: publicUrl,
+      storageType: "supabase",
+      bucket: targetBucket,
+      publicId: uploadedPath,
+      fileId: uploadedPath,
+      uploadedAt: new Date()
+    };
+  }
+
+  return null;
 }
 
+
+// --- CONTROLLER HANDLERS ---
+
 /**
- * Create a resource (multipart form upload)
- * Expects:
- * - mainFile (single) optional — multer memory storage provides req.file or req.files
- * - coverFile (single) optional — multer memory storage provides req.coverFile
- * - form fields as before
+ * Create a Resource
  */
 export async function createResource(req, res) {
+  const uploadedFilesToCleanup = [];
+
   try {
     const title = (req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 
+    // Review Point 1 & 2: Added resourceType and notebook-specific fields
     const resource = {
       title,
+      resourceType: req.body.resourceType || "textbook",
       subtitle: req.body.subtitle || "",
       authors: parseListField(req.body.authors || req.body.bookAuthor || ""),
       coauthors: parseListField(req.body.coauthors || req.body.bookCoAuthor || ""),
@@ -105,8 +160,14 @@ export async function createResource(req, res) {
       semester: req.body.semester || req.body.textbookSemester || req.body.notebookSemester || "",
       courseCode: req.body.courseCode || req.body.textbookCourseCode || "",
       courseTitle: req.body.courseTitle || req.body.textbookCourseTitle || "",
+
+      // Notebook-specific fields
+      course: req.body.course || req.body.notebookCourse || "",
+      week: req.body.week || req.body.notebookWeek || "",
+      lecturer: req.body.lecturer || req.body.notebookLecturer || "",
+
       contentHtml: sanitizeHtml(req.body.contentHtml || req.body.notebookContent || req.body.content || "", {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
+        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
         allowedAttributes: {
           ...sanitizeHtml.defaults.allowedAttributes,
           img: ['src', 'alt', 'width', 'height', 'style']
@@ -121,82 +182,43 @@ export async function createResource(req, res) {
       enableDownload: parseBool(req.body.enableDownload, true),
       published: parseBool(req.body.publishNow, req.body.publishNow === undefined ? (req.body.publishNowCheck === "on" || req.body.publishNowCheck === "true") : false),
       publishDate: null,
+      files: []
     };
 
-    // Attach main uploaded file(s)
-    resource.files = [];
+    // Review Point 3 & 4: Strictly separate main files from cover image
+    let mainFilesCandidates = [];
+    let coverFileCandidate = req.coverFile || null;
 
-    // Helper to consume a multer file (memory or pre-uploaded)
-    async function processIncomingFile(f, targetBucketPrefix = RESOURCES_BUCKET) {
-      if (!f) return null;
-
-      // If middleware already uploaded to supabase and attached bucket/key/publicUrl, use it.
-      if (f.bucket && f.key) {
-        const url = f.publicUrl || buildPublicFileUrlFromSupabase(f.bucket, f.key);
-        return {
-          name: f.originalname || f.name || "",
-          label: f.fieldname || f.label || "",
-          mimeType: f.mimetype || f.type || "",
-          size: f.size || 0,
-          url,
-          storageType: "supabase",
-          bucket: f.bucket,
-          publicId: f.key,
-          fileId: f.key,
-          uploadedAt: new Date()
-        };
-      }
-
-      // Expect buffer (multer memoryStorage)
-      if (f.buffer && Buffer.isBuffer(f.buffer)) {
-        // destination key
-        const key = makeKey(targetBucketPrefix, f.originalname || f.name || "file");
-        const { path: uploadedPath, publicUrl } = await uploadBufferToSupabase(f.buffer, targetBucketPrefix, key, f.mimetype || undefined);
-        return {
-          name: f.originalname || f.name || "",
-          label: f.fieldname || f.label || "",
-          mimeType: f.mimetype || f.type || "",
-          size: f.size || (f.buffer ? f.buffer.length : 0),
-          url: publicUrl,
-          storageType: "supabase",
-          bucket: targetBucketPrefix,
-          publicId: uploadedPath,
-          fileId: uploadedPath,
-          uploadedAt: new Date()
-        };
-      }
-
-      // fallback: cannot handle
-      return null;
-    }
-
-    // Single main file (req.file) preferred; else check req.files arrays
     if (req.file) {
-      const fileObj = await processIncomingFile(req.file, RESOURCES_BUCKET);
-      if (fileObj) resource.files.push(fileObj);
-    } else if (req.files && Array.isArray(req.files) && req.files.length) {
+      if (req.file.fieldname === "coverFile") coverFileCandidate = req.file;
+      else mainFilesCandidates.push(req.file);
+    } else if (Array.isArray(req.files)) {
       for (const f of req.files) {
-        const fo = await processIncomingFile(f, RESOURCES_BUCKET);
-        if (fo) resource.files.push(fo);
+        if (f.fieldname === "coverFile") coverFileCandidate = f;
+        else mainFilesCandidates.push(f);
       }
     } else if (req.files && typeof req.files === "object") {
-      // multer may provide keyed object: { mainFile: [..], other: [..] }
-      const arr = Object.values(req.files).flat();
-      for (const f of arr) {
-        const targetBucket = (f.fieldname === "coverFile") ? COVERS_BUCKET : RESOURCES_BUCKET;
-        const fo = await processIncomingFile(f, targetBucket);
-        if (fo) resource.files.push(fo);
+      if (req.files.coverFile && req.files.coverFile.length > 0) {
+        coverFileCandidate = req.files.coverFile[0];
+      }
+      for (const key of Object.keys(req.files)) {
+        if (key !== "coverFile" && Array.isArray(req.files[key])) {
+          mainFilesCandidates.push(...req.files[key]);
+        }
       }
     }
 
-    // Attach cover file (req.coverFile or req.files.coverFile[0])
-    let coverFileCandidate = null;
-    if (req.coverFile) coverFileCandidate = req.coverFile;
-    else if (req.files && req.files.coverFile && Array.isArray(req.files.coverFile)) coverFileCandidate = req.files.coverFile[0];
-    else if (req.files && typeof req.files === "object" && req.files.coverFile) coverFileCandidate = req.files.coverFile[0];
+    // Process main files in parallel
+    if (mainFilesCandidates.length > 0) {
+      const processedFiles = await Promise.all(
+        mainFilesCandidates.map(f => processIncomingFile(f, RESOURCES_BUCKET, uploadedFilesToCleanup))
+      );
+      resource.files = processedFiles.filter(Boolean);
+    }
 
+    // Process cover file separately
     if (coverFileCandidate) {
-      const coverObj = await processIncomingFile(coverFileCandidate, COVERS_BUCKET);
+      const coverObj = await processIncomingFile(coverFileCandidate, COVERS_BUCKET, uploadedFilesToCleanup);
       if (coverObj) {
         resource.cover = {
           url: coverObj.url,
@@ -209,24 +231,200 @@ export async function createResource(req, res) {
       }
     }
 
+    // Review Point 8: Add validation requirements
+    if (resource.resourceType === "textbook" && resource.files.length === 0) {
+      await cleanupUploadedFiles(uploadedFilesToCleanup);
+      return res.status(400).json({ error: "A textbook requires at least one file attachment." });
+    }
+
+    if (resource.resourceType === "notebook" && !resource.contentHtml && resource.files.length === 0) {
+      await cleanupUploadedFiles(uploadedFilesToCleanup);
+      return res.status(400).json({ error: "Notebook content or attached document is required." });
+    }
+
     if (resource.published) resource.publishDate = new Date();
     if (req.user && req.user._id) resource.uploader = req.user._id;
 
     const doc = await Resources.create(resource);
     return res.status(201).json({ success: true, resource: doc });
+
   } catch (err) {
     console.error("createResource error:", err);
+    await cleanupUploadedFiles(uploadedFilesToCleanup);
     return res.status(500).json({ error: err.message || "Server error" });
   }
 }
 
+/**
+ * Update an existing Resource (Review Points 5 & 6)
+ */
+export async function updateResource(req, res) {
+  const uploadedFilesToCleanup = [];
+
+  try {
+    const { id } = req.params;
+    const resourceDoc = await Resources.findById(id);
+
+    if (!resourceDoc) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+
+    // Update simple fields
+    if (req.body.title) resourceDoc.title = req.body.title.trim();
+    if (req.body.resourceType) resourceDoc.resourceType = req.body.resourceType;
+    if (req.body.subtitle !== undefined) resourceDoc.subtitle = req.body.subtitle;
+    if (req.body.course !== undefined) resourceDoc.course = req.body.course;
+    if (req.body.week !== undefined) resourceDoc.week = req.body.week;
+    if (req.body.lecturer !== undefined) resourceDoc.lecturer = req.body.lecturer;
+    if (req.body.courseCode !== undefined) resourceDoc.courseCode = req.body.courseCode;
+    if (req.body.courseTitle !== undefined) resourceDoc.courseTitle = req.body.courseTitle;
+    if (req.body.contentHtml !== undefined) {
+      resourceDoc.contentHtml = sanitizeHtml(req.body.contentHtml, {
+        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+        allowedAttributes: {
+          ...sanitizeHtml.defaults.allowedAttributes,
+          img: ['src', 'alt', 'width', 'height', 'style']
+        }
+      });
+    }
+
+    // Separate main files and cover file from request
+    let mainFilesCandidates = [];
+    let coverFileCandidate = req.coverFile || null;
+
+    if (req.file) {
+      if (req.file.fieldname === "coverFile") coverFileCandidate = req.file;
+      else mainFilesCandidates.push(req.file);
+    } else if (req.files) {
+      if (Array.isArray(req.files)) {
+        for (const f of req.files) {
+          if (f.fieldname === "coverFile") coverFileCandidate = f;
+          else mainFilesCandidates.push(f);
+        }
+      } else if (typeof req.files === "object") {
+        if (req.files.coverFile && req.files.coverFile.length > 0) {
+          coverFileCandidate = req.files.coverFile[0];
+        }
+        for (const key of Object.keys(req.files)) {
+          if (key !== "coverFile" && Array.isArray(req.files[key])) {
+            mainFilesCandidates.push(...req.files[key]);
+          }
+        }
+      }
+    }
+
+    // Review Point 5 & 6: Upload new main files and delete old ones if replaced
+    if (mainFilesCandidates.length > 0) {
+      const newFiles = await Promise.all(
+        mainFilesCandidates.map(f => processIncomingFile(f, RESOURCES_BUCKET, uploadedFilesToCleanup))
+      );
+      const validNewFiles = newFiles.filter(Boolean);
+
+      if (validNewFiles.length > 0) {
+        // Delete old files from Supabase if replacing entirely
+        if (req.body.replaceFiles === "true" && resourceDoc.files && resourceDoc.files.length > 0) {
+          for (const oldFile of resourceDoc.files) {
+            if (oldFile.bucket && oldFile.publicId) {
+              await deleteSupabaseFile(oldFile.bucket, oldFile.publicId);
+            }
+          }
+          resourceDoc.files = validNewFiles;
+        } else {
+          // Append new files
+          resourceDoc.files.push(...validNewFiles);
+        }
+      }
+    }
+
+    // Review Point 5 & 6: Handle cover image replacement and delete old cover from Supabase
+    if (coverFileCandidate) {
+      const coverObj = await processIncomingFile(coverFileCandidate, COVERS_BUCKET, uploadedFilesToCleanup);
+      if (coverObj) {
+        if (resourceDoc.cover && resourceDoc.cover.bucket && resourceDoc.cover.publicId) {
+          await deleteSupabaseFile(resourceDoc.cover.bucket, resourceDoc.cover.publicId);
+        }
+
+        resourceDoc.cover = {
+          url: coverObj.url,
+          mimeType: coverObj.mimeType,
+          size: coverObj.size,
+          storageType: "supabase",
+          bucket: coverObj.bucket,
+          publicId: coverObj.publicId
+        };
+      }
+    }
+
+    await resourceDoc.save();
+    return res.json({ success: true, resource: resourceDoc });
+
+  } catch (err) {
+    console.error("updateResource error:", err);
+    await cleanupUploadedFiles(uploadedFilesToCleanup);
+    return res.status(500).json({ error: err.message || "Server error" });
+  }
+}
+
+/**
+ * Get and Search Resources (Review Point 9)
+ */
+export async function getResources(req, res) {
+  try {
+    const { q, resourceType, faculty, department, level, page = 1, limit = 20 } = req.query;
+    const filter = {};
+
+    if (resourceType) filter.resourceType = resourceType;
+    if (faculty) filter.faculty = faculty;
+    if (department) filter.department = department;
+    if (level) filter.level = level;
+
+    // Review Point 9: Support notebook fields in search query
+    if (q) {
+      const searchRegex = new RegExp(q.trim(), "i");
+      filter.$or = [
+        { title: searchRegex },
+        { subtitle: searchRegex },
+        { authors: searchRegex },
+        { coauthors: searchRegex },
+        { courseCode: searchRegex },
+        { courseTitle: searchRegex },
+        { course: searchRegex },        // Notebook course field
+        { lecturer: searchRegex },      // Notebook lecturer field
+        { tags: searchRegex },
+        { publisher: searchRegex }
+      ];
+    }
+
+    const skip = (parseInt(page, 10) - 1) * parseInt(limit, 10);
+    const [resources, total] = await Promise.all([
+      Resources.find(filter).sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit, 10)),
+      Resources.countDocuments(filter)
+    ]);
+
+    return res.json({
+      success: true,
+      resources,
+      pagination: {
+        total,
+        page: parseInt(page, 10),
+        pages: Math.ceil(total / parseInt(limit, 10))
+      }
+    });
+  } catch (err) {
+    console.error("getResources error:", err);
+    return res.status(500).json({ error: err.message || "Server error" });
+  }
+}
+
+/**
+ * Upload image from rich editor
+ */
 export async function uploadEditorImage(req, res) {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
-    // If middleware already uploaded to Supabase
     if (req.file.bucket && req.file.key) {
-      const publicUrl = req.file.publicUrl || buildPublicFileUrlFromSupabase(req.file.bucket, req.file.key);
+      const publicUrl = req.file.publicUrl || `${SUPABASE_URL}/storage/v1/object/public/${req.file.bucket}/${encodeURIComponent(req.file.key)}`;
       return res.json({ success: true, url: publicUrl });
     }
 
@@ -234,8 +432,8 @@ export async function uploadEditorImage(req, res) {
       return res.status(400).json({ error: "Invalid editor file payload" });
     }
 
-    const key = makeKey("editor", req.file.originalname || "editor-image");
-    const { path: uploadedPath, publicUrl } = await uploadBufferToSupabase(req.file.buffer, EDITOR_BUCKET, key, req.file.mimetype || undefined);
+    const key = makeKey(req.file.originalname || "editor-image", "editor");
+    const { publicUrl } = await uploadBufferToSupabase(req.file.buffer, EDITOR_BUCKET, key, req.file.mimetype || undefined);
 
     return res.json({ success: true, url: publicUrl });
   } catch (err) {
@@ -244,13 +442,13 @@ export async function uploadEditorImage(req, res) {
   }
 }
 
-/* Expose helper to delete files from Supabase (used by routes) */
-export async function deleteSupabaseFile(bucket, key) {
-  if (!bucket || !key) return;
-  try {
-    await supabase.storage.from(bucket).remove([key]);
-  } catch (e) {
-    // don't throw — best-effort
-    console.warn("deleteSupabaseFile error", e);
+/**
+ * Helper to cleanup storage if database save fails
+ */
+async function cleanupUploadedFiles(filesArray) {
+  if (filesArray && filesArray.length > 0) {
+    await Promise.all(
+      filesArray.map(item => deleteSupabaseFile(item.bucket, item.key))
+    );
   }
 }
