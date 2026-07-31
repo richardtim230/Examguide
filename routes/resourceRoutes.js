@@ -56,22 +56,33 @@ const upload = multer({
   limits: { fileSize: MAX_RESOURCE_SIZE }
 });
 async function refreshResourceStats(resourceId) {
-  const total = await ResourceChapter.countDocuments({
-    resource: resourceId
-  });
+  const total = await ResourceChapter.countDocuments({ resource: resourceId });
+  const lastChapter = await ResourceChapter.findOne({ resource: resourceId }).sort({ chapterNumber: -1 }).select("chapterNumber").lean();
+  const lastChapterNumber = lastChapter ? lastChapter.chapterNumber : 0;
+  const totalWordsAgg = await ResourceChapter.aggregate([
+    { $match: { resource: mongoose.Types.ObjectId(resourceId) } },
+    { $group: { _id: null, words: { $sum: "$wordCount" } } }
+  ]);
+  const totalWords = (totalWordsAgg[0] && totalWordsAgg[0].words) || 0;
+  await Resources.findByIdAndUpdate(resourceId, { totalChapters: total, lastChapterNumber, totalWords }).catch(()=>{});
+}
 
-  const lastChapter = await ResourceChapter.findOne({
-    resource: resourceId
-  })
-    .sort({ chapterNumber: -1 })
-    .select("chapterNumber")
-    .lean();
+const BookmarkSchema = new mongoose.Schema({
+  resource: { type: mongoose.Schema.Types.ObjectId, ref: "Resources", required: true, index: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  createdAt: { type: Date, default: Date.now }
+}, { timestamps: true });
+const Bookmark = mongoose.models.Bookmark || mongoose.model("Bookmark", BookmarkSchema);
 
-  await Resources.findByIdAndUpdate(resourceId, {
-    totalChapters: total,
-    lastChapterNumber: lastChapter ? lastChapter.chapterNumber : 0
-  });
-  }
+const ProgressSchema = new mongoose.Schema({
+  resource: { type: mongoose.Schema.Types.ObjectId, ref: "Resources", required: true, index: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  chapter: { type: mongoose.Schema.Types.ObjectId, ref: "ResourceChapter", default: null },
+  page: { type: Number, default: 1 },
+  updatedAt: { type: Date, default: Date.now }
+}, { timestamps: true });
+const Progress = mongoose.models.ReaderProgress || mongoose.model("ReaderProgress", ProgressSchema);
+
 async function removeFilesSafely(files = []) {
   if (!files) return;
   const arr = Array.isArray(files) ? files : [files];
