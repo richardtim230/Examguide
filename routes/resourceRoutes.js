@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs/promises";
 import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
+import ResourceChapter from "../models/ResourceChapter.js";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 
