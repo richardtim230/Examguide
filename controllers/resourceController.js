@@ -3,7 +3,6 @@ import path from "path";
 import sanitizeHtml from "sanitize-html";
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase client initialization
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
 
@@ -13,12 +12,9 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
-// Buckets configuration
 const RESOURCES_BUCKET = process.env.SUPABASE_RESOURCES_BUCKET || "resources";
 const COVERS_BUCKET = process.env.SUPABASE_COVERS_BUCKET || "covers";
 const EDITOR_BUCKET = process.env.SUPABASE_EDITOR_BUCKET || "editor";
-
-// --- HELPERS ---
 
 function sanitizeFilename(filename) {
   return filename.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_\-\.]/g, "");
@@ -63,7 +59,6 @@ function parseListField(v) {
     const parsed = JSON.parse(v);
     if (Array.isArray(parsed)) return parsed.map(String).map(s => s.trim()).filter(Boolean);
   } catch (e) {
-    // not valid JSON string
   }
   return String(v).split(",").map(s => s.trim()).filter(Boolean);
 }
@@ -81,11 +76,9 @@ function parseIntSafe(v) {
   return Number.isFinite(n) ? n : 0;
 }
 
-// Single file upload worker helper
 async function processIncomingFile(f, targetBucket, cleanupTracker = []) {
   if (!f) return null;
 
-  // Already uploaded by upstream middleware
   if (f.bucket && f.key) {
     const url = f.publicUrl || `${SUPABASE_URL}/storage/v1/object/public/${f.bucket}/${encodeURIComponent(f.key)}`;
     return {
@@ -102,7 +95,6 @@ async function processIncomingFile(f, targetBucket, cleanupTracker = []) {
     };
   }
 
-  // Handle Multer memoryStorage Buffer
   if (f.buffer && Buffer.isBuffer(f.buffer)) {
     const key = makeKey(f.originalname || "file");
     const { path: uploadedPath, publicUrl } = await uploadBufferToSupabase(f.buffer, targetBucket, key, f.mimetype || undefined);
@@ -126,12 +118,6 @@ async function processIncomingFile(f, targetBucket, cleanupTracker = []) {
   return null;
 }
 
-
-// --- CONTROLLER HANDLERS ---
-
-/**
- * Create a Resource
- */
 export async function createResource(req, res) {
   const uploadedFilesToCleanup = [];
 
@@ -139,7 +125,6 @@ export async function createResource(req, res) {
     const title = (req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 
-    // Build resource object (note: removed contentHtml handling here per request)
     const resource = {
       title,
       resourceType: req.body.resourceType || "textbook",
@@ -160,13 +145,11 @@ export async function createResource(req, res) {
       semester: req.body.semester || req.body.textbookSemester || req.body.notebookSemester || "",
       courseCode: req.body.courseCode || req.body.textbookCourseCode || "",
       courseTitle: req.body.courseTitle || req.body.textbookCourseTitle || "",
-
-      // Notebook-specific fields (kept, but no chapter logic)
       course: req.body.course || req.body.notebookCourse || "",
       week: req.body.week || req.body.notebookWeek || "",
       lecturer: req.body.lecturer || req.body.notebookLecturer || "",
-
-      // Note: contentHtml removed from createResource payload per request.
+      description: (req.body.description || "").trim(),
+      introduction: (req.body.introduction || "").trim(),
       tags: parseListField(req.body.tags || req.body.tagInput || req.body.tagsJson || ""),
       copyrightHolder: req.body.copyrightHolder || "",
       licenseType: req.body.licenseType || req.body.copyrightLicense || "All Rights Reserved",
@@ -179,7 +162,6 @@ export async function createResource(req, res) {
       files: []
     };
 
-    // Separate main files and cover file from incoming request
     let mainFilesCandidates = [];
     let coverFileCandidate = req.coverFile || null;
 
@@ -202,7 +184,6 @@ export async function createResource(req, res) {
       }
     }
 
-    // Process main files in parallel
     if (mainFilesCandidates.length > 0) {
       const processedFiles = await Promise.all(
         mainFilesCandidates.map(f => processIncomingFile(f, RESOURCES_BUCKET, uploadedFilesToCleanup))
@@ -210,7 +191,6 @@ export async function createResource(req, res) {
       resource.files = processedFiles.filter(Boolean);
     }
 
-    // Process cover file separately
     if (coverFileCandidate) {
       const coverObj = await processIncomingFile(coverFileCandidate, COVERS_BUCKET, uploadedFilesToCleanup);
       if (coverObj) {
@@ -225,13 +205,10 @@ export async function createResource(req, res) {
       }
     }
 
-    // Validation: textbooks must have at least one file attached
     if (resource.resourceType === "textbook" && resource.files.length === 0) {
       await cleanupUploadedFiles(uploadedFilesToCleanup);
       return res.status(400).json({ error: "A textbook requires at least one file attachment." });
     }
-
-    // Note: Removed notebook-specific contentHtml requirement so notebooks are created without chapter logic
 
     if (resource.published) resource.publishDate = new Date();
     if (req.user && req.user._id) resource.uploader = req.user._id;
@@ -246,9 +223,6 @@ export async function createResource(req, res) {
   }
 }
 
-/**
- * Update an existing Resource (Review Points 5 & 6)
- */
 export async function updateResource(req, res) {
   const uploadedFilesToCleanup = [];
 
@@ -260,10 +234,15 @@ export async function updateResource(req, res) {
       return res.status(404).json({ error: "Resource not found" });
     }
 
-    // Update simple fields
     if (req.body.title) resourceDoc.title = req.body.title.trim();
     if (req.body.resourceType) resourceDoc.resourceType = req.body.resourceType;
     if (req.body.subtitle !== undefined) resourceDoc.subtitle = req.body.subtitle;
+    if (req.body.description !== undefined) {
+      resourceDoc.description = req.body.description.trim();
+    }
+    if (req.body.introduction !== undefined) {
+      resourceDoc.introduction = req.body.introduction.trim();
+    }
     if (req.body.course !== undefined) resourceDoc.course = req.body.course;
     if (req.body.week !== undefined) resourceDoc.week = req.body.week;
     if (req.body.lecturer !== undefined) resourceDoc.lecturer = req.body.lecturer;
@@ -279,7 +258,6 @@ export async function updateResource(req, res) {
       });
     }
 
-    // Separate main files and cover file from request
     let mainFilesCandidates = [];
     let coverFileCandidate = req.coverFile || null;
 
@@ -304,7 +282,6 @@ export async function updateResource(req, res) {
       }
     }
 
-    // Review Point 5 & 6: Upload new main files and delete old ones if replaced
     if (mainFilesCandidates.length > 0) {
       const newFiles = await Promise.all(
         mainFilesCandidates.map(f => processIncomingFile(f, RESOURCES_BUCKET, uploadedFilesToCleanup))
@@ -312,7 +289,6 @@ export async function updateResource(req, res) {
       const validNewFiles = newFiles.filter(Boolean);
 
       if (validNewFiles.length > 0) {
-        // Delete old files from Supabase if replacing entirely
         if (req.body.replaceFiles === "true" && resourceDoc.files && resourceDoc.files.length > 0) {
           for (const oldFile of resourceDoc.files) {
             if (oldFile.bucket && oldFile.publicId) {
@@ -321,13 +297,11 @@ export async function updateResource(req, res) {
           }
           resourceDoc.files = validNewFiles;
         } else {
-          // Append new files
           resourceDoc.files.push(...validNewFiles);
         }
       }
     }
 
-    // Review Point 5 & 6: Handle cover image replacement and delete old cover from Supabase
     if (coverFileCandidate) {
       const coverObj = await processIncomingFile(coverFileCandidate, COVERS_BUCKET, uploadedFilesToCleanup);
       if (coverObj) {
@@ -356,9 +330,6 @@ export async function updateResource(req, res) {
   }
 }
 
-/**
- * Get and Search Resources (Review Point 9)
- */
 export async function getResources(req, res) {
   try {
     const { q, resourceType, faculty, department, level, page = 1, limit = 20 } = req.query;
@@ -369,7 +340,6 @@ export async function getResources(req, res) {
     if (department) filter.department = department;
     if (level) filter.level = level;
 
-    // Review Point 9: Support notebook fields in search query
     if (q) {
       const searchRegex = new RegExp(q.trim(), "i");
       filter.$or = [
@@ -379,8 +349,8 @@ export async function getResources(req, res) {
         { coauthors: searchRegex },
         { courseCode: searchRegex },
         { courseTitle: searchRegex },
-        { course: searchRegex },        // Notebook course field
-        { lecturer: searchRegex },      // Notebook lecturer field
+        { course: searchRegex },
+        { lecturer: searchRegex },
         { tags: searchRegex },
         { publisher: searchRegex }
       ];
@@ -407,9 +377,6 @@ export async function getResources(req, res) {
   }
 }
 
-/**
- * Upload image from rich editor
- */
 export async function uploadEditorImage(req, res) {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
@@ -433,9 +400,6 @@ export async function uploadEditorImage(req, res) {
   }
 }
 
-/**
- * Helper to cleanup storage if database save fails
- */
 async function cleanupUploadedFiles(filesArray) {
   if (filesArray && filesArray.length > 0) {
     await Promise.all(
