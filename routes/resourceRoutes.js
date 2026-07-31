@@ -57,15 +57,40 @@ const upload = multer({
   limits: { fileSize: MAX_RESOURCE_SIZE }
 });
 async function refreshResourceStats(resourceId) {
-  const total = await ResourceChapter.countDocuments({ resource: resourceId });
-  const lastChapter = await ResourceChapter.findOne({ resource: resourceId }).sort({ chapterNumber: -1 }).select("chapterNumber").lean();
-  const lastChapterNumber = lastChapter ? lastChapter.chapterNumber : 0;
+  const total = await ResourceChapter.countDocuments({
+    resource: resourceId
+  });
+
+  const lastChapter = await ResourceChapter.findOne({
+    resource: resourceId
+  })
+    .sort({ chapterNumber: -1 })
+    .select("chapterNumber")
+    .lean();
+
   const totalWordsAgg = await ResourceChapter.aggregate([
-    { $match: { resource: mongoose.Types.ObjectId(resourceId) } },
-    { $group: { _id: null, words: { $sum: "$wordCount" } } }
+    {
+      $match: {
+        resource: new mongoose.Types.ObjectId(resourceId)
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        words: {
+          $sum: "$wordCount"
+        }
+      }
+    }
   ]);
-  const totalWords = (totalWordsAgg[0] && totalWordsAgg[0].words) || 0;
-  await Resources.findByIdAndUpdate(resourceId, { totalChapters: total, lastChapterNumber, totalWords }).catch(()=>{});
+
+  const totalWords = totalWordsAgg[0]?.words || 0;
+
+  await Resources.findByIdAndUpdate(resourceId, {
+    totalChapters: total,
+    lastChapterNumber: lastChapter?.chapterNumber || 0,
+    totalWords
+  });
 }
 
 const BookmarkSchema = new mongoose.Schema({
