@@ -161,3 +161,9 @@ export const editorUpload = multer({
   },
   fileFilter: imageFileFilter
 });
+// compatibility export for code that still imports uploadPaths
+export const uploadPaths = {
+  resources: RESOURCES_BUCKET,
+  covers: COVERS_BUCKET,
+  editor: EDITOR_BUCKET
+};
