@@ -139,7 +139,7 @@ export async function createResource(req, res) {
     const title = (req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 
-    // Review Point 1 & 2: Added resourceType and notebook-specific fields
+    // Build resource object (note: removed contentHtml handling here per request)
     const resource = {
       title,
       resourceType: req.body.resourceType || "textbook",
@@ -161,18 +161,12 @@ export async function createResource(req, res) {
       courseCode: req.body.courseCode || req.body.textbookCourseCode || "",
       courseTitle: req.body.courseTitle || req.body.textbookCourseTitle || "",
 
-      // Notebook-specific fields
+      // Notebook-specific fields (kept, but no chapter logic)
       course: req.body.course || req.body.notebookCourse || "",
       week: req.body.week || req.body.notebookWeek || "",
       lecturer: req.body.lecturer || req.body.notebookLecturer || "",
 
-      contentHtml: sanitizeHtml(req.body.contentHtml || req.body.notebookContent || req.body.content || "", {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        allowedAttributes: {
-          ...sanitizeHtml.defaults.allowedAttributes,
-          img: ['src', 'alt', 'width', 'height', 'style']
-        }
-      }),
+      // Note: contentHtml removed from createResource payload per request.
       tags: parseListField(req.body.tags || req.body.tagInput || req.body.tagsJson || ""),
       copyrightHolder: req.body.copyrightHolder || "",
       licenseType: req.body.licenseType || req.body.copyrightLicense || "All Rights Reserved",
@@ -185,7 +179,7 @@ export async function createResource(req, res) {
       files: []
     };
 
-    // Review Point 3 & 4: Strictly separate main files from cover image
+    // Separate main files and cover file from incoming request
     let mainFilesCandidates = [];
     let coverFileCandidate = req.coverFile || null;
 
@@ -231,16 +225,13 @@ export async function createResource(req, res) {
       }
     }
 
-    // Review Point 8: Add validation requirements
+    // Validation: textbooks must have at least one file attached
     if (resource.resourceType === "textbook" && resource.files.length === 0) {
       await cleanupUploadedFiles(uploadedFilesToCleanup);
       return res.status(400).json({ error: "A textbook requires at least one file attachment." });
     }
 
-    if (resource.resourceType === "notebook" && !resource.contentHtml && resource.files.length === 0) {
-      await cleanupUploadedFiles(uploadedFilesToCleanup);
-      return res.status(400).json({ error: "Notebook content or attached document is required." });
-    }
+    // Note: Removed notebook-specific contentHtml requirement so notebooks are created without chapter logic
 
     if (resource.published) resource.publishDate = new Date();
     if (req.user && req.user._id) resource.uploader = req.user._id;
