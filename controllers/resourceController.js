@@ -188,7 +188,7 @@ export async function createResource(req, res) {
 
     // === Resolve uploader robustly ===
     // Accept common shapes from auth middleware: req.user._id, req.user.id, req.user.sub, or req.user (string)
-    // Previously only admins could set req.body.uploader; per your request we accept req.body.uploader when the requester is authenticated (i.e., req.user exists).
+    // If the authenticated user is logged in, allow specifying req.body.uploader to create on behalf of someone else.
     let uploaderId = null;
     if (req.user) {
       if (req.user._id) uploaderId = req.user._id;
@@ -197,8 +197,10 @@ export async function createResource(req, res) {
       else if (typeof req.user === "string") uploaderId = req.user;
     }
 
-    // Allow authenticated user to provide explicit uploader (no admin-only restriction)
-    if (req.user && req.body.uploader) {
+    // Allow logged-in users to optionally provide an explicit uploader id in the request body.
+    // NOTE: This will accept the provided uploader value only when req.user exists (i.e., user is authenticated).
+    // If you want to restrict setting uploader to the authenticated user's id only, remove this override.
+    if (!uploaderId && req.user && req.body.uploader) {
       uploaderId = req.body.uploader;
     }
 
