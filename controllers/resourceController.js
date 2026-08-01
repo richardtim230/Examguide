@@ -16,6 +16,26 @@ const RESOURCES_BUCKET = process.env.SUPABASE_RESOURCES_BUCKET || "resources";
 const COVERS_BUCKET = process.env.SUPABASE_COVERS_BUCKET || "covers";
 const EDITOR_BUCKET = process.env.SUPABASE_EDITOR_BUCKET || "editor";
 
+// Story/Genre categories for notebooks
+const NOTEBOOK_CATEGORIES = [
+  "Science Fiction",
+  "Fantasy",
+  "Mystery",
+  "Romance",
+  "Thriller",
+  "Horror",
+  "Adventure",
+  "Drama",
+  "Historical Fiction",
+  "Biography",
+  "Self-Help",
+  "Education",
+  "Poetry",
+  "Short Stories",
+  "Memoirs",
+  "Other"
+];
+
 function sanitizeFilename(filename) {
   return filename.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_\-\.]/g, "");
 }
@@ -26,6 +46,46 @@ function makeKey(originalName, folderPrefix = "") {
   const name = sanitizeFilename(base).slice(0, 100) || "file";
   const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   return folderPrefix ? `${folderPrefix}/${name}-${unique}${ext}` : `${name}-${unique}${ext}`;
+}
+
+/**
+ * Generate a unique ISBN-13 for notebooks
+ * Format: 978-YYMM-RRRR-C where:
+ * YY = year, MM = month, RRRR = random, C = check digit
+ */
+function generateISBN13() {
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(-2);
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const random = Math.floor(Math.random() * 10000).toString().padStart(4, "0");
+  
+  // Base: 978 + YYMM + RRRR
+  const baseIsbn = `978${year}${month}${random}`;
+  
+  // Calculate check digit (ISBN-13 mod 10)
+  let sum = 0;
+  for (let i = 0; i < 12; i++) {
+    sum += parseInt(baseIsbn[i]) * (i % 2 === 0 ? 1 : 3);
+  }
+  const checkDigit = (10 - (sum % 10)) % 10;
+  
+  return `${baseIsbn}${checkDigit}`;
+}
+
+/**
+ * Generate ISBN-10 from ISBN-13
+ */
+function generateISBN10() {
+  const random = Math.floor(Math.random() * 1000000000).toString().padStart(9, "0");
+  
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(random[i]) * (10 - i);
+  }
+  const checkDigit = (11 - (sum % 11)) % 11;
+  const check = checkDigit === 10 ? "X" : checkDigit.toString();
+  
+  return `${random}${check}`;
 }
 
 async function uploadBufferToSupabase(buffer, bucket, destinationPath, contentType) {
@@ -125,20 +185,49 @@ export async function createResource(req, res) {
     const title = (req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 
+    const resourceType = req.body.resourceType || "textbook";
+    const isNotebook = resourceType === "notebook";
+
+    // For notebooks, auto-assign ISBN, publisher, and author
+    let isbn13 = req.body.isbn13 || "";
+    let isbn10 = req.body.isbn10 || "";
+    let publisher = req.body.publisher || req.body.bookPublisher || "";
+    let authors = parseListField(req.body.authors || req.body.bookAuthor || "");
+    let edition = req.body.edition || req.body.bookEdition || "";
+
+    if (isNotebook) {
+      // Auto-generate ISBNs for notebooks
+      if (!isbn13) isbn13 = generateISBN13();
+      if (!isbn10) isbn10 = generateISBN10();
+
+      // Set uploader as publisher and author
+      if (req.user) {
+        publisher = req.user.fullname || req.user.username || "Author";
+        if (!authors.includes(publisher)) {
+          authors = [publisher, ...authors];
+        }
+      }
+
+      // Set edition to "First Edition" if not provided
+      if (!edition) edition = "First Edition";
+    }
+
     const resource = {
       title,
-      resourceType: req.body.resourceType || "textbook",
+      resourceType,
       subtitle: req.body.subtitle || "",
-      authors: parseListField(req.body.authors || req.body.bookAuthor || ""),
-      coauthors: parseListField(req.body.coauthors || req.body.bookCoAuthor || ""),
-      publisher: req.body.publisher || req.body.bookPublisher || "",
-      edition: req.body.edition || req.body.bookEdition || "",
-      isbn10: req.body.isbn10 || "",
-      isbn13: req.body.isbn13 || "",
+      authors: isNotebook ? authors : parseListField(req.body.authors || req.body.bookAuthor || ""),
+      coauthors: isNotebook ? [] : parseListField(req.body.coauthors || req.body.bookCoAuthor || ""),
+      publisher,
+      edition,
+      isbn10,
+      isbn13,
       language: req.body.language || req.body.languageSelect || "English",
-      publicationYear: req.body.publicationYear || req.body.pubYearSelect || "",
-      pages: parseIntSafe(req.body.pages || req.body.bookPages),
-      format: req.body.format || req.body.formatSelect || "",
+      publicationYear: isNotebook 
+        ? new Date().getFullYear().toString() 
+        : (req.body.publicationYear || req.body.pubYearSelect || ""),
+      pages: isNotebook ? 0 : parseIntSafe(req.body.pages || req.body.bookPages),
+      format: req.body.format || req.body.formatSelect || (isNotebook ? "Notebook" : ""),
       faculty: req.body.faculty || req.body.textbookFaculty || req.body.notebookFaculty || "",
       department: req.body.department || req.body.textbookDept || req.body.notebookDept || "",
       level: req.body.level || req.body.textbookLevel || req.body.notebookLevel || "",
@@ -151,7 +240,10 @@ export async function createResource(req, res) {
       description: (req.body.description || "").trim(),
       introduction: (req.body.introduction || "").trim(),
       tags: parseListField(req.body.tags || req.body.tagInput || req.body.tagsJson || ""),
-      copyrightHolder: req.body.copyrightHolder || "",
+      category: isNotebook 
+        ? (req.body.category || req.body.notebookCategory || "Other")
+        : (req.body.category || ""),
+      copyrightHolder: req.body.copyrightHolder || (isNotebook && req.user ? req.user.fullname || req.user.username : ""),
       licenseType: req.body.licenseType || req.body.copyrightLicense || "All Rights Reserved",
       visibility: req.body.visibility || "public",
       allowPreview: parseBool(req.body.allowPreview, true),
@@ -159,7 +251,11 @@ export async function createResource(req, res) {
       enableDownload: parseBool(req.body.enableDownload, true),
       published: parseBool(req.body.publishNow, req.body.publishNow === undefined ? (req.body.publishNowCheck === "on" || req.body.publishNowCheck === "true") : false),
       publishDate: null,
-      files: []
+      files: [],
+      notesCount: 0, // Will be updated when chapters are added
+      totalChapters: 0,
+      lastChapterNumber: 0,
+      totalWords: 0
     };
 
     let mainFilesCandidates = [];
@@ -248,6 +344,7 @@ export async function updateResource(req, res) {
     if (req.body.lecturer !== undefined) resourceDoc.lecturer = req.body.lecturer;
     if (req.body.courseCode !== undefined) resourceDoc.courseCode = req.body.courseCode;
     if (req.body.courseTitle !== undefined) resourceDoc.courseTitle = req.body.courseTitle;
+    if (req.body.category !== undefined) resourceDoc.category = req.body.category;
     if (req.body.contentHtml !== undefined) {
       resourceDoc.contentHtml = sanitizeHtml(req.body.contentHtml, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -398,6 +495,13 @@ export async function uploadEditorImage(req, res) {
     console.error("uploadEditorImage error:", err);
     return res.status(500).json({ error: err.message || "Server error" });
   }
+}
+
+/**
+ * Export categories for frontend to use in dropdowns
+ */
+export function getNotebookCategories() {
+  return NOTEBOOK_CATEGORIES;
 }
 
 async function cleanupUploadedFiles(filesArray) {
