@@ -310,7 +310,7 @@ import cbtQuestionsRoutes from "./routes/cbtQuestions.js";
 const memStorage = multer.memoryStorage();
 import pastQuestionsRoute from "./routes/pastQuestion.js";
 const uploadToMemory = multer({ storage: memStorage });
-import { avatarUpload } from "../middleware/upload.js";
+import { avatarUpload } from "./middleware/upload.js";
 
 router.post(
   "/upload-avatar",
