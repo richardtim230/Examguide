@@ -255,7 +255,7 @@ router.post(
 router.post(
   "/users/upload-avatar",
   authenticate,
-  avatarUpload.single("avatar"),
+  avatarUpload.single("profilePic"),
   async (req, res) => {
     try {
       if (!req.file) {
