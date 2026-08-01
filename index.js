@@ -327,7 +327,7 @@ router.post(
       const user = await User.findByIdAndUpdate(
         req.user.id,
         {
-          profilePicture: req.file.publicUrl
+          profilePic: req.file.publicUrl
         },
         {
           new: true
