@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { avatarUpload } from "../middleware/upload.js";
-
+import CreditTransaction from "../models/CreditTransaction.js";
 
 
 export async function authenticate(req, res, next) {
@@ -418,7 +418,91 @@ router.put(
     }
   }
 );
+router.post(
+  "/:id/read",
+  authenticate,
+  async (req, res) => {
+    const session = await mongoose.startSession();
 
+    try {
+      session.startTransaction();
+
+      const resource = await Resources.findById(req.params.id).session(session);
+
+      if (!resource) {
+        await session.abortTransaction();
+        return res.status(404).json({
+          error: "Resource not found"
+        });
+      }
+
+      const reader = await User.findById(req.user.id).session(session);
+
+      const uploader = await User.findById(resource.uploader).session(session);
+
+      if (!reader || !uploader) {
+        await session.abortTransaction();
+        return res.status(404).json({
+          error: "User not found"
+        });
+      }
+
+      // Optional
+      if (reader._id.equals(uploader._id)) {
+        await session.commitTransaction();
+
+        return res.json({
+          success: true,
+          free: true
+        });
+      }
+
+      if (reader.creditPoints < 10) {
+        await session.abortTransaction();
+
+        return res.status(400).json({
+          error: "Insufficient credit points."
+        });
+      }
+
+      reader.creditPoints -= 10;
+
+      uploader.creditPoints += 5;
+
+      await reader.save({ session });
+
+      await uploader.save({ session });
+
+      await CreditTransaction.create([{
+        from: reader._id,
+        to: uploader._id,
+        resource: resource._id,
+        amount: 10,
+        uploaderReward: 5
+      }], { session });
+
+      await session.commitTransaction();
+
+      res.json({
+        success: true,
+        readerCredits: reader.creditPoints
+      });
+
+    } catch (err) {
+
+      await session.abortTransaction();
+
+      console.error(err);
+
+      res.status(500).json({
+        error: "Transaction failed."
+      });
+
+    } finally {
+      session.endSession();
+    }
+  }
+);
 router.delete("/:id", authenticate, async (req, res, next) => {
   try {
     const id = req.params.id;
