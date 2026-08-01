@@ -280,7 +280,7 @@ router.get("/", async (req, res) => {
 
   const [items, total] = await Promise.all([
     Resources.find(filter)
-      .populate("uploader", "fullName avatar faculty department level")
+      .populate("uploader", "fullname avatar faculty department level")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
@@ -297,7 +297,9 @@ router.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
-    const resource = await Resources.findById(id).lean();
+    const resource = await Resources.findById(id)
+      .populate("uploader", "fullname profilePic faculty department level username")
+      .lean();
     if (!resource) return res.status(404).json({ error: "Resource not found" });
     res.json({ success: true, resource });
   } catch (err) {
