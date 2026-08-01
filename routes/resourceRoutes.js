@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { createResource, uploadEditorImage, deleteSupabaseFile, getNotebookCategories } from "../controllers/resourceController.js";
+import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
 import ResourceChapter from "../models/ResourceChapter.js";
 import User from "../models/User.js";
@@ -117,8 +117,7 @@ async function refreshResourceStats(resourceId) {
   await Resources.findByIdAndUpdate(resourceId, {
     totalChapters: total,
     lastChapterNumber: lastChapter?.chapterNumber || 0,
-    totalWords,
-    pages: total // For notebooks, pages = number of chapters
+    totalWords
   });
 }
 
@@ -186,17 +185,6 @@ function multerMiddleware(fieldsSpec) {
     });
   };
 }
-
-// Get notebook categories
-router.get("/categories/notebook", async (req, res) => {
-  try {
-    const categories = getNotebookCategories();
-    res.json({ success: true, categories });
-  } catch (err) {
-    console.error("Error fetching categories:", err);
-    res.status(500).json({ error: "Failed to fetch categories" });
-  }
-});
 
 router.get("/users/:id", async (req, res) => {
   try {
@@ -292,7 +280,7 @@ router.get("/", async (req, res) => {
 
   const [items, total] = await Promise.all([
     Resources.find(filter)
-      .populate("uploader", "fullname profilePic faculty department level username")
+      .populate("uploader", "fullname avatar faculty department level")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
@@ -344,7 +332,7 @@ router.put(
         "edition", "isbn10", "isbn13", "language", "publicationYear", "pages",
         "format", "faculty", "department", "level", "semester", "courseCode",
         "courseTitle", "lecturer", "description", "introduction", "contentHtml",
-        "category", "copyrightHolder", "licenseType", "visibility", "allowPreview",
+        "copyrightHolder", "licenseType", "visibility", "allowPreview",
         "allowComments", "enableDownload", "published", "publishDate"
       ];
       fields.forEach(f => {
