@@ -723,7 +723,7 @@ router.post(
 
       // Deduct and reward
       reader.creditPoints -= 10;
-      uploader.creditPoints += 5;
+      uploader.points += 5;
 
       await reader.save({ session });
       await uploader.save({ session });
