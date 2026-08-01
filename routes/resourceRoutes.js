@@ -189,11 +189,46 @@ function multerMiddleware(fieldsSpec) {
 router.get("/users/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    if (!isValidId(id)) return res.status(400).json({ error: "Invalid user id" });
-    const user = await User.findById(id).select("fullName profilePicture faculty department level bio institution").lean();
-    if (!user) return res.status(404).json({ error: "User not found" });
-    res.json(user);
+
+    if (!isValidId(id)) {
+      return res.status(400).json({ error: "Invalid user id" });
+    }
+
+    const user = await User.findById(id)
+      .populate("institution", "name")
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .select(
+        "fullname profilePic faculty department level bio institution username"
+      )
+      .lean();
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({
+      _id: user._id,
+      fullName: user.fullname || "",
+      username: user.username || "",
+      profilePicture: user.profilePic || "",
+      faculty:
+        typeof user.faculty === "object"
+          ? user.faculty?.name || ""
+          : user.faculty || "",
+      department:
+        typeof user.department === "object"
+          ? user.department?.name || ""
+          : user.department || "",
+      institution:
+        typeof user.institution === "object"
+          ? user.institution?.name || ""
+          : user.institution || "",
+      level: user.level || "",
+      bio: user.bio || ""
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
