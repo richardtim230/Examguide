@@ -9,31 +9,33 @@ import User from "../models/User.js";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+
 export async function authenticate(req, res, next) {
-    try {
-        const auth = req.headers.authorization;
+  try {
+    const auth = req.headers.authorization;
 
-        if (!auth) {
-            return res.status(401).json({ message: "No token provided" });
-        }
-
-        const token = auth.split(" ")[1];
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const user = await User.findById(decoded.id || decoded._id);
-
-        if (!user) {
-            return res.status(401).json({ message: "User not found" });
-        }
-
-        req.user = user;
-
-        next();
-    } catch (err) {
-        return res.status(401).json({ message: "Invalid token" });
+    if (!auth) {
+      return res.status(401).json({ message: "No token provided" });
     }
-                }
+
+    const token = auth.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id || decoded._id);
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    req.user = user;
+
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+}
+
 function isValidId(id) {
   return mongoose.Types.ObjectId.isValid(String(id));
 }
@@ -220,7 +222,14 @@ router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.faculty) filter.faculty = req.query.faculty;
   if (req.query.department) filter.department = req.query.department;
-  if (req.query.uploader) filter.uploader = req.query.uploader;
+
+  if (req.query.uploader) {
+    if (!mongoose.Types.ObjectId.isValid(req.query.uploader)) {
+      return res.status(400).json({ error: "Invalid uploader id" });
+    }
+    filter.uploader = new mongoose.Types.ObjectId(req.query.uploader);
+  }
+
   if (req.query.published !== undefined) {
     filter.published = req.query.published === "true";
   }
@@ -231,6 +240,9 @@ router.get("/", async (req, res) => {
     { courseCode: new RegExp(q, "i") }
   ];
   const skip = (page - 1) * limit;
+
+  console.log("FILTER:", filter);
+
   const [items, total] = await Promise.all([
     Resources.find(filter)
       .populate("uploader", "fullName avatar faculty department level")
@@ -240,15 +252,22 @@ router.get("/", async (req, res) => {
       .lean(),
     Resources.countDocuments(filter)
   ]);
+
+  console.log("FOUND:", items.length);
+
   res.json({ items, total, page, limit });
 });
 
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ error: "Invalid id" });
-  const doc = await Resources.findById(id).lean();
-  if (!doc) return res.status(404).json({ error: "Not found" });
-  res.json({ resource: doc });
+router.get("/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
+    const resource = await Resources.findById(id).lean();
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+    res.json({ success: true, resource });
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.put(
@@ -258,27 +277,34 @@ router.put(
     { name: "mainFile", maxCount: 1 },
     { name: "coverFile", maxCount: 1 }
   ]),
-  async (req, res) => {
-    const id = req.params.id;
-    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
-      await removeFilesSafely([req.file, req.coverFile]);
-      return res.status(400).json({ error: "Invalid id" });
-    }
-    const doc = await Resources.findById(id);
-    if (!doc) {
-      await removeFilesSafely([req.file, req.coverFile]);
-      return res.status(404).json({ error: "Not found" });
-    }
-    const up = {};
-    const fields = ["title","subtitle","authors","coauthors","publisher","edition","isbn10","isbn13","language","publicationYear","pages","format","faculty","department","level","semester","courseCode","courseTitle","contentHtml","copyrightHolder","licenseType","visibility","allowPreview","allowComments","enableDownload","published"];
-    fields.forEach(f => {
-      if (typeof req.body[f] !== "undefined" && req.body[f] !== null) up[f] = req.body[f];
-    });
-    if (req.body.tags) {
-      try { up.tags = typeof req.body.tags === "string" ? JSON.parse(req.body.tags) : req.body.tags; } catch(e){ up.tags = req.body.tags; }
-    }
-
+  async (req, res, next) => {
     try {
+      const id = req.params.id;
+      if (!isValidId(id)) {
+        await removeFilesSafely([req.file, req.coverFile]);
+        return res.status(400).json({ error: "Invalid id" });
+      }
+      const doc = await Resources.findById(id);
+      if (!doc) {
+        await removeFilesSafely([req.file, req.coverFile]);
+        return res.status(404).json({ error: "Resource not found" });
+      }
+      const up = {};
+      const fields = [
+        "resourceType", "title", "subtitle", "authors", "coauthors", "publisher",
+        "edition", "isbn10", "isbn13", "language", "publicationYear", "pages",
+        "format", "faculty", "department", "level", "semester", "courseCode",
+        "courseTitle", "lecturer", "description", "introduction", "contentHtml",
+        "copyrightHolder", "licenseType", "visibility", "allowPreview",
+        "allowComments", "enableDownload", "published", "publishDate"
+      ];
+      fields.forEach(f => {
+        if (typeof req.body[f] !== "undefined" && req.body[f] !== null) up[f] = req.body[f];
+      });
+      if (req.body.tags) {
+        try { up.tags = typeof req.body.tags === "string" ? JSON.parse(req.body.tags) : req.body.tags; } catch (e) { up.tags = req.body.tags; }
+      }
+
       if (req.file) {
         const f = req.file;
         const fileObj = {
@@ -307,77 +333,51 @@ router.put(
           publicId: cf.key || cf.publicId || cf.fileId || null
         };
       }
-    } catch (e) {
-    }
 
-    Object.assign(doc, up);
-    await doc.save();
-    res.json({ success: true, resource: doc });
+      Object.assign(doc, up);
+      await doc.save();
+      res.json({ success: true, resource: doc });
+    } catch (err) {
+      await removeFilesSafely([req.file, req.coverFile]);
+      next(err);
+    }
   }
 );
 
-router.delete("/:id", authenticate, async (req, res) => {
-  const id = req.params.id;
-  if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ error: "Invalid id" });
-  const doc = await Resources.findById(id);
-  if (!doc) return res.status(404).json({ error: "Not found" });
-
-  const deleteOps = [];
-  if (Array.isArray(doc.files)) {
-    doc.files.forEach(f => {
-      if (f && f.storageType === "supabase" && f.bucket && (f.publicId || f.fileId)) {
-        deleteOps.push(deleteSupabaseFile(f.bucket, f.publicId || f.fileId));
-      } else if (f && f.url && typeof f.url === "string" && f.url.startsWith("/uploads/")) {
-        const p = path.join(process.cwd(), f.url.slice(1));
-        deleteOps.push(fs.unlink(p).catch(() => {}));
-      }
-    });
-  }
-  if (doc.cover && doc.cover.storageType === "supabase" && doc.cover.bucket && doc.cover.publicId) {
-    deleteOps.push(deleteSupabaseFile(doc.cover.bucket, doc.cover.publicId));
-  } else if (doc.cover && doc.cover.url && typeof doc.cover.url === "string" && doc.cover.url.startsWith("/uploads/")) {
-    deleteOps.push(fs.unlink(path.join(process.cwd(), doc.cover.url.slice(1))).catch(() => {}));
-  }
-
-  await Promise.all(deleteOps);
-  await Resources.deleteOne({ _id: id });
-  res.json({ success: true });
-});
-
-router.get("/:resourceId", async (req, res, next) => {
+router.delete("/:id", authenticate, async (req, res, next) => {
   try {
-    const id = req.params.resourceId;
+    const id = req.params.id;
     if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
-    const resource = await Resources.findById(id).lean();
-    if (!resource) return res.status(404).json({ error: "Resource not found" });
-    res.json({ success: true, resource });
-  } catch (err) { next(err); }
-});
+    const doc = await Resources.findById(id);
+    if (!doc) return res.status(404).json({ error: "Resource not found" });
 
-router.put("/:resourceId", authenticate, async (req, res, next) => {
-  try {
-    const id = req.params.resourceId;
-    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
-    const allowed = ["resourceType","title","subtitle","authors","coauthors","publisher","edition","isbn10","isbn13","language","publicationYear","pages","format","faculty","department","level","semester","courseCode","courseTitle","lecturer","description","introduction","files","cover","tags","visibility","allowPreview","enableDownload","published","publishDate"];
-    const update = {};
-    allowed.forEach(k => { if (typeof req.body[k] !== "undefined") update[k] = req.body[k]; });
-    const resource = await Resources.findByIdAndUpdate(id, update, { new: true, runValidators: true });
-    if (!resource) return res.status(404).json({ error: "Resource not found" });
-    res.json({ success: true, resource });
-  } catch (err) { next(err); }
-});
+    const deleteOps = [];
+    if (Array.isArray(doc.files)) {
+      doc.files.forEach(f => {
+        if (f && f.storageType === "supabase" && f.bucket && (f.publicId || f.fileId)) {
+          deleteOps.push(deleteSupabaseFile(f.bucket, f.publicId || f.fileId));
+        } else if (f && f.url && typeof f.url === "string" && f.url.startsWith("/uploads/")) {
+          const p = path.join(process.cwd(), f.url.slice(1));
+          deleteOps.push(fs.unlink(p).catch(() => {}));
+        }
+      });
+    }
+    if (doc.cover && doc.cover.storageType === "supabase" && doc.cover.bucket && doc.cover.publicId) {
+      deleteOps.push(deleteSupabaseFile(doc.cover.bucket, doc.cover.publicId));
+    } else if (doc.cover && doc.cover.url && typeof doc.cover.url === "string" && doc.cover.url.startsWith("/uploads/")) {
+      deleteOps.push(fs.unlink(path.join(process.cwd(), doc.cover.url.slice(1))).catch(() => {}));
+    }
 
-router.delete("/:resourceId", authenticate, async (req, res, next) => {
-  try {
-    const id = req.params.resourceId;
-    if (!isValidId(id)) return res.status(400).json({ error: "Invalid id" });
-    const resource = await Resources.findByIdAndDelete(id);
-    if (!resource) return res.status(404).json({ error: "Resource not found" });
-    await ResourceChapter.deleteMany({ resource: id }).catch(()=>{});
-    await Bookmark.deleteMany({ resource: id }).catch(()=>{});
-    await Progress.deleteMany({ resource: id }).catch(()=>{});
+    await Promise.all(deleteOps);
+    await Resources.deleteOne({ _id: id });
+    await ResourceChapter.deleteMany({ resource: id }).catch(() => {});
+    await Bookmark.deleteMany({ resource: id }).catch(() => {});
+    await Progress.deleteMany({ resource: id }).catch(() => {});
+
     res.json({ success: true, message: "Resource and related data removed", resourceId: id });
-  } catch (err) { next(err); }
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get("/:resourceId/chapters", async (req, res, next) => {
@@ -427,7 +427,7 @@ router.post("/:resourceId/chapters", authenticate, async (req, res, next) => {
   }
 });
 
-router.get("/resources/:resourceId/chapters/latest", async (req, res, next) => {
+router.get("/:resourceId/chapters/latest", async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
