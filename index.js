@@ -310,7 +310,44 @@ import cbtQuestionsRoutes from "./routes/cbtQuestions.js";
 const memStorage = multer.memoryStorage();
 import pastQuestionsRoute from "./routes/pastQuestion.js";
 const uploadToMemory = multer({ storage: memStorage });
+import { avatarUpload } from "../middleware/upload.js";
 
+router.post(
+  "/upload-avatar",
+  authMiddleware,
+  avatarUpload.single("avatar"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({
+          error: "Please upload an image."
+        });
+      }
+
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          profilePicture: req.file.publicUrl
+        },
+        {
+          new: true
+        }
+      ).select("-password");
+
+      res.json({
+        success: true,
+        message: "Profile picture updated successfully.",
+        profilePicture: req.file.publicUrl,
+        user
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Failed to upload profile picture."
+      });
+    }
+  }
+);
 const {
   MONGODB_URI,
   JWT_SECRET,
