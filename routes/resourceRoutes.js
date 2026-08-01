@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { createResource, uploadEditorImage, deleteSupabaseFile } from "../controllers/resourceController.js";
+import { createResource, uploadEditorImage, deleteSupabaseFile, getNotebookCategories } from "../controllers/resourceController.js";
 import Resources from "../models/Resources.js";
 import ResourceChapter from "../models/ResourceChapter.js";
 import User from "../models/User.js";
@@ -118,7 +118,7 @@ async function refreshResourceStats(resourceId) {
     totalChapters: total,
     lastChapterNumber: lastChapter?.chapterNumber || 0,
     totalWords,
-    pages: total
+    pages: total // For notebooks, pages = number of chapters
   });
 }
 
@@ -186,6 +186,17 @@ function multerMiddleware(fieldsSpec) {
     });
   };
 }
+
+// Get notebook categories
+router.get("/categories/notebook", async (req, res) => {
+  try {
+    const categories = getNotebookCategories();
+    res.json({ success: true, categories });
+  } catch (err) {
+    console.error("Error fetching categories:", err);
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
+});
 
 router.get("/users/:id", async (req, res) => {
   try {
@@ -256,11 +267,8 @@ router.get("/", async (req, res) => {
   const limit = Math.min(100, Math.max(1, parseInt(req.query.limit || "20", 10)));
   const q = req.query.q || "";
   const filter = {};
-  
   if (req.query.faculty) filter.faculty = req.query.faculty;
   if (req.query.department) filter.department = req.query.department;
-  if (req.query.category) filter.category = req.query.category;
-  if (req.query.resourceType) filter.resourceType = req.query.resourceType;
 
   if (req.query.uploader) {
     if (!mongoose.Types.ObjectId.isValid(req.query.uploader)) {
@@ -272,17 +280,12 @@ router.get("/", async (req, res) => {
   if (req.query.published !== undefined) {
     filter.published = req.query.published === "true";
   }
-
-  if (q) {
-    filter.$or = [
-      { title: new RegExp(q, "i") },
-      { subtitle: new RegExp(q, "i") },
-      { authors: new RegExp(q, "i") },
-      { courseCode: new RegExp(q, "i") },
-      { description: new RegExp(q, "i") }
-    ];
-  }
-
+  if (q) filter.$or = [
+    { title: new RegExp(q, "i") },
+    { subtitle: new RegExp(q, "i") },
+    { authors: new RegExp(q, "i") },
+    { courseCode: new RegExp(q, "i") }
+  ];
   const skip = (page - 1) * limit;
 
   console.log("FILTER:", filter);
@@ -340,9 +343,9 @@ router.put(
         "resourceType", "title", "subtitle", "authors", "coauthors", "publisher",
         "edition", "isbn10", "isbn13", "language", "publicationYear", "pages",
         "format", "faculty", "department", "level", "semester", "courseCode",
-        "courseTitle", "course", "week", "lecturer", "description", "introduction", 
-        "contentHtml", "category", "copyrightHolder", "licenseType", "visibility", 
-        "allowPreview", "allowComments", "enableDownload", "published", "publishDate"
+        "courseTitle", "lecturer", "description", "introduction", "contentHtml",
+        "category", "copyrightHolder", "licenseType", "visibility", "allowPreview",
+        "allowComments", "enableDownload", "published", "publishDate"
       ];
       fields.forEach(f => {
         if (typeof req.body[f] !== "undefined" && req.body[f] !== null) up[f] = req.body[f];
@@ -397,11 +400,6 @@ router.delete("/:id", authenticate, async (req, res, next) => {
     const doc = await Resources.findById(id);
     if (!doc) return res.status(404).json({ error: "Resource not found" });
 
-    // Verify ownership
-    if (doc.uploader.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ error: "You can only delete your own resources" });
-    }
-
     const deleteOps = [];
     if (Array.isArray(doc.files)) {
       doc.files.forEach(f => {
@@ -453,18 +451,12 @@ router.post("/:resourceId/chapters", authenticate, async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
-    const resource = await Resources.findById(resourceId).select("_id uploader");
+    const resource = await Resources.findById(resourceId).select("_id");
     if (!resource) return res.status(404).json({ error: "Resource not found" });
-
-    // Verify ownership
-    if (resource.uploader.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ error: "You can only add chapters to your own notebooks" });
-    }
-
     const payload = {
       resource: resourceId,
-      chapterNumber: req.body.chapterNumber || 1,
-      title: req.body.title || "Untitled Chapter",
+      chapterNumber: req.body.chapterNumber,
+      title: req.body.title,
       slug: req.body.slug || "",
       description: req.body.description || "",
       contentHtml: req.body.contentHtml || "",
@@ -513,18 +505,8 @@ router.put("/:resourceId/chapters/:chapterId", authenticate, async (req, res, ne
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
     if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
-    
-    const resource = await Resources.findById(resourceId).select("uploader");
-    if (!resource) return res.status(404).json({ error: "Resource not found" });
-
-    // Verify ownership
-    if (resource.uploader.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ error: "You can only edit chapters in your own notebooks" });
-    }
-
     const chapter = await ResourceChapter.findOne({ _id: chapterId, resource: resourceId });
     if (!chapter) return res.status(404).json({ error: "Chapter not found" });
-    
     const allowed = ["chapterNumber","title","slug","description","contentHtml","isLocked","allowComments","status","publishedAt","lastEditedBy"];
     allowed.forEach(k => { if (typeof req.body[k] !== "undefined") chapter[k] = req.body[k]; });
     await chapter.save();
@@ -541,18 +523,8 @@ router.delete("/:resourceId/chapters/:chapterId", authenticate, async (req, res,
     const resourceId = req.params.resourceId;
     const chapterId = req.params.chapterId;
     if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
-    
-    const resource = await Resources.findById(resourceId).select("uploader");
-    if (!resource) return res.status(404).json({ error: "Resource not found" });
-
-    // Verify ownership
-    if (resource.uploader.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ error: "You can only delete chapters from your own notebooks" });
-    }
-
     const chapter = await ResourceChapter.findOneAndDelete({ _id: chapterId, resource: resourceId });
     if (!chapter) return res.status(404).json({ error: "Chapter not found" });
-    
     const remaining = await ResourceChapter.find({ resource: resourceId }).sort({ chapterNumber: 1 }).lean();
     for (let i = 0; i < remaining.length; i++) {
       const desired = i + 1;
