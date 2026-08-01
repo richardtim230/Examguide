@@ -721,12 +721,21 @@ router.post(
         });
       }
 
-      // Deduct and reward
-      reader.creditPoints -= 10;
-      uploader.points += 5;
+      await User.updateOne(
+  { _id: reader._id },
+  {
+    $inc: { creditPoints: -10 }
+  },
+  { session }
+);
 
-      await reader.save({ session });
-      await uploader.save({ session });
+await User.updateOne(
+  { _id: uploader._id },
+  {
+    $inc: { points: 5 }
+  },
+  { session }
+);
 
       // Save permanent access
       await ReadAccess.create(
