@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { avatarUpload } from "../middleware/upload.js";
+import ReadAccess from "../models/ReadAccess.js";
 import CreditTransaction from "../models/CreditTransaction.js";
 
 
@@ -425,7 +426,7 @@ router.post(
     const session = await mongoose.startSession();
 
     try {
-      session.startTransaction();
+      await session.startTransaction();
 
       const resource = await Resources.findById(req.params.id).session(session);
 
@@ -447,7 +448,7 @@ router.post(
         });
       }
 
-      // Optional
+      // Uploader reads own resource for free
       if (reader._id.equals(uploader._id)) {
         await session.commitTransaction();
 
@@ -457,6 +458,23 @@ router.post(
         });
       }
 
+      // Has this user already paid?
+      const existingAccess = await ReadAccess.findOne({
+        user: reader._id,
+        resource: resource._id
+      }).session(session);
+
+      if (existingAccess) {
+        await session.commitTransaction();
+
+        return res.json({
+          success: true,
+          alreadyPaid: true,
+          readerCredits: reader.creditPoints
+        });
+      }
+
+      // Check balance
       if (reader.creditPoints < 10) {
         await session.abortTransaction();
 
@@ -465,26 +483,44 @@ router.post(
         });
       }
 
+      // Deduct and reward
       reader.creditPoints -= 10;
-
       uploader.creditPoints += 5;
 
       await reader.save({ session });
-
       await uploader.save({ session });
 
-      await CreditTransaction.create([{
-        from: reader._id,
-        to: uploader._id,
-        resource: resource._id,
-        amount: 10,
-        uploaderReward: 5
-      }], { session });
+      // Save permanent access
+      await ReadAccess.create(
+        [
+          {
+            user: reader._id,
+            resource: resource._id,
+            paidAt: new Date()
+          }
+        ],
+        { session }
+      );
+
+      // Save transaction history
+      await CreditTransaction.create(
+        [
+          {
+            from: reader._id,
+            to: uploader._id,
+            resource: resource._id,
+            amount: 10,
+            uploaderReward: 5
+          }
+        ],
+        { session }
+      );
 
       await session.commitTransaction();
 
       res.json({
         success: true,
+        alreadyPaid: false,
         readerCredits: reader.creditPoints
       });
 
@@ -499,7 +535,9 @@ router.post(
       });
 
     } finally {
-      session.endSession();
+
+      await session.endSession();
+
     }
   }
 );
