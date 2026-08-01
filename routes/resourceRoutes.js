@@ -419,6 +419,244 @@ router.put(
     }
   }
 );
+router.post("/:id/bookmark", authenticate, async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const resource = await Resources.findById(resourceId).select("_id");
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+
+    const existing = await Bookmark.findOne({ resource: resourceId, user: req.user._id });
+
+    if (existing) {
+      await Bookmark.deleteOne({ _id: existing._id });
+      return res.json({ success: true, bookmarked: false, message: "Bookmark removed" });
+    }
+
+    const bookmark = await Bookmark.create({
+      resource: resourceId,
+      user: req.user._id
+    });
+
+    res.json({ success: true, bookmarked: true, bookmark });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ error: "Resource already bookmarked" });
+    }
+    console.error("Bookmark toggle error:", err);
+    res.status(500).json({ error: "Failed to toggle bookmark" });
+  }
+});
+
+router.get("/:id/bookmark", authenticate, async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const [bookmark, bookmarkCount] = await Promise.all([
+      Bookmark.findOne({ resource: resourceId, user: req.user._id }).lean(),
+      Bookmark.countDocuments({ resource: resourceId })
+    ]);
+
+    res.json({
+      success: true,
+      bookmarked: !!bookmark,
+      bookmarkCount
+    });
+  } catch (err) {
+    console.error("Bookmark status error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.get("/user/bookmarks", authenticate, async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page || "1", 10));
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit || "20", 10)));
+    const skip = (page - 1) * limit;
+
+    const [bookmarks, total] = await Promise.all([
+      Bookmark.find({ user: req.user._id })
+        .populate({
+          path: "resource",
+          populate: { path: "uploader", select: "fullname profilePic faculty department level username" }
+        })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Bookmark.countDocuments({ user: req.user._id })
+    ]);
+
+    const items = bookmarks.map(b => b.resource).filter(Boolean);
+
+    res.json({ success: true, items, total, page, limit });
+  } catch (err) {
+    console.error("Fetch bookmarks error:", err);
+    res.status(500).json({ error: "Failed to fetch bookmarks" });
+  }
+});
+
+router.get("/:id/progress", authenticate, async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const progress = await Progress.findOne({ resource: resourceId, user: req.user._id })
+      .populate("chapter", "chapterNumber title")
+      .lean();
+
+    res.json({ success: true, progress: progress || null });
+  } catch (err) {
+    console.error("Get progress error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.post("/:id/progress", authenticate, async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const resource = await Resources.findById(resourceId).select("uploader").lean();
+    if (!resource) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+
+    const isOwner = String(resource.uploader) === String(req.user._id);
+    if (!isOwner) {
+      const access = await ReadAccess.findOne({
+        user: req.user._id,
+        resource: resourceId
+      }).lean();
+
+      if (!access) {
+        return res.status(403).json({ error: "You don't have access to this resource." });
+      }
+    }
+
+    const { chapterId, page } = req.body;
+
+    if (chapterId) {
+      if (!isValidId(chapterId)) {
+        return res.status(400).json({ error: "Invalid chapter id" });
+      }
+
+      const chapter = await ResourceChapter.findOne({
+        _id: chapterId,
+        resource: resourceId
+      }).lean();
+
+      if (!chapter) {
+        return res.status(404).json({ error: "Chapter not found for this resource" });
+      }
+    }
+
+    const progress = await Progress.findOneAndUpdate(
+      { resource: resourceId, user: req.user._id },
+      {
+        chapter: chapterId || null,
+        page: Number(page) || 1,
+        updatedAt: new Date()
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+
+    const populated = await Progress.findById(progress._id)
+      .populate("chapter", "chapterNumber title")
+      .lean();
+
+    res.json({ success: true, progress: populated });
+  } catch (err) {
+    console.error("Save progress error:", err);
+    res.status(500).json({ error: "Failed to update reading progress" });
+  }
+});
+
+router.get("/:id/read-status", authenticate, async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const resource = await Resources.findById(resourceId).select("uploader").lean();
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+
+    if (String(resource.uploader) === String(req.user._id)) {
+      return res.json({
+        success: true,
+        hasAccess: true,
+        isOwner: true,
+        paidAt: null
+      });
+    }
+
+    const access = await ReadAccess.findOne({
+      resource: resourceId,
+      user: req.user._id
+    }).lean();
+
+    res.json({
+      success: true,
+      hasAccess: !!access,
+      isOwner: false,
+      paidAt: access?.paidAt || null
+    });
+  } catch (err) {
+    console.error("Read status error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+router.get("/:id/read-access", authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!isValidId(id)) {
+      return res.status(400).json({
+        error: "Invalid resource id"
+      });
+    }
+
+    const resource = await Resources.findById(id)
+      .select("uploader")
+      .lean();
+
+    if (!resource) {
+      return res.status(404).json({
+        error: "Resource not found"
+      });
+    }
+
+    // Owner always has access
+    if (String(resource.uploader) === String(req.user._id)) {
+      return res.json({
+        success: true,
+        hasAccess: true,
+        owner: true,
+        alreadyPaid: false
+      });
+    }
+
+    const access = await ReadAccess.findOne({
+      user: req.user._id,
+      resource: id
+    }).lean();
+
+    res.json({
+      success: true,
+      hasAccess: !!access,
+      owner: false,
+      alreadyPaid: !!access
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: "Server error"
+    });
+  }
+});
 router.post(
   "/:id/read",
   authenticate,
