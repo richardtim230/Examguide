@@ -9,6 +9,9 @@ import User from "../models/User.js";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import { avatarUpload } from "../middleware/upload.js";
+
+
 
 export async function authenticate(req, res, next) {
   try {
@@ -249,7 +252,42 @@ router.post(
     }
   }
 );
+router.post(
+  "/users/upload-avatar",
+  authenticate,
+  avatarUpload.single("avatar"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({
+          error: "Please upload an image."
+        });
+      }
 
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          profilePic: req.file.publicUrl
+        },
+        {
+          new: true
+        }
+      ).select("-password");
+
+      res.json({
+        success: true,
+        message: "Profile picture updated successfully.",
+        profilePic: req.file.publicUrl,
+        user
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Failed to upload profile picture."
+      });
+    }
+  }
+);
 router.get("/", async (req, res) => {
   const page = Math.max(1, parseInt(req.query.page || "1", 10));
   const limit = Math.min(100, Math.max(1, parseInt(req.query.limit || "20", 10)));
