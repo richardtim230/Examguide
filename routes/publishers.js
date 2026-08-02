@@ -118,7 +118,7 @@ router.post("/register", async (req, res) => {
       bank: String(bank).trim() || undefined,
       accountNumber: accountNumber ? String(accountNumber).trim() : undefined,
       accountName: accountName ? String(accountName).trim() : undefined,
-      role: "pending_blogger",
+      role: "pending_publisher",
       approved: false
     });
 
@@ -144,7 +144,7 @@ router.get("/public", async (req, res) => {
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit || "20", 10)));
     const skip = (page - 1) * limit;
 
-    const q = { approved: true, role: { $in: ["blogger", "uploader", "pq-uploader"] } };
+    const q = { approved: true, role: { $in: ["blogger", "publisher", "uploader", "pq-uploader"] } };
 
     if (req.query.search) {
       const s = String(req.query.search).trim();
