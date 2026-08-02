@@ -231,7 +231,6 @@ router.get("/count", async (req, res) => {
   }
 });
 
-// PATCH user approval (e.g., pending_blogger -> blogger)
 router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
@@ -240,9 +239,13 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
 
     user.approved = approved;
 
-    // If user is a pending_blogger and is approved, update their role to blogger
-    if (user.role === "pending_blogger" && approved === true) {
-      user.role = "blogger";
+    // Promote pending roles upon approval
+    if (approved === true) {
+      if (user.role === "pending_blogger") {
+        user.role = "blogger";
+      } else if (user.role === "pending_publisher") {
+        user.role = "publisher";
+      }
     }
 
     await user.save();
@@ -251,6 +254,7 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
     res.status(500).json({ error: 'Could not update user approval.' });
   }
 });
+
 router.get("/me", authenticate, async (req, res) => {
   try {
     const user = await Users.findById(req.user.id)
