@@ -179,8 +179,13 @@ router.post(
 
             user.completedArticles.push(postId);
 
-const updatedUser = await awardTaskPoints(user, points);
-
+const updatedUser = await awardTaskPoints(user, points, {
+  key: `article:${post._id}`,
+  type: 'reading',
+  reason: `Completed article: ${post.title || post._id}`,
+  by: String(req.user.id),
+  arrayName: 'reading' // placing article rewards in reading array helps the history mapper
+});
 return res.json({
     success: true,
     pointsAwarded: points,
