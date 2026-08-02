@@ -65,10 +65,19 @@ async function completeManualTask(user, taskId) {
 router.patch("/complete", authenticate, async (req, res) => {
     try {
         const { type, id } = req.body;
+        let completionType = type;
+
+if (id === "daily_login") {
+    completionType = "daily_login";
+} else if (id === "profile_complete") {
+    completionType = "profile";
+} else if (typeof id === "string" && id.startsWith("article_")) {
+    completionType = "article";
+}
         const user = await reloadUser(req.user.id);
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        switch (type) {
+        switch (completionType) {
                 case "task": {
     const result = await completeManualTask(user, id);
 
@@ -86,6 +95,7 @@ router.patch("/complete", authenticate, async (req, res) => {
         totalCreditPoints: result.user.creditPoints
     });
                 }
+            case "login":
             case "daily_login": {
                 const today = todayString();
                 const existing = user.dailyTasks.find(d => d.date === today);
@@ -196,11 +206,15 @@ router.patch("/complete", authenticate, async (req, res) => {
             }
 
             case "article": {
-                if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-                    return res.status(400).json({ error: "Invalid article id" });
-                }
+    const articleId = id.replace("article_", "");
 
-                const post = await Post.findOne({ _id: id, status: "Published", rewardEnabled: true });
+    if (!mongoose.Types.ObjectId.isValid(articleId)) {
+        return res.status(400).json({
+            error: "Invalid article id"
+        });
+    }
+
+                const post = await Post.findOne({ _id: articleId, status: "Published", rewardEnabled: true });
                 if (!post) return res.status(404).json({ error: "Article not found" });
 
                 if ((user.completedArticles || []).some(p => String(p) === String(post._id))) {
