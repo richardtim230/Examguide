@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import Faculty from "../models/Faculty.js";
 import Department from "../models/Department.js";
 import crypto from "crypto";
+import CreditTransaction from "../models/CreditTransaction.js";
+import Withdrawal from "../models/Withdrawal.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
@@ -133,7 +135,217 @@ await Users.populate(usersToPopulate, [
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+// GET /api/users/:id/points-history
+// Returns unified paginated history of point gains/spends for the user.
+// Accessible by the user themselves or admin/superadmin.
+router.get("/:id/points-history", authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requester = req.user;
 
+    if (!requester) return res.status(401).json({ ok: false, message: "Unauthorized" });
+
+    // Authorization: only the owner or admins can see this history
+    if (String(requester.id) !== String(id) && !["admin", "superadmin"].includes(requester.role)) {
+      return res.status(403).json({ ok: false, message: "Forbidden" });
+    }
+
+    const page = Math.max(1, parseInt(req.query.page || "1", 10));
+    const limit = Math.max(1, Math.min(200, parseInt(req.query.limit || "50", 10)));
+    const typeFilter = req.query.type ? String(req.query.type).toLowerCase() : null;
+    const from = req.query.from ? new Date(req.query.from) : null;
+    const to = req.query.to ? new Date(req.query.to) : null;
+
+    const user = await Users.findById(id).select("rewardHistory points").lean();
+    if (!user) return res.status(404).json({ ok: false, message: "User not found" });
+
+    const rh = user.rewardHistory || {};
+    const entries = [];
+
+    const pushEntry = (obj) => entries.push(obj);
+
+    // practiced: [{ key, points, date }]
+    if (Array.isArray(rh.practiced)) {
+      for (const p of rh.practiced) {
+        pushEntry({
+          id: `practiced_${p.key || ''}_${p.date ? new Date(p.date).getTime() : Math.random()}`,
+          type: "practiced",
+          source: p.key || null,
+          points: Number(p.points || 0),
+          amount: null,
+          date: p.date ? new Date(p.date) : null,
+          meta: {}
+        });
+      }
+    }
+
+    // reading: [{ postId, points, date }]
+    if (Array.isArray(rh.reading)) {
+      for (const r of rh.reading) {
+        pushEntry({
+          id: `reading_${r.postId || ''}_${r.date ? new Date(r.date).getTime() : Math.random()}`,
+          type: "reading",
+          source: r.postId || null,
+          points: Number(r.points || 0),
+          amount: null,
+          date: r.date ? new Date(r.date) : null,
+          meta: {}
+        });
+      }
+    }
+
+    // bonus: [{ reason, points, date, by }]
+    if (Array.isArray(rh.bonus)) {
+      for (const b of rh.bonus) {
+        pushEntry({
+          id: `bonus_${(b.reason||'')}_${b.date ? new Date(b.date).getTime() : Math.random()}`,
+          type: "bonus",
+          source: b.reason || null,
+          points: Number(b.points || 0),
+          amount: null,
+          date: b.date ? new Date(b.date) : null,
+          meta: { by: b.by || null }
+        });
+      }
+    }
+
+    // admin: [{ reason, points, date, by }]
+    if (Array.isArray(rh.admin)) {
+      for (const a of rh.admin) {
+        pushEntry({
+          id: `admin_${(a.reason||'')}_${a.date ? new Date(a.date).getTime() : Math.random()}`,
+          type: "admin",
+          source: a.reason || null,
+          points: Number(a.points || 0),
+          amount: null,
+          date: a.date ? new Date(a.date) : null,
+          meta: { by: a.by || null }
+        });
+      }
+    }
+
+    // referrals: [{ referredUser, points, date }]
+    if (Array.isArray(rh.referrals)) {
+      for (const r of rh.referrals) {
+        pushEntry({
+          id: `referral_${(r.referredUser||'')}_${r.date ? new Date(r.date).getTime() : Math.random()}`,
+          type: "referral",
+          source: r.referredUser || null,
+          points: Number((r.points !== undefined) ? r.points : 10),
+          amount: null,
+          date: r.date ? new Date(r.date) : null,
+          meta: {}
+        });
+      }
+    }
+
+    // spent (optional in rewardHistory)
+    if (Array.isArray(rh.spent)) {
+      for (const s of rh.spent) {
+        pushEntry({
+          id: `spent_${(s.reason||'')}_${s.date ? new Date(s.date).getTime() : Math.random()}`,
+          type: "spent",
+          source: s.reason || null,
+          points: -Math.abs(Number(s.points || 0)),
+          amount: null,
+          date: s.date ? new Date(s.date) : null,
+          meta: {}
+        });
+      }
+    }
+
+    // Include CreditTransaction entries (money-based transactions)
+    try {
+      const ctQuery = {
+        $or: [
+          { from: id },
+          { to: id }
+        ]
+      };
+      const creditTx = await CreditTransaction.find(ctQuery).sort({ createdAt: -1 }).lean();
+      for (const tx of creditTx) {
+        const isIn = String(tx.to) === String(id);
+        pushEntry({
+          id: `ct_${tx._id}`,
+          type: "credit_transaction",
+          source: tx.resource || null,
+          points: null,
+          amount: typeof tx.amount === "number" ? tx.amount : (tx.uploaderReward || null),
+          date: tx.createdAt ? new Date(tx.createdAt) : null,
+          meta: {
+            direction: isIn ? "in" : "out",
+            uploaderReward: tx.uploaderReward || null,
+            rawType: tx.type || null,
+            from: tx.from || null,
+            to: tx.to || null
+          }
+        });
+      }
+    } catch (e) {
+      // ignore credit transaction errors
+      console.warn("points-history: CreditTransaction load failed", e && e.message);
+    }
+
+    // Include Withdrawals (payouts)
+    try {
+      const withdrawals = await Withdrawal.find({ user: id }).sort({ requestedAt: -1 }).lean();
+      for (const w of withdrawals) {
+        pushEntry({
+          id: `withdrawal_${w._id}`,
+          type: "withdrawal",
+          source: null,
+          points: null,
+          amount: typeof w.amount === "number" ? -Math.abs(w.amount) : null,
+          date: w.requestedAt ? new Date(w.requestedAt) : null,
+          meta: { status: w.status || null, accountNumber: w.accountNumber || null }
+        });
+      }
+    } catch (e) {
+      console.warn("points-history: Withdrawal load failed", e && e.message);
+    }
+
+    // Normalize, filter by type/date
+    const normalized = entries
+      .map(e => ({
+        id: e.id || `${e.type}_${Math.random().toString(36).slice(2,9)}`,
+        type: e.type,
+        source: e.source || null,
+        points: (typeof e.points === "number") ? e.points : null,
+        amount: (typeof e.amount === "number") ? e.amount : null,
+        date: e.date || null,
+        meta: e.meta || {}
+      }))
+      .filter(e => {
+        if (from && e.date && e.date < from) return false;
+        if (to && e.date && e.date > to) return false;
+        if (typeFilter && e.type !== typeFilter) return false;
+        return true;
+      });
+
+    // Sort: newest first (items without date go to the end)
+    normalized.sort((a, b) => {
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return b.date - a.date;
+    });
+
+    const total = normalized.length;
+    const pages = Math.ceil(total / limit) || 1;
+    const start = (page - 1) * limit;
+    const pageItems = normalized.slice(start, start + limit);
+
+    res.json({
+      ok: true,
+      meta: { total, page, limit, pages },
+      balance: typeof user.points === "number" ? user.points : 0,
+      data: pageItems
+    });
+  } catch (err) {
+    console.error("GET /api/users/:id/points-history error:", err);
+    res.status(500).json({ ok: false, message: err.message || "Server error" });
+  }
+});
 // POST /api/users/:studentId/activation-key (admin)
 router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
