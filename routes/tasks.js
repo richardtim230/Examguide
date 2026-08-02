@@ -447,17 +447,42 @@ router.post("/bulk", authenticate, async (req, res) => {
         });
 
         const filtered = merged.filter(task => {
-            if (status && task.status !== status) return false;
-            if (activityType && task.activityType !== activityType) return false;
-            return true;
-        });
+    if (status && task.status !== status) return false;
+    if (activityType && task.activityType !== activityType) return false;
+    return true;
+});
 
-        res.json(filtered.slice(0, 10));
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
+const filtered = merged.filter(task => {
+    if (status && task.status !== status) return false;
+    if (activityType && task.activityType !== activityType) return false;
+    return true;
+});
+
+// Return today's saved task list if it already exists
+if (
+    user.dailyTaskPool &&
+    user.dailyTaskPool.date === today &&
+    Array.isArray(user.dailyTaskPool.taskIds)
+) {
+    const todaysTasks = user.dailyTaskPool.taskIds
+        .map(id => filtered.find(task => String(task._id) === String(id)))
+        .filter(Boolean);
+
+    return res.json(todaysTasks);
+}
+
+// First request today: create today's task list
+const todaysTasks = filtered.slice(0, 10);
+
+// Save it
+await User.findByIdAndUpdate(user._id, {
+    dailyTaskPool: {
+        date: today,
+        taskIds: todaysTasks.map(task => String(task._id))
     }
 });
+
+return res.json(todaysTasks);
 
 
 // PATCH: Update a task (status, progress, etc.)
