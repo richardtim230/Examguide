@@ -69,6 +69,23 @@ router.patch("/complete", authenticate, async (req, res) => {
         if (!user) return res.status(404).json({ error: "User not found" });
 
         switch (type) {
+                case "task": {
+    const result = await completeManualTask(user, id);
+
+    if (!result.success) {
+        return res.status(result.status).json({
+            error: result.message
+        });
+    }
+
+    return res.json({
+        success: true,
+        message: result.message,
+        task: result.task,
+        totalPoints: result.user.points,
+        totalCreditPoints: result.user.creditPoints
+    });
+                }
             case "daily_login": {
                 const today = todayString();
                 const existing = user.dailyTasks.find(d => d.date === today);
