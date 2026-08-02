@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import Faculty from "../models/Faculty.js";
 import Department from "../models/Department.js";
 import crypto from "crypto";
+import Task from "../models/Task.js";
 import CreditTransaction from "../models/CreditTransaction.js";
 import Withdrawal from "../models/Withdrawal.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
@@ -152,10 +153,11 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
 
     const page = Math.max(1, parseInt(req.query.page || "1", 10));
     const limit = Math.max(1, Math.min(200, parseInt(req.query.limit || "50", 10)));
-    const typeFilter = req.query.type ? String(req.query.type).toLowerCase() : null;
+    const typeFilter = req.query.type ? String(req.query.type).toLowerCase() : null; // e.g. 'practiced','reading','task','withdrawal'
     const from = req.query.from ? new Date(req.query.from) : null;
     const to = req.query.to ? new Date(req.query.to) : null;
 
+    // Fetch the user reward history and points summary
     const user = await Users.findById(id).select("rewardHistory points").lean();
     if (!user) return res.status(404).json({ ok: false, message: "User not found" });
 
@@ -164,7 +166,7 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
 
     const pushEntry = (obj) => entries.push(obj);
 
-    // practiced: [{ key, points, date }]
+    // Map rewardHistory arrays into unified entries
     if (Array.isArray(rh.practiced)) {
       for (const p of rh.practiced) {
         pushEntry({
@@ -179,7 +181,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // reading: [{ postId, points, date }]
     if (Array.isArray(rh.reading)) {
       for (const r of rh.reading) {
         pushEntry({
@@ -194,7 +195,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // bonus: [{ reason, points, date, by }]
     if (Array.isArray(rh.bonus)) {
       for (const b of rh.bonus) {
         pushEntry({
@@ -209,7 +209,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // admin: [{ reason, points, date, by }]
     if (Array.isArray(rh.admin)) {
       for (const a of rh.admin) {
         pushEntry({
@@ -224,7 +223,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // referrals: [{ referredUser, points, date }]
     if (Array.isArray(rh.referrals)) {
       for (const r of rh.referrals) {
         pushEntry({
@@ -239,7 +237,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // spent (optional in rewardHistory)
     if (Array.isArray(rh.spent)) {
       for (const s of rh.spent) {
         pushEntry({
@@ -254,14 +251,45 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       }
     }
 
-    // Include CreditTransaction entries (money-based transactions)
+    // --- Include Task-based rewards (new) ---
+    // Include tasks that awarded points: completed tasks or explicit rewardGranted flag
     try {
-      const ctQuery = {
+      const taskQuery = {
+        user: id,
         $or: [
-          { from: id },
-          { to: id }
+          { status: "done" },
+          { rewardGranted: true }
         ]
       };
+      // Optionally accept activityType filter via query ?taskActivity=reading etc.
+      if (req.query.taskActivity) {
+        taskQuery.activityType = req.query.taskActivity;
+      }
+
+      const tasks = await Task.find(taskQuery)
+        .select("title points completedAt updatedAt createdAt activityType _id")
+        .sort({ completedAt: -1, updatedAt: -1, createdAt: -1 })
+        .lean();
+
+      for (const t of tasks) {
+        const tsDate = t.completedAt || t.updatedAt || t.createdAt || null;
+        pushEntry({
+          id: `task_${t._id}`,
+          type: "task",
+          source: t._id,
+          points: (typeof t.points === "number") ? t.points : 0,
+          amount: null,
+          date: tsDate ? new Date(tsDate) : null,
+          meta: { title: t.title || null, activityType: t.activityType || null }
+        });
+      }
+    } catch (e) {
+      console.warn("points-history: Task load failed", e && e.message);
+    }
+
+    // Include CreditTransaction entries (money-based transactions) as amount entries
+    try {
+      const ctQuery = { $or: [{ from: id }, { to: id }] };
       const creditTx = await CreditTransaction.find(ctQuery).sort({ createdAt: -1 }).lean();
       for (const tx of creditTx) {
         const isIn = String(tx.to) === String(id);
@@ -270,7 +298,7 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
           type: "credit_transaction",
           source: tx.resource || null,
           points: null,
-          amount: typeof tx.amount === "number" ? tx.amount : (tx.uploaderReward || null),
+          amount: typeof tx.amount === "number" ? (isIn ? tx.amount : -Math.abs(tx.amount)) : (tx.uploaderReward || null),
           date: tx.createdAt ? new Date(tx.createdAt) : null,
           meta: {
             direction: isIn ? "in" : "out",
@@ -282,7 +310,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     } catch (e) {
-      // ignore credit transaction errors
       console.warn("points-history: CreditTransaction load failed", e && e.message);
     }
 
@@ -304,7 +331,7 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
       console.warn("points-history: Withdrawal load failed", e && e.message);
     }
 
-    // Normalize, filter by type/date
+    // Normalize & filter entries (date range and type)
     const normalized = entries
       .map(e => ({
         id: e.id || `${e.type}_${Math.random().toString(36).slice(2,9)}`,
@@ -322,7 +349,7 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         return true;
       });
 
-    // Sort: newest first (items without date go to the end)
+    // Sort newest first; items without date go to the end
     normalized.sort((a, b) => {
       if (!a.date && !b.date) return 0;
       if (!a.date) return 1;
