@@ -246,23 +246,17 @@ router.post("/bulk", authenticate, async (req, res) => {
   }
 });
 
-router.get("/user/:id", authenticate, async (req, res) => {
-    try {
 
+    router.get("/user/:id", authenticate, async (req, res) => {
+    try {
         if (req.user.id !== req.params.id && req.user.role !== "admin") {
             return res.status(403).json({ message: "Forbidden" });
         }
 
         const user = await User.findById(req.params.id).lean();
-
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found"
-            });
-        }
+        if (!user) return res.status(404).json({ message: "User not found" });
 
         const { status, activityType } = req.query;
-
         const manualTasks = await Task.find({
             user: user._id,
             ...(status && { status }),
@@ -270,11 +264,7 @@ router.get("/user/:id", authenticate, async (req, res) => {
         }).lean();
 
         const generatedTasks = [];
-
-        const completedArticles = new Set(
-            (user.completedArticles || []).map(String)
-        );
-
+        const completedArticles = new Set((user.completedArticles || []).map(String));
         const completedRewards = new Set([
             ...(user.rewardHistory?.reading || []).map(r => r.postId || r.key),
             ...(user.rewardHistory?.practiced || []).map(r => r.key),
@@ -282,35 +272,13 @@ router.get("/user/:id", authenticate, async (req, res) => {
         ]);
 
         const today = new Date().toISOString().split("T")[0];
+        const todayTask = (user.dailyTasks || []).find(d => d.date === today);
+        const completedToday = new Set(todayTask?.done || []);
 
-        const todayTask = (user.dailyTasks || []).find(
-            d => d.date === today
-        );
-
-        const completedToday = new Set(
-            todayTask?.done || []
-        );
-
-        const profileFields = [
-            user.fullname,
-            user.username,
-            user.email,
-            user.profilePic,
-            user.faculty,
-            user.department,
-            user.level,
-            user.bio
-        ];
-
-        const profilePercent = Math.round(
-            (
-                profileFields.filter(Boolean).length /
-                profileFields.length
-            ) * 100
-        );
+        const profileFields = [user.fullname, user.username, user.email, user.profilePic, user.faculty, user.department, user.level, user.bio];
+        const profilePercent = Math.round((profileFields.filter(Boolean).length / profileFields.length) * 100);
 
         if (!completedToday.has("daily_login")) {
-
             generatedTasks.push({
                 _id: "daily_login",
                 title: "Daily Login",
@@ -320,19 +288,11 @@ router.get("/user/:id", authenticate, async (req, res) => {
                 points: 5,
                 priority: 1,
                 createdAt: new Date(),
-                meta: {
-                    icon: "login",
-                    key: "daily_login"
-                }
+                meta: { icon: "login", key: "daily_login" }
             });
-
         }
 
-        if (
-            profilePercent < 100 &&
-            !completedRewards.has("profile_complete")
-        ) {
-
+        if (profilePercent < 100 && !completedRewards.has("profile_complete")) {
             generatedTasks.push({
                 _id: "profile_complete",
                 title: "Complete your profile",
@@ -342,16 +302,11 @@ router.get("/user/:id", authenticate, async (req, res) => {
                 points: 30,
                 priority: 2,
                 createdAt: new Date(),
-                meta: {
-                    progress: profilePercent,
-                    key: "profile_complete"
-                }
+                meta: { progress: profilePercent, key: "profile_complete" }
             });
-
         }
 
         if ((user.totalReferrals || 0) < 1) {
-
             generatedTasks.push({
                 _id: "refer_friend",
                 title: "Invite your first friend",
@@ -361,32 +316,20 @@ router.get("/user/:id", authenticate, async (req, res) => {
                 points: 50,
                 priority: 3,
                 createdAt: new Date(),
-                meta: {
-                    referralCode: user.referralCode,
-                    key: "refer_friend"
-                }
+                meta: { referralCode: user.referralCode, key: "refer_friend" }
             });
-
         }
-              const posts = await Post.find({
-            status: "Published",
-            rewardEnabled: true
-        })
-        .sort({ date: -1 })
-        .limit(20)
-        .select(
-            "title content category imageUrl rewardPoints minimumReadTime createdAt"
-        )
-        .lean();
+
+        const posts = await Post.find({ status: "Published", rewardEnabled: true })
+            .sort({ createdAt: -1 })
+            .limit(20)
+            .select("title content category imageUrl rewardPoints minimumReadTime createdAt")
+            .lean();
 
         for (const post of posts) {
-
-            if (completedArticles.has(String(post._id))) continue;
-
-            if (completedRewards.has(`article:${post._id}`)) continue;
+            if (completedArticles.has(String(post._id)) || completedRewards.has(`article:${post._id}`)) continue;
 
             let points = post.rewardPoints || 20;
-
             if (post.category === "Academics") points = Math.max(points, 30);
             if (post.category === "Opportunities") points = Math.max(points, 25);
             if (post.category === "Scholarships") points = Math.max(points, 35);
@@ -395,9 +338,7 @@ router.get("/user/:id", authenticate, async (req, res) => {
             generatedTasks.push({
                 _id: `article_${post._id}`,
                 title: `Read: ${post.title}`,
-                description: (post.content || "")
-                    .replace(/<[^>]+>/g, "")
-                    .substring(0, 180),
+                description: (post.content || "").replace(/<[^>]+>/g, "").substring(0, 180),
                 activityType: "article",
                 status: "active",
                 points,
@@ -411,239 +352,113 @@ router.get("/user/:id", authenticate, async (req, res) => {
                     url: `/campus-news-update?id=${post._id}`
                 }
             });
-
         }
 
         const resources = await Resources.find({
             published: true,
             $or: [
                 { visibility: "public" },
-                {
-                    visibility: "campus",
-                    institution: user.institution
-                },
-                {
-                    visibility: "department",
-                    faculty: user.faculty,
-                    department: user.department
-                }
+                { visibility: "campus", institution: user.institution },
+                { visibility: "department", faculty: user.faculty, department: user.department }
             ]
-        })
-        .sort({ createdAt: -1 })
-        .limit(20)
-        .lean();
+        }).sort({ createdAt: -1 }).limit(20).lean();
 
         for (const resource of resources) {
-
-            if (
-                completedRewards.has(
-                    `resource:${resource._id}`
-                )
-            ) continue;
+            if (completedRewards.has(`resource:${resource._id}`)) continue;
 
             let score = 25;
-
-            if (
-                resource.level &&
-                resource.level === user.level
-            ) {
-                score += 10;
-            }
+            if (resource.level && resource.level === user.level) score += 10;
 
             generatedTasks.push({
-
                 _id: `resource_${resource._id}`,
-
                 title: `Study ${resource.title}`,
-
-                description:
-                    resource.description ||
-                    resource.subtitle ||
-                    "",
-
+                description: resource.description || resource.subtitle || "",
                 activityType: "resource",
-
                 status: "active",
-
                 points: score,
-
                 priority: 6,
-
                 createdAt: resource.createdAt,
-
                 image: resource.cover?.url,
-
                 meta: {
-
                     key: `resource:${resource._id}`,
-
                     resourceId: resource._id,
-
                     resourceType: resource.resourceType,
-
                     faculty: resource.faculty,
-
                     department: resource.department,
-
                     level: resource.level
-
                 }
-
             });
-
         }
 
-        const examSets = await ExamSet.find({
-            examType: "cbt"
-        })
-        .sort({
-            createdAt: -1
-        })
-        .limit(15)
-        .lean();
+        const examSets = await ExamSet.find({ examType: "cbt" })
+            .sort({ createdAt: -1 })
+            .limit(15)
+            .lean();
 
         for (const exam of examSets) {
+            if (completedRewards.has(`quiz:${exam._id}`)) continue;
 
-            const totalQuestions =
-                await CbtQuestion.countDocuments({
-                    examSet: exam._id
-                });
-
+            const totalQuestions = await CbtQuestion.countDocuments({ examSet: exam._id });
             if (!totalQuestions) continue;
 
-            if (
-                completedRewards.has(
-                    `quiz:${exam._id}`
-                )
-            ) continue;
-
             generatedTasks.push({
-
                 _id: `quiz_${exam._id}`,
-
                 title: `Practice ${exam.subject}`,
-
-                description:
-                    exam.title,
-
+                description: exam.title,
                 activityType: "quiz",
-
                 status: "active",
-
-                points: Math.min(
-                    100,
-                    totalQuestions
-                ),
-
+                points: Math.min(100, totalQuestions),
                 priority: 7,
-
                 createdAt: exam.createdAt,
-
                 meta: {
-
                     key: `quiz:${exam._id}`,
-
                     examSetId: exam._id,
-
                     subject: exam.subject,
-
                     questions: totalQuestions,
-
                     duration: exam.duration
-
                 }
-
             });
-
         }
-              const manualIds = new Set();
 
+        const manualIds = new Set();
         for (const task of manualTasks) {
             manualIds.add(String(task._id));
-
-            if (task.meta?.key) {
-                manualIds.add(task.meta.key);
-            }
-
-            if (task.status === "done") {
-                completedRewards.add(task.meta?.key || String(task._id));
-            }
+            if (task.meta?.key) manualIds.add(task.meta.key);
+            if (task.status === "done") completedRewards.add(task.meta?.key || String(task._id));
         }
 
         const merged = [...manualTasks];
-
         for (const task of generatedTasks) {
-
-            if (task.meta?.key && completedRewards.has(task.meta.key)) {
-                continue;
-            }
+            if (task.meta?.key && completedRewards.has(task.meta.key)) continue;
 
             const exists = merged.some(existing => {
-
-                if (existing.meta?.key && task.meta?.key) {
-                    return existing.meta.key === task.meta.key;
-                }
-
-                if (
-                    existing.activityType === task.activityType &&
-                    existing.title === task.title
-                ) {
-                    return true;
-                }
-
-                return false;
-
+                if (existing.meta?.key && task.meta?.key) return existing.meta.key === task.meta.key;
+                return existing.activityType === task.activityType && existing.title === task.title;
             });
 
-            if (!exists) {
-                merged.push(task);
-            }
-
+            if (!exists) merged.push(task);
         }
 
         merged.sort((a, b) => {
-
             const pa = a.priority || 999;
             const pb = b.priority || 999;
-
-            if (pa !== pb) {
-                return pa - pb;
-            }
-
+            if (pa !== pb) return pa - pb;
             return new Date(b.createdAt) - new Date(a.createdAt);
-
         });
 
         const filtered = merged.filter(task => {
-
-            if (status && task.status !== status) {
-                return false;
-            }
-
-            if (
-                activityType &&
-                task.activityType !== activityType
-            ) {
-                return false;
-            }
-
+            if (status && task.status !== status) return false;
+            if (activityType && task.activityType !== activityType) return false;
             return true;
-
         });
 
-        res.json(filtered);
-
+        res.json(filtered.slice(0, 10));
     } catch (err) {
-
         console.error(err);
-
-        res.status(500).json({
-            error: err.message
-        });
-
+        res.status(500).json({ error: err.message });
     }
-
 });
+
 
 // PATCH: Update a task (status, progress, etc.)
 router.patch("/:taskId", authenticate, async (req, res) => {
