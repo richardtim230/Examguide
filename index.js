@@ -312,7 +312,7 @@ import pastQuestionsRoute from "./routes/pastQuestion.js";
 const uploadToMemory = multer({ storage: memStorage });
 import { avatarUpload } from "./middleware/upload.js";
 import publishersRouter from "./routes/publishers.js";
-
+import taskActionsRouter from "./routes/taskActions.js";
 
 router.post(
   "/upload-avatar",
@@ -3629,7 +3629,7 @@ app.use("/api/student", studentRouter);
 app.use("/api/lecturer", lecturerDashboardRoutes);
 app.use("/api/lecturers", letRoutes);
 app.use("/api/discussions", discussionsRouter);
-
+app.use("/api/task-actions", taskActionsRouter);
 
 // mount chatbot routes (these routes themselves use auth middleware)
 app.use("/api/chatbot", chatbotRoutes);
