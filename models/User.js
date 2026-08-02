@@ -79,7 +79,7 @@ const UserSchema = new Schema({
 
   role: {
     type: String,
-    enum: ["student","tutor","blogger","pending_blogger","pending_marketer","pending_both","uploader","pq-uploader","admin","superadmin","codec"],
+    enum: ["student","tutor","blogger", "publisher", "pending_publisher", "pending_blogger","pending_marketer","pending_both","uploader","pq-uploader","admin","superadmin","codec"],
     default: "student",
     index: true
   },
