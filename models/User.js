@@ -200,6 +200,15 @@ const UserSchema = new Schema({
     status: String
   }],
 
+  dailyTaskPool: {
+    date: String,
+    tasks: [
+        {
+            id: String,
+            completed: Boolean
+        }
+    ]
+  },
   totalSubmissions: { type: Number, default: 0 },
   averageScore: { type: Number, default: 0 }
 }, { timestamps: true });
