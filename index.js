@@ -311,6 +311,8 @@ const memStorage = multer.memoryStorage();
 import pastQuestionsRoute from "./routes/pastQuestion.js";
 const uploadToMemory = multer({ storage: memStorage });
 import { avatarUpload } from "./middleware/upload.js";
+import publishersRouter from "./routes/publishers.js";
+
 
 router.post(
   "/upload-avatar",
@@ -3632,7 +3634,8 @@ app.use("/api/discussions", discussionsRouter);
 // mount chatbot routes (these routes themselves use auth middleware)
 app.use("/api/chatbot", chatbotRoutes);
 // In your index.js, add:
-
+// after your other middlewares (body parser, etc.)
+app.use("/api/publishers", publishersRouter);
 app.use("/api/schools", schoolRegistrationRoutes);
 app.use('/api', assignmentsRouter);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
