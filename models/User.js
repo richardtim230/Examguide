@@ -202,13 +202,19 @@ const UserSchema = new Schema({
 
   dailyTaskPool: {
     date: String,
-    tasks: [
-        {
-            id: String,
-            completed: Boolean
-        }
-    ]
-  },
+    tasks: [{
+        _id: String,
+        title: String,
+        description: String,
+        activityType: String,
+        status: String,
+        points: Number,
+        priority: Number,
+        createdAt: Date,
+        image: String,
+        meta: mongoose.Schema.Types.Mixed
+    }]
+},
   totalSubmissions: { type: Number, default: 0 },
   averageScore: { type: Number, default: 0 }
 }, { timestamps: true });
