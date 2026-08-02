@@ -142,21 +142,7 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
-/**
- * POST /bulk
- * Admin-only endpoint - create the same task for many users selected by:
- *  - explicit userIds array OR
- *  - filters object (level, faculty, department, sex, q) to match users
- *
- * Body:
- * {
- *   title, description, points, activityType, meta, dueDate,
- *   userIds: [ "...", ... ] OR filters: { level, faculty, department, sex, q },
- *   skipIfExists: boolean (default false)  // skip creating if a task with same title exists for that user (status not 'done')
- * }
- *
- * Response includes counts and any errors.
- */
+
 router.post("/bulk", authenticate, async (req, res) => {
   try {
     if (req.user.role !== "admin") return res.status(403).json({ message: "Forbidden" });
