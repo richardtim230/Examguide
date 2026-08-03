@@ -246,6 +246,277 @@ router.post("/bulk", authenticate, async (req, res) => {
   }
 });
 
+/**
+ * POST /api/tasks/auto-allocate
+ * Automatic credit point allocation for active task completions (e.g., article reading, quizzes, resources).
+ */
+router.post("/auto-allocate", authenticate, async (req, res) => {
+  try {
+    const { taskId, expectedPoints } = req.body;
+    const userId = req.user.id;
+
+    if (!taskId) {
+      return res.status(400).json({ success: false, message: "taskId is required" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    let pointsToAward = Number(expectedPoints) || 0;
+    let rewardKey = `task:${taskId}`;
+    let activityType = "task";
+    let title = "Task Completed";
+
+    // -------------------------------------------------------------
+    // CASE 1: Standard Mongoose ObjectId (Task Document in DB)
+    // -------------------------------------------------------------
+    if (taskId.match(/^[0-9a-fA-F]{24}$/)) {
+      const task = await Task.findById(taskId);
+
+      if (task) {
+        if (task.user.toString() !== userId && req.user.role !== "admin") {
+          return res.status(403).json({ success: false, message: "Forbidden" });
+        }
+
+        if (task.status === "done") {
+          return res.status(400).json({
+            success: false,
+            message: "Credit points have already been awarded for this task."
+          });
+        }
+
+        task.status = "done";
+        task.completedAt = new Date();
+        await task.save();
+
+        pointsToAward = task.points || pointsToAward;
+        rewardKey = task.meta?.key || `task:${task._id}`;
+        activityType = task.activityType || "task";
+        title = task.title || "Task completed";
+
+        await awardTaskPoints(user, pointsToAward, {
+          key: rewardKey,
+          type: activityType,
+          title,
+          by: String(userId),
+          referenceId: task._id.toString()
+        });
+
+        return res.json({
+          success: true,
+          message: `🎉 ${pointsToAward} credit points allocated!`,
+          pointsAwarded: pointsToAward
+        });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // CASE 2: Dynamic Article Reading Task (Prefix: "article_")
+    // -------------------------------------------------------------
+    if (taskId.startsWith("article_")) {
+      const postId = taskId.replace("article_", "");
+      const completedArticles = new Set((user.completedArticles || []).map(String));
+
+      if (completedArticles.has(postId)) {
+        return res.status(400).json({
+          success: false,
+          message: "You have already earned points for reading this article."
+        });
+      }
+
+      const post = await Post.findById(postId).lean();
+      if (!post) {
+        return res.status(404).json({ success: false, message: "Article not found" });
+      }
+
+      // Backend security validation for points
+      let verifiedPoints = post.rewardPoints || 20;
+      if (post.category === "Academics") verifiedPoints = Math.max(verifiedPoints, 30);
+      if (post.category === "Opportunities") verifiedPoints = Math.max(verifiedPoints, 25);
+      if (post.category === "Scholarships") verifiedPoints = Math.max(verifiedPoints, 35);
+      if (post.category === "Tips & Hacks") verifiedPoints = Math.max(verifiedPoints, 20);
+
+      pointsToAward = verifiedPoints;
+      rewardKey = `article:${postId}`;
+      activityType = "article";
+      title = `Read: ${post.title}`;
+
+      // Mark article as completed on user record
+      await User.findByIdAndUpdate(userId, {
+        $addToSet: { completedArticles: postId }
+      });
+
+      await awardTaskPoints(user, pointsToAward, {
+        key: rewardKey,
+        type: activityType,
+        title,
+        by: String(userId),
+        referenceId: postId
+      });
+
+      return res.json({
+        success: true,
+        message: `🎉 ${pointsToAward} credit points allocated for reading!`,
+        pointsAwarded: pointsToAward
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CASE 3: Dynamic Resource Task (Prefix: "resource_")
+    // -------------------------------------------------------------
+    if (taskId.startsWith("resource_")) {
+      const resourceId = taskId.replace("resource_", "");
+      const completedRewards = new Set([
+        ...(user.rewardHistory?.reading || []).map(r => r.key),
+        ...(user.rewardHistory?.practiced || []).map(r => r.key),
+        ...(user.rewardHistory?.bonus || []).map(r => r.key)
+      ]);
+
+      rewardKey = `resource:${resourceId}`;
+      if (completedRewards.has(rewardKey)) {
+        return res.status(400).json({
+          success: false,
+          message: "Points already claimed for this study resource."
+        });
+      }
+
+      const resource = await Resources.findById(resourceId).lean();
+      if (!resource) {
+        return res.status(404).json({ success: false, message: "Resource not found" });
+      }
+
+      let verifiedPoints = 25;
+      if (resource.level && resource.level === user.level) verifiedPoints += 10;
+
+      pointsToAward = verifiedPoints;
+      activityType = "resource";
+      title = `Studied ${resource.title}`;
+
+      await awardTaskPoints(user, pointsToAward, {
+        key: rewardKey,
+        type: activityType,
+        title,
+        by: String(userId),
+        referenceId: resourceId
+      });
+
+      return res.json({
+        success: true,
+        message: `🎉 ${pointsToAward} credit points allocated!`,
+        pointsAwarded: pointsToAward
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CASE 4: Dynamic Quiz/CBT Task (Prefix: "quiz_")
+    // -------------------------------------------------------------
+    if (taskId.startsWith("quiz_")) {
+      const examSetId = taskId.replace("quiz_", "");
+      rewardKey = `quiz:${examSetId}`;
+
+      const completedRewards = new Set([
+        ...(user.rewardHistory?.reading || []).map(r => r.key),
+        ...(user.rewardHistory?.practiced || []).map(r => r.key),
+        ...(user.rewardHistory?.bonus || []).map(r => r.key)
+      ]);
+
+      if (completedRewards.has(rewardKey)) {
+        return res.status(400).json({
+          success: false,
+          message: "Points already claimed for this quiz."
+        });
+      }
+
+      const exam = await ExamSet.findById(examSetId).lean();
+      if (!exam) {
+        return res.status(404).json({ success: false, message: "Quiz not found" });
+      }
+
+      const totalQuestions = await CbtQuestion.countDocuments({ examSet: examSetId });
+      pointsToAward = Math.min(100, totalQuestions || pointsToAward);
+      activityType = "quiz";
+      title = `Practiced ${exam.subject}`;
+
+      await awardTaskPoints(user, pointsToAward, {
+        key: rewardKey,
+        type: activityType,
+        title,
+        by: String(userId),
+        referenceId: examSetId
+      });
+
+      return res.json({
+        success: true,
+        message: `🎉 ${pointsToAward} credit points allocated!`,
+        pointsAwarded: pointsToAward
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CASE 5: Daily Login Task
+    // -------------------------------------------------------------
+    if (taskId === "daily_login") {
+      const today = new Date().toISOString().split("T")[0];
+      const todayTask = (user.dailyTasks || []).find(d => d.date === today);
+
+      if (todayTask?.done?.includes("daily_login")) {
+        return res.status(400).json({
+          success: false,
+          message: "Daily login reward already claimed for today."
+        });
+      }
+
+      pointsToAward = 5;
+      activityType = "login";
+      title = "Daily Login";
+
+      await User.updateOne(
+        { _id: userId, "dailyTasks.date": today },
+        { $addToSet: { "dailyTasks.$.done": "daily_login" } }
+      );
+
+      await awardTaskPoints(user, pointsToAward, {
+        key: "daily_login",
+        type: activityType,
+        title,
+        by: String(userId)
+      });
+
+      return res.json({
+        success: true,
+        message: `🎉 ${pointsToAward} daily login points allocated!`,
+        pointsAwarded: pointsToAward
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CASE 6: Fallback Generic / Custom Task Handler
+    // -------------------------------------------------------------
+    if (pointsToAward <= 0) {
+      return res.status(400).json({ success: false, message: "Invalid allocation points" });
+    }
+
+    await awardTaskPoints(user, pointsToAward, {
+      key: rewardKey,
+      type: "custom",
+      title,
+      by: String(userId)
+    });
+
+    return res.json({
+      success: true,
+      message: `🎉 ${pointsToAward} credit points allocated!`,
+      pointsAwarded: pointsToAward
+    });
+
+  } catch (err) {
+    console.error("POST /api/tasks/auto-allocate error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 
     router.get("/user/:id", authenticate, async (req, res) => {
     try {
