@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcryptjs";
-import Users from "../models/Users.js";
+import User from "../models/User.js";
 import BloggerDashboard from "../models/BloggerDashboard.js";
 import mongoose from "mongoose";
 import Faculty from "../models/Faculty.js";
@@ -64,7 +64,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const users = await Users.find(filter)
+    const users = await User.find(filter)
       .select("-password")
       .sort({ createdAt: -1 });
 
@@ -114,21 +114,21 @@ router.get("/", async (req, res) => {
     }
 
     // Only populate faculty/department for users whose field is a valid ObjectId
-const usersToPopulate = users.filter(u =>
-  mongoose.Types.ObjectId.isValid(u.faculty) ||
-  mongoose.Types.ObjectId.isValid(u.department)
-);
+    const usersToPopulate = users.filter(u =>
+      mongoose.Types.ObjectId.isValid(u.faculty) ||
+      mongoose.Types.ObjectId.isValid(u.department)
+    );
 
-await Users.populate(usersToPopulate, [
-  {
-    path: "faculty",
-    select: "name"
-  },
-  {
-    path: "department",
-    select: "name"
-  }
-]);
+    await User.populate(usersToPopulate, [
+      {
+        path: "faculty",
+        select: "name"
+      },
+      {
+        path: "department",
+        select: "name"
+      }
+    ]);
 
     const data = users.map(u => u.toObject());
     res.json(data);
@@ -136,6 +136,7 @@ await Users.populate(usersToPopulate, [
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+
 // GET /api/users/:id/points-history
 // Returns unified paginated history of point gains/spends for the user.
 // Accessible by the user themselves or admin/superadmin.
@@ -158,7 +159,7 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     const to = req.query.to ? new Date(req.query.to) : null;
 
     // Fetch the user reward history and points summary
-    const user = await Users.findById(id).select("rewardHistory points").lean();
+    const user = await User.findById(id).select("rewardHistory points").lean();
     if (!user) return res.status(404).json({ ok: false, message: "User not found" });
 
     const rh = user.rewardHistory || {};
@@ -373,11 +374,12 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     res.status(500).json({ ok: false, message: err.message || "Server error" });
   }
 });
+
 // POST /api/users/:studentId/activation-key (admin)
 router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const studentId = req.params.studentId;
-    const user = await Users.findOne({ studentId });
+    const user = await User.findOne({ studentId });
     if (!user) return res.status(404).json({ message: "Student not found" });
 
     const key = crypto.randomBytes(8).toString("hex").toUpperCase();
@@ -396,7 +398,7 @@ router.post("/redeem-activation", authenticate, async (req, res) => {
     const { activationKey } = req.body;
     if (!activationKey) return res.status(400).json({ message: "Activation key required." });
 
-    const user = await Users.findOne({ assignedActivationKey: activationKey, activationKeyStatus: "pending", _id: req.user.id });
+    const user = await User.findOne({ assignedActivationKey: activationKey, activationKeyStatus: "pending", _id: req.user.id });
     if (!user) return res.status(404).json({ message: "Invalid or expired key." });
 
     user.isPremium = true;
@@ -407,9 +409,10 @@ router.post("/redeem-activation", authenticate, async (req, res) => {
     res.status(500).json({ message: err.message || "Could not redeem key." });
   }
 });
+
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.verified = true;
     await user.save();
@@ -424,13 +427,12 @@ router.get("/:id/daily-tasks", authenticate, async (req, res) => {
   const { id } = req.params;
   const { date } = req.query;
   if (!date) return res.status(400).json({ error: "Missing date" });
-  const user = await Users.findById(id);
+  const user = await User.findById(id);
   if (!user) return res.status(404).json({ error: "User not found" });
   const daily = (user.dailyTasks || []).find(d => d.date === date);
   res.json({ done: daily ? daily.done : [] });
 });
 
-// POST /api/users/:id/daily-tasks
 // POST /api/users/:id/daily-tasks
 router.post("/:id/daily-tasks", authenticate, async (req, res) => {
   try {
@@ -448,7 +450,7 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
       });
     }
 
-    const user = await Users.findById(id);
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -485,7 +487,7 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
 
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.active = false;
     await user.save();
@@ -497,7 +499,7 @@ router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), asy
 
 router.get("/count", async (req, res) => {
   try {
-    const count = await Users.countDocuments({});
+    const count = await User.countDocuments({});
     res.json({ count });
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
@@ -507,7 +509,7 @@ router.get("/count", async (req, res) => {
 router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
-    const user = await Users.findById(req.params.userId);
+    const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     user.approved = approved;
@@ -530,7 +532,7 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
 
 router.get("/me", authenticate, async (req, res) => {
   try {
-    const user = await Users.findById(req.user.id)
+    const user = await User.findById(req.user.id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
@@ -549,10 +551,11 @@ router.get("/me", authenticate, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 // GET user by id (for author lookup, with account/payment/contact details)
 router.get("/:id", async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id)
+    const user = await User.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("fullname username profilePic faculty department bio phone bank accountName accountNumber location email");
@@ -583,6 +586,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Could not fetch user" });
   }
 });
+
 // POST /api/users/batch-assign-keys
 // { studentIds: [array of studentId strings] }
 router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
@@ -590,7 +594,7 @@ router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadm
   if (!studentIds || !Array.isArray(studentIds)) return res.status(400).json({ message: "studentIds array required" });
   const results = [];
   for (let studentId of studentIds) {
-    const user = await Users.findOne({ studentId });
+    const user = await User.findOne({ studentId });
     if (!user) {
       results.push({ studentId, error: "Not found" });
       continue;
@@ -608,10 +612,11 @@ router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadm
   }
   res.json({ results });
 });
+
 // PATCH /api/users/:studentId/expire-key (admin)
 // Expires/revokes a key, disables premium if already active
 router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const user = await Users.findOne({ studentId: req.params.studentId });
+  const user = await User.findOne({ studentId: req.params.studentId });
   if (!user) return res.status(404).json({ message: "Student not found" });
   user.activationKeyStatus = "expired";
   user.assignedActivationKey = "";
@@ -619,6 +624,7 @@ router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "sup
   await user.save();
   res.json({ message: "Activation key expired/revoked", studentId: user.studentId });
 });
+
 // GET /api/users/activation-keys?status=&studentId= (admin only)
 // Returns all users with activation key info, or filtered by status or studentId
 router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
@@ -626,13 +632,14 @@ router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"
   let filter = { assignedActivationKey: { $ne: "" } };
   if (status) filter.activationKeyStatus = status;
   if (studentId) filter.studentId = studentId;
-  const users = await Users.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium");
+  const users = await User.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium");
   res.json({ data: users });
 });
+
 // GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id)
+    const user = await User.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name");
 
@@ -664,12 +671,11 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: err.message || "Server error" });
   }
 });
-// In routes/auth.js or routes/user.js
-// PATCH /auth/me
-// Replace this block that uses router.patch(...)
+
+// PATCH /api/auth/me
 router.patch('/api/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
-  const user = await Users.findById(req.user.id);
+  const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ error: "User not found" });
 
   // Only allow these keys to be updated
@@ -693,14 +699,16 @@ router.patch('/api/auth/me', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
+
 router.patch('/:id', authenticate, async (req, res) => {
   if (req.user.id !== req.params.id) return res.status(403).json({ error: "Forbidden" });
-  const user = await Users.findById(req.params.id);
+  const user = await User.findById(req.params.id);
   if (!user) return res.status(404).json({ error: "User not found" });
   Object.assign(user, req.body);
   await user.save();
   res.json(user);
 });
+
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const {
@@ -749,19 +757,19 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     }
 
     // Check duplicate username/email
-    const exists = await Users.findOne({ $or: [{ username }, { email }] });
+    const exists = await User.findOne({ $or: [{ username }, { email }] });
     if (exists) return res.status(400).json({ message: "Username or email already exists." });
 
     const hashed = await bcrypt.hash(password, 12);
 
-    const user = new Users({
+    const user = new User({
       fullname, username, email, password: hashed, role,
       faculty: facultyId || faculty, // fallback to string if not resolved
       department: departmentId || department, // fallback to string if not resolved
       profilePic, active
     });
     await user.save();
-    const retUser = await Users.findById(user._id)
+    const retUser = await User.findById(user._id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
@@ -774,7 +782,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 // UPDATE user profile (admin or superadmin, allow both string/ObjectId & allow legacy)
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     for (const field of ["fullname", "username", "email", "level", "phone", "profilePic", "active", "religion", "role"]) {
@@ -818,7 +826,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
       user.password = await bcrypt.hash(req.body.password, 12);
     }
     await user.save();
-    const retUser = await Users.findById(user._id)
+    const retUser = await User.findById(user._id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
@@ -831,7 +839,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
 // Activate/deactivate user (shortcut)
 router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.active = !!req.body.active;
     await user.save();
@@ -844,7 +852,7 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
 // DELETE user (admin/superadmin)
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await Users.findByIdAndDelete(req.params.id);
+    const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ message: "User deleted." });
   } catch (err) {
