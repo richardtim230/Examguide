@@ -1,4 +1,11 @@
 export const awardTaskPoints = async (user, points, opts = {}) => {
+    console.log("awardTaskPoints called");
+    console.log("Before:", {
+        points: user?.points,
+        creditPoints: user?.creditPoints,
+        rewardHistory: user?.rewardHistory?.length
+    });
+
     const p = Number(points) || 0;
 
     if (!Array.isArray(user.rewardHistory)) {
@@ -67,6 +74,7 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
             item.key === opts.key || item.referenceId === opts.referenceId
         );
         if (exists) {
+            console.log("Reward key/referenceId already exists in history. Skipping save.");
             return user;
         }
     }
@@ -84,6 +92,14 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         referenceId: opts.referenceId || null
     });
 
+    console.log("Saving user...");
     await user.save();
+    console.log("Saved.");
+    console.log("After:", {
+        points: user.points,
+        creditPoints: user.creditPoints,
+        rewardHistory: user.rewardHistory.length
+    });
+
     return user;
 };
