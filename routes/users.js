@@ -431,22 +431,56 @@ router.get("/:id/daily-tasks", authenticate, async (req, res) => {
 });
 
 // POST /api/users/:id/daily-tasks
+// POST /api/users/:id/daily-tasks
 router.post("/:id/daily-tasks", authenticate, async (req, res) => {
-  const { id } = req.params;
-  const { date, taskId } = req.body;
-  if (!date || !taskId) return res.status(400).json({ error: "Missing date or taskId" });
-  const user = await Users.findById(id);
-  if (!user) return res.status(404).json({ error: "User not found" });
-  let daily = user.dailyTasks.find(d => d.date === date);
-  if (!daily) {
-    daily = { date, done: [] };
-    user.dailyTasks.push(daily);
+  try {
+    const { id } = req.params;
+    const { date, taskId } = req.body;
+
+    if (!date || !taskId) {
+      return res.status(400).json({ error: "Missing date or taskId" });
+    }
+
+    // Daily login is handled by /api/task-actions/complete
+    if (taskId === "daily_login") {
+      return res.status(400).json({
+        error: "Use /api/task-actions/complete for the daily login reward."
+      });
+    }
+
+    const user = await Users.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (!Array.isArray(user.dailyTasks)) {
+      user.dailyTasks = [];
+    }
+
+    let daily = user.dailyTasks.find(d => d.date === date);
+
+    if (!daily) {
+      daily = {
+        date,
+        done: []
+      };
+      user.dailyTasks.push(daily);
+    }
+
+    if (!daily.done.includes(taskId)) {
+      daily.done.push(taskId);
+      await user.save();
+    }
+
+    res.json({
+      success: true,
+      done: daily.done
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message || "Server error"
+    });
   }
-  if (!daily.done.includes(taskId)) {
-    daily.done.push(taskId);
-    await user.save();
-  }
-  res.json({ success: true, done: daily.done });
 });
 
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
