@@ -1,15 +1,39 @@
+import User from "../models/User.js";
+
+/**
+ * Safely award points to a user.
+ * - Reloads the latest user document from DB to avoid stale in-memory checks.
+ * - Migrates legacy rewardHistory shape to an array when needed.
+ * - Performs duplicate detection using both key and referenceId.
+ */
 export const awardTaskPoints = async (user, points, opts = {}) => {
     console.log("awardTaskPoints called");
+
+    // Ensure we have a fresh user document from DB to avoid stale rewardHistory
+    let userDoc = user;
+    try {
+        if (user && user._id) {
+            userDoc = await User.findById(user._id);
+        }
+    } catch (err) {
+        console.warn("Could not reload user in awardTaskPoints:", err);
+    }
+
+    if (!userDoc) {
+        throw new Error("User not found when awarding points");
+    }
+
     console.log("Before:", {
-        points: user?.points,
-        creditPoints: user?.creditPoints,
-        rewardHistory: user?.rewardHistory?.length
+        points: userDoc?.points,
+        creditPoints: userDoc?.creditPoints,
+        rewardHistory: Array.isArray(userDoc.rewardHistory) ? userDoc.rewardHistory.length : typeof userDoc.rewardHistory
     });
 
     const p = Number(points) || 0;
 
-    if (!Array.isArray(user.rewardHistory)) {
-        const old = user.rewardHistory || {};
+    // Migrate legacy rewardHistory shapes into an array if necessary
+    if (!Array.isArray(userDoc.rewardHistory)) {
+        const old = userDoc.rewardHistory || {};
         const migrated = [];
 
         (old.practiced || []).forEach(x => {
@@ -66,23 +90,29 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
             });
         });
 
-        user.rewardHistory = migrated;
+        userDoc.rewardHistory = migrated;
     }
 
-    if (opts.key) {
-        const exists = user.rewardHistory.some(item =>
-            item.key === opts.key || item.referenceId === opts.referenceId
-        );
+    // Duplicate detection: check both key and referenceId on fresh data
+    if (opts.key || opts.referenceId) {
+        const exists = (userDoc.rewardHistory || []).some(item => {
+            if (opts.key && item.key && String(item.key) === String(opts.key)) return true;
+            if (opts.referenceId && item.referenceId && String(item.referenceId) === String(opts.referenceId)) return true;
+            return false;
+        });
+
         if (exists) {
             console.log("Reward key/referenceId already exists in history. Skipping save.");
-            return user;
+            return userDoc;
         }
     }
 
-    user.points = (user.points || 0) + p;
-    user.creditPoints = (user.creditPoints || 0) + p;
+    // Ensure arrays/fields exist
+    userDoc.points = (userDoc.points || 0) + p;
+    userDoc.creditPoints = (userDoc.creditPoints || 0) + p;
+    userDoc.rewardHistory = userDoc.rewardHistory || [];
 
-    user.rewardHistory.push({
+    userDoc.rewardHistory.push({
         key: opts.key || null,
         type: opts.type || "task",
         title: opts.title || "",
@@ -93,13 +123,13 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
     });
 
     console.log("Saving user...");
-    await user.save();
+    await userDoc.save();
     console.log("Saved.");
     console.log("After:", {
-        points: user.points,
-        creditPoints: user.creditPoints,
-        rewardHistory: user.rewardHistory.length
+        points: userDoc.points,
+        creditPoints: userDoc.creditPoints,
+        rewardHistory: userDoc.rewardHistory.length
     });
 
-    return user;
+    return userDoc;
 };
