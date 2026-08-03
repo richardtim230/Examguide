@@ -85,7 +85,7 @@ const UserSchema = new Schema({
   },
 
   active: { type: Boolean, default: true },
-  status: { type: String, enum: ["pending","active","banned"], default: "pending" },
+  status: { type: String, enum: ["pending","approved","active","banned"], default: "pending" },
   approved: { type: Boolean, default: false },
 
   specialties: { type: [String], default: [] },
