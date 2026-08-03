@@ -268,4 +268,5 @@ UserSchema.index({ username: 1 }, { unique: true, background: true });
 UserSchema.index({ email: 1 }, { background: true });
 UserSchema.index({ referralCode: 1 }, { unique: true, sparse: true });
 
-export default model("User", UserSchema);
+// With this (prevents model re-compilation issues during hot reloading):
+export default mongoose.models.User || model("User", UserSchema);
