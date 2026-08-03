@@ -140,7 +140,7 @@ const UserSchema = new Schema({
     points: Number,
     date: { type: Date, default: Date.now },
     by: String,
-    referenceId: String
+    referenceId: { type: mongoose.Schema.Types.Mixed, default: null }
   }],
 
   lastLoginAt: { type: Date },
