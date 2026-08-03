@@ -1,8 +1,6 @@
-
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-
 const { Schema, model } = mongoose;
 
 const socialSchema = new Schema({
@@ -18,7 +16,6 @@ const socialSchema = new Schema({
 }, { _id: false });
 
 const UsersSchema = new Schema({
-  // Basic profile
   fullname: { type: String, default: "" },
   username: { type: String, required: true, unique: true, trim: true, index: true },
   email: { type: String, default: "", lowercase: true, trim: true, index: true },
@@ -27,42 +24,74 @@ const UsersSchema = new Schema({
   level: { type: String, default: "" },
   religion: { type: String, default: "" },
 
-  // Authentication
   password: { type: String, required: true },
+
   emailVerified: { type: Boolean, default: true },
   emailVerificationToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  resetPasswordCode: { type: String },
+  resetPasswordCodeExpires: { type: Date },
 
-  // Profile picture & identity
   profilePic: { type: String, default: "" },
   ninSlip: { type: String, default: "" },
 
-  // Relational / legacy mixed fields
+  faceImage: { type: String, default: "" },
+  faceDescriptor: { type: [Number], default: [] },
+  faceDescriptorEncrypted: { type: String, default: "" },
+  faceVerified: { type: Boolean, default: false },
+  verificationScore: { type: Number, default: 0 },
+  lastFaceVerification: { type: Date },
+  lastFailedFaceVerification: { type: Date },
+  lastLoginWithFace: { type: Date },
+  faceVerificationAttempts: { type: Number, default: 0 },
+
+  referralCode: { type: String, unique: true, sparse: true, index: true },
+  referredBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
+    set: v => {
+      if (v === '' || v === null || typeof v === 'undefined') return undefined;
+      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+      return undefined;
+    }
+  },
+  totalReferrals: { type: Number, default: 0 },
+  referrals: [{ type: Schema.Types.ObjectId, ref: "User" }],
+
   faculty: { type: Schema.Types.Mixed, ref: "Faculty", default: null },
   department: { type: Schema.Types.Mixed, ref: "Department", default: null },
 
-  // Role / permissions
+  userType: { type: String, enum: ["student", "post_utme", "alumni", "staff", "guest"], default: "student", index: true },
+
+  institution: {
+    type: Schema.Types.ObjectId,
+    ref: "Institution",
+    default: new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382"),
+    index: true,
+    set: v => {
+      if (v === '' || v === null || typeof v === 'undefined') return new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382");
+      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+      return v;
+    }
+  },
+
   role: {
     type: String,
-    enum: [
-      "student", "tutor", "blogger", "pending_blogger", "pending_marketer",
-      "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"
-    ],
+    enum: ["student","tutor","blogger", "publisher", "pending_publisher", "pending_blogger","pending_marketer","pending_both","uploader","pq-uploader","admin","superadmin","codec"],
     default: "student",
     index: true
   },
-  active: { type: Boolean, default: true },
-  status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
-  approved: { type: Boolean, default: false }, // used for tutors
 
-  // Tutor-specific / public profile fields (added)
+  active: { type: Boolean, default: true },
+  status: { type: String, enum: ["pending","active","banned"], default: "pending" },
+  approved: { type: Boolean, default: false },
+
   specialties: { type: [String], default: [] },
   about: { type: String, default: "" },
   achievements: { type: [String], default: [] },
-  socials: { type: socialSchema, default: {} }, // alias/duplicate of `social` for compatibility
-
-  // Legacy 'social' kept
+  socials: { type: socialSchema, default: {} },
   social: {
     facebook: { type: String, default: "" },
     twitter: { type: String, default: "" },
@@ -74,87 +103,147 @@ const UsersSchema = new Schema({
     dribbble: { type: String, default: "" }
   },
 
-  // Financial / payouts
   bank: { type: String },
   accountName: { type: String },
   accountNumber: { type: String },
   idType: { type: String },
+
   creditPoints: { type: Number, default: 35 },
+  completedArticles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   isPremium: { type: Boolean, default: false },
 
-  // Activation keys / verification
   assignedActivationKey: { type: String, default: "" },
-  activationKeyStatus: { type: String, enum: ["pending", "redeemed", "expired"], default: "pending" },
+  activationKeyStatus: { type: String, enum: ["pending","redeemed","expired"], default: "pending" },
 
-  // Other profile
   location: { type: String, default: "" },
   verification: {
     idDocument: { type: String, default: "" },
     proofOfAddress: { type: String, default: "" },
     status: { type: String, default: "pending" }
   },
-  dailyTasks: [
-    {
-      date: { type: String }, // "YYYY-MM-DD"
-      done: [String]
-    }
-  ],
+
+  dailyTasks: [{ date: String, done: [String] }],
   verified: { type: Boolean, default: false },
 
-  // Meta fields used elsewhere
   offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }],
   wishlist: [{ type: Schema.Types.ObjectId, ref: "Listing" }],
-  institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
+
   address: { type: String, default: "" },
   zip: { type: String, default: "" },
   bio: { type: String, default: "" },
 
-  // Reward history
-  rewardHistory: {
-    practiced: [{ key: String, points: Number, date: { type: Date, default: Date.now } }],
-    reading: [{ postId: String, points: Number, date: { type: Date, default: Date.now } }],
-    bonus: [{ reason: String, points: Number, date: { type: Date, default: Date.now }, by: String }],
-    admin: [{ reason: String, points: Number, date: { type: Date, default: Date.now }, by: String }]
-  },
+  rewardHistory: [{
+    key: String,
+    type: String,          // task, article, quiz, referral, login, admin
+    title: String,
+    points: Number,
+    date: Date,
+    by: String,
+    referenceId: String
+}],
 
-  // tracking
   lastLoginAt: { type: Date },
   meta: { type: Schema.Types.Mixed, default: {} },
 
-}, {
-  timestamps: true
-});
+  students: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  courses: [{
+    _id: { type: Schema.Types.ObjectId, required: true },
+    title: { type: String, default: "" },
+    code: { type: String, default: "" },
+    description: { type: String, default: "" },
+    level: { type: String, default: "" },
+    students: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    questions: [Schema.Types.ObjectId],
+    resources: [{
+      _id: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+      name: { type: String, default: "" },
+      label: { type: String, default: "" },
+      mimeType: { type: String, default: "" },
+      size: { type: Number, default: 0 },
+      url: { type: String, default: "" },
+      storageType: { type: String, enum: ["gridfs","cloudinary","local","other"], default: "gridfs" },
+      publicId: { type: String, default: null },
+      fileId: { type: String, default: null },
+      uploadedAt: { type: Date, default: Date.now }
+    }],
+    createdAt: { type: Date, default: Date.now }
+  }],
+  questions: [{
+    _id: Schema.Types.ObjectId,
+    course: Schema.Types.ObjectId,
+    question: String,
+    type: String,
+    options: [{ text: { type: String, default: "" }, image: { type: String, default: "" } }],
+    answer: String,
+    createdAt: { type: Date, default: Date.now }
+  }],
+  exams: [{
+    _id: Schema.Types.ObjectId,
+    course: Schema.Types.ObjectId,
+    title: String,
+    startDate: Date,
+    endDate: Date,
+    duration: Number,
+    levels: [String],
+    students: [Schema.Types.ObjectId],
+    questions: [Schema.Types.ObjectId],
+    status: String,
+    createdAt: { type: Date, default: Date.now }
+  }],
+  results: [{
+    _id: Schema.Types.ObjectId,
+    student: Schema.Types.ObjectId,
+    exam: Schema.Types.ObjectId,
+    score: Number,
+    grade: String,
+    submittedAt: Date,
+    duration: Number,
+    status: String
+  }],
 
-/**
- * Virtuals
- */
+  dailyTaskPool: {
+    date: String,
+    tasks: [{
+        _id: String,
+        title: String,
+        description: String,
+        activityType: String,
+        status: String,
+        points: Number,
+        priority: Number,
+        createdAt: Date,
+        image: String,
+        meta: mongoose.Schema.Types.Mixed
+    }]
+},
+  totalSubmissions: { type: Number, default: 0 },
+  averageScore: { type: Number, default: 0 }
+}, { timestamps: true });
+
 UsersSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
 UsersSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
 
-/**
- * Sanitize JSON output: remove sensitive fields
- */
-UsersSchema.methods.toJSON = function () {
+UsersSchema.pre("save", function(next) {
+  if (!this.referralCode) {
+    this.referralCode = `EG${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+  }
+  next();
+});
+
+UsersSchema.methods.toJSON = function() {
   const obj = this.toObject({ virtuals: true });
   delete obj.password;
   delete obj.emailVerificationToken;
   delete obj.resetPasswordToken;
   delete obj.resetPasswordExpires;
+  delete obj.resetPasswordCode;
+  delete obj.resetPasswordCodeExpires;
   delete obj.__v;
   return obj;
 };
 
-/**
- * Password hashing (bcryptjs)
- */
-
-
-/**
- * Compare candidate password with stored hash
- * Returns a Promise<boolean> to keep compatibility with async usage
- */
-UsersSchema.methods.comparePassword = function (candidate) {
+UsersSchema.methods.comparePassword = function(candidate) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidate, this.password, (err, isMatch) => {
       if (err) return reject(err);
@@ -163,28 +252,20 @@ UsersSchema.methods.comparePassword = function (candidate) {
   });
 };
 
-/**
- * Generate email verification token
- */
-UsersSchema.methods.generateEmailVerificationToken = function () {
+UsersSchema.methods.generateEmailVerificationToken = function() {
   const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
   return token;
 };
 
-/**
- * Keep backwards-compatible `socials` mapping to/from `social`.
- */
-UsersSchema.virtual("socialMerged").get(function () {
+UsersSchema.virtual("socialMerged").get(function() {
   const hasSocials = this.socials && Object.keys(this.socials || {}).length > 0;
   if (hasSocials) return this.socials;
   return this.social || {};
 });
 
-/**
- * Indexes
- */
-UsersSchema.index({ username: 2 }, { unique: true, background: true });
-UsersSchema.index({ email: 2 }, { background: true });
+UsersSchema.index({ username: 1 }, { unique: true, background: true });
+UsersSchema.index({ email: 1 }, { background: true });
+UsersSchema.index({ referralCode: 1 }, { unique: true, sparse: true });
 
 export default model("Users", UsersSchema);
