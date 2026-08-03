@@ -5,8 +5,6 @@ import User from "../models/User.js";
 import Task from "../models/Task.js";
 import Post from "../models/Post.js";
 import Resources from "../models/Resources.js";
-import ExamSet from "../models/ExamSet.js";
-import CbtQuestion from "../models/CbtQuestion.js";
 import { awardTaskPoints } from "../utils/awardTaskPoints.js";
 
 const router = express.Router();
@@ -100,7 +98,7 @@ router.patch("/complete", authenticate, async (req, res) => {
                     return res.json({
                         success: true,
                         message: "Already completed today.",
-                        points: user.points
+                        totalPoints: user.points
                     });
                 }
 
@@ -112,7 +110,7 @@ router.patch("/complete", authenticate, async (req, res) => {
 
                 await user.save();
                 const updatedUser = await awardTaskPoints(user, 5, {
-                    key: `login:${today}`,
+                    key: `daily_login:${today}`,
                     type: "bonus",
                     title: "Daily Login",
                     by: String(user._id)
@@ -194,6 +192,9 @@ router.patch("/complete", authenticate, async (req, res) => {
 
             case "article": {
                 const articleId = id.replace("article_", "");
+
+                console.log("Article:", articleId);
+                console.log("Completed:", user.completedArticles);
 
                 if (!mongoose.Types.ObjectId.isValid(articleId)) {
                     return res.status(400).json({
@@ -300,8 +301,8 @@ router.patch("/daily_login", authenticate, async (req, res) => {
         const user = await User.findById(req.user.id);
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        const today = new Date().toISOString().slice(0, 10);
-        const alreadyClaimed = (user.rewardHistory || []).some(
+        const today = todayString();
+        const alreadyClaimed = hasReward(user, `daily_login:${today}`) || (user.rewardHistory || []).some(
             r => r.type === "bonus" &&
                  r.title === "Daily Login" &&
                  new Date(r.date).toISOString().slice(0, 10) === today
