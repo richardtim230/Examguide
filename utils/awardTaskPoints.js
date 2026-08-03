@@ -1,15 +1,8 @@
 import User from "../models/User.js";
 
-/**
- * Safely award points to a user.
- * - Reloads the latest user document from DB to avoid stale in-memory checks.
- * - Migrates legacy rewardHistory shape to an array when needed.
- * - Performs duplicate detection using both key and referenceId.
- */
 export const awardTaskPoints = async (user, points, opts = {}) => {
     console.log("awardTaskPoints called");
 
-    // Ensure we have a fresh user document from DB to avoid stale rewardHistory
     let userDoc = user;
     try {
         if (user && user._id) {
@@ -31,7 +24,6 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
 
     const p = Number(points) || 0;
 
-    // Migrate legacy rewardHistory shapes into an array if necessary
     if (!Array.isArray(userDoc.rewardHistory)) {
         const old = userDoc.rewardHistory || {};
         const migrated = [];
@@ -91,9 +83,9 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         });
 
         userDoc.rewardHistory = migrated;
+        userDoc.markModified("rewardHistory");
     }
 
-    // Duplicate detection: check both key and referenceId on fresh data
     if (opts.key || opts.referenceId) {
         const exists = (userDoc.rewardHistory || []).some(item => {
             if (opts.key && item.key && String(item.key) === String(opts.key)) return true;
@@ -107,10 +99,12 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         }
     }
 
-    // Ensure arrays/fields exist
     userDoc.points = (userDoc.points || 0) + p;
     userDoc.creditPoints = (userDoc.creditPoints || 0) + p;
-    userDoc.rewardHistory = userDoc.rewardHistory || [];
+    
+    if (!Array.isArray(userDoc.rewardHistory)) {
+        userDoc.rewardHistory = [];
+    }
 
     userDoc.rewardHistory.push({
         key: opts.key || null,
@@ -121,6 +115,8 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         by: opts.by || null,
         referenceId: opts.referenceId || null
     });
+
+    userDoc.markModified("rewardHistory");
 
     console.log("Saving user...");
     await userDoc.save();
