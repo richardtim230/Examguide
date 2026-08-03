@@ -1,12 +1,10 @@
-
 import express, { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { Users, Post, Follower, MarketplaceListing } from '../models/blogger.models.ts';
+import { User, Post, Follower, MarketplaceListing } from '../models/blogger.models.ts';
 
 const router: Router = express.Router();
 
-// Middleware to verify JWT token
 const authMiddleware = async (req: express.Request, res: express.Response, next: () => void) => {
   const token = req.headers.authorization?.split('Bearer ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
@@ -20,7 +18,6 @@ const authMiddleware = async (req: express.Request, res: express.Response, next:
   }
 };
 
-// Get current user profile (/auth/me)
 router.get('/auth/me', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -31,7 +28,6 @@ router.get('/auth/me', authMiddleware, async (req: express.Request, res: express
   }
 });
 
-// Update user profile (/superadmin/me)
 router.put('/superadmin/me', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { username, email, phone } = req.body;
   if (!username || !email) {
@@ -51,7 +47,6 @@ router.put('/superadmin/me', authMiddleware, async (req: express.Request, res: e
   }
 });
 
-// Change password (/auth/change-password)
 router.post('/auth/change-password', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { currentPassword, newPassword } = req.body;
   if (!currentPassword || !newPassword) {
@@ -75,7 +70,6 @@ router.post('/auth/change-password', authMiddleware, async (req: express.Request
   }
 });
 
-// Get all posts (/posts)
 router.get('/posts', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const posts = await Post.find({ author: req.user.id }).sort({ createdAt: -1 });
@@ -85,7 +79,6 @@ router.get('/posts', authMiddleware, async (req: express.Request, res: express.R
   }
 });
 
-// Create a post (/posts)
 router.post('/posts', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { title, content, status } = req.body;
   if (!title || !content) {
@@ -106,7 +99,6 @@ router.post('/posts', authMiddleware, async (req: express.Request, res: express.
   }
 });
 
-// Delete a post (/posts/:id)
 router.delete('/posts/:id', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id, author: req.user.id });
@@ -117,7 +109,6 @@ router.delete('/posts/:id', authMiddleware, async (req: express.Request, res: ex
   }
 });
 
-// Get followers (/followers)
 router.get('/followers', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const followers = await Follower.find({ blogger: req.user.id }).populate('follower', 'username');
@@ -127,7 +118,6 @@ router.get('/followers', authMiddleware, async (req: express.Request, res: expre
   }
 });
 
-// Get marketplace listings (/marketplace/listings)
 router.get('/marketplace/listings', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const listings = await MarketplaceListing.find({ seller: req.user.id }).sort({ createdAt: -1 });
@@ -137,7 +127,6 @@ router.get('/marketplace/listings', authMiddleware, async (req: express.Request,
   }
 });
 
-// Create a marketplace listing (/marketplace/listings)
 router.post('/marketplace/listings', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { item, price, status } = req.body;
   if (!item || !price) {
@@ -158,7 +147,6 @@ router.post('/marketplace/listings', authMiddleware, async (req: express.Request
   }
 });
 
-// Delete a marketplace listing (/marketplace/listings/:id)
 router.delete('/marketplace/listings/:id', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const listing = await MarketplaceListing.findOneAndDelete({ _id: req.params.id, seller: req.user.id });
