@@ -15,8 +15,7 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
     }
 
     user.points = (user.points || 0) + p;
-    user.creditPoints = (user.creditPoints || 0) + p;
-
+    
     user.rewardHistory.push({
         key: opts.key || null,
         type: opts.type || "task",
