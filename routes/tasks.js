@@ -446,11 +446,7 @@ router.post("/bulk", authenticate, async (req, res) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         });
 
-        const filtered = merged.filter(task => {
-    if (status && task.status !== status) return false;
-    if (activityType && task.activityType !== activityType) return false;
-    return true;
-});
+
 
 const filtered = merged.filter(task => {
     if (status && task.status !== status) return false;
