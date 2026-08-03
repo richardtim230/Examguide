@@ -16,17 +16,12 @@ function todayString() {
 }
 
 function hasReward(user, key) {
-    if (!user.rewardHistory) return false;
-    const arrays = Object.values(user.rewardHistory);
-    for (const arr of arrays) {
-        if (!Array.isArray(arr)) continue;
-        for (const item of arr) {
-            if (item.key === key || item.postId === key || item.reason === key) {
-                return true;
-            }
-        }
-    }
-    return false;
+    if (!Array.isArray(user.rewardHistory)) return false;
+
+    return user.rewardHistory.some(item =>
+        item.key === key ||
+        item.referenceId === key
+    );
 }
 
 async function reloadUser(id) {
@@ -55,7 +50,8 @@ async function completeManualTask(user, taskId) {
     const updatedUser = await awardTaskPoints(user, task.points || 0, {
         key: `task:${task._id}`,
         type: "task",
-        reason: task.title,
+        title: task.title,
+        referenceId: String(task._id),
         by: String(user._id)
     });
 
@@ -67,34 +63,34 @@ router.patch("/complete", authenticate, async (req, res) => {
         const { type, id } = req.body;
         let completionType = type;
 
-if (id === "daily_login") {
-    completionType = "daily_login";
-} else if (id === "profile_complete") {
-    completionType = "profile";
-} else if (typeof id === "string" && id.startsWith("article_")) {
-    completionType = "article";
-}
+        if (id === "daily_login") {
+            completionType = "daily_login";
+        } else if (id === "profile_complete") {
+            completionType = "profile";
+        } else if (typeof id === "string" && id.startsWith("article_")) {
+            completionType = "article";
+        }
+        
         const user = await reloadUser(req.user.id);
         if (!user) return res.status(404).json({ error: "User not found" });
 
         switch (completionType) {
-                case "task": {
-    const result = await completeManualTask(user, id);
+            case "task": {
+                const result = await completeManualTask(user, id);
 
-    if (!result.success) {
-        return res.status(result.status).json({
-            error: result.message
-        });
-    }
-
-    return res.json({
-        success: true,
-        message: result.message,
-        task: result.task,
-        totalPoints: result.user.points,
-        totalCreditPoints: result.user.creditPoints
-    });
+                if (!result.success) {
+                    return res.status(result.status).json({
+                        error: result.message
+                    });
                 }
+
+                return res.json({
+                    success: true,
+                    message: result.message,
+                    task: result.task,
+                    totalPoints: result.user.points
+                });
+            }
             case "login":
             case "daily_login": {
                 const today = todayString();
@@ -104,8 +100,7 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Already completed today.",
-                        points: user.points,
-                        creditPoints: user.creditPoints
+                        points: user.points
                     });
                 }
 
@@ -119,17 +114,15 @@ if (id === "daily_login") {
                 const updatedUser = await awardTaskPoints(user, 5, {
                     key: `login:${today}`,
                     type: "bonus",
-                    reason: "Daily Login",
-                    by: String(user._id),
-                    arrayName: "bonus"
+                    title: "Daily Login",
+                    by: String(user._id)
                 });
 
                 return res.json({
                     success: true,
                     message: "Daily login completed.",
                     pointsAwarded: 5,
-                    totalPoints: updatedUser.points,
-                    totalCreditPoints: updatedUser.creditPoints
+                    totalPoints: updatedUser.points
                 });
             }
 
@@ -148,25 +141,22 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Profile reward already claimed.",
-                        totalPoints: user.points,
-                        totalCreditPoints: user.creditPoints
+                        totalPoints: user.points
                     });
                 }
 
                 const updatedUser = await awardTaskPoints(user, 30, {
                     key: "profile_complete",
                     type: "bonus",
-                    reason: "Completed profile",
-                    by: String(user._id),
-                    arrayName: "bonus"
+                    title: "Completed profile",
+                    by: String(user._id)
                 });
 
                 return res.json({
                     success: true,
                     message: "Profile task completed.",
                     pointsAwarded: 30,
-                    totalPoints: updatedUser.points,
-                    totalCreditPoints: updatedUser.creditPoints
+                    totalPoints: updatedUser.points
                 });
             }
 
@@ -183,36 +173,33 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Referral reward already claimed.",
-                        totalPoints: user.points,
-                        totalCreditPoints: user.creditPoints
+                        totalPoints: user.points
                     });
                 }
 
                 const updatedUser = await awardTaskPoints(user, 50, {
                     key: "refer_friend",
                     type: "bonus",
-                    reason: "First successful referral",
-                    by: String(user._id),
-                    arrayName: "bonus"
+                    title: "First successful referral",
+                    by: String(user._id)
                 });
 
                 return res.json({
                     success: true,
                     message: "Referral completed.",
                     pointsAwarded: 50,
-                    totalPoints: updatedUser.points,
-                    totalCreditPoints: updatedUser.creditPoints
+                    totalPoints: updatedUser.points
                 });
             }
 
             case "article": {
-    const articleId = id.replace("article_", "");
+                const articleId = id.replace("article_", "");
 
-    if (!mongoose.Types.ObjectId.isValid(articleId)) {
-        return res.status(400).json({
-            error: "Invalid article id"
-        });
-    }
+                if (!mongoose.Types.ObjectId.isValid(articleId)) {
+                    return res.status(400).json({
+                        error: "Invalid article id"
+                    });
+                }
 
                 const post = await Post.findOne({ _id: articleId, status: "Published", rewardEnabled: true });
                 if (!post) return res.status(404).json({ error: "Article not found" });
@@ -221,8 +208,7 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Article already completed.",
-                        totalPoints: user.points,
-                        totalCreditPoints: user.creditPoints
+                        totalPoints: user.points
                     });
                 }
 
@@ -231,8 +217,7 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Reward already claimed.",
-                        totalPoints: user.points,
-                        totalCreditPoints: user.creditPoints
+                        totalPoints: user.points
                     });
                 }
 
@@ -251,17 +236,16 @@ if (id === "daily_login") {
                 const updatedUser = await awardTaskPoints(user, points, {
                     key: rewardKey,
                     type: "reading",
-                    reason: `Completed article: ${post.title}`,
-                    by: String(user._id),
-                    arrayName: "reading"
+                    title: post.title,
+                    referenceId: String(post._id),
+                    by: String(user._id)
                 });
 
                 return res.json({
                     success: true,
                     message: "Article completed.",
                     pointsAwarded: points,
-                    totalPoints: updatedUser.points,
-                    totalCreditPoints: updatedUser.creditPoints
+                    totalPoints: updatedUser.points
                 });
             }
 
@@ -278,8 +262,7 @@ if (id === "daily_login") {
                     return res.json({
                         success: true,
                         message: "Resource already completed.",
-                        totalPoints: user.points,
-                        totalCreditPoints: user.creditPoints
+                        totalPoints: user.points
                     });
                 }
 
@@ -291,17 +274,16 @@ if (id === "daily_login") {
                 const updatedUser = await awardTaskPoints(user, points, {
                     key: rewardKey,
                     type: "reading",
-                    reason: `Studied ${resource.title}`,
-                    by: String(user._id),
-                    arrayName: "reading"
+                    title: resource.title,
+                    referenceId: String(resource._id),
+                    by: String(user._id)
                 });
 
                 return res.json({
                     success: true,
                     message: "Resource completed.",
                     pointsAwarded: points,
-                    totalPoints: updatedUser.points,
-                    totalCreditPoints: updatedUser.creditPoints
+                    totalPoints: updatedUser.points
                 });
             }
 
@@ -319,8 +301,10 @@ router.patch("/daily_login", authenticate, async (req, res) => {
         if (!user) return res.status(404).json({ error: "User not found" });
 
         const today = new Date().toISOString().slice(0, 10);
-        const alreadyClaimed = (user.rewardHistory?.bonus || []).some(
-            r => r.reason === "Daily Login" && new Date(r.date).toISOString().slice(0, 10) === today
+        const alreadyClaimed = (user.rewardHistory || []).some(
+            r => r.type === "bonus" &&
+                 r.title === "Daily Login" &&
+                 new Date(r.date).toISOString().slice(0, 10) === today
         );
 
         if (alreadyClaimed) {
@@ -330,15 +314,14 @@ router.patch("/daily_login", authenticate, async (req, res) => {
         const updatedUser = await awardTaskPoints(user, 5, {
             key: `daily_login:${today}`,
             type: "bonus",
-            reason: "Daily Login",
+            title: "Daily Login",
             by: String(req.user.id)
         });
 
         res.json({
             success: true,
             pointsAwarded: 5,
-            totalPoints: updatedUser.points,
-            totalCreditPoints: updatedUser.creditPoints
+            totalPoints: updatedUser.points
         });
     } catch (err) {
         console.error(err);
@@ -352,14 +335,15 @@ router.patch("/read_article", authenticate, async (req, res) => {
         if (!postId) return res.status(400).json({ error: "postId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 5, {
+        const updatedUser = await awardTaskPoints(user, 5, {
             key: `article:${postId}`,
             type: "reading",
-            reason: "Read article",
-            by: req.user.id
+            title: "Read article",
+            referenceId: String(postId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -371,14 +355,15 @@ router.patch("/read_book", authenticate, async (req, res) => {
         if (!resourceId) return res.status(400).json({ error: "resourceId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 8, {
+        const updatedUser = await awardTaskPoints(user, 8, {
             key: `book:${resourceId}`,
             type: "reading",
-            reason: "Read textbook",
-            by: req.user.id
+            title: "Read textbook",
+            referenceId: String(resourceId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -395,14 +380,15 @@ router.patch("/complete_quiz", authenticate, async (req, res) => {
         else if (score >= 40) reward = 10;
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, reward, {
+        const updatedUser = await awardTaskPoints(user, reward, {
             key: `quiz:${examSetId}`,
-            type: "practiced",
-            reason: "Completed CBT",
-            by: req.user.id
+            type: "quiz",
+            title: "Completed CBT",
+            referenceId: String(examSetId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, reward, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, reward, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -414,14 +400,15 @@ router.patch("/share_post", authenticate, async (req, res) => {
         if (!postId) return res.status(400).json({ error: "postId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 4, {
+        const updatedUser = await awardTaskPoints(user, 4, {
             key: `share:${postId}`,
             type: "bonus",
-            reason: "Shared a post",
-            by: req.user.id
+            title: "Shared a post",
+            referenceId: String(postId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -433,14 +420,15 @@ router.patch("/comment_post", authenticate, async (req, res) => {
         if (!postId) return res.status(400).json({ error: "postId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 3, {
+        const updatedUser = await awardTaskPoints(user, 3, {
             key: `comment:${postId}`,
             type: "bonus",
-            reason: "Commented on a post",
-            by: req.user.id
+            title: "Commented on a post",
+            referenceId: String(postId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -452,14 +440,15 @@ router.patch("/like_post", authenticate, async (req, res) => {
         if (!postId) return res.status(400).json({ error: "postId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 1, {
+        const updatedUser = await awardTaskPoints(user, 1, {
             key: `like:${postId}`,
             type: "bonus",
-            reason: "Liked a post",
-            by: req.user.id
+            title: "Liked a post",
+            referenceId: String(postId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -471,14 +460,15 @@ router.patch("/watch_video", authenticate, async (req, res) => {
         if (!videoId) return res.status(400).json({ error: "videoId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 6, {
+        const updatedUser = await awardTaskPoints(user, 6, {
             key: `video:${videoId}`,
             type: "reading",
-            reason: "Watched educational video",
-            by: req.user.id
+            title: "Watched educational video",
+            referenceId: String(videoId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -493,14 +483,14 @@ router.patch("/complete_profile", authenticate, async (req, res) => {
             return res.status(400).json({ error: "Complete your profile first." });
         }
 
-        await awardTaskPoints(user, 15, {
+        const updatedUser = await awardTaskPoints(user, 15, {
             key: "profile_complete",
             type: "bonus",
-            reason: "Completed profile",
-            by: req.user.id
+            title: "Completed profile",
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -513,14 +503,14 @@ router.patch("/verify_email", authenticate, async (req, res) => {
             return res.status(400).json({ error: "Email not verified." });
         }
 
-        await awardTaskPoints(user, 10, {
+        const updatedUser = await awardTaskPoints(user, 10, {
             key: "email_verified",
             type: "bonus",
-            reason: "Verified Email",
-            by: req.user.id
+            title: "Verified Email",
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -536,14 +526,15 @@ router.patch("/upload_resource", authenticate, async (req, res) => {
         if (!resourceId) return res.status(400).json({ error: "resourceId required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 20, {
+        const updatedUser = await awardTaskPoints(user, 20, {
             key: `resource:${resourceId}`,
             type: "bonus",
-            reason: "Uploaded resource",
-            by: req.user.id
+            title: "Uploaded resource",
+            referenceId: String(resourceId),
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -556,14 +547,14 @@ router.patch("/become_publisher", authenticate, async (req, res) => {
             return res.status(400).json({ error: "User is not yet a publisher." });
         }
 
-        await awardTaskPoints(user, 50, {
+        const updatedUser = await awardTaskPoints(user, 50, {
             key: "publisher_reward",
             type: "bonus",
-            reason: "Became Publisher",
-            by: req.user.id
+            title: "Became Publisher",
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -572,14 +563,14 @@ router.patch("/become_publisher", authenticate, async (req, res) => {
 router.patch("/first_purchase", authenticate, async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, 30, {
+        const updatedUser = await awardTaskPoints(user, 30, {
             key: "first_purchase",
             type: "bonus",
-            reason: "First Purchase",
-            by: req.user.id
+            title: "First Purchase",
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -593,14 +584,14 @@ router.patch("/streak_reward", authenticate, async (req, res) => {
         const user = await User.findById(req.user.id);
         const reward = Math.min(streak * 2, 100);
 
-        await awardTaskPoints(user, reward, {
+        const updatedUser = await awardTaskPoints(user, reward, {
             key: `streak:${streak}`,
             type: "bonus",
-            reason: `${streak} day streak`,
-            by: req.user.id
+            title: `${streak} day streak`,
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, reward, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, reward, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -612,14 +603,14 @@ router.patch("/special_bonus", authenticate, async (req, res) => {
         if (!points) return res.status(400).json({ error: "points required" });
 
         const user = await User.findById(req.user.id);
-        await awardTaskPoints(user, points, {
+        const updatedUser = await awardTaskPoints(user, points, {
             key: `bonus:${Date.now()}`,
             type: "admin",
-            reason: reason || "Special Bonus",
-            by: req.user.id
+            title: reason || "Special Bonus",
+            by: String(req.user.id)
         });
 
-        res.json({ success: true, points: user.points, creditPoints: user.creditPoints });
+        res.json({ success: true, points: updatedUser.points });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
