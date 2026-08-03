@@ -480,7 +480,11 @@ await User.findByIdAndUpdate(user._id, {
 
 return res.json(todaysTasks);
 
-
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
 // PATCH: Update a task (status, progress, etc.)
 router.patch("/:taskId", authenticate, async (req, res) => {
   try {
