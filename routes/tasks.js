@@ -457,7 +457,8 @@ const filtered = merged.filter(task => {
 if (
     user.dailyTaskPool &&
     user.dailyTaskPool.date === today &&
-    Array.isArray(user.dailyTaskPool.tasks)
+    Array.isArray(user.dailyTaskPool.tasks) &&
+    user.dailyTaskPool.tasks.length
 ) {
     return res.json(user.dailyTaskPool.tasks);
 }
