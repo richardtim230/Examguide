@@ -1,34 +1,66 @@
-// utils/awardTaskPoints.js
 export const awardTaskPoints = async (user, points, opts = {}) => {
-  // points: number
-  // opts: { key, type, reason, by, arrayName }
-  const p = Number(points) || 0;
+    const p = Number(points) || 0;
 
-  // numeric updates
-  user.points = (user.points || 0) + p;
-  user.creditPoints = (user.creditPoints || 0) + p;
+    user.rewardHistory ||= {};
 
-  // ensure rewardHistory shape exists
-  user.rewardHistory = user.rewardHistory || {};
+    // Decide where to save
+    let arrayName = "practiced";
 
-  // default mapping: treat "reading" separately, otherwise use "practiced"
-  const defaultArray = (opts.type === 'reading' || opts.arrayName === 'reading') ? 'reading' : 'practiced';
-  const arrayName = opts.arrayName || defaultArray;
+    if (opts.type === "reading") arrayName = "reading";
+    if (opts.type === "bonus") arrayName = "bonus";
+    if (opts.type === "admin") arrayName = "admin";
+    if (opts.arrayName) arrayName = opts.arrayName;
 
-  user.rewardHistory[arrayName] = user.rewardHistory[arrayName] || [];
+    user.rewardHistory[arrayName] ||= [];
 
-  const entry = {
-    key: opts.key || null,            // e.g., "task:abcdef" or "article:123"
-    points: p,
-    date: new Date(),
-    reason: opts.reason || opts.type || null,
-    by: opts.by || null
-  };
+    // Prevent duplicate rewards
+    if (opts.key) {
+        const exists = user.rewardHistory[arrayName].some(item => {
+            return item.key === opts.key || item.postId === opts.key;
+        });
 
-  user.rewardHistory[arrayName].push(entry);
+        if (exists) {
+            return user;
+        }
+    }
 
-  await user.save();
+    // Award points
+    user.points = (user.points || 0) + p;
+    user.creditPoints = (user.creditPoints || 0) + p;
 
-  // Return updated user object (lean callers may expect points/creditPoints)
-  return user;
+    let entry;
+
+    switch (arrayName) {
+
+        case "reading":
+            entry = {
+                postId: opts.key || opts.postId,
+                points: p,
+                date: new Date()
+            };
+            break;
+
+        case "bonus":
+        case "admin":
+            entry = {
+                reason: opts.reason,
+                points: p,
+                by: opts.by,
+                date: new Date()
+            };
+            break;
+
+        default:
+            entry = {
+                key: opts.key,
+                points: p,
+                date: new Date()
+            };
+    }
+
+    user.rewardHistory[arrayName].push(entry);
+
+    await user.save();
+
+    return user;
 };
