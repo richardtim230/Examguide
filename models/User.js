@@ -133,13 +133,15 @@ const UserSchema = new Schema({
   zip: { type: String, default: "" },
   bio: { type: String, default: "" },
 
-  rewardHistory: {
-    practiced: [{ key: String, points: Number, date: { type: Date, default: Date.now } }],
-    reading: [{ postId: String, points: Number, date: { type: Date, default: Date.now } }],
-    bonus: [{ reason: String, points: Number, date: { type: Date, default: Date.now }, by: String }],
-    admin: [{ reason: String, points: Number, date: { type: Date, default: Date.now }, by: String }],
-    referrals: [{ referredUser: { type: Schema.Types.ObjectId, ref: "User" }, points: { type: Number, default: 10 }, date: { type: Date, default: Date.now } }]
-  },
+  rewardHistory: [{
+    key: String,
+    type: String,          // task, article, quiz, referral, login, admin
+    title: String,
+    points: Number,
+    date: Date,
+    by: String,
+    referenceId: String
+}],
 
   lastLoginAt: { type: Date },
   meta: { type: Schema.Types.Mixed, default: {} },
