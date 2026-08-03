@@ -512,11 +512,12 @@ router.patch("/:taskId", authenticate, async (req, res) => {
       const user = await User.findById(task.user);
 
       if (user) {
-        await awardTaskPoints(user, task.points || 0, {
+await awardTaskPoints(user, task.points || 0, {
   key: `task:${task._id}`,
-  type: 'task',
-  reason: task.title || 'Task completed',
-  by: String(req.user.id)
+  type: task.activityType || "task",
+  title: task.title || "Task completed",
+  by: String(req.user.id),
+  referenceId: task._id.toString()
 });
       }
     }
