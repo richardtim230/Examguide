@@ -393,7 +393,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(cookieParser());
-
+app.set("trust proxy", true);
 // Set device_id cookie if not present
 app.use((req, res, next) => {
   if (!req.cookies.device_id) {
