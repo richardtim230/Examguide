@@ -100,8 +100,7 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
     }
 
     userDoc.points = (userDoc.points || 0) + p;
-    userDoc.creditPoints = (userDoc.creditPoints || 0) + p;
-    
+        
     if (!Array.isArray(userDoc.rewardHistory)) {
         userDoc.rewardHistory = [];
     }
