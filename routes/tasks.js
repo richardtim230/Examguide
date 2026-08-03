@@ -454,17 +454,12 @@ const filtered = merged.filter(task => {
     return true;
 });
 
-// Return today's saved task list if it already exists
 if (
     user.dailyTaskPool &&
     user.dailyTaskPool.date === today &&
-    Array.isArray(user.dailyTaskPool.taskIds)
+    Array.isArray(user.dailyTaskPool.tasks)
 ) {
-    const todaysTasks = user.dailyTaskPool.taskIds
-        .map(id => filtered.find(task => String(task._id) === String(id)))
-        .filter(Boolean);
-
-    return res.json(todaysTasks);
+    return res.json(user.dailyTaskPool.tasks);
 }
 
 // First request today: create today's task list
@@ -474,7 +469,7 @@ const todaysTasks = filtered.slice(0, 10);
 await User.findByIdAndUpdate(user._id, {
     dailyTaskPool: {
         date: today,
-        taskIds: todaysTasks.map(task => String(task._id))
+        tasks: todaysTasks
     }
 });
 
