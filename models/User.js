@@ -135,13 +135,13 @@ const UserSchema = new Schema({
 
   rewardHistory: [{
     key: String,
-    type: String,          // task, article, quiz, referral, login, admin
+    type: { type: String }, // Use { type: String } if 'type' causes reserved-word conflicts in Mongoose
     title: String,
     points: Number,
-    date: Date,
+    date: { type: Date, default: Date.now },
     by: String,
     referenceId: String
-}],
+  }],
 
   lastLoginAt: { type: Date },
   meta: { type: Schema.Types.Mixed, default: {} },
