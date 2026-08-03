@@ -9,8 +9,13 @@ import { awardTaskPoints } from "../utils/awardTaskPoints.js";
 
 const router = express.Router();
 
-function todayString() {
-    return new Date().toISOString().split("T")[0];
+function todayString(timeZone = "Africa/Lagos") {
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(new Date());
 }
 
 function hasReward(user, key) {
