@@ -412,6 +412,229 @@ router.get("/user/library", authenticate, async (req, res) => {
     });
   }
 });
+router.get("/users/me/library", authenticate, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId)
+      .select("fullname username profilePic faculty department level")
+      .lean();
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+
+    const uploadedResources = await Resources.find({
+      uploader: userId
+    })
+      .sort({ createdAt: -1 })
+      .populate("uploader", "fullname username profilePic")
+      .lean();
+
+    const books = uploadedResources.filter(
+      resource => resource.resourceType === "textbook"
+    );
+
+    const notes = uploadedResources.filter(
+      resource => resource.resourceType === "notebook"
+    );
+
+    const resourceIds = uploadedResources.map(resource => resource._id);
+
+    const progresses = await Progress.find({
+      user: userId,
+      resource: { $in: resourceIds }
+    })
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    const progressMap = new Map(
+      progresses.map(progress => [
+        String(progress.resource),
+        progress
+      ])
+    );
+
+    const booksWithProgress = books.map(book => {
+      const progress = progressMap.get(String(book._id));
+
+      return {
+        ...book,
+        coverImage: book.cover?.url || "",
+        progress: progress
+          ? {
+              progressPercent: progress.progressPercent || 0,
+              currentPage: progress.currentPage || 0,
+              totalPages: progress.totalPages || book.pages || 0,
+              updatedAt: progress.updatedAt,
+              lastOpenedAt: progress.lastOpenedAt || progress.updatedAt
+            }
+          : {
+              progressPercent: 0,
+              currentPage: 0,
+              totalPages: book.pages || 0,
+              updatedAt: null,
+              lastOpenedAt: null
+            }
+      };
+    });
+
+    const notesWithProgress = notes.map(note => {
+      const progress = progressMap.get(String(note._id));
+
+      return {
+        ...note,
+        coverImage: note.cover?.url || "",
+        progress: progress
+          ? {
+              progressPercent: progress.progressPercent || 0,
+              currentPage: progress.currentPage || 0,
+              totalPages: progress.totalPages || note.pages || 0,
+              updatedAt: progress.updatedAt,
+              lastOpenedAt: progress.lastOpenedAt || progress.updatedAt
+            }
+          : {
+              progressPercent: 0,
+              currentPage: 0,
+              totalPages: note.pages || 0,
+              updatedAt: null,
+              lastOpenedAt: null
+            }
+      };
+    });
+
+    const accessedRecords = await ReadAccess.find({
+      user: userId
+    })
+      .sort({ paidAt: -1 })
+      .populate({
+        path: "resource",
+        populate: {
+          path: "uploader",
+          select: "fullname username profilePic"
+        }
+      })
+      .lean();
+
+    const accessed = accessedRecords
+      .filter(item => item.resource)
+      .map(item => {
+        const resource = item.resource;
+        const progress = progressMap.get(String(resource._id));
+
+        return {
+          _id: resource._id,
+          title: resource.title,
+          subtitle: resource.subtitle,
+          resourceType: resource.resourceType,
+          courseCode: resource.courseCode,
+          courseTitle: resource.courseTitle,
+          uploader: resource.uploader,
+          coverImage: resource.cover?.url || "",
+          access: {
+            paidAt: item.paidAt,
+            createdAt: item.createdAt
+          },
+          progress: progress
+            ? {
+                progressPercent: progress.progressPercent || 0,
+                currentPage: progress.currentPage || 0,
+                totalPages: progress.totalPages || resource.pages || 0,
+                updatedAt: progress.updatedAt,
+                lastOpenedAt: progress.lastOpenedAt || progress.updatedAt
+              }
+            : {
+                progressPercent: 0,
+                currentPage: 0,
+                totalPages: resource.pages || 0,
+                updatedAt: null,
+                lastOpenedAt: null
+              }
+        };
+      });
+
+    const historyRecords = await Progress.find({
+      user: userId
+    })
+      .sort({ updatedAt: -1 })
+      .limit(50)
+      .populate({
+        path: "resource",
+        populate: {
+          path: "uploader",
+          select: "fullname username profilePic"
+        }
+      })
+      .lean();
+
+    const history = historyRecords
+      .filter(item => item.resource)
+      .map(item => {
+        const resource = item.resource;
+
+        return {
+          _id: resource._id,
+          title: resource.title,
+          subtitle: resource.subtitle,
+          resourceType: resource.resourceType,
+          courseCode: resource.courseCode,
+          courseTitle: resource.courseTitle,
+          uploader: resource.uploader,
+          coverImage: resource.cover?.url || "",
+          progress: {
+            progressPercent: item.progressPercent || 0,
+            currentPage: item.currentPage || 0,
+            totalPages: item.totalPages || resource.pages || 0,
+            updatedAt: item.updatedAt,
+            lastOpenedAt: item.lastOpenedAt || item.updatedAt
+          }
+        };
+      });
+
+    const totalOpened = await Progress.countDocuments({
+      user: userId
+    });
+
+    const stats = {
+      totalBooks: books.length,
+      totalNotes: notes.length,
+      totalAccessed: accessed.length,
+      totalOpened,
+      totalBookmarks: 0
+    };
+
+    return res.json({
+      success: true,
+
+      user,
+
+      stats,
+
+      library: {
+        books: booksWithProgress,
+        notes: notesWithProgress
+      },
+
+      accessed,
+
+      history,
+
+      bookmarks: []
+    });
+
+  } catch (error) {
+    console.error("GET /users/me/library error:", error);
+
+    return res.status(500).json({
+      success: false,
+      error: "Failed to load library"
+    });
+  }
+});
+
 router.get("/users/:id/library", async (req, res) => {
   try {
     const userId = req.params.id;
