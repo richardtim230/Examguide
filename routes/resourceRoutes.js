@@ -189,7 +189,197 @@ function multerMiddleware(fieldsSpec) {
     });
   };
 }
+router.get("/user/library", authenticate, async (req, res) => {
+  try {
+    const userId = req.user._id;
 
+    const [
+      uploadedResources,
+      readingProgress,
+      accessedResources,
+      bookmarks
+    ] = await Promise.all([
+      Resources.find({
+        uploader: userId
+      })
+        .populate("uploader", "fullname profilePic username faculty department level")
+        .sort({ createdAt: -1 })
+        .lean(),
+
+      Progress.find({
+        user: userId
+      })
+        .populate({
+          path: "resource",
+          populate: {
+            path: "uploader",
+            select: "fullname profilePic username faculty department level"
+          }
+        })
+        .populate("chapter", "chapterNumber title")
+        .sort({ updatedAt: -1 })
+        .lean(),
+
+      ReadAccess.find({
+        user: userId
+      })
+        .populate({
+          path: "resource",
+          populate: {
+            path: "uploader",
+            select: "fullname profilePic username faculty department level"
+          }
+        })
+        .sort({ paidAt: -1 })
+        .lean(),
+
+      Bookmark.find({
+        user: userId
+      })
+        .populate({
+          path: "resource",
+          populate: {
+            path: "uploader",
+            select: "fullname profilePic username faculty department level"
+          }
+        })
+        .sort({ createdAt: -1 })
+        .lean()
+    ]);
+
+    const uploadedBooks = uploadedResources.filter(
+      resource => resource.resourceType === "textbook"
+    );
+
+    const uploadedNotes = uploadedResources.filter(
+      resource => resource.resourceType === "notebook"
+    );
+
+    const progressMap = new Map();
+
+    for (const progress of readingProgress) {
+      if (!progress.resource?._id) continue;
+
+      progressMap.set(
+        String(progress.resource._id),
+        {
+          chapter: progress.chapter
+            ? {
+                _id: progress.chapter._id,
+                chapterNumber: progress.chapter.chapterNumber,
+                title: progress.chapter.title
+              }
+            : null,
+          page: progress.page || 1,
+          updatedAt: progress.updatedAt,
+          progressPercent: progress.progressPercent || 0
+        }
+      );
+    }
+
+    const addProgress = resource => {
+      if (!resource) return null;
+
+      const progress = progressMap.get(String(resource._id));
+
+      return {
+        ...resource,
+        progress: progress || {
+          chapter: null,
+          page: 1,
+          updatedAt: null,
+          progressPercent: 0
+        }
+      };
+    };
+
+    const libraryBooks = uploadedBooks.map(addProgress);
+    const libraryNotes = uploadedNotes.map(addProgress);
+
+    const history = readingProgress
+      .filter(item => item.resource)
+      .map(item => ({
+        ...item.resource,
+        progress: {
+          chapter: item.chapter
+            ? {
+                _id: item.chapter._id,
+                chapterNumber: item.chapter.chapterNumber,
+                title: item.chapter.title
+              }
+            : null,
+          page: item.page || 1,
+          progressPercent: item.progressPercent || 0,
+          updatedAt: item.updatedAt
+        }
+      }));
+
+    const accessed = accessedResources
+      .filter(item => item.resource)
+      .map(item => ({
+        ...item.resource,
+        access: {
+          paidAt: item.paidAt || item.createdAt || null
+        },
+        progress: progressMap.get(String(item.resource._id)) || {
+          chapter: null,
+          page: 1,
+          updatedAt: null,
+          progressPercent: 0
+        }
+      }));
+
+    const bookmarked = bookmarks
+      .filter(item => item.resource)
+      .map(item => ({
+        ...item.resource,
+        bookmarkedAt: item.createdAt
+      }));
+
+    res.json({
+      success: true,
+
+      user: {
+        _id: req.user._id,
+        fullname: req.user.fullname || "",
+        username: req.user.username || "",
+        profilePic: req.user.profilePic || "",
+        faculty: req.user.faculty || "",
+        department: req.user.department || "",
+        level: req.user.level || "",
+        bio: req.user.bio || ""
+      },
+
+      stats: {
+        totalResources: uploadedResources.length,
+        totalBooks: uploadedBooks.length,
+        totalNotes: uploadedNotes.length,
+        totalOpened: readingProgress.length,
+        totalAccessed: accessedResources.length,
+        totalBookmarks: bookmarks.length
+      },
+
+      library: {
+        books: libraryBooks,
+        notes: libraryNotes
+      },
+
+      history,
+
+      accessed,
+
+      bookmarks: bookmarked
+    });
+
+  } catch (err) {
+    console.error("Fetch user library error:", err);
+
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch user library"
+    });
+  }
+});
 router.get("/users/:id", async (req, res) => {
   try {
     const id = req.params.id;
