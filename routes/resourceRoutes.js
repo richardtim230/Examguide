@@ -12,7 +12,7 @@ import jwt from "jsonwebtoken";
 import { avatarUpload } from "../middleware/upload.js";
 import ReadAccess from "../models/ReadAccess.js";
 import CreditTransaction from "../models/CreditTransaction.js";
-
+import Progress from "../models/Progress.js";
 
 export async function authenticate(req, res, next) {
   try {
@@ -376,6 +376,182 @@ router.get("/user/library", authenticate, async (req, res) => {
 
     res.status(500).json({
       success: false,
+      error: "Failed to fetch user library"
+    });
+  }
+});
+router.get("/users/:id/library", async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (!isValidId(userId)) {
+      return res.status(400).json({
+        error: "Invalid user id"
+      });
+    }
+
+    const user = await User.findById(userId)
+      .select("_id fullname username profilePic faculty department level bio institution")
+      .populate("institution", "name")
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .lean();
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found"
+      });
+    }
+
+    const page = Math.max(
+      1,
+      parseInt(req.query.page || "1", 10)
+    );
+
+    const limit = Math.min(
+      50,
+      Math.max(1, parseInt(req.query.limit || "12", 10))
+    );
+
+    const skip = (page - 1) * limit;
+
+    const uploadedFilter = {
+      uploader: userId
+    };
+
+    const progressFilter = {
+      user: userId
+    };
+
+    const [
+      uploadedResources,
+      uploadedTotal,
+      progressRecords,
+      openedTotal,
+      bookmarkRecords,
+      bookmarkTotal
+    ] = await Promise.all([
+      Resources.find(uploadedFilter)
+        .populate(
+          "uploader",
+          "fullname username profilePic faculty department level"
+        )
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+
+      Resources.countDocuments(uploadedFilter),
+
+      Progress.find(progressFilter)
+        .populate({
+          path: "resource",
+          populate: {
+            path: "uploader",
+            select: "fullname username profilePic faculty department level"
+          }
+        })
+        .populate("chapter", "chapterNumber title")
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+
+      Progress.countDocuments(progressFilter),
+
+      Bookmark.find({ user: userId })
+        .populate({
+          path: "resource",
+          populate: {
+            path: "uploader",
+            select: "fullname username profilePic faculty department level"
+          }
+        })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+
+      Bookmark.countDocuments({ user: userId })
+    ]);
+
+    const openedResources = progressRecords
+      .filter(item => item.resource)
+      .map(item => ({
+        ...item.resource,
+        readingProgress: {
+          chapter: item.chapter || null,
+          page: item.page || 1,
+          updatedAt: item.updatedAt
+        }
+      }));
+
+    const bookmarkedResources = bookmarkRecords
+      .filter(item => item.resource)
+      .map(item => ({
+        ...item.resource,
+        bookmarkedAt: item.createdAt
+      }));
+
+    res.json({
+      success: true,
+
+      user: {
+        _id: user._id,
+        fullName: user.fullname || "",
+        username: user.username || "",
+        profilePicture: user.profilePic || "",
+        faculty:
+          typeof user.faculty === "object"
+            ? user.faculty?.name || ""
+            : user.faculty || "",
+        department:
+          typeof user.department === "object"
+            ? user.department?.name || ""
+            : user.department || "",
+        institution:
+          typeof user.institution === "object"
+            ? user.institution?.name || ""
+            : user.institution || "",
+        level: user.level || "",
+        bio: user.bio || ""
+      },
+
+      stats: {
+        uploaded: uploadedTotal,
+        opened: openedTotal,
+        bookmarked: bookmarkTotal
+      },
+
+      uploaded: {
+        items: uploadedResources,
+        total: uploadedTotal,
+        page,
+        limit,
+        hasMore: skip + uploadedResources.length < uploadedTotal
+      },
+
+      opened: {
+        items: openedResources,
+        total: openedTotal,
+        page,
+        limit,
+        hasMore: skip + openedResources.length < openedTotal
+      },
+
+      bookmarked: {
+        items: bookmarkedResources,
+        total: bookmarkTotal,
+        page,
+        limit,
+        hasMore: skip + bookmarkedResources.length < bookmarkTotal
+      }
+    });
+
+  } catch (err) {
+    console.error("Fetch user library error:", err);
+
+    res.status(500).json({
       error: "Failed to fetch user library"
     });
   }
