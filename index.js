@@ -314,6 +314,7 @@ import { avatarUpload } from "./middleware/upload.js";
 import publishersRouter from "./routes/publishers.js";
 import taskActionsRouter from "./routes/taskActions.js";
 import coursesRouter from "./routes/courses.js";
+import subcoursesRouter from "./routes/subcourses.js";
 
 router.post(
   "/upload-avatar",
@@ -3634,7 +3635,7 @@ app.use("/api/task-actions", taskActionsRouter);
 app.use("/api/courses", coursesRouter);
 // mount chatbot routes (these routes themselves use auth middleware)
 app.use("/api/chatbot", chatbotRoutes);
-// In your index.js, add:
+app.use("/api/subcourses", subcoursesRouter); // new subcourses endpoints
 // after your other middlewares (body parser, etc.)
 app.use("/api/publishers", publishersRouter);
 app.use("/api/schools", schoolRegistrationRoutes);
