@@ -12,7 +12,6 @@ import jwt from "jsonwebtoken";
 import { avatarUpload } from "../middleware/upload.js";
 import ReadAccess from "../models/ReadAccess.js";
 import CreditTransaction from "../models/CreditTransaction.js";
-import Progress from "../models/Progress.js";
 
 export async function authenticate(req, res, next) {
   try {
@@ -133,12 +132,45 @@ const BookmarkSchema = new mongoose.Schema({
 const Bookmark = mongoose.models.Bookmark || mongoose.model("Bookmark", BookmarkSchema);
 
 const ProgressSchema = new mongoose.Schema({
-  resource: { type: mongoose.Schema.Types.ObjectId, ref: "Resources", required: true, index: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
-  chapter: { type: mongoose.Schema.Types.ObjectId, ref: "ResourceChapter", default: null },
-  page: { type: Number, default: 1 },
-  updatedAt: { type: Date, default: Date.now }
-}, { timestamps: true });
+    resource: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Resources",
+        required: true,
+        index: true
+    },
+
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        index: true
+    },
+
+    chapter: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ResourceChapter",
+        default: null
+    },
+
+    page: {
+        type: Number,
+        default: 1
+    },
+
+    progressPercent: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100
+    },
+
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    timestamps: true
+});
 const Progress = mongoose.models.ReaderProgress || mongoose.model("ReaderProgress", ProgressSchema);
 
 async function removeFilesSafely(files = []) {
