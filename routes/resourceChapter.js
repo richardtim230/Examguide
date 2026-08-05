@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Resources from "../models/Resources.js";
 import ResourceChapter from "../models/ResourceChapter.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
@@ -36,6 +37,31 @@ const ProgressSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 const Progress = mongoose.models.ReaderProgress || mongoose.model("ReaderProgress", ProgressSchema);
+
+// OWNER CHECKING HELPER
+async function ensureOwner(req, res, next) {
+  try {
+    const resourceId = req.params.resourceId;
+    if (!isValidId(resourceId)) return res.status(400).json({ error: "Invalid resource id" });
+
+    const resource = await Resources.findById(resourceId).select("uploader").lean();
+    if (!resource) return res.status(404).json({ error: "Resource not found" });
+
+    // req.user expected to be set by authenticate middleware
+    const userId = req.user && (req.user._id || req.user.id || req.user);
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    if (String(resource.uploader) !== String(userId)) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+
+    // Attach resource for downstream handlers if needed
+    req._resource = resource;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
 
 router.get("/resources", async (req, res, next) => {
   try {
@@ -143,6 +169,50 @@ router.get("/resources/:resourceId/chapters", async (req, res, next) => {
       ResourceChapter.countDocuments({ resource: resourceId })
     ]);
     res.json({ success: true, page, limit, total, chapters });
+  } catch (err) { next(err); }
+});
+
+// OWNER-ONLY: fetch all chapters for editor (includes drafts & full contentHtml)
+router.get("/resources/:resourceId/chapters/editor", authenticate, ensureOwner, async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapters = await ResourceChapter.find({ resource: resourceId }).sort({ chapterNumber: 1 }).lean();
+    res.json({ success: true, resource: req._resource || null, chapters });
+  } catch (err) { next(err); }
+});
+
+// OWNER-ONLY: fetch single chapter for editor
+router.get("/resources/:resourceId/chapters/:chapterId/editor", authenticate, ensureOwner, async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapterId = req.params.chapterId;
+    if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
+    const chapter = await ResourceChapter.findOne({ _id: chapterId, resource: resourceId }).lean();
+    if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+    res.json({ success: true, resource: req._resource || null, chapter });
+  } catch (err) { next(err); }
+});
+
+// OWNER-ONLY: update chapter for editor — safer owner-only update route
+router.put("/resources/:resourceId/chapters/:chapterId/editor", authenticate, ensureOwner, async (req, res, next) => {
+  try {
+    const resourceId = req.params.resourceId;
+    const chapterId = req.params.chapterId;
+    if (!isValidId(resourceId) || !isValidId(chapterId)) return res.status(400).json({ error: "Invalid id(s)" });
+    const chapter = await ResourceChapter.findOne({ _id: chapterId, resource: resourceId });
+    if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+
+    const allowed = ["chapterNumber","title","slug","description","contentHtml","isLocked","allowComments","status","publishedAt","lastEditedBy","wordCount"];
+    let changed = false;
+    allowed.forEach(k => {
+      if (typeof req.body[k] !== "undefined") {
+        chapter[k] = req.body[k];
+        changed = true;
+      }
+    });
+    if (changed) await chapter.save();
+    await refreshResourceStats(resourceId);
+    res.json({ success: true, chapter });
   } catch (err) { next(err); }
 });
 
