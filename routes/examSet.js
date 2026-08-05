@@ -3,6 +3,7 @@
 import express from "express";
 import ExamSet from "../models/ExamSet.js";
 import CbtQuestion from "../models/CbtQuestion.js";
+import { authenticate } from "../middleware/authenticate.js";
 import { sendNotificationToAllUsers } from "../services/notificationService.js";
 
 const router = express.Router();
@@ -10,43 +11,63 @@ const router = express.Router();
 /**
  * Create an ExamSet
  * POST /api/exam-set
- * Body: {subject, title, accessCode, duration, tags}
  */
-router.post("/", async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   try {
-    const { subject, title, accessCode, duration } = req.body;
+    const { subject, title, accessCode, duration, examType } = req.body;
     let { tags } = req.body;
+
     if (!subject || !title || !accessCode) {
-      return res.status(400).json({ error: "Missing required fields" });
+      return res.status(400).json({
+        error: "Missing required fields"
+      });
     }
-    // Parse tags field robustly
+
     let tagsArr = [];
-    if (Array.isArray(tags)) tagsArr = tags.filter(Boolean);
-    else if (typeof tags === "string" && tags.length)
-      tagsArr = tags.split(",").map(t => t.trim()).filter(Boolean);
 
-    // Set default tag if missing/empty
-    if (!tagsArr || tagsArr.length === 0) tagsArr = ["university"];
-
-    // Ensure unique access code
-    if (await ExamSet.findOne({ accessCode })) {
-      return res.status(409).json({ error: "Access code already exists" });
+    if (Array.isArray(tags)) {
+      tagsArr = tags.filter(Boolean);
+    } else if (typeof tags === "string" && tags.length) {
+      tagsArr = tags
+        .split(",")
+        .map(t => t.trim())
+        .filter(Boolean);
     }
-    
+
+    if (tagsArr.length === 0) {
+      tagsArr = ["university"];
+    }
+
+    const existing = await ExamSet.findOne({ accessCode });
+
+    if (existing) {
+      return res.status(409).json({
+        error: "Access code already exists"
+      });
+    }
+
+    const createdBy = req.user?._id || req.user?.id;
+
+    if (!createdBy) {
+      return res.status(401).json({
+        error: "Unable to determine authenticated user"
+      });
+    }
+
     const set = await ExamSet.create({
-      subject,
-      title,
-      accessCode,
-      duration: duration || 3600,
+      subject: subject.trim(),
+      title: title.trim(),
+      accessCode: accessCode.trim(),
+      duration: duration ? Number(duration) : 3600,
       tags: tagsArr,
-      createdBy: req.user?.id,
+      examType: examType || "cbt",
+      createdBy
     });
 
-    // ============ SEND PUSH NOTIFICATION ============
     try {
       const notificationPayload = {
         title: `🎓 New Mock Exam Available!`,
-        message: `${subject} - ${title || "Practice Now"}`,
+        message: `${subject} - ${title}`,
         image: "https://oau.examguard.com.ng/logo.png",
         icon: "https://oau.examguard.com.ng/logo.png",
         url: `https://oau.examguard.com.ng/tutor/mock.html?accessCode=${set.accessCode}`,
@@ -55,132 +76,338 @@ router.post("/", async (req, res) => {
       };
 
       await sendNotificationToAllUsers(notificationPayload);
-      console.log("✓ Notification sent for new exam set:", set.accessCode);
     } catch (notifErr) {
-      console.error("⚠ Notification failed (non-blocking):", notifErr.message);
-      // Don't fail the request if notification fails
+      console.error(
+        "⚠ Notification failed:",
+        notifErr.message
+      );
     }
 
     res.status(201).json(set);
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Create ExamSet error:", e);
+    res.status(500).json({
+      error: e.message
+    });
   }
 });
 
+
 /**
- * List ExamSets (optionally filter by subject, tag, or tags)
- * GET /api/exam-set?subject=MTH101&tag=undergraduate  OR  /api/exam-set?tags=undergraduate,university
+ * Get only ExamSets created by the logged-in user
+ *
+ * GET /api/exam-set/mine
+ */
+router.get("/mine", authenticate, async (req, res) => {
+  try {
+    const userId = req.user?._id || req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Authentication required"
+      });
+    }
+
+    const filter = {
+      createdBy: userId
+    };
+
+    if (req.query.subject) {
+      filter.subject = req.query.subject;
+    }
+
+    if (req.query.tag) {
+      filter.tags = req.query.tag;
+    }
+
+    if (req.query.tags) {
+      const tagsArr = Array.isArray(req.query.tags)
+        ? req.query.tags
+        : req.query.tags
+            .split(",")
+            .map(t => t.trim())
+            .filter(Boolean);
+
+      filter.tags = {
+        $in: tagsArr
+      };
+    }
+
+    const sets = await ExamSet
+      .find(filter)
+      .populate("createdBy", "fullname username email profilePic")
+      .sort({ createdAt: -1 });
+
+    res.json(sets);
+
+  } catch (e) {
+    console.error("Fetch my ExamSets error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
+  }
+});
+
+
+/**
+ * List all ExamSets
+ *
+ * GET /api/exam-set
  */
 router.get("/", async (req, res) => {
   try {
     const filter = {};
-    if (req.query.subject) filter.subject = req.query.subject;
-    if (req.query.tag) filter.tags = req.query.tag;
+
+    if (req.query.subject) {
+      filter.subject = req.query.subject;
+    }
+
+    if (req.query.tag) {
+      filter.tags = req.query.tag;
+    }
+
     if (req.query.tags) {
       const tagsArr = Array.isArray(req.query.tags)
         ? req.query.tags
-        : req.query.tags.split(",").map(t => t.trim()).filter(Boolean);
-      filter.tags = { $in: tagsArr };
+        : req.query.tags
+            .split(",")
+            .map(t => t.trim())
+            .filter(Boolean);
+
+      filter.tags = {
+        $in: tagsArr
+      };
     }
-    const sets = await ExamSet.find(filter).sort({ createdAt: -1 });
+
+    const sets = await ExamSet
+      .find(filter)
+      .populate("createdBy", "fullname username email profilePic")
+      .sort({ createdAt: -1 });
+
     res.json(sets);
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Fetch ExamSets error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
   }
 });
 
+
 /**
- * Get or auto-create a specific ExamSet and its questions by access code.
- * GET /api/exam-set/by-access?accessCode=xxxx[&subject=...&title=...&duration=...&tags=...]
+ * Get a specific ExamSet by access code
+ *
+ * GET /api/exam-set/by-access?accessCode=xxxx
+ *
+ * This remains public because students need to access exams
+ * using the access code.
  */
 router.get("/by-access", async (req, res) => {
   try {
-    const { accessCode, subject, title, duration } = req.query;
-    let { tags } = req.query;
-    if (!accessCode) return res.status(400).json({ error: "accessCode required" });
+    const {
+      accessCode
+    } = req.query;
 
-    // Try to find an existing ExamSet
-    let examSet = await ExamSet.findOne({ accessCode });
-
-    // If not found, auto-create using provided info (subject required for create)
-    if (!examSet) {
-      if (!subject || typeof subject !== "string" || subject.trim().length === 0) {
-        return res.status(400).json({ error: "Exam set not found and subject parameter required to create new set." });
-      }
-      // Normalize tags
-      let tagsArr = [];
-      if (Array.isArray(tags)) tagsArr = tags.filter(Boolean);
-      else if (typeof tags === "string" && tags.length)
-        tagsArr = tags.split(",").map(t => t.trim()).filter(Boolean);
-
-      // Set default tag if missing/empty
-      if (!tagsArr || tagsArr.length === 0) tagsArr = ["university"];
-
-      examSet = await ExamSet.create({
-        subject: subject.trim(),
-        title: (title && typeof title === "string" && title.trim().length > 0) ? title.trim() : `${subject.trim()} Exam`,
-        accessCode: accessCode.trim(),
-        duration: duration ? Number(duration) : 3600,
-        tags: tagsArr,
+    if (!accessCode) {
+      return res.status(400).json({
+        error: "accessCode required"
       });
-
-      // ============ SEND PUSH NOTIFICATION FOR AUTO-CREATED EXAM SET ============
-      try {
-        const notificationPayload = {
-          title: `🎓 New Mock Exam Available!`,
-          message: `${subject.trim()} - ${examSet.title}`,
-          image: "https://oau.examguard.com.ng/logo.png",
-          icon: "https://oau.examguard.com.ng/logo.png",
-          url: `https://oau.examguard.com.ng/tutor/mock.html?accessCode=${examSet.accessCode}`,
-          type: "exam",
-          examCode: examSet.accessCode
-        };
-
-        await sendNotificationToAllUsers(notificationPayload);
-        console.log("✓ Notification sent for auto-created exam set:", examSet.accessCode);
-      } catch (notifErr) {
-        console.error("⚠ Notification failed (non-blocking):", notifErr.message);
-      }
     }
 
-    // Always get latest questions for this set
-    const questions = await CbtQuestion.find({ examSet: examSet._id });
-    res.json({ examSet, questions });
+    const examSet = await ExamSet
+      .findOne({ accessCode: accessCode.trim() })
+      .populate("createdBy", "fullname username email profilePic");
+
+    if (!examSet) {
+      return res.status(404).json({
+        error: "Exam set not found"
+      });
+    }
+
+    const questions = await CbtQuestion.find({
+      examSet: examSet._id
+    });
+
+    res.json({
+      examSet,
+      questions
+    });
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Get ExamSet by access error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
   }
 });
 
+
 /**
- * Update ExamSet -- Now supports updating tags!
+ * Get a single ExamSet by ID
+ *
+ * GET /api/exam-set/:id
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const examSet = await ExamSet
+      .findById(req.params.id)
+      .populate("createdBy", "fullname username email profilePic");
+
+    if (!examSet) {
+      return res.status(404).json({
+        error: "Exam set not found"
+      });
+    }
+
+    const questions = await CbtQuestion.find({
+      examSet: examSet._id
+    });
+
+    res.json({
+      examSet,
+      questions
+    });
+
+  } catch (e) {
+    console.error("Get ExamSet error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
+  }
+});
+
+
+/**
+ * Update ExamSet
+ *
  * PUT /api/exam-set/:id
+ *
+ * Only the owner can update it.
  */
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticate, async (req, res) => {
   try {
-    const update = { ...req.body };
-    if (update.tags && typeof update.tags === "string")
-      update.tags = update.tags.split(",").map(t => t.trim()).filter(Boolean);
-    const set = await ExamSet.findByIdAndUpdate(req.params.id, update, { new: true });
-    if (!set) return res.status(404).json({ error: "Not found" });
-    res.json(set);
+    const userId = req.user?._id || req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Authentication required"
+      });
+    }
+
+    const examSet = await ExamSet.findById(req.params.id);
+
+    if (!examSet) {
+      return res.status(404).json({
+        error: "Exam set not found"
+      });
+    }
+
+    if (
+      !examSet.createdBy ||
+      String(examSet.createdBy) !== String(userId)
+    ) {
+      return res.status(403).json({
+        error: "You are not allowed to modify this exam set"
+      });
+    }
+
+    const update = {
+      ...req.body
+    };
+
+    delete update.createdBy;
+    delete update.accessCode;
+
+    if (update.tags && typeof update.tags === "string") {
+      update.tags = update.tags
+        .split(",")
+        .map(t => t.trim())
+        .filter(Boolean);
+    }
+
+    const updatedSet = await ExamSet.findByIdAndUpdate(
+      req.params.id,
+      update,
+      {
+        new: true,
+        runValidators: true
+      }
+    ).populate(
+      "createdBy",
+      "fullname username email profilePic"
+    );
+
+    res.json(updatedSet);
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Update ExamSet error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
   }
 });
 
+
 /**
- * Delete ExamSet (& cascade-delete questions)
+ * Delete ExamSet and its questions
+ *
  * DELETE /api/exam-set/:id
+ *
+ * Only the owner can delete it.
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
-    await CbtQuestion.deleteMany({ examSet: req.params.id });
-    const set = await ExamSet.findByIdAndDelete(req.params.id);
-    if (!set) return res.status(404).json({ error: "Not found" });
-    res.json({ message: "Deleted", id: set._id });
+    const userId = req.user?._id || req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Authentication required"
+      });
+    }
+
+    const examSet = await ExamSet.findById(req.params.id);
+
+    if (!examSet) {
+      return res.status(404).json({
+        error: "Exam set not found"
+      });
+    }
+
+    if (
+      !examSet.createdBy ||
+      String(examSet.createdBy) !== String(userId)
+    ) {
+      return res.status(403).json({
+        error: "You are not allowed to delete this exam set"
+      });
+    }
+
+    await CbtQuestion.deleteMany({
+      examSet: examSet._id
+    });
+
+    await ExamSet.findByIdAndDelete(examSet._id);
+
+    res.json({
+      message: "Exam set and its questions deleted successfully",
+      id: examSet._id
+    });
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Delete ExamSet error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
   }
 });
+
 
 export default router;
