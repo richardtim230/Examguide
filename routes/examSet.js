@@ -199,13 +199,46 @@ router.get("/", async (req, res) => {
 
 
 /**
- * Get a specific ExamSet by access code
+ * Get random ExamSets for homepage announcements
  *
- * GET /api/exam-set/by-access?accessCode=xxxx
- *
- * This remains public because students need to access exams
- * using the access code.
+ * GET /api/exam-set/random?limit=3
  */
+router.get("/random", async (req, res) => {
+  try {
+    let limit = Number(req.query.limit) || 3;
+
+    // Keep the limit reasonable
+    limit = Math.min(Math.max(limit, 1), 10);
+
+    const sets = await ExamSet.aggregate([
+      {
+        $match: {
+          examType: { $in: ["cbt", "mock"] }
+        }
+      },
+      {
+        $sample: {
+          size: limit
+        }
+      }
+    ]);
+
+    // Populate createdBy after aggregation
+    const populatedSets = await ExamSet.populate(sets, {
+      path: "createdBy",
+      select: "fullname username email profilePic"
+    });
+
+    res.json(populatedSets);
+
+  } catch (e) {
+    console.error("Fetch random ExamSets error:", e);
+
+    res.status(500).json({
+      error: e.message
+    });
+  }
+});
 router.get("/by-access", async (req, res) => {
   try {
     const {
