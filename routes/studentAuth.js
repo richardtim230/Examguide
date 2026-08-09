@@ -135,7 +135,7 @@ router.post("/exam-set/use-credit-v2", authenticate, async (req, res) => {
     if (!accessCode) return res.status(400).json({ message: "Access code required." });
 
     // Find the student and exam set, but using Users model instead of User
-    const user = await Users.findById(req.user.id);
+    const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "Student not found (Users model)" });
     const examSet = await ExamSet.findOne({ accessCode });
     if (!examSet) return res.status(404).json({ message: "Invalid/expired Exam Access code." });
