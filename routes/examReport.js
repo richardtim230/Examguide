@@ -2,6 +2,7 @@
 
 import express from "express";
 import ExamReport from "../models/ExamReport.js";
+import ExamSet from "../models/ExamSet.js";
 import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
@@ -59,6 +60,66 @@ router.post("/", authenticateToken, async (req, res) => {
       theoryAnswers: theoryAnswers || [],
       status: "submitted"
     });
+
+    // Update lightweight attempt summary on the ExamSet
+    try {
+      const examSet = await ExamSet.findById(report.examSetId);
+
+      if (examSet) {
+        const now = new Date();
+        const timeNum = Number(timeSpent) || 0;
+
+        // Initialize attemptSummary if missing
+        if (!examSet.attemptSummary) {
+          examSet.attemptSummary = {
+            attempts: 0,
+            scoredAttempts: 0,
+            totalScore: 0,
+            averageScore: 0,
+            bestScore: 0,
+            worstScore: 0,
+            totalTimeSpent: 0,
+            lastAttemptAt: null
+          };
+        }
+
+        // Always increment total attempts and totalTimeSpent
+        examSet.attemptSummary.attempts = (examSet.attemptSummary.attempts || 0) + 1;
+        examSet.attemptSummary.totalTimeSpent = (examSet.attemptSummary.totalTimeSpent || 0) + timeNum;
+        examSet.attemptSummary.lastAttemptAt = now;
+
+        // If percentage is a numeric value, update scored aggregates
+        const scoreProvided = typeof percentage === "number" && !Number.isNaN(percentage);
+
+        if (scoreProvided) {
+          const pct = Number(percentage);
+
+          examSet.attemptSummary.scoredAttempts = (examSet.attemptSummary.scoredAttempts || 0) + 1;
+          examSet.attemptSummary.totalScore = (examSet.attemptSummary.totalScore || 0) + pct;
+
+          // recompute averageScore
+          const sa = examSet.attemptSummary.scoredAttempts;
+          examSet.attemptSummary.averageScore = sa > 0
+            ? Number((examSet.attemptSummary.totalScore / sa).toFixed(2))
+            : 0;
+
+          // best/worst
+          if (examSet.attemptSummary.bestScore == null || pct > examSet.attemptSummary.bestScore) {
+            examSet.attemptSummary.bestScore = pct;
+          }
+          if (examSet.attemptSummary.worstScore == null || sa === 1 || pct < examSet.attemptSummary.worstScore) {
+            // if this is the first scored attempt, set worstScore to pct
+            examSet.attemptSummary.worstScore = pct;
+          }
+        }
+
+        // Save updated examSet summary
+        await examSet.save();
+      }
+    } catch (summaryErr) {
+      // Log but do not break the main response
+      console.error("Could not update ExamSet attempt summary:", summaryErr);
+    }
 
     res.status(201).json({
       message: "Report saved successfully",
@@ -180,7 +241,7 @@ router.get("/stats/summary", authenticateToken, async (req, res) => {
 });
 
 /**
- * Delete Report
+ * DELETE Report
  * DELETE /api/exam-reports/:id
  */
 router.delete("/:id", authenticateToken, async (req, res) => {
