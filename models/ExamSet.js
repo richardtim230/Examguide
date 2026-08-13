@@ -42,11 +42,24 @@ const ExamSetSchema = new mongoose.Schema({
     index: true
   },
 
+  // Lightweight attempt summary for fast reads
+  attemptSummary: {
+    attempts: { type: Number, default: 0 },           // total attempts (graded or not)
+    scoredAttempts: { type: Number, default: 0 },     // number of attempts that have percentage values
+    totalScore: { type: Number, default: 0 },         // sum of percentages for scored attempts
+    averageScore: { type: Number, default: 0 },       // average over scoredAttempts (totalScore / scoredAttempts)
+    bestScore: { type: Number, default: 0 },
+    worstScore: { type: Number, default: 0 },
+    totalTimeSpent: { type: Number, default: 0 },     // cumulative time spent in seconds
+    lastAttemptAt: { type: Date, default: null }
+  },
+
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
+// keep existing export pattern
 export default mongoose.models.ExamSet ||
   mongoose.model("ExamSet", ExamSetSchema);
