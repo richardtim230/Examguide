@@ -1,4 +1,4 @@
-// routes/examReports.js
+// routes/examReport.js
 
 import express from "express";
 import ExamReport from "../models/ExamReport.js";
@@ -127,6 +127,119 @@ router.post("/", authenticateToken, async (req, res) => {
     });
   } catch (e) {
     console.error("Error saving report:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * NEW: Get all reports for an ExamSet (for the exam creator only)
+ *
+ * GET /api/exam-reports/exam-set/:examSetId
+ *
+ * Returns:
+ * - paginated list of reports for the exam set (populated with student info)
+ * - simple stats: totalAttempts, averageScore, bestScore, worstScore, totalTimeSpent
+ */
+router.get("/exam-set/:examSetId", authenticateToken, async (req, res) => {
+  try {
+    const { examSetId } = req.params;
+    const { page = 1, limit = 20 } = req.query;
+
+    if (!examSetId) {
+      return res.status(400).json({ error: "examSetId required" });
+    }
+
+    const examSet = await ExamSet.findById(examSetId);
+    if (!examSet) {
+      return res.status(404).json({ error: "Exam set not found" });
+    }
+
+    const requesterId = req.user?.id || req.user?._id;
+    if (!requesterId) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    // Only the creator of the exam set can view attempts
+    if (!examSet.createdBy || String(examSet.createdBy) !== String(requesterId)) {
+      return res.status(403).json({ error: "You are not allowed to view reports for this exam set" });
+    }
+
+    const pg = Math.max(1, Number(page) || 1);
+    const lim = Math.max(1, Math.min(1000, Number(limit) || 20));
+    const skip = (pg - 1) * lim;
+
+    // Paginated reports with student info
+    const reports = await ExamReport.find({ examSetId: examSet._id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(lim)
+      .populate("userId", "fullname username email profilePic")
+      .select("attemptId userId score percentage timeSpent status createdAt");
+
+    const total = await ExamReport.countDocuments({ examSetId: examSet._id });
+
+    // Compute stats: prefer lightweight attemptSummary if available, else aggregate
+    let stats = {
+      totalAttempts: 0,
+      averageScore: 0,
+      bestScore: 0,
+      worstScore: 0,
+      totalTimeSpent: 0
+    };
+
+    if (examSet.attemptSummary && typeof examSet.attemptSummary === "object" && Object.keys(examSet.attemptSummary).length) {
+      const a = examSet.attemptSummary;
+      stats = {
+        totalAttempts: a.attempts || 0,
+        averageScore: typeof a.averageScore === "number" ? a.averageScore : (a.averageScore ? Number(a.averageScore) : 0),
+        bestScore: a.bestScore || 0,
+        worstScore: a.worstScore || 0,
+        totalTimeSpent: a.totalTimeSpent || 0
+      };
+    } else {
+      // fallback aggregation
+      const agg = await ExamReport.aggregate([
+        { $match: { examSetId: examSet._id } },
+        {
+          $group: {
+            _id: null,
+            totalAttempts: { $sum: 1 },
+            averageScore: { $avg: "$percentage" },
+            bestScore: { $max: "$percentage" },
+            worstScore: { $min: "$percentage" },
+            totalTimeSpent: { $sum: { $ifNull: ["$timeSpent", 0] } }
+          }
+        }
+      ]);
+
+      const r = agg && agg.length ? agg[0] : null;
+      stats = {
+        totalAttempts: (r && r.totalAttempts) || 0,
+        averageScore: r && typeof r.averageScore === "number" ? Number(r.averageScore.toFixed(2)) : 0,
+        bestScore: (r && (r.bestScore ?? 0)) || 0,
+        worstScore: (r && (r.worstScore ?? 0)) || 0,
+        totalTimeSpent: (r && r.totalTimeSpent) || 0
+      };
+    }
+
+    res.json({
+      examSet: {
+        id: examSet._id,
+        subject: examSet.subject,
+        title: examSet.title,
+        accessCode: examSet.accessCode,
+        attemptSummary: examSet.attemptSummary || null
+      },
+      stats,
+      reports,
+      pagination: {
+        total,
+        page: pg,
+        pages: Math.ceil(total / lim)
+      }
+    });
+  } catch (e) {
+    console.error("Error fetching exam set reports:", e);
     res.status(500).json({ error: e.message });
   }
 });
