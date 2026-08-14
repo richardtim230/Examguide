@@ -368,7 +368,7 @@ const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads")
 app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "100d" }));
 
 const rawOrigins = (process.env.ALLOWED_ORIGINS || "https://oau.examguard.com.ng").split(",").map(s => s.trim()).filter(Boolean);
-const devOrigins = ["http://drich.examguard.com.ng", "https://www.examguard.com.ng/", "https://drich.examguard.com.ng", "https://new-sch-app-je3v.vercel.app/", "https://registrar.examguard.com.ng", "https://www.examguard.com.ng"];
+const devOrigins = ["https://drich.examguard.com.ng", "https://www.examguard.com.ng/", "https://codecx.examguard.com.ng", "https://new-sch-app-je3v.vercel.app/", "https://registrar.examguard.com.ng", "https://www.examguard.com.ng"];
 const ALLOWED_ORIGINS = Array.from(new Set([...rawOrigins, ...devOrigins]));
 const corsOptions = {
   origin: function (origin, callback) {
