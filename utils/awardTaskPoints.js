@@ -99,13 +99,19 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         }
     }
 
-    userDoc.creditPoints = (userDoc.creditPoints || 0) + p;
-    userDoc.points = (userDoc.points || 0) + p;
+    // Split points: half to creditPoints, half to points.
+    // Use integer split so total remains exactly p.
+    const creditHalf = Math.floor(p / 2);
+    const pointsHalf = p - creditHalf;
+
+    userDoc.creditPoints = (userDoc.creditPoints || 0) + creditHalf;
+    userDoc.points = (userDoc.points || 0) + pointsHalf;
         
     if (!Array.isArray(userDoc.rewardHistory)) {
         userDoc.rewardHistory = [];
     }
 
+    // Include split breakdown in reward history entry for clarity
     userDoc.rewardHistory.push({
         key: opts.key || null,
         type: opts.type || "task",
@@ -113,7 +119,9 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
         points: p,
         date: new Date(),
         by: opts.by || null,
-        referenceId: opts.referenceId || null
+        referenceId: opts.referenceId || null,
+        creditSplit: creditHalf,
+        pointsSplit: pointsHalf
     });
 
     userDoc.markModified("rewardHistory");
@@ -122,6 +130,8 @@ export const awardTaskPoints = async (user, points, opts = {}) => {
     await userDoc.save();
     console.log("Saved.");
     console.log("After:", {
+        pointsAdded: pointsHalf,
+        creditPointsAdded: creditHalf,
         points: userDoc.points,
         creditPoints: userDoc.creditPoints,
         rewardHistory: userDoc.rewardHistory.length
