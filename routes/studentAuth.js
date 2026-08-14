@@ -51,6 +51,35 @@ function authenticate(req, res, next) {
   }
 }
 
+// Helper: credit the creator user by amount
+async function creditCreator(creatorId, amount) {
+  if (!creatorId) return null;
+  // try User first, then Users
+  try {
+    let creator = null;
+    try {
+      creator = await User.findById(creatorId);
+    } catch (e) {
+      creator = null;
+    }
+    if (!creator) {
+      try {
+        creator = await Users.findById(creatorId);
+      } catch (e) {
+        creator = null;
+      }
+    }
+    if (!creator) return null;
+
+    creator.creditPoints = (creator.creditPoints || 0) + Number(amount || 0);
+    await creator.save();
+    return creator;
+  } catch (err) {
+    console.error("Failed to credit creator:", err);
+    return null;
+  }
+}
+
 router.post("/register", upload.single("passport"), async (req, res) => {
   try {
     let {
@@ -144,19 +173,40 @@ router.post("/exam-set/use-credit-v2", authenticate, async (req, res) => {
     if ((user.creditPoints || 0) < 20) 
       return res.status(403).json({ message: "Insufficient credit points to access this exam." });
 
-    // Deduct 10 credit points and save
+    // Deduct 20 credit points and save
     user.creditPoints -= 20;
     await user.save();
 
-    return res.json({
+    // Credit exam set creator
+    const creatorId = examSet.createdBy;
+    let creditedCreator = null;
+    try {
+      creditedCreator = await creditCreator(creatorId, 20);
+    } catch (err) {
+      console.error("Error crediting creator:", err);
+    }
+
+    const response = {
       message: "Exam access granted (Users model). 20 credit points deducted.",
       creditPoints: user.creditPoints,
       examSet,
-    });
+    };
+
+    if (creditedCreator) {
+      response.creditedTo = {
+        id: creditedCreator._id,
+        creditPoints: creditedCreator.creditPoints
+      };
+    } else {
+      response.warning = "Could not credit exam-set creator (creator not found or save failed).";
+    }
+
+    return res.json(response);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
 router.post("/exam-set/use-credit", authenticate, async (req, res) => {
   try {
     const { accessCode } = req.body;
@@ -179,15 +229,36 @@ router.post("/exam-set/use-credit", authenticate, async (req, res) => {
     user.creditPoints -= 10;
     await user.save();
 
-    return res.json({
+    // Credit exam set creator
+    const creatorId = examSet.createdBy;
+    let creditedCreator = null;
+    try {
+      creditedCreator = await creditCreator(creatorId, 10);
+    } catch (err) {
+      console.error("Error crediting creator:", err);
+    }
+
+    const response = {
       message: "Exam access granted. 10 credit points deducted.",
       creditPoints: user.creditPoints,
-      examSet, // You can send only examSet info! (not questions, if you want)
-    });
+      examSet,
+    };
+
+    if (creditedCreator) {
+      response.creditedTo = {
+        id: creditedCreator._id,
+        creditPoints: creditedCreator.creditPoints
+      };
+    } else {
+      response.warning = "Could not credit exam-set creator (creator not found or save failed).";
+    }
+
+    return res.json(response);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
 /**
  * Login Route (POST /api/student/login)
  * Body: { emailOrPhone, password }
