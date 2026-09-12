@@ -10,12 +10,21 @@ const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "please_set_a_strong_secret";
 
-// ============ CONFIGURATION ============
+// ============ EMAIL CONFIGURATION ============
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD
+  }
+});
+
+// Test transporter connection
+transporter.verify((error, success) => {
+  if (error) {
+    console.warn("Email service not available:", error.message);
+  } else {
+    console.log("Email service ready");
   }
 });
 
@@ -37,64 +46,165 @@ function generateToken(user) {
 }
 
 /**
- * Send verification email
+ * Send verification email with code
  */
-async function sendVerificationEmail(email, verificationToken) {
+async function sendVerificationEmail(email, fullName, verificationCode) {
   try {
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-    
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    const emailContent = `
+<!DOCTYPE html>
+<html lang="en" style="background:#f3f7fa;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Email Verification | RCCG Rehoboth Mega Cathedral</title>
+  <style>
+    body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
+    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}
+    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}
+    .title {color:#003366;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
+    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
+    .code-box {background:linear-gradient(90deg,#003366 0%,#0047AB 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}
+    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
+    .warning {background:#E6F4EA;border-left:4px solid #008037;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#008037;}
+    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
+    .link {word-break:break-all;color:#003366;text-decoration:underline;}
+    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
+    .socials {text-align:center;margin-top:18px;}
+    .socials a {display:inline-block;margin:0 8px;text-decoration:none;}
+    .socials span {color:#003366;font-size:24px;margin:0 4px;}
+    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:3rem;margin:10px 0;">🙏</div>
+    </div>
+    <div class="title">Email Verification</div>
+    <div class="subtitle">
+      Hi <b>${fullName || "Member"},</b>
+    </div>
+    <div class="subtitle" style="font-size:1.01rem;">
+      Welcome to RCCG Rehoboth Mega Cathedral! Please verify your email with the code below:
+    </div>
+    <div class="code-box">${verificationCode}</div>
+    <div class="info">
+      This code will expire in <b>24 hours</b>. Do not share this code with anyone.
+    </div>
+    <div class="warning">
+      <strong>✓ Security Notice:</strong> If you did not create this account, please ignore this email and your email will remain unverified.
+    </div>
+    <div class="support">
+      Questions? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a>
+    </div>
+    <div class="socials">
+      <a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a>
+      <a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a>
+      <a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a>
+    </div>
+    <div class="footer">
+      &copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>
+      Ile-Ife, Osun State, Nigeria
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+    await transporter.sendMail({
+      from: `"RCCG Rehoboth" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Email Verification - RCCG Rehoboth Mega Cathedral",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #003366;">Welcome to RCCG Rehoboth Mega Cathedral</h2>
-          <p>Thank you for registering with us. Please verify your email address by clicking the link below:</p>
-          <a href="${verificationUrl}" style="display: inline-block; background-color: #008037; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0;">Verify Email</a>
-          <p>Or copy and paste this link: ${verificationUrl}</p>
-          <p>This link expires in 24 hours.</p>
-          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
-          <p style="color: #666; font-size: 12px;">If you didn't register for this account, please ignore this email.</p>
-        </div>
-      `
-    };
+      html: emailContent
+    });
 
-    await transporter.sendMail(mailOptions);
+    console.log("Verification email sent to:", email);
     return true;
   } catch (error) {
-    console.error("Error sending verification email:", error);
-    throw error;
+    console.error("Error sending verification email:", error.message);
+    // Don't throw - allow registration to proceed
+    return false;
   }
 }
 
 /**
- * Send password reset email
+ * Send password reset code email
  */
-async function sendPasswordResetEmail(email, resetToken) {
+async function sendPasswordResetCode(email, fullName, resetCode) {
   try {
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Password Reset - RCCG Rehoboth Mega Cathedral",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #003366;">Password Reset Request</h2>
-          <p>You requested to reset your password. Click the link below to proceed:</p>
-          <a href="${resetUrl}" style="display: inline-block; background-color: #D92525; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0;">Reset Password</a>
-          <p>This link expires in 1 hour.</p>
-          <p style="color: #666; font-size: 12px;">If you didn't request this, please ignore this email.</p>
-        </div>
-      `
-    };
+    const emailContent = `
+<!DOCTYPE html>
+<html lang="en" style="background:#f3f7fa;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Password Reset Code | RCCG Rehoboth Mega Cathedral</title>
+  <style>
+    body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
+    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}
+    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}
+    .title {color:#D92525;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
+    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
+    .code-box {background:linear-gradient(90deg,#D92525 0%,#B91C1C 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}
+    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
+    .warning {background:#FCE8E6;border-left:4px solid #D92525;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#D92525;}
+    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
+    .link {word-break:break-all;color:#D92525;text-decoration:underline;}
+    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
+    .socials {text-align:center;margin-top:18px;}
+    .socials a {display:inline-block;margin:0 8px;text-decoration:none;}
+    .socials span {color:#D92525;font-size:24px;margin:0 4px;}
+    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:3rem;margin:10px 0;">🔐</div>
+    </div>
+    <div class="title">Password Reset Code</div>
+    <div class="subtitle">
+      Hi <b>${fullName || "Member"},</b>
+    </div>
+    <div class="subtitle" style="font-size:1.01rem;">
+      We received a request to reset your password. Use the code below to proceed:
+    </div>
+    <div class="code-box">${resetCode}</div>
+    <div class="info">
+      This code will expire in <b>15 minutes</b>. Do not share this code with anyone.
+    </div>
+    <div class="warning">
+      <strong>⚠️ Security Notice:</strong> If you did not request a password reset, please ignore this email and your password will remain unchanged. Your account is secure.
+    </div>
+    <div class="support">
+      Need help? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a>
+    </div>
+    <div class="socials">
+      <a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a>
+      <a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a>
+      <a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a>
+    </div>
+    <div class="footer">
+      &copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>
+      Ile-Ife, Osun State, Nigeria
+    </div>
+  </div>
+</body>
+</html>
+`;
 
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail({
+      from: `"RCCG Rehoboth" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Your Password Reset Code - RCCG Rehoboth Mega Cathedral",
+      html: emailContent
+    });
+
+    console.log("Password reset code sent to:", email);
     return true;
   } catch (error) {
-    console.error("Error sending password reset email:", error);
-    throw error;
+    console.error("Error sending reset code email:", error.message);
+    return false;
   }
 }
 
@@ -131,8 +241,8 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({ success: false, message: "Email or phone number already registered" });
     }
 
-    // Create new user
-    const verificationToken = crypto.randomBytes(32).toString("hex");
+    // Generate 6-digit verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     
     const newUser = new RCCG_User({
       fullName,
@@ -143,8 +253,8 @@ router.post("/register", async (req, res) => {
       gender: gender || null,
       state: state || "Osun",
       maritalStatus: maritalStatus || null,
-      emailVerificationToken: verificationToken,
-      emailVerificationExpires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      verificationCode,
+      verificationCodeExpires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
       membershipStatus: "visitor"
     });
 
@@ -161,25 +271,62 @@ router.post("/register", async (req, res) => {
 
     await newUser.save();
 
-    // Send verification email
-    try {
-      await sendVerificationEmail(email, verificationToken);
-    } catch (emailError) {
-      console.error("Failed to send verification email:", emailError);
-    }
+    // Send verification email (non-blocking)
+    sendVerificationEmail(email, fullName, verificationCode).catch(err => 
+      console.error("Failed to send verification email:", err)
+    );
 
     // Generate token
     const token = generateToken(newUser);
 
     res.status(201).json({
       success: true,
-      message: "Registration successful. Please verify your email.",
+      message: "Registration successful. Please check your email for verification code.",
       token,
       user: newUser.toJSON()
     });
 
   } catch (error) {
     console.error("Registration error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   POST /api/rccg/users/verify-email
+ * @desc    Verify user email with code
+ * @access  Public
+ */
+router.post("/verify-email", async (req, res) => {
+  try {
+    const { email, verificationCode } = req.body;
+
+    if (!email || !verificationCode) {
+      return res.status(400).json({ success: false, message: "Email and verification code required" });
+    }
+
+    const user = await RCCG_User.findOne({
+      email: email.toLowerCase(),
+      verificationCode,
+      verificationCodeExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+    }
+
+    user.emailVerified = true;
+    user.verificationCode = null;
+    user.verificationCodeExpires = null;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Email verified successfully"
+    });
+
+  } catch (error) {
+    console.error("Email verification error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -210,7 +357,11 @@ router.post("/login", async (req, res) => {
     }
 
     if (!user.emailVerified) {
-      return res.status(403).json({ success: false, message: "Please verify your email first" });
+      return res.status(403).json({ 
+        success: false, 
+        message: "Please verify your email first",
+        requiresVerification: true
+      });
     }
 
     // Update last login
@@ -235,121 +386,91 @@ router.post("/login", async (req, res) => {
 });
 
 /**
- * @route   POST /api/rccg/users/verify-email
- * @desc    Verify user email
+ * @route   POST /api/rccg/users/send-reset-code
+ * @desc    Send password reset code
  * @access  Public
  */
-router.post("/verify-email", async (req, res) => {
-  try {
-    const { token } = req.body;
-
-    if (!token) {
-      return res.status(400).json({ success: false, message: "Verification token required" });
-    }
-
-    const user = await RCCG_User.findOne({
-      emailVerificationToken: token,
-      emailVerificationExpires: { $gt: new Date() }
-    });
-
-    if (!user) {
-      return res.status(400).json({ success: false, message: "Invalid or expired verification token" });
-    }
-
-    user.emailVerified = true;
-    user.emailVerificationToken = null;
-    user.emailVerificationExpires = null;
-    await user.save();
-
-    res.json({
-      success: true,
-      message: "Email verified successfully"
-    });
-
-  } catch (error) {
-    console.error("Email verification error:", error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-/**
- * @route   POST /api/rccg/users/forgot-password
- * @desc    Send password reset email
- * @access  Public
- */
-router.post("/forgot-password", async (req, res) => {
+router.post("/send-reset-code", async (req, res) => {
   try {
     const { email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ success: false, message: "Email required" });
+      return res.status(400).json({ success: false, message: "Email address is required" });
     }
 
     const user = await RCCG_User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res.status(404).json({ success: false, message: "User not found with this email address" });
     }
 
-    const resetToken = user.generatePasswordResetToken();
+    // Generate 6-digit reset code
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    user.resetPasswordCode = resetCode;
+    user.resetPasswordCodeExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
     await user.save();
 
-    try {
-      await sendPasswordResetEmail(email, resetToken);
-    } catch (emailError) {
-      console.error("Failed to send reset email:", emailError);
-      return res.status(500).json({ success: false, message: "Failed to send reset email" });
-    }
+    // Send reset code email (non-blocking)
+    sendPasswordResetCode(email, user.fullName, resetCode).catch(err => 
+      console.error("Failed to send reset code:", err)
+    );
 
-    res.json({
+    res.status(200).json({ 
       success: true,
-      message: "Password reset link sent to your email"
+      message: "Reset code sent to your email. Please check your inbox (and spam/promotions folders). Code expires in 15 minutes."
     });
 
   } catch (error) {
-    console.error("Forgot password error:", error);
+    console.error("Send reset code error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
 /**
- * @route   POST /api/rccg/users/reset-password
- * @desc    Reset user password
+ * @route   POST /api/rccg/users/verify-reset-code
+ * @desc    Verify reset code and reset password
  * @access  Public
  */
-router.post("/reset-password", async (req, res) => {
+router.post("/verify-reset-code", async (req, res) => {
   try {
-    const { token, password, confirmPassword } = req.body;
+    const { email, resetCode, newPassword, confirmPassword } = req.body;
 
-    if (!token || !password || !confirmPassword) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
+    if (!email || !resetCode || !newPassword || !confirmPassword) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       return res.status(400).json({ success: false, message: "Passwords do not match" });
     }
 
+    if (newPassword.length < 8) {
+      return res.status(400).json({ success: false, message: "Password must be at least 8 characters" });
+    }
+
     const user = await RCCG_User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: new Date() }
+      email: email.toLowerCase(),
+      resetPasswordCode: resetCode,
+      resetPasswordCodeExpires: { $gt: new Date() }
     });
 
     if (!user) {
-      return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+      return res.status(400).json({ success: false, message: "Invalid or expired reset code" });
     }
 
-    user.password = password;
-    user.resetPasswordToken = null;
-    user.resetPasswordExpires = null;
+    // Update password
+    user.password = newPassword;
+    user.resetPasswordCode = null;
+    user.resetPasswordCodeExpires = null;
     await user.save();
 
     res.json({
       success: true,
-      message: "Password reset successfully"
+      message: "Password reset successfully. You can now log in with your new password."
     });
 
   } catch (error) {
-    console.error("Reset password error:", error);
+    console.error("Verify reset code error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -672,8 +793,7 @@ router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => 
 
     res.json({
       success: true,
-      message: "Unregistered from event successfully",
-      user: user.toJSON()
+      message: "Unregistered from event successfully"
     });
 
   } catch (error) {
@@ -754,7 +874,6 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
  */
 router.get("/admin/all", authMiddleware, async (req, res) => {
   try {
-    // Check if user is admin
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
