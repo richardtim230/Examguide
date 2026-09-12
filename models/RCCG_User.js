@@ -56,7 +56,7 @@ const RCCG_UserSchema = new Schema({
   },
   emailVerified: { 
     type: Boolean, 
-    default: false 
+    default: true 
   },
   emailVerificationToken: { 
     type: String,
