@@ -315,6 +315,8 @@ import publishersRouter from "./routes/publishers.js";
 import taskActionsRouter from "./routes/taskActions.js";
 import coursesRouter from "./routes/courses.js";
 import subcoursesRouter from "./routes/subcourses.js";
+import rccgUsersRouter from "./routes/rccg_users.js";
+
 
 router.post(
   "/upload-avatar",
@@ -3640,6 +3642,7 @@ app.use("/api/subcourses", subcoursesRouter); // new subcourses endpoints
 app.use("/api/publishers", publishersRouter);
 app.use("/api/schools", schoolRegistrationRoutes);
 app.use('/api', assignmentsRouter);
+app.use("/api/rccg/users", rccgUsersRouter);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
