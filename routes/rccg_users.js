@@ -1,11 +1,14 @@
 import express from "express";
 import RCCG_User from "../models/RCCG_User.js";
-import { authenticateToken, authorizeRole } from "../middleware/auth.js";
-import { uploadProfileImage } from "../middleware/upload.js";
+import authMiddleware from "../middleware/auth.js";
+import { avatarUpload } from "../middleware/upload.js";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
+
+const JWT_SECRET = process.env.JWT_SECRET || "please_set_a_strong_secret";
 
 // ============ CONFIGURATION ============
 const transporter = nodemailer.createTransport({
@@ -19,11 +22,18 @@ const transporter = nodemailer.createTransport({
 // ============ HELPER FUNCTIONS ============
 
 /**
- * Generate membership number
+ * Generate JWT token
  */
-async function generateMembershipNumber() {
-  const count = await RCCG_User.countDocuments();
-  return `RCCG-${new Date().getFullYear()}-${(count + 1).toString().padStart(5, '0')}`;
+function generateToken(user) {
+  return jwt.sign(
+    { 
+      id: user._id, 
+      email: user.email,
+      userType: user.userType
+    },
+    JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 }
 
 /**
@@ -97,7 +107,7 @@ async function sendPasswordResetEmail(email, resetToken) {
  */
 router.post("/register", async (req, res) => {
   try {
-    const { fullName, email, phone, password, confirmPassword, dateOfBirth, state, referralCode } = req.body;
+    const { fullName, email, phone, password, confirmPassword, dateOfBirth, gender, state, maritalStatus, referralCode } = req.body;
 
     // Validation
     if (!fullName || !email || !phone || !password) {
@@ -129,8 +139,10 @@ router.post("/register", async (req, res) => {
       email: email.toLowerCase(),
       phone,
       password,
-      dateOfBirth,
+      dateOfBirth: dateOfBirth || null,
+      gender: gender || null,
       state: state || "Osun",
+      maritalStatus: maritalStatus || null,
       emailVerificationToken: verificationToken,
       emailVerificationExpires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       membershipStatus: "visitor"
@@ -141,6 +153,9 @@ router.post("/register", async (req, res) => {
       const referrer = await RCCG_User.findOne({ referralCode });
       if (referrer) {
         newUser.referredBy = referrer._id;
+        referrer.referrals.push(newUser._id);
+        referrer.totalReferrals += 1;
+        await referrer.save();
       }
     }
 
@@ -151,12 +166,15 @@ router.post("/register", async (req, res) => {
       await sendVerificationEmail(email, verificationToken);
     } catch (emailError) {
       console.error("Failed to send verification email:", emailError);
-      // Continue despite email error
     }
+
+    // Generate token
+    const token = generateToken(newUser);
 
     res.status(201).json({
       success: true,
       message: "Registration successful. Please verify your email.",
+      token,
       user: newUser.toJSON()
     });
 
@@ -200,8 +218,8 @@ router.post("/login", async (req, res) => {
     user.lastActivityAt = new Date();
     await user.save();
 
-    // Generate token (assuming JWT middleware exists)
-    const token = generateJWT(user);
+    // Generate token
+    const token = generateToken(user);
 
     res.json({
       success: true,
@@ -343,9 +361,9 @@ router.post("/reset-password", async (req, res) => {
  * @desc    Get user profile
  * @access  Private
  */
-router.get("/profile", authenticateToken, async (req, res) => {
+router.get("/profile", authMiddleware, async (req, res) => {
   try {
-    const user = await RCCG_User.findById(req.user.id)
+    const user = await RCCG_User.findById(req.user._id)
       .populate("departments")
       .populate("ministries")
       .populate("primaryMinistry")
@@ -373,26 +391,29 @@ router.get("/profile", authenticateToken, async (req, res) => {
  * @desc    Update user profile
  * @access  Private
  */
-router.put("/profile", authenticateToken, async (req, res) => {
+router.put("/profile", authMiddleware, async (req, res) => {
   try {
-    const { fullName, phone, dateOfBirth, gender, address, city, state, zipCode, bio, profession, maritalStatus } = req.body;
+    const { fullName, phone, dateOfBirth, gender, address, city, state, zipCode, bio, profession, maritalStatus, designation } = req.body;
+
+    const updateData = {};
+    if (fullName) updateData.fullName = fullName;
+    if (phone) updateData.phone = phone;
+    if (dateOfBirth) updateData.dateOfBirth = dateOfBirth;
+    if (gender) updateData.gender = gender;
+    if (address) updateData.address = address;
+    if (city) updateData.city = city;
+    if (state) updateData.state = state;
+    if (zipCode) updateData.zipCode = zipCode;
+    if (bio) updateData.bio = bio;
+    if (profession) updateData.profession = profession;
+    if (maritalStatus) updateData.maritalStatus = maritalStatus;
+    if (designation) updateData.designation = designation;
+
+    updateData.lastActivityAt = new Date();
 
     const user = await RCCG_User.findByIdAndUpdate(
-      req.user.id,
-      {
-        fullName: fullName || undefined,
-        phone: phone || undefined,
-        dateOfBirth: dateOfBirth || undefined,
-        gender: gender || undefined,
-        address: address || undefined,
-        city: city || undefined,
-        state: state || undefined,
-        zipCode: zipCode || undefined,
-        bio: bio || undefined,
-        profession: profession || undefined,
-        maritalStatus: maritalStatus || undefined,
-        lastActivityAt: new Date()
-      },
+      req.user._id,
+      updateData,
       { new: true, runValidators: true }
     );
 
@@ -413,16 +434,17 @@ router.put("/profile", authenticateToken, async (req, res) => {
  * @desc    Upload profile image
  * @access  Private
  */
-router.post("/profile-image", authenticateToken, uploadProfileImage.single("profileImage"), async (req, res) => {
+router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
 
     const user = await RCCG_User.findByIdAndUpdate(
-      req.user.id,
+      req.user._id,
       {
-        profileImage: req.file.path,
+        profileImage: req.file.publicUrl,
+        profileImagePublicId: req.file.key,
         lastActivityAt: new Date()
       },
       { new: true }
@@ -445,7 +467,7 @@ router.post("/profile-image", authenticateToken, uploadProfileImage.single("prof
  * @desc    Add giving record
  * @access  Private
  */
-router.post("/giving", authenticateToken, async (req, res) => {
+router.post("/giving", authMiddleware, async (req, res) => {
   try {
     const { type, amount, currency, method, reference, description } = req.body;
 
@@ -453,7 +475,7 @@ router.post("/giving", authenticateToken, async (req, res) => {
       return res.status(400).json({ success: false, message: "Type and amount required" });
     }
 
-    const user = await RCCG_User.findById(req.user.id);
+    const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -489,9 +511,9 @@ router.post("/giving", authenticateToken, async (req, res) => {
  * @desc    Get user giving history
  * @access  Private
  */
-router.get("/giving", authenticateToken, async (req, res) => {
+router.get("/giving", authMiddleware, async (req, res) => {
   try {
-    const user = await RCCG_User.findById(req.user.id);
+    const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -514,7 +536,7 @@ router.get("/giving", authenticateToken, async (req, res) => {
  * @desc    Submit prayer request
  * @access  Private
  */
-router.post("/prayer-request", authenticateToken, async (req, res) => {
+router.post("/prayer-request", authMiddleware, async (req, res) => {
   try {
     const { title, description, category, isConfidential } = req.body;
 
@@ -522,7 +544,7 @@ router.post("/prayer-request", authenticateToken, async (req, res) => {
       return res.status(400).json({ success: false, message: "Title and description required" });
     }
 
-    const user = await RCCG_User.findById(req.user.id);
+    const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -549,13 +571,37 @@ router.post("/prayer-request", authenticateToken, async (req, res) => {
 });
 
 /**
+ * @route   GET /api/rccg/users/prayer-requests
+ * @desc    Get user prayer requests
+ * @access  Private
+ */
+router.get("/prayer-requests", authMiddleware, async (req, res) => {
+  try {
+    const user = await RCCG_User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({
+      success: true,
+      prayerRequests: user.prayerRequests
+    });
+
+  } catch (error) {
+    console.error("Get prayer requests error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
  * @route   GET /api/rccg/users/attendance
  * @desc    Get user attendance history
  * @access  Private
  */
-router.get("/attendance", authenticateToken, async (req, res) => {
+router.get("/attendance", authMiddleware, async (req, res) => {
   try {
-    const user = await RCCG_User.findById(req.user.id);
+    const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -573,15 +619,15 @@ router.get("/attendance", authenticateToken, async (req, res) => {
 });
 
 /**
- * @route   POST /api/rccg/users/register-event
+ * @route   POST /api/rccg/users/register-event/:eventId
  * @desc    Register for event
  * @access  Private
  */
-router.post("/register-event/:eventId", authenticateToken, async (req, res) => {
+router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
     const { eventId } = req.params;
 
-    const user = await RCCG_User.findById(req.user.id);
+    const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -592,6 +638,7 @@ router.post("/register-event/:eventId", authenticateToken, async (req, res) => {
     }
 
     user.registeredEvents.push(eventId);
+    user.lastActivityAt = new Date();
     await user.save();
 
     res.json({
@@ -610,13 +657,16 @@ router.post("/register-event/:eventId", authenticateToken, async (req, res) => {
  * @desc    Unregister from event
  * @access  Private
  */
-router.delete("/unregister-event/:eventId", authenticateToken, async (req, res) => {
+router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => {
   try {
     const { eventId } = req.params;
 
     const user = await RCCG_User.findByIdAndUpdate(
-      req.user.id,
-      { $pull: { registeredEvents: eventId } },
+      req.user._id,
+      { 
+        $pull: { registeredEvents: eventId },
+        lastActivityAt: new Date()
+      },
       { new: true }
     );
 
@@ -632,15 +682,83 @@ router.delete("/unregister-event/:eventId", authenticateToken, async (req, res) 
   }
 });
 
+/**
+ * @route   POST /api/rccg/users/save-sermon/:sermonId
+ * @desc    Save a sermon
+ * @access  Private
+ */
+router.post("/save-sermon/:sermonId", authMiddleware, async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    const user = await RCCG_User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (user.savedSermons.includes(sermonId)) {
+      return res.status(400).json({ success: false, message: "Sermon already saved" });
+    }
+
+    user.savedSermons.push(sermonId);
+    user.lastActivityAt = new Date();
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Sermon saved successfully"
+    });
+
+  } catch (error) {
+    console.error("Save sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   DELETE /api/rccg/users/unsave-sermon/:sermonId
+ * @desc    Unsave a sermon
+ * @access  Private
+ */
+router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    const user = await RCCG_User.findByIdAndUpdate(
+      req.user._id,
+      { 
+        $pull: { savedSermons: sermonId },
+        lastActivityAt: new Date()
+      },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      message: "Sermon removed from saved"
+    });
+
+  } catch (error) {
+    console.error("Unsave sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // ============ ADMIN ROUTES ============
 
 /**
  * @route   GET /api/rccg/users/admin/all
- * @desc    Get all users
+ * @desc    Get all users (admin only)
  * @access  Private/Admin
  */
-router.get("/admin/all", authenticateToken, authorizeRole("admin"), async (req, res) => {
+router.get("/admin/all", authMiddleware, async (req, res) => {
   try {
+    // Check if user is admin
+    if (req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required" });
+    }
+
     const { page = 1, limit = 20, membershipStatus, state, userType } = req.query;
 
     const filter = { deletedAt: null };
@@ -676,15 +794,19 @@ router.get("/admin/all", authenticateToken, authorizeRole("admin"), async (req, 
  * @desc    Approve user account
  * @access  Private/Admin
  */
-router.put("/admin/:userId/approve", authenticateToken, authorizeRole("admin"), async (req, res) => {
+router.put("/admin/:userId/approve", authMiddleware, async (req, res) => {
   try {
+    if (req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required" });
+    }
+
     const { userId } = req.params;
 
     const user = await RCCG_User.findByIdAndUpdate(
       userId,
       {
         isApproved: true,
-        approvedBy: req.user.id,
+        approvedBy: req.user._id,
         approvalDate: new Date()
       },
       { new: true }
@@ -707,8 +829,12 @@ router.put("/admin/:userId/approve", authenticateToken, authorizeRole("admin"), 
  * @desc    Soft delete user
  * @access  Private/Admin
  */
-router.delete("/admin/:userId", authenticateToken, authorizeRole("admin"), async (req, res) => {
+router.delete("/admin/:userId", authMiddleware, async (req, res) => {
   try {
+    if (req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required" });
+    }
+
     const { userId } = req.params;
 
     const user = await RCCG_User.findByIdAndUpdate(
@@ -727,13 +853,5 @@ router.delete("/admin/:userId", authenticateToken, authorizeRole("admin"), async
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
-// ============ UTILITY FUNCTION ============
-
-function generateJWT(user) {
-  // This is a placeholder - implement based on your JWT setup
-  // Example: return jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  return "your_jwt_token_here";
-}
 
 export default router;
