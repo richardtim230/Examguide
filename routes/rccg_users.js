@@ -122,7 +122,6 @@ async function sendVerificationEmail(email, fullName, verificationCode) {
     return true;
   } catch (error) {
     console.error("Error sending verification email:", error.message);
-    // Don't throw - allow registration to proceed
     return false;
   }
 }
@@ -208,6 +207,99 @@ async function sendPasswordResetCode(email, fullName, resetCode) {
   }
 }
 
+/**
+ * Get current date/time information in Nigeria (Africa/Lagos timezone)
+ */
+function getNigeriaDateInfo() {
+  const now = new Date();
+
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Africa/Lagos",
+    weekday: "long",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).formatToParts(now);
+
+  const get = (type) => parts.find(p => p.type === type)?.value;
+
+  let hour = parseInt(get("hour"), 10);
+  if (hour === 24) hour = 0;
+
+  return {
+    date: `${get("year")}-${get("month")}-${get("day")}`,
+    weekday: get("weekday"),
+    hour,
+    minute: parseInt(get("minute"), 10),
+    second: parseInt(get("second"), 10),
+    now
+  };
+}
+
+/**
+ * Determine whether attendance is currently active based on Nigeria time
+ */
+function getAttendanceWindow() {
+  const info = getNigeriaDateInfo();
+  const currentMinutes = info.hour * 60 + info.minute;
+
+  // Sunday: 9:00 AM - 10:30 AM
+  if (info.weekday === "Sunday") {
+    const start = 9 * 60;       // 09:00
+    const end = 10 * 60 + 30;   // 10:30
+
+    if (currentMinutes >= start && currentMinutes < end) {
+      return {
+        active: true,
+        serviceType: "Sunday Service",
+        start: "09:00",
+        end: "10:30"
+      };
+    }
+
+    return {
+      active: false,
+      serviceType: "Sunday Service",
+      start: "09:00",
+      end: "10:30"
+    };
+  }
+
+  // Wednesday: 6:00 PM - 7:00 PM
+  if (info.weekday === "Wednesday") {
+    const start = 18 * 60;      // 18:00
+    const end = 19 * 60;        // 19:00
+
+    if (currentMinutes >= start && currentMinutes < end) {
+      return {
+        active: true,
+        serviceType: "Digging Deep",
+        start: "18:00",
+        end: "19:00"
+      };
+    }
+
+    return {
+      active: false,
+      serviceType: "Digging Deep",
+      start: "18:00",
+      end: "19:00"
+    };
+  }
+
+  // No attendance on other days
+  return {
+    active: false,
+    serviceType: null,
+    start: null,
+    end: null
+  };
+}
+
 // ============ PUBLIC ROUTES ============
 
 /**
@@ -219,7 +311,6 @@ router.post("/register", async (req, res) => {
   try {
     const { fullName, email, phone, password, confirmPassword, dateOfBirth, gender, state, maritalStatus, referralCode } = req.body;
 
-    // Validation
     if (!fullName || !email || !phone || !password) {
       return res.status(400).json({ success: false, message: "Missing required fields" });
     }
@@ -232,7 +323,6 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ success: false, message: "Password must be at least 8 characters" });
     }
 
-    // Check if user already exists
     const existingUser = await RCCG_User.findOne({ 
       $or: [{ email: email.toLowerCase() }, { phone }] 
     });
@@ -241,7 +331,6 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({ success: false, message: "Email or phone number already registered" });
     }
 
-    // Generate 6-digit verification code
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     
     const newUser = new RCCG_User({
@@ -258,7 +347,6 @@ router.post("/register", async (req, res) => {
       membershipStatus: "visitor"
     });
 
-    // Add referral if provided
     if (referralCode) {
       const referrer = await RCCG_User.findOne({ referralCode });
       if (referrer) {
@@ -271,12 +359,10 @@ router.post("/register", async (req, res) => {
 
     await newUser.save();
 
-    // Send verification email (non-blocking)
     sendVerificationEmail(email, fullName, verificationCode).catch(err => 
       console.error("Failed to send verification email:", err)
     );
 
-    // Generate token
     const token = generateToken(newUser);
 
     res.status(201).json({
@@ -291,126 +377,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
-// ============ ATTENDANCE ROUTES ============
 
-/**
- * @route   POST /api/rccg/users/attendance/check-in
- * @desc    Record user's attendance for a service
- * @access  Private
- */
-router.post("/attendance/check-in", authMiddleware, async (req, res) => {
-  try {
-    // Make sure authentication worked
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized - No user found"
-      });
-    }
-
-    const {
-      eventId,
-      eventName,
-      serviceType,
-      attendanceType
-    } = req.body;
-
-    // Find the RCCG user
-    const user = await RCCG_User.findById(req.user._id);
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "RCCG user not found"
-      });
-    }
-
-    // Current date/time
-    const now = new Date();
-
-    // Start and end of today
-    const startOfDay = new Date(now);
-    startOfDay.setHours(0, 0, 0, 0);
-
-    const endOfDay = new Date(now);
-    endOfDay.setHours(23, 59, 59, 999);
-
-    // Make sure attendanceRecords exists
-    if (!Array.isArray(user.attendanceRecords)) {
-      user.attendanceRecords = [];
-    }
-
-    // Prevent duplicate attendance for the same service/event today
-    const alreadyCheckedIn = user.attendanceRecords.some(record => {
-      const recordDate = record.date || record.createdAt;
-
-      if (!recordDate) return false;
-
-      const date = new Date(recordDate);
-
-      const sameDay =
-        date >= startOfDay &&
-        date <= endOfDay;
-
-      const sameEvent =
-        eventId
-          ? String(record.eventId || "") === String(eventId)
-          : true;
-
-      const sameService =
-        serviceType
-          ? String(record.serviceType || "").toLowerCase() ===
-            String(serviceType).toLowerCase()
-          : true;
-
-      return sameDay && sameEvent && sameService;
-    });
-
-    if (alreadyCheckedIn) {
-      return res.status(409).json({
-        success: false,
-        message: "You have already checked in for this service today."
-      });
-    }
-
-    // Create attendance record
-    const attendanceRecord = {
-      eventId: eventId || null,
-      eventName: eventName || "Today's Service",
-      serviceType: serviceType || "Sunday Service",
-      attendanceType: attendanceType || "physical",
-      date: now,
-      checkedIn: true
-    };
-
-    // Add attendance
-    user.attendanceRecords.push(attendanceRecord);
-
-    // Update activity
-    user.lastActivityAt = now;
-
-    await user.save();
-
-    // Get the newly-created record
-    const savedRecord =
-      user.attendanceRecords[user.attendanceRecords.length - 1];
-
-    return res.status(201).json({
-      success: true,
-      message: "Attendance successfully checked in!",
-      attendance: savedRecord,
-      attendanceCount: user.attendanceRecords.length
-    });
-
-  } catch (error) {
-    console.error("Attendance check-in error:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to record attendance"
-    });
-  }
-});
 /**
  * @route   POST /api/rccg/users/verify-email
  * @desc    Verify user email with code
@@ -483,12 +450,10 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Update last login
     user.lastLogin = new Date();
     user.lastActivityAt = new Date();
     await user.save();
 
-    // Generate token
     const token = generateToken(user);
 
     res.json({
@@ -523,14 +488,12 @@ router.post("/send-reset-code", async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found with this email address" });
     }
 
-    // Generate 6-digit reset code
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
     
     user.resetPasswordCode = resetCode;
     user.resetPasswordCodeExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
     await user.save();
 
-    // Send reset code email (non-blocking)
     sendPasswordResetCode(email, user.fullName, resetCode).catch(err => 
       console.error("Failed to send reset code:", err)
     );
@@ -577,7 +540,6 @@ router.post("/verify-reset-code", async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid or expired reset code" });
     }
 
-    // Update password
     user.password = newPassword;
     user.resetPasswordCode = null;
     user.resetPasswordCodeExpires = null;
@@ -606,7 +568,6 @@ router.get("/video-sermons", async (req, res) => {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
 
-    // Mock video sermons data
     const allVideoSermons = [
       {
         _id: "video-101",
@@ -688,13 +649,11 @@ router.get("/video-sermons", async (req, res) => {
       }
     ];
 
-    // Filter by category
     let filteredSermons = allVideoSermons;
     if (category && category !== "all") {
       filteredSermons = filteredSermons.filter(s => s.category === category);
     }
 
-    // Filter by search
     if (search) {
       const searchLower = search.toLowerCase();
       filteredSermons = filteredSermons.filter(s =>
@@ -734,7 +693,6 @@ router.get("/audio-sermons", async (req, res) => {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
 
-    // Mock audio sermons data
     const allAudioSermons = [
       {
         _id: "audio-101",
@@ -798,13 +756,11 @@ router.get("/audio-sermons", async (req, res) => {
       }
     ];
 
-    // Filter by category
     let filteredSermons = allAudioSermons;
     if (category && category !== "all") {
       filteredSermons = filteredSermons.filter(s => s.category === category);
     }
 
-    // Filter by search
     if (search) {
       const searchLower = search.toLowerCase();
       filteredSermons = filteredSermons.filter(s =>
@@ -842,7 +798,6 @@ router.get("/video-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
 
-    // Mock sermon data - TODO: Replace with database query
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -877,7 +832,6 @@ router.get("/audio-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
 
-    // Mock sermon data - TODO: Replace with database query
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -1169,6 +1123,181 @@ router.get("/prayer-requests", authMiddleware, async (req, res) => {
   }
 });
 
+// ============ ATTENDANCE ROUTES ============
+
+/**
+ * @route   POST /api/rccg/users/attendance/check-in
+ * @desc    Check in for an active church service (Nigeria timezone restricted)
+ * @access  Private
+ */
+router.post("/attendance/check-in", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized - No user found"
+      });
+    }
+
+    const nigeriaTime = getNigeriaDateInfo();
+    const attendanceWindow = getAttendanceWindow();
+
+    if (!attendanceWindow.active) {
+      return res.status(403).json({
+        success: false,
+        code: "ATTENDANCE_INACTIVE",
+        message: "Attendance is not currently active.",
+        schedule: {
+          sunday: "9:00 AM - 10:30 AM",
+          wednesday: "6:00 PM - 7:00 PM"
+        },
+        currentDay: nigeriaTime.weekday,
+        currentTime: `${String(nigeriaTime.hour).padStart(2, "0")}:${String(nigeriaTime.minute).padStart(2, "0")}`
+      });
+    }
+
+    const user = await RCCG_User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "RCCG user not found"
+      });
+    }
+
+    if (!Array.isArray(user.attendanceRecords)) {
+      user.attendanceRecords = [];
+    }
+
+    // Prevent multiple attendance records on the same calendar day in Africa/Lagos timezone
+    const alreadyCheckedIn = user.attendanceRecords.some(record => {
+      if (!record.date) return false;
+
+      const recordDate = new Date(record.date);
+      const recordNigeriaDate = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Africa/Lagos",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(recordDate);
+
+      return recordNigeriaDate === nigeriaTime.date;
+    });
+
+    if (alreadyCheckedIn) {
+      return res.status(409).json({
+        success: false,
+        code: "ALREADY_CHECKED_IN",
+        message: "You have already marked your attendance today."
+      });
+    }
+
+    const attendanceRecord = {
+      eventName: attendanceWindow.serviceType,
+      serviceType: attendanceWindow.serviceType,
+      attendanceType: "physical",
+      date: nigeriaTime.now,
+      checkedIn: true
+    };
+
+    user.attendanceRecords.push(attendanceRecord);
+    user.lastActivityAt = nigeriaTime.now;
+
+    await user.save();
+
+    const savedRecord = user.attendanceRecords[user.attendanceRecords.length - 1];
+
+    return res.status(201).json({
+      success: true,
+      message: `Attendance recorded for ${attendanceWindow.serviceType}.`,
+      attendance: savedRecord,
+      service: {
+        name: attendanceWindow.serviceType,
+        date: nigeriaTime.date,
+        start: attendanceWindow.start,
+        end: attendanceWindow.end
+      },
+      attendanceCount: user.attendanceRecords.length
+    });
+
+  } catch (error) {
+    console.error("Attendance check-in error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to record attendance"
+    });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/attendance/status
+ * @desc    Get current attendance availability & user check-in status
+ * @access  Private
+ */
+router.get("/attendance/status", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized - No user found"
+      });
+    }
+
+    const nigeriaTime = getNigeriaDateInfo();
+    const window = getAttendanceWindow();
+
+    const user = await RCCG_User.findById(req.user._id).select("attendanceRecords");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    const attendanceRecords = Array.isArray(user.attendanceRecords) ? user.attendanceRecords : [];
+
+    const alreadyCheckedIn = attendanceRecords.some(record => {
+      if (!record.date) return false;
+
+      const recordDate = new Date(record.date);
+      const recordNigeriaDate = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Africa/Lagos",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(recordDate);
+
+      return recordNigeriaDate === nigeriaTime.date;
+    });
+
+    return res.json({
+      success: true,
+      active: window.active && !alreadyCheckedIn,
+      alreadyCheckedIn,
+      service: window.serviceType,
+      currentDay: nigeriaTime.weekday,
+      currentTime: `${String(nigeriaTime.hour).padStart(2, "0")}:${String(nigeriaTime.minute).padStart(2, "0")}`,
+      window: {
+        start: window.start,
+        end: window.end
+      },
+      message: alreadyCheckedIn
+        ? "Attendance already recorded today."
+        : window.active
+          ? `Attendance is currently open for ${window.serviceType}.`
+          : "Attendance is currently closed."
+    });
+
+  } catch (error) {
+    console.error("Attendance status error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to get attendance status"
+    });
+  }
+});
+
 /**
  * @route   GET /api/rccg/users/attendance
  * @desc    Get user attendance history
@@ -1192,9 +1321,7 @@ router.get("/attendance", authMiddleware, async (req, res) => {
       });
     }
 
-    const attendance = Array.isArray(user.attendanceRecords)
-      ? user.attendanceRecords
-      : [];
+    const attendance = Array.isArray(user.attendanceRecords) ? user.attendanceRecords : [];
 
     return res.json({
       success: true,
@@ -1204,13 +1331,20 @@ router.get("/attendance", authMiddleware, async (req, res) => {
 
   } catch (error) {
     console.error("Get attendance error:", error);
-
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to get attendance"
     });
   }
 });
+
+// ============ EVENT & SERMON SAVING ROUTES ============
+
+/**
+ * @route   POST /api/rccg/users/register-event/:eventId
+ * @desc    Register for an event
+ * @access  Private
+ */
 router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -1257,7 +1391,7 @@ router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => 
 
     const { eventId } = req.params;
 
-    const user = await RCCG_User.findByIdAndUpdate(
+    await RCCG_User.findByIdAndUpdate(
       req.user._id,
       { 
         $pull: { registeredEvents: eventId },
@@ -1328,7 +1462,7 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
 
     const { sermonId } = req.params;
 
-    const user = await RCCG_User.findByIdAndUpdate(
+    await RCCG_User.findByIdAndUpdate(
       req.user._id,
       { 
         $pull: { savedSermons: sermonId },
@@ -1385,7 +1519,7 @@ router.get("/admin/all", authMiddleware, async (req, res) => {
       pagination: {
         total,
         pages: Math.ceil(total / limit),
-        currentPage: page
+        currentPage: parseInt(page)
       }
     });
 
@@ -1451,7 +1585,7 @@ router.delete("/admin/:userId", authMiddleware, async (req, res) => {
 
     const { userId } = req.params;
 
-    const user = await RCCG_User.findByIdAndUpdate(
+    await RCCG_User.findByIdAndUpdate(
       userId,
       { deletedAt: new Date(), isActive: false },
       { new: true }
