@@ -865,6 +865,214 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
   }
 });
 
+// ============ VIDEO & AUDIO SERMONS ROUTES ============
+
+/**
+ * @route   GET /api/rccg/users/video-sermons
+ * @desc    Get all video sermons with pagination
+ * @access  Private
+ */
+router.get("/video-sermons", authMiddleware, async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category, search } = req.query;
+    const skip = (page - 1) * limit;
+
+    // Build filter
+    const filter = {};
+    if (category && category !== "all") {
+      filter.category = category;
+    }
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { pastor: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    // TODO: Replace with actual video sermons from database
+    // For now, return mock data structure
+    const videoSermons = [
+      {
+        _id: "video-101",
+        title: "The Power of Unshakable Faith",
+        description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        eventType: "Sunday Service",
+        duration: "46:32",
+        views: 12400,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-102",
+        title: "Walking in Daily Divine Victory",
+        description: "Learn how to walk in divine victory daily through faith and God's word.",
+        pastor: "Ministerial Team",
+        category: "digging",
+        eventType: "Digging Deep",
+        duration: "42:15",
+        views: 8900,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1509021436471-181cf93012a3?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      }
+    ];
+
+    const total = videoSermons.length;
+
+    res.json({
+      success: true,
+      videoSermons: videoSermons.slice(skip, skip + limit),
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: page,
+        limit
+      }
+    });
+
+  } catch (error) {
+    console.error("Get video sermons error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/audio-sermons
+ * @desc    Get all audio sermons with pagination
+ * @access  Private
+ */
+router.get("/audio-sermons", authMiddleware, async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category, search } = req.query;
+    const skip = (page - 1) * limit;
+
+    // Build filter
+    const filter = {};
+    if (category && category !== "all") {
+      filter.category = category;
+    }
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { pastor: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    // TODO: Replace with actual audio sermons from database
+    // For now, return mock data structure
+    const audioSermons = [
+      {
+        _id: "audio-101",
+        title: "The Power of Unshakable Faith",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        duration: "46:32",
+        durationSec: 2792,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-102",
+        title: "Walking in Daily Divine Victory",
+        pastor: "Ministerial Team",
+        category: "digging",
+        duration: "42:15",
+        durationSec: 2535,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        createdAt: new Date()
+      }
+    ];
+
+    const total = audioSermons.length;
+
+    res.json({
+      success: true,
+      audioSermons: audioSermons.slice(skip, skip + limit),
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: page,
+        limit
+      }
+    });
+
+  } catch (error) {
+    console.error("Get audio sermons error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/video-sermons/:sermonId
+ * @desc    Get single video sermon details
+ * @access  Private
+ */
+router.get("/video-sermons/:sermonId", authMiddleware, async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    // TODO: Replace with actual video sermon from database
+    const sermon = {
+      _id: sermonId,
+      title: "The Power of Unshakable Faith",
+      description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
+      pastor: "Pastor E.A. Adeboye",
+      category: "sunday",
+      eventType: "Sunday Service",
+      duration: "46:32",
+      views: 12400,
+      videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+      thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
+      createdAt: new Date()
+    };
+
+    res.json({
+      success: true,
+      sermon
+    });
+
+  } catch (error) {
+    console.error("Get video sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/audio-sermons/:sermonId
+ * @desc    Get single audio sermon details
+ * @access  Private
+ */
+router.get("/audio-sermons/:sermonId", authMiddleware, async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    // TODO: Replace with actual audio sermon from database
+    const sermon = {
+      _id: sermonId,
+      title: "The Power of Unshakable Faith",
+      pastor: "Pastor E.A. Adeboye",
+      category: "sunday",
+      duration: "46:32",
+      durationSec: 2792,
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      createdAt: new Date()
+    };
+
+    res.json({
+      success: true,
+      sermon
+    });
+
+  } catch (error) {
+    console.error("Get audio sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // ============ ADMIN ROUTES ============
 
 /**
