@@ -185,7 +185,7 @@ const RCCG_UserSchema = new Schema({
     },
     method: {
       type: String,
-      enum: ["bank_transfer", "card", "cash", "mobile_money", "ussd"],
+      enum: ["bank_transfer", "card", "cash", "online", "ussd"],
       default: null
     },
     reference: String,
@@ -248,7 +248,7 @@ const RCCG_UserSchema = new Schema({
     description: String,
     category: {
       type: String,
-      enum: ["health", "finance", "family", "business", "spiritual", "other"]
+      enum: ["health", "finance", "family", "business", "spiritual", "general"]
     },
     status: {
       type: String,
