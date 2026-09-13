@@ -475,6 +475,312 @@ router.post("/verify-reset-code", async (req, res) => {
   }
 });
 
+// ============ PUBLIC VIDEO & AUDIO SERMONS ROUTES ============
+
+/**
+ * @route   GET /api/rccg/users/video-sermons
+ * @desc    Get all video sermons with pagination
+ * @access  Public
+ */
+router.get("/video-sermons", async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category, search } = req.query;
+    const skip = (page - 1) * limit;
+
+    // Mock video sermons data
+    const allVideoSermons = [
+      {
+        _id: "video-101",
+        title: "The Power of Unshakable Faith",
+        description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        eventType: "Sunday Service",
+        duration: "46:32",
+        views: 12400,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-102",
+        title: "Walking in Daily Divine Victory",
+        description: "Learn how to walk in divine victory daily through faith and God's word.",
+        pastor: "Ministerial Team",
+        category: "digging",
+        eventType: "Digging Deep",
+        duration: "42:15",
+        views: 8900,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1509021436471-181cf93012a3?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-103",
+        title: "Understanding God's Destiny for You",
+        description: "Discover God's purpose and destiny for your life.",
+        pastor: "Resident Pastor",
+        category: "youth",
+        eventType: "Youth Service",
+        duration: "38:47",
+        views: 15100,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-104",
+        title: "Kingdom Stewardship and Divine Covenant",
+        description: "Learn about true stewardship and God's covenant with His people.",
+        pastor: "Regional Overseer",
+        category: "special",
+        eventType: "Holy Ghost Service",
+        duration: "51:04",
+        views: 22800,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-105",
+        title: "Supernatural Breakthroughs and Grace",
+        description: "Experience supernatural breakthroughs through God's amazing grace.",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        eventType: "Sunday Service",
+        duration: "48:10",
+        views: 18300,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-106",
+        title: "The Weapon of Praise and Worship",
+        description: "Discover how praise and worship are weapons in spiritual warfare.",
+        pastor: "Ministerial Team",
+        category: "digging",
+        eventType: "Digging Deep",
+        duration: "35:50",
+        views: 11600,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      }
+    ];
+
+    // Filter by category
+    let filteredSermons = allVideoSermons;
+    if (category && category !== "all") {
+      filteredSermons = filteredSermons.filter(s => s.category === category);
+    }
+
+    // Filter by search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredSermons = filteredSermons.filter(s =>
+        s.title.toLowerCase().includes(searchLower) ||
+        s.pastor.toLowerCase().includes(searchLower) ||
+        s.description.toLowerCase().includes(searchLower)
+      );
+    }
+
+    const total = filteredSermons.length;
+    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
+
+    res.json({
+      success: true,
+      videoSermons: paginatedSermons,
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: parseInt(page),
+        limit: parseInt(limit)
+      }
+    });
+
+  } catch (error) {
+    console.error("Get video sermons error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/audio-sermons
+ * @desc    Get all audio sermons with pagination
+ * @access  Public
+ */
+router.get("/audio-sermons", async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category, search } = req.query;
+    const skip = (page - 1) * limit;
+
+    // Mock audio sermons data
+    const allAudioSermons = [
+      {
+        _id: "audio-101",
+        title: "The Power of Unshakable Faith",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        duration: "46:32",
+        durationSec: 2792,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-102",
+        title: "Walking in Daily Divine Victory",
+        pastor: "Ministerial Team",
+        category: "digging",
+        duration: "42:15",
+        durationSec: 2535,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-103",
+        title: "Understanding God's Destiny for You",
+        pastor: "Resident Pastor",
+        category: "youth",
+        duration: "38:47",
+        durationSec: 2327,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-104",
+        title: "Kingdom Stewardship and Divine Covenant",
+        pastor: "Regional Overseer",
+        category: "special",
+        duration: "51:04",
+        durationSec: 3064,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-105",
+        title: "Supernatural Breakthroughs and Grace",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        duration: "48:10",
+        durationSec: 2890,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-106",
+        title: "The Weapon of Praise and Worship",
+        pastor: "Ministerial Team",
+        category: "digging",
+        duration: "35:50",
+        durationSec: 2150,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        createdAt: new Date()
+      }
+    ];
+
+    // Filter by category
+    let filteredSermons = allAudioSermons;
+    if (category && category !== "all") {
+      filteredSermons = filteredSermons.filter(s => s.category === category);
+    }
+
+    // Filter by search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredSermons = filteredSermons.filter(s =>
+        s.title.toLowerCase().includes(searchLower) ||
+        s.pastor.toLowerCase().includes(searchLower)
+      );
+    }
+
+    const total = filteredSermons.length;
+    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
+
+    res.json({
+      success: true,
+      audioSermons: paginatedSermons,
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: parseInt(page),
+        limit: parseInt(limit)
+      }
+    });
+
+  } catch (error) {
+    console.error("Get audio sermons error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/video-sermons/:sermonId
+ * @desc    Get single video sermon details
+ * @access  Public
+ */
+router.get("/video-sermons/:sermonId", async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    // Mock sermon data - TODO: Replace with database query
+    const sermon = {
+      _id: sermonId,
+      title: "The Power of Unshakable Faith",
+      description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
+      pastor: "Pastor E.A. Adeboye",
+      category: "sunday",
+      eventType: "Sunday Service",
+      duration: "46:32",
+      views: 12400,
+      videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+      thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
+      createdAt: new Date()
+    };
+
+    res.json({
+      success: true,
+      sermon
+    });
+
+  } catch (error) {
+    console.error("Get video sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/rccg/users/audio-sermons/:sermonId
+ * @desc    Get single audio sermon details
+ * @access  Public
+ */
+router.get("/audio-sermons/:sermonId", async (req, res) => {
+  try {
+    const { sermonId } = req.params;
+
+    // Mock sermon data - TODO: Replace with database query
+    const sermon = {
+      _id: sermonId,
+      title: "The Power of Unshakable Faith",
+      pastor: "Pastor E.A. Adeboye",
+      category: "sunday",
+      duration: "46:32",
+      durationSec: 2792,
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      createdAt: new Date()
+    };
+
+    res.json({
+      success: true,
+      sermon
+    });
+
+  } catch (error) {
+    console.error("Get audio sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // ============ PROTECTED ROUTES ============
 
 /**
@@ -910,328 +1216,6 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
 
   } catch (error) {
     console.error("Unsave sermon error:", error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-// ============ VIDEO & AUDIO SERMONS ROUTES ============
-
-/**
- * @route   GET /api/rccg/users/video-sermons
- * @desc    Get all video sermons with pagination
- * @access  Private
- */
-router.get("/video-sermons", authMiddleware, async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
-    }
-
-    const { page = 1, limit = 10, category, search } = req.query;
-    const skip = (page - 1) * limit;
-
-    // Mock video sermons data
-    const allVideoSermons = [
-      {
-        _id: "video-101",
-        title: "The Power of Unshakable Faith",
-        description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        eventType: "Sunday Service",
-        duration: "46:32",
-        views: 12400,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-102",
-        title: "Walking in Daily Divine Victory",
-        description: "Learn how to walk in divine victory daily through faith and God's word.",
-        pastor: "Ministerial Team",
-        category: "digging",
-        eventType: "Digging Deep",
-        duration: "42:15",
-        views: 8900,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1509021436471-181cf93012a3?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-103",
-        title: "Understanding God's Destiny for You",
-        description: "Discover God's purpose and destiny for your life.",
-        pastor: "Resident Pastor",
-        category: "youth",
-        eventType: "Youth Service",
-        duration: "38:47",
-        views: 15100,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-104",
-        title: "Kingdom Stewardship and Divine Covenant",
-        description: "Learn about true stewardship and God's covenant with His people.",
-        pastor: "Regional Overseer",
-        category: "special",
-        eventType: "Holy Ghost Service",
-        duration: "51:04",
-        views: 22800,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-105",
-        title: "Supernatural Breakthroughs and Grace",
-        description: "Experience supernatural breakthroughs through God's amazing grace.",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        eventType: "Sunday Service",
-        duration: "48:10",
-        views: 18300,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-106",
-        title: "The Weapon of Praise and Worship",
-        description: "Discover how praise and worship are weapons in spiritual warfare.",
-        pastor: "Ministerial Team",
-        category: "digging",
-        eventType: "Digging Deep",
-        duration: "35:50",
-        views: 11600,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      }
-    ];
-
-    // Filter by category
-    let filteredSermons = allVideoSermons;
-    if (category && category !== "all") {
-      filteredSermons = filteredSermons.filter(s => s.category === category);
-    }
-
-    // Filter by search
-    if (search) {
-      const searchLower = search.toLowerCase();
-      filteredSermons = filteredSermons.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.pastor.toLowerCase().includes(searchLower) ||
-        s.description.toLowerCase().includes(searchLower)
-      );
-    }
-
-    const total = filteredSermons.length;
-    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
-
-    res.json({
-      success: true,
-      videoSermons: paginatedSermons,
-      pagination: {
-        total,
-        pages: Math.ceil(total / limit),
-        currentPage: parseInt(page),
-        limit: parseInt(limit)
-      }
-    });
-
-  } catch (error) {
-    console.error("Get video sermons error:", error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-/**
- * @route   GET /api/rccg/users/audio-sermons
- * @desc    Get all audio sermons with pagination
- * @access  Private
- */
-router.get("/audio-sermons", authMiddleware, async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
-    }
-
-    const { page = 1, limit = 10, category, search } = req.query;
-    const skip = (page - 1) * limit;
-
-    // Mock audio sermons data
-    const allAudioSermons = [
-      {
-        _id: "audio-101",
-        title: "The Power of Unshakable Faith",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        duration: "46:32",
-        durationSec: 2792,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-102",
-        title: "Walking in Daily Divine Victory",
-        pastor: "Ministerial Team",
-        category: "digging",
-        duration: "42:15",
-        durationSec: 2535,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-103",
-        title: "Understanding God's Destiny for You",
-        pastor: "Resident Pastor",
-        category: "youth",
-        duration: "38:47",
-        durationSec: 2327,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-104",
-        title: "Kingdom Stewardship and Divine Covenant",
-        pastor: "Regional Overseer",
-        category: "special",
-        duration: "51:04",
-        durationSec: 3064,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-105",
-        title: "Supernatural Breakthroughs and Grace",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        duration: "48:10",
-        durationSec: 2890,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-106",
-        title: "The Weapon of Praise and Worship",
-        pastor: "Ministerial Team",
-        category: "digging",
-        duration: "35:50",
-        durationSec: 2150,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        createdAt: new Date()
-      }
-    ];
-
-    // Filter by category
-    let filteredSermons = allAudioSermons;
-    if (category && category !== "all") {
-      filteredSermons = filteredSermons.filter(s => s.category === category);
-    }
-
-    // Filter by search
-    if (search) {
-      const searchLower = search.toLowerCase();
-      filteredSermons = filteredSermons.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.pastor.toLowerCase().includes(searchLower)
-      );
-    }
-
-    const total = filteredSermons.length;
-    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
-
-    res.json({
-      success: true,
-      audioSermons: paginatedSermons,
-      pagination: {
-        total,
-        pages: Math.ceil(total / limit),
-        currentPage: parseInt(page),
-        limit: parseInt(limit)
-      }
-    });
-
-  } catch (error) {
-    console.error("Get audio sermons error:", error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-/**
- * @route   GET /api/rccg/users/video-sermons/:sermonId
- * @desc    Get single video sermon details
- * @access  Private
- */
-router.get("/video-sermons/:sermonId", authMiddleware, async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
-    }
-
-    const { sermonId } = req.params;
-
-    // Mock sermon data - TODO: Replace with database query
-    const sermon = {
-      _id: sermonId,
-      title: "The Power of Unshakable Faith",
-      description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
-      pastor: "Pastor E.A. Adeboye",
-      category: "sunday",
-      eventType: "Sunday Service",
-      duration: "46:32",
-      views: 12400,
-      videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-      thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
-      createdAt: new Date()
-    };
-
-    res.json({
-      success: true,
-      sermon
-    });
-
-  } catch (error) {
-    console.error("Get video sermon error:", error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-/**
- * @route   GET /api/rccg/users/audio-sermons/:sermonId
- * @desc    Get single audio sermon details
- * @access  Private
- */
-router.get("/audio-sermons/:sermonId", authMiddleware, async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
-    }
-
-    const { sermonId } = req.params;
-
-    // Mock sermon data - TODO: Replace with database query
-    const sermon = {
-      _id: sermonId,
-      title: "The Power of Unshakable Faith",
-      pastor: "Pastor E.A. Adeboye",
-      category: "sunday",
-      duration: "46:32",
-      durationSec: 2792,
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-      createdAt: new Date()
-    };
-
-    res.json({
-      success: true,
-      sermon
-    });
-
-  } catch (error) {
-    console.error("Get audio sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
