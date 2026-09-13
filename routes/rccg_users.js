@@ -484,6 +484,10 @@ router.post("/verify-reset-code", async (req, res) => {
  */
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const user = await RCCG_User.findById(req.user._id)
       .populate("departments")
       .populate("ministries")
@@ -514,6 +518,10 @@ router.get("/profile", authMiddleware, async (req, res) => {
  */
 router.put("/profile", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { fullName, phone, dateOfBirth, gender, address, city, state, zipCode, bio, profession, maritalStatus, designation } = req.body;
 
     const updateData = {};
@@ -557,6 +565,10 @@ router.put("/profile", authMiddleware, async (req, res) => {
  */
 router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"), async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
@@ -590,6 +602,10 @@ router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"
  */
 router.post("/giving", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { type, amount, currency, method, reference, description } = req.body;
 
     if (!type || !amount) {
@@ -634,6 +650,10 @@ router.post("/giving", authMiddleware, async (req, res) => {
  */
 router.get("/giving", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
@@ -659,6 +679,10 @@ router.get("/giving", authMiddleware, async (req, res) => {
  */
 router.post("/prayer-request", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { title, description, category, isConfidential } = req.body;
 
     if (!title || !description) {
@@ -675,7 +699,8 @@ router.post("/prayer-request", authMiddleware, async (req, res) => {
       title,
       description,
       category: category || "other",
-      isConfidential: isConfidential !== false
+      isConfidential: isConfidential !== false,
+      createdAt: new Date()
     });
 
     await user.save();
@@ -698,6 +723,10 @@ router.post("/prayer-request", authMiddleware, async (req, res) => {
  */
 router.get("/prayer-requests", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
@@ -722,6 +751,10 @@ router.get("/prayer-requests", authMiddleware, async (req, res) => {
  */
 router.get("/attendance", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
@@ -746,6 +779,10 @@ router.get("/attendance", authMiddleware, async (req, res) => {
  */
 router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { eventId } = req.params;
 
     const user = await RCCG_User.findById(req.user._id);
@@ -780,6 +817,10 @@ router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
  */
 router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { eventId } = req.params;
 
     const user = await RCCG_User.findByIdAndUpdate(
@@ -809,6 +850,10 @@ router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => 
  */
 router.post("/save-sermon/:sermonId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { sermonId } = req.params;
 
     const user = await RCCG_User.findById(req.user._id);
@@ -843,6 +888,10 @@ router.post("/save-sermon/:sermonId", authMiddleware, async (req, res) => {
  */
 router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { sermonId } = req.params;
 
     const user = await RCCG_User.findByIdAndUpdate(
@@ -874,25 +923,15 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
  */
 router.get("/video-sermons", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
 
-    // Build filter
-    const filter = {};
-    if (category && category !== "all") {
-      filter.category = category;
-    }
-    if (search) {
-      filter.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { pastor: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } }
-      ];
-    }
-
-    // TODO: Replace with actual video sermons from database
-    // For now, return mock data structure
-    const videoSermons = [
+    // Mock video sermons data
+    const allVideoSermons = [
       {
         _id: "video-101",
         title: "The Power of Unshakable Faith",
@@ -918,19 +957,88 @@ router.get("/video-sermons", authMiddleware, async (req, res) => {
         videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
         thumbnailUrl: "https://images.unsplash.com/photo-1509021436471-181cf93012a3?auto=format&fit=crop&q=80&w=600",
         createdAt: new Date()
+      },
+      {
+        _id: "video-103",
+        title: "Understanding God's Destiny for You",
+        description: "Discover God's purpose and destiny for your life.",
+        pastor: "Resident Pastor",
+        category: "youth",
+        eventType: "Youth Service",
+        duration: "38:47",
+        views: 15100,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-104",
+        title: "Kingdom Stewardship and Divine Covenant",
+        description: "Learn about true stewardship and God's covenant with His people.",
+        pastor: "Regional Overseer",
+        category: "special",
+        eventType: "Holy Ghost Service",
+        duration: "51:04",
+        views: 22800,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-105",
+        title: "Supernatural Breakthroughs and Grace",
+        description: "Experience supernatural breakthroughs through God's amazing grace.",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        eventType: "Sunday Service",
+        duration: "48:10",
+        views: 18300,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
+      },
+      {
+        _id: "video-106",
+        title: "The Weapon of Praise and Worship",
+        description: "Discover how praise and worship are weapons in spiritual warfare.",
+        pastor: "Ministerial Team",
+        category: "digging",
+        eventType: "Digging Deep",
+        duration: "35:50",
+        views: 11600,
+        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
+        thumbnailUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
+        createdAt: new Date()
       }
     ];
 
-    const total = videoSermons.length;
+    // Filter by category
+    let filteredSermons = allVideoSermons;
+    if (category && category !== "all") {
+      filteredSermons = filteredSermons.filter(s => s.category === category);
+    }
+
+    // Filter by search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredSermons = filteredSermons.filter(s =>
+        s.title.toLowerCase().includes(searchLower) ||
+        s.pastor.toLowerCase().includes(searchLower) ||
+        s.description.toLowerCase().includes(searchLower)
+      );
+    }
+
+    const total = filteredSermons.length;
+    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
 
     res.json({
       success: true,
-      videoSermons: videoSermons.slice(skip, skip + limit),
+      videoSermons: paginatedSermons,
       pagination: {
         total,
         pages: Math.ceil(total / limit),
-        currentPage: page,
-        limit
+        currentPage: parseInt(page),
+        limit: parseInt(limit)
       }
     });
 
@@ -947,24 +1055,15 @@ router.get("/video-sermons", authMiddleware, async (req, res) => {
  */
 router.get("/audio-sermons", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
 
-    // Build filter
-    const filter = {};
-    if (category && category !== "all") {
-      filter.category = category;
-    }
-    if (search) {
-      filter.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { pastor: { $regex: search, $options: "i" } }
-      ];
-    }
-
-    // TODO: Replace with actual audio sermons from database
-    // For now, return mock data structure
-    const audioSermons = [
+    // Mock audio sermons data
+    const allAudioSermons = [
       {
         _id: "audio-101",
         title: "The Power of Unshakable Faith",
@@ -984,19 +1083,75 @@ router.get("/audio-sermons", authMiddleware, async (req, res) => {
         durationSec: 2535,
         audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
         createdAt: new Date()
+      },
+      {
+        _id: "audio-103",
+        title: "Understanding God's Destiny for You",
+        pastor: "Resident Pastor",
+        category: "youth",
+        duration: "38:47",
+        durationSec: 2327,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-104",
+        title: "Kingdom Stewardship and Divine Covenant",
+        pastor: "Regional Overseer",
+        category: "special",
+        duration: "51:04",
+        durationSec: 3064,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-105",
+        title: "Supernatural Breakthroughs and Grace",
+        pastor: "Pastor E.A. Adeboye",
+        category: "sunday",
+        duration: "48:10",
+        durationSec: 2890,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        createdAt: new Date()
+      },
+      {
+        _id: "audio-106",
+        title: "The Weapon of Praise and Worship",
+        pastor: "Ministerial Team",
+        category: "digging",
+        duration: "35:50",
+        durationSec: 2150,
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        createdAt: new Date()
       }
     ];
 
-    const total = audioSermons.length;
+    // Filter by category
+    let filteredSermons = allAudioSermons;
+    if (category && category !== "all") {
+      filteredSermons = filteredSermons.filter(s => s.category === category);
+    }
+
+    // Filter by search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredSermons = filteredSermons.filter(s =>
+        s.title.toLowerCase().includes(searchLower) ||
+        s.pastor.toLowerCase().includes(searchLower)
+      );
+    }
+
+    const total = filteredSermons.length;
+    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
 
     res.json({
       success: true,
-      audioSermons: audioSermons.slice(skip, skip + limit),
+      audioSermons: paginatedSermons,
       pagination: {
         total,
         pages: Math.ceil(total / limit),
-        currentPage: page,
-        limit
+        currentPage: parseInt(page),
+        limit: parseInt(limit)
       }
     });
 
@@ -1013,9 +1168,13 @@ router.get("/audio-sermons", authMiddleware, async (req, res) => {
  */
 router.get("/video-sermons/:sermonId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { sermonId } = req.params;
 
-    // TODO: Replace with actual video sermon from database
+    // Mock sermon data - TODO: Replace with database query
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -1048,9 +1207,13 @@ router.get("/video-sermons/:sermonId", authMiddleware, async (req, res) => {
  */
 router.get("/audio-sermons/:sermonId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     const { sermonId } = req.params;
 
-    // TODO: Replace with actual audio sermon from database
+    // Mock sermon data - TODO: Replace with database query
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -1082,6 +1245,10 @@ router.get("/audio-sermons/:sermonId", authMiddleware, async (req, res) => {
  */
 router.get("/admin/all", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
@@ -1123,6 +1290,10 @@ router.get("/admin/all", authMiddleware, async (req, res) => {
  */
 router.put("/admin/:userId/approve", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
@@ -1158,6 +1329,10 @@ router.put("/admin/:userId/approve", authMiddleware, async (req, res) => {
  */
 router.delete("/admin/:userId", authMiddleware, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
