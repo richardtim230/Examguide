@@ -291,7 +291,126 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+// ============ ATTENDANCE ROUTES ============
 
+/**
+ * @route   POST /api/rccg/users/attendance/check-in
+ * @desc    Record user's attendance for a service
+ * @access  Private
+ */
+router.post("/attendance/check-in", authMiddleware, async (req, res) => {
+  try {
+    // Make sure authentication worked
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized - No user found"
+      });
+    }
+
+    const {
+      eventId,
+      eventName,
+      serviceType,
+      attendanceType
+    } = req.body;
+
+    // Find the RCCG user
+    const user = await RCCG_User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "RCCG user not found"
+      });
+    }
+
+    // Current date/time
+    const now = new Date();
+
+    // Start and end of today
+    const startOfDay = new Date(now);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(now);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // Make sure attendanceRecords exists
+    if (!Array.isArray(user.attendanceRecords)) {
+      user.attendanceRecords = [];
+    }
+
+    // Prevent duplicate attendance for the same service/event today
+    const alreadyCheckedIn = user.attendanceRecords.some(record => {
+      const recordDate = record.date || record.createdAt;
+
+      if (!recordDate) return false;
+
+      const date = new Date(recordDate);
+
+      const sameDay =
+        date >= startOfDay &&
+        date <= endOfDay;
+
+      const sameEvent =
+        eventId
+          ? String(record.eventId || "") === String(eventId)
+          : true;
+
+      const sameService =
+        serviceType
+          ? String(record.serviceType || "").toLowerCase() ===
+            String(serviceType).toLowerCase()
+          : true;
+
+      return sameDay && sameEvent && sameService;
+    });
+
+    if (alreadyCheckedIn) {
+      return res.status(409).json({
+        success: false,
+        message: "You have already checked in for this service today."
+      });
+    }
+
+    // Create attendance record
+    const attendanceRecord = {
+      eventId: eventId || null,
+      eventName: eventName || "Today's Service",
+      serviceType: serviceType || "Sunday Service",
+      attendanceType: attendanceType || "physical",
+      date: now,
+      checkedIn: true
+    };
+
+    // Add attendance
+    user.attendanceRecords.push(attendanceRecord);
+
+    // Update activity
+    user.lastActivityAt = now;
+
+    await user.save();
+
+    // Get the newly-created record
+    const savedRecord =
+      user.attendanceRecords[user.attendanceRecords.length - 1];
+
+    return res.status(201).json({
+      success: true,
+      message: "Attendance successfully checked in!",
+      attendance: savedRecord,
+      attendanceCount: user.attendanceRecords.length
+    });
+
+  } catch (error) {
+    console.error("Attendance check-in error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to record attendance"
+    });
+  }
+});
 /**
  * @route   POST /api/rccg/users/verify-email
  * @desc    Verify user email with code
@@ -1058,31 +1177,40 @@ router.get("/prayer-requests", authMiddleware, async (req, res) => {
 router.get("/attendance", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized - No user found"
+      });
     }
 
     const user = await RCCG_User.findById(req.user._id);
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
     }
 
-    res.json({
+    const attendance = Array.isArray(user.attendanceRecords)
+      ? user.attendanceRecords
+      : [];
+
+    return res.json({
       success: true,
-      attendance: user.attendanceRecords
+      attendance,
+      total: attendance.length
     });
 
   } catch (error) {
     console.error("Get attendance error:", error);
-    res.status(500).json({ success: false, message: error.message });
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to get attendance"
+    });
   }
 });
-
-/**
- * @route   POST /api/rccg/users/register-event/:eventId
- * @desc    Register for event
- * @access  Private
- */
 router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
