@@ -7,10 +7,8 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
-
 const JWT_SECRET = process.env.JWT_SECRET || "please_set_a_strong_secret";
 
-// ============ EMAIL CONFIGURATION ============
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -19,7 +17,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Test transporter connection
 transporter.verify((error, success) => {
   if (error) {
     console.warn("Email service not available:", error.message);
@@ -28,11 +25,6 @@ transporter.verify((error, success) => {
   }
 });
 
-// ============ HELPER FUNCTIONS ============
-
-/**
- * Generate JWT token
- */
 function generateToken(user) {
   return jwt.sign(
     { 
@@ -45,79 +37,15 @@ function generateToken(user) {
   );
 }
 
-/**
- * Send verification email with code
- */
 async function sendVerificationEmail(email, fullName, verificationCode) {
   try {
-    const emailContent = `
-<!DOCTYPE html>
-<html lang="en" style="background:#f3f7fa;">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Email Verification | RCCG Rehoboth Mega Cathedral</title>
-  <style>
-    body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
-    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}
-    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}
-    .title {color:#003366;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
-    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
-    .code-box {background:linear-gradient(90deg,#003366 0%,#0047AB 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}
-    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
-    .warning {background:#E6F4EA;border-left:4px solid #008037;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#008037;}
-    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
-    .link {word-break:break-all;color:#003366;text-decoration:underline;}
-    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
-    .socials {text-align:center;margin-top:18px;}
-    .socials a {display:inline-block;margin:0 8px;text-decoration:none;}
-    .socials span {color:#003366;font-size:24px;margin:0 4px;}
-    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:3rem;margin:10px 0;">🙏</div>
-    </div>
-    <div class="title">Email Verification</div>
-    <div class="subtitle">
-      Hi <b>${fullName || "Member"},</b>
-    </div>
-    <div class="subtitle" style="font-size:1.01rem;">
-      Welcome to RCCG Rehoboth Mega Cathedral! Please verify your email with the code below:
-    </div>
-    <div class="code-box">${verificationCode}</div>
-    <div class="info">
-      This code will expire in <b>24 hours</b>. Do not share this code with anyone.
-    </div>
-    <div class="warning">
-      <strong>✓ Security Notice:</strong> If you did not create this account, please ignore this email and your email will remain unverified.
-    </div>
-    <div class="support">
-      Questions? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a>
-    </div>
-    <div class="socials">
-      <a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a>
-      <a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a>
-      <a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a>
-    </div>
-    <div class="footer">
-      &copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>
-      Ile-Ife, Osun State, Nigeria
-    </div>
-  </div>
-</body>
-</html>
-`;
-
+    const emailContent = `<!DOCTYPE html><html lang="en" style="background:#f3f7fa;"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Email Verification | RCCG Rehoboth Mega Cathedral</title><style>body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}.container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}.logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}.title {color:#003366;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}.subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}.code-box {background:linear-gradient(90deg,#003366 0%,#0047AB 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}.info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}.warning {background:#E6F4EA;border-left:4px solid #008037;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#008037;}.support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}.link {word-break:break-all;color:#003366;text-decoration:underline;}.footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}.socials {text-align:center;margin-top:18px;}.socials a {display:inline-block;margin:0 8px;text-decoration:none;}.socials span {color:#003366;font-size:24px;margin:0 4px;}@media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}</style></head><body><div class="container"><div style="text-align:center;margin-bottom:20px;"><div style="font-size:3rem;margin:10px 0;">🙏</div></div><div class="title">Email Verification</div><div class="subtitle">Hi <b>${fullName || "Member"},</b></div><div class="subtitle" style="font-size:1.01rem;">Welcome to RCCG Rehoboth Mega Cathedral! Please verify your email with the code below:</div><div class="code-box">${verificationCode}</div><div class="info">This code will expire in <b>24 hours</b>. Do not share this code with anyone.</div><div class="warning"><strong>✓ Security Notice:</strong> If you did not create this account, please ignore this email and your email will remain unverified.</div><div class="support">Questions? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a></div><div class="socials"><a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a><a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a><a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a></div><div class="footer">&copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>Ile-Ife, Osun State, Nigeria</div></div></body></html>`;
     await transporter.sendMail({
       from: `"RCCG Rehoboth" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Email Verification - RCCG Rehoboth Mega Cathedral",
       html: emailContent
     });
-
     console.log("Verification email sent to:", email);
     return true;
   } catch (error) {
@@ -126,79 +54,15 @@ async function sendVerificationEmail(email, fullName, verificationCode) {
   }
 }
 
-/**
- * Send password reset code email
- */
 async function sendPasswordResetCode(email, fullName, resetCode) {
   try {
-    const emailContent = `
-<!DOCTYPE html>
-<html lang="en" style="background:#f3f7fa;">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Password Reset Code | RCCG Rehoboth Mega Cathedral</title>
-  <style>
-    body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
-    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}
-    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}
-    .title {color:#D92525;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
-    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
-    .code-box {background:linear-gradient(90deg,#D92525 0%,#B91C1C 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}
-    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
-    .warning {background:#FCE8E6;border-left:4px solid #D92525;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#D92525;}
-    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
-    .link {word-break:break-all;color:#D92525;text-decoration:underline;}
-    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
-    .socials {text-align:center;margin-top:18px;}
-    .socials a {display:inline-block;margin:0 8px;text-decoration:none;}
-    .socials span {color:#D92525;font-size:24px;margin:0 4px;}
-    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:3rem;margin:10px 0;">🔐</div>
-    </div>
-    <div class="title">Password Reset Code</div>
-    <div class="subtitle">
-      Hi <b>${fullName || "Member"},</b>
-    </div>
-    <div class="subtitle" style="font-size:1.01rem;">
-      We received a request to reset your password. Use the code below to proceed:
-    </div>
-    <div class="code-box">${resetCode}</div>
-    <div class="info">
-      This code will expire in <b>15 minutes</b>. Do not share this code with anyone.
-    </div>
-    <div class="warning">
-      <strong>⚠️ Security Notice:</strong> If you did not request a password reset, please ignore this email and your password will remain unchanged. Your account is secure.
-    </div>
-    <div class="support">
-      Need help? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a>
-    </div>
-    <div class="socials">
-      <a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a>
-      <a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a>
-      <a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a>
-    </div>
-    <div class="footer">
-      &copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>
-      Ile-Ife, Osun State, Nigeria
-    </div>
-  </div>
-</body>
-</html>
-`;
-
+    const emailContent = `<!DOCTYPE html><html lang="en" style="background:#f3f7fa;"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Password Reset Code | RCCG Rehoboth Mega Cathedral</title><style>body {background:#f3f7fa;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}.container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px rgba(0,51,102,0.1);padding:40px 24px 28px 24px;}.logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px rgba(0,51,102,0.1);background:#fff;}.title {color:#D92525;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}.subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}.code-box {background:linear-gradient(90deg,#D92525 0%,#B91C1C 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin:24px 0;font-size:2.5rem;font-weight:800;letter-spacing:8px;font-family:monospace;}.info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}.warning {background:#FCE8E6;border-left:4px solid #D92525;padding:16px;border-radius:6px;margin:18px 0;font-size:.95rem;color:#D92525;}.support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}.link {word-break:break-all;color:#D92525;text-decoration:underline;}.footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}.socials {text-align:center;margin-top:18px;}.socials a {display:inline-block;margin:0 8px;text-decoration:none;}.socials span {color:#D92525;font-size:24px;margin:0 4px;}@media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}.code-box{font-size:1.8rem;letter-spacing:4px;}}</style></head><body><div class="container"><div style="text-align:center;margin-bottom:20px;"><div style="font-size:3rem;margin:10px 0;">🔐</div></div><div class="title">Password Reset Code</div><div class="subtitle">Hi <b>${fullName || "Member"},</b></div><div class="subtitle" style="font-size:1.01rem;">We received a request to reset your password. Use the code below to proceed:</div><div class="code-box">${resetCode}</div><div class="info">This code will expire in <b>15 minutes</b>. Do not share this code with anyone.</div><div class="warning"><strong>⚠️ Security Notice:</strong> If you did not request a password reset, please ignore this email and your password will remain unchanged. Your account is secure.</div><div class="support">Need help? <a class="link" href="mailto:support@rccgrehoboth.com">Contact Support</a></div><div class="socials"><a href="https://facebook.com/RCCGRehoboth" target="_blank"><span>f</span></a><a href="https://twitter.com/RCCGRehoboth" target="_blank"><span>𝕏</span></a><a href="https://instagram.com/RCCGRehoboth" target="_blank"><span>📷</span></a></div><div class="footer">&copy; ${new Date().getFullYear()} RCCG Rehoboth Mega Cathedral, Region 3 HQ<br>Ile-Ife, Osun State, Nigeria</div></div></body></html>`;
     await transporter.sendMail({
       from: `"RCCG Rehoboth" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Your Password Reset Code - RCCG Rehoboth Mega Cathedral",
       html: emailContent
     });
-
     console.log("Password reset code sent to:", email);
     return true;
   } catch (error) {
@@ -207,12 +71,8 @@ async function sendPasswordResetCode(email, fullName, resetCode) {
   }
 }
 
-/**
- * Get current date/time information in Nigeria (Africa/Lagos timezone)
- */
 function getNigeriaDateInfo() {
   const now = new Date();
-
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "Africa/Lagos",
     weekday: "long",
@@ -224,12 +84,9 @@ function getNigeriaDateInfo() {
     second: "2-digit",
     hour12: false
   }).formatToParts(now);
-
   const get = (type) => parts.find(p => p.type === type)?.value;
-
   let hour = parseInt(get("hour"), 10);
   if (hour === 24) hour = 0;
-
   return {
     date: `${get("year")}-${get("month")}-${get("day")}`,
     weekday: get("weekday"),
@@ -240,99 +97,47 @@ function getNigeriaDateInfo() {
   };
 }
 
-/**
- * Determine whether attendance is currently active based on Nigeria time
- */
 function getAttendanceWindow() {
   const info = getNigeriaDateInfo();
   const currentMinutes = info.hour * 60 + info.minute;
-
-  // Sunday: 9:00 AM - 10:30 AM
   if (info.weekday === "Sunday") {
-    const start = 9 * 60;       // 09:00
-    const end = 10 * 60 + 30;   // 10:30
-
+    const start = 9 * 60;
+    const end = 10 * 60 + 30;
     if (currentMinutes >= start && currentMinutes < end) {
-      return {
-        active: true,
-        serviceType: "Sunday Service",
-        start: "09:00",
-        end: "10:30"
-      };
+      return { active: true, serviceType: "Sunday Service", start: "09:00", end: "10:30" };
     }
-
-    return {
-      active: false,
-      serviceType: "Sunday Service",
-      start: "09:00",
-      end: "10:30"
-    };
+    return { active: false, serviceType: "Sunday Service", start: "09:00", end: "10:30" };
   }
-
-  // Wednesday: 6:00 PM - 7:00 PM
   if (info.weekday === "Wednesday") {
-    const start = 18 * 60;      // 18:00
-    const end = 19 * 60;        // 19:00
-
+    const start = 18 * 60;
+    const end = 19 * 60;
     if (currentMinutes >= start && currentMinutes < end) {
-      return {
-        active: true,
-        serviceType: "Digging Deep",
-        start: "18:00",
-        end: "19:00"
-      };
+      return { active: true, serviceType: "Digging Deep", start: "18:00", end: "19:00" };
     }
-
-    return {
-      active: false,
-      serviceType: "Digging Deep",
-      start: "18:00",
-      end: "19:00"
-    };
+    return { active: false, serviceType: "Digging Deep", start: "18:00", end: "19:00" };
   }
-
-  // No attendance on other days
-  return {
-    active: false,
-    serviceType: null,
-    start: null,
-    end: null
-  };
+  return { active: false, serviceType: null, start: null, end: null };
 }
 
-// ============ PUBLIC ROUTES ============
-
-/**
- * @route   POST /api/rccg/users/register
- * @desc    Register a new user
- * @access  Public
- */
 router.post("/register", async (req, res) => {
   try {
     const { fullName, email, phone, password, confirmPassword, dateOfBirth, gender, state, maritalStatus, referralCode } = req.body;
-
     if (!fullName || !email || !phone || !password) {
       return res.status(400).json({ success: false, message: "Missing required fields" });
     }
-
     if (password !== confirmPassword) {
       return res.status(400).json({ success: false, message: "Passwords do not match" });
     }
-
     if (password.length < 8) {
       return res.status(400).json({ success: false, message: "Password must be at least 8 characters" });
     }
-
     const existingUser = await RCCG_User.findOne({ 
       $or: [{ email: email.toLowerCase() }, { phone }] 
     });
-
     if (existingUser) {
       return res.status(409).json({ success: false, message: "Email or phone number already registered" });
     }
-
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    
     const newUser = new RCCG_User({
       fullName,
       email: email.toLowerCase(),
@@ -343,10 +148,9 @@ router.post("/register", async (req, res) => {
       state: state || "Osun",
       maritalStatus: maritalStatus || null,
       verificationCode,
-      verificationCodeExpires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+      verificationCodeExpires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       membershipStatus: "visitor"
     });
-
     if (referralCode) {
       const referrer = await RCCG_User.findOne({ referralCode });
       if (referrer) {
@@ -356,92 +160,62 @@ router.post("/register", async (req, res) => {
         await referrer.save();
       }
     }
-
     await newUser.save();
-
     sendVerificationEmail(email, fullName, verificationCode).catch(err => 
       console.error("Failed to send verification email:", err)
     );
-
     const token = generateToken(newUser);
-
     res.status(201).json({
       success: true,
       message: "Registration successful. Please check your email for verification code.",
       token,
       user: newUser.toJSON()
     });
-
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/verify-email
- * @desc    Verify user email with code
- * @access  Public
- */
 router.post("/verify-email", async (req, res) => {
   try {
     const { email, verificationCode } = req.body;
-
     if (!email || !verificationCode) {
       return res.status(400).json({ success: false, message: "Email and verification code required" });
     }
-
     const user = await RCCG_User.findOne({
       email: email.toLowerCase(),
       verificationCode,
       verificationCodeExpires: { $gt: new Date() }
     });
-
     if (!user) {
       return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
     }
-
     user.emailVerified = true;
     user.verificationCode = null;
     user.verificationCodeExpires = null;
     await user.save();
-
-    res.json({
-      success: true,
-      message: "Email verified successfully"
-    });
-
+    res.json({ success: true, message: "Email verified successfully" });
   } catch (error) {
     console.error("Email verification error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/login
- * @desc    Login user
- * @access  Public
- */
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password required" });
     }
-
     const user = await RCCG_User.findOne({ email: email.toLowerCase() });
-
     if (!user) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
-
     const isPasswordValid = await user.comparePassword(password);
-
     if (!isPasswordValid) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
-
     if (!user.emailVerified) {
       return res.status(403).json({ 
         success: false, 
@@ -449,125 +223,87 @@ router.post("/login", async (req, res) => {
         requiresVerification: true
       });
     }
-
     user.lastLogin = new Date();
     user.lastActivityAt = new Date();
     await user.save();
-
     const token = generateToken(user);
-
     res.json({
       success: true,
       message: "Login successful",
       token,
       user: user.toJSON()
     });
-
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/send-reset-code
- * @desc    Send password reset code
- * @access  Public
- */
 router.post("/send-reset-code", async (req, res) => {
   try {
     const { email } = req.body;
-
     if (!email) {
       return res.status(400).json({ success: false, message: "Email address is required" });
     }
-
     const user = await RCCG_User.findOne({ email: email.toLowerCase() });
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found with this email address" });
     }
-
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-    
     user.resetPasswordCode = resetCode;
-    user.resetPasswordCodeExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    user.resetPasswordCodeExpires = new Date(Date.now() + 15 * 60 * 1000);
     await user.save();
-
     sendPasswordResetCode(email, user.fullName, resetCode).catch(err => 
       console.error("Failed to send reset code:", err)
     );
-
     res.status(200).json({ 
       success: true,
       message: "Reset code sent to your email. Please check your inbox (and spam/promotions folders). Code expires in 15 minutes."
     });
-
   } catch (error) {
     console.error("Send reset code error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/verify-reset-code
- * @desc    Verify reset code and reset password
- * @access  Public
- */
 router.post("/verify-reset-code", async (req, res) => {
   try {
     const { email, resetCode, newPassword, confirmPassword } = req.body;
-
     if (!email || !resetCode || !newPassword || !confirmPassword) {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
-
     if (newPassword !== confirmPassword) {
       return res.status(400).json({ success: false, message: "Passwords do not match" });
     }
-
     if (newPassword.length < 8) {
       return res.status(400).json({ success: false, message: "Password must be at least 8 characters" });
     }
-
     const user = await RCCG_User.findOne({
       email: email.toLowerCase(),
       resetPasswordCode: resetCode,
       resetPasswordCodeExpires: { $gt: new Date() }
     });
-
     if (!user) {
       return res.status(400).json({ success: false, message: "Invalid or expired reset code" });
     }
-
     user.password = newPassword;
     user.resetPasswordCode = null;
     user.resetPasswordCodeExpires = null;
     await user.save();
-
     res.json({
       success: true,
       message: "Password reset successfully. You can now log in with your new password."
     });
-
   } catch (error) {
     console.error("Verify reset code error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// ============ PUBLIC VIDEO & AUDIO SERMONS ROUTES ============
-
-/**
- * @route   GET /api/rccg/users/video-sermons
- * @desc    Get all video sermons with pagination
- * @access  Public
- */
 router.get("/video-sermons", async (req, res) => {
   try {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
-
     const allVideoSermons = [
       {
         _id: "video-101",
@@ -648,12 +384,10 @@ router.get("/video-sermons", async (req, res) => {
         createdAt: new Date()
       }
     ];
-
     let filteredSermons = allVideoSermons;
     if (category && category !== "all") {
       filteredSermons = filteredSermons.filter(s => s.category === category);
     }
-
     if (search) {
       const searchLower = search.toLowerCase();
       filteredSermons = filteredSermons.filter(s =>
@@ -662,10 +396,8 @@ router.get("/video-sermons", async (req, res) => {
         s.description.toLowerCase().includes(searchLower)
       );
     }
-
     const total = filteredSermons.length;
     const paginatedSermons = filteredSermons.slice(skip, skip + limit);
-
     res.json({
       success: true,
       videoSermons: paginatedSermons,
@@ -676,23 +408,16 @@ router.get("/video-sermons", async (req, res) => {
         limit: parseInt(limit)
       }
     });
-
   } catch (error) {
     console.error("Get video sermons error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   GET /api/rccg/users/audio-sermons
- * @desc    Get all audio sermons with pagination
- * @access  Public
- */
 router.get("/audio-sermons", async (req, res) => {
   try {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
-
     const allAudioSermons = [
       {
         _id: "audio-101",
@@ -755,12 +480,10 @@ router.get("/audio-sermons", async (req, res) => {
         createdAt: new Date()
       }
     ];
-
     let filteredSermons = allAudioSermons;
     if (category && category !== "all") {
       filteredSermons = filteredSermons.filter(s => s.category === category);
     }
-
     if (search) {
       const searchLower = search.toLowerCase();
       filteredSermons = filteredSermons.filter(s =>
@@ -768,10 +491,8 @@ router.get("/audio-sermons", async (req, res) => {
         s.pastor.toLowerCase().includes(searchLower)
       );
     }
-
     const total = filteredSermons.length;
     const paginatedSermons = filteredSermons.slice(skip, skip + limit);
-
     res.json({
       success: true,
       audioSermons: paginatedSermons,
@@ -782,22 +503,15 @@ router.get("/audio-sermons", async (req, res) => {
         limit: parseInt(limit)
       }
     });
-
   } catch (error) {
     console.error("Get audio sermons error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   GET /api/rccg/users/video-sermons/:sermonId
- * @desc    Get single video sermon details
- * @access  Public
- */
 router.get("/video-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
-
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -811,27 +525,16 @@ router.get("/video-sermons/:sermonId", async (req, res) => {
       thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
       createdAt: new Date()
     };
-
-    res.json({
-      success: true,
-      sermon
-    });
-
+    res.json({ success: true, sermon });
   } catch (error) {
     console.error("Get video sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   GET /api/rccg/users/audio-sermons/:sermonId
- * @desc    Get single audio sermon details
- * @access  Public
- */
 router.get("/audio-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
-
     const sermon = {
       _id: sermonId,
       title: "The Power of Unshakable Faith",
@@ -842,31 +545,18 @@ router.get("/audio-sermons/:sermonId", async (req, res) => {
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
       createdAt: new Date()
     };
-
-    res.json({
-      success: true,
-      sermon
-    });
-
+    res.json({ success: true, sermon });
   } catch (error) {
     console.error("Get audio sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// ============ PROTECTED ROUTES ============
-
-/**
- * @route   GET /api/rccg/users/profile
- * @desc    Get user profile
- * @access  Private
- */
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const user = await RCCG_User.findById(req.user._id)
       .populate("departments")
       .populate("ministries")
@@ -874,35 +564,22 @@ router.get("/profile", authMiddleware, async (req, res) => {
       .populate("referredBy", "fullName email")
       .populate("savedSermons")
       .populate("savedAnnouncements");
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
-    res.json({
-      success: true,
-      user: user.toJSON()
-    });
-
+    res.json({ success: true, user: user.toJSON() });
   } catch (error) {
     console.error("Get profile error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   PUT /api/rccg/users/profile
- * @desc    Update user profile
- * @access  Private
- */
 router.put("/profile", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { fullName, phone, dateOfBirth, gender, address, city, state, zipCode, bio, profession, maritalStatus, designation } = req.body;
-
     const updateData = {};
     if (fullName) updateData.fullName = fullName;
     if (phone) updateData.phone = phone;
@@ -916,42 +593,47 @@ router.put("/profile", authMiddleware, async (req, res) => {
     if (profession) updateData.profession = profession;
     if (maritalStatus) updateData.maritalStatus = maritalStatus;
     if (designation) updateData.designation = designation;
-
     updateData.lastActivityAt = new Date();
-
     const user = await RCCG_User.findByIdAndUpdate(
       req.user._id,
       updateData,
       { new: true, runValidators: true }
     );
-
     res.json({
       success: true,
       message: "Profile updated successfully",
       user: user.toJSON()
     });
-
   } catch (error) {
     console.error("Update profile error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/profile-image
- * @desc    Upload profile image
- * @access  Private
- */
+router.delete("/profile", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    await RCCG_User.findByIdAndUpdate(
+      req.user._id,
+      { deletedAt: new Date(), isActive: false }
+    );
+    res.json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Delete profile error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"), async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
-
     const user = await RCCG_User.findByIdAndUpdate(
       req.user._id,
       {
@@ -961,42 +643,30 @@ router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"
       },
       { new: true }
     );
-
     res.json({
       success: true,
       message: "Profile image uploaded successfully",
       user: user.toJSON()
     });
-
   } catch (error) {
     console.error("Upload profile image error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/giving
- * @desc    Add giving record
- * @access  Private
- */
 router.post("/giving", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { type, amount, currency, method, reference, description } = req.body;
-
     if (!type || !amount) {
       return res.status(400).json({ success: false, message: "Type and amount required" });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     const givingRecord = {
       type,
       amount,
@@ -1007,73 +677,126 @@ router.post("/giving", authMiddleware, async (req, res) => {
       date: new Date(),
       confirmed: false
     };
-
     await user.addGivingRecord(givingRecord);
-
     res.status(201).json({
       success: true,
       message: "Giving record added successfully",
       user: user.toJSON()
     });
-
   } catch (error) {
     console.error("Add giving record error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   GET /api/rccg/users/giving
- * @desc    Get user giving history
- * @access  Private
- */
 router.get("/giving", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     res.json({
       success: true,
       totalGiving: user.totalGiving,
       givingRecords: user.givingRecords
     });
-
   } catch (error) {
     console.error("Get giving history error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/prayer-request
- * @desc    Submit prayer request
- * @access  Private
- */
+router.get("/giving/:recordId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const record = user.givingRecords.id(req.params.recordId);
+    if (!record) {
+      return res.status(404).json({ success: false, message: "Giving record not found" });
+    }
+    res.json({ success: true, record });
+  } catch (error) {
+    console.error("Get single giving record error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+router.put("/giving/:recordId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const { type, amount, currency, method, reference, description, confirmed } = req.body;
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const record = user.givingRecords.id(req.params.recordId);
+    if (!record) {
+      return res.status(404).json({ success: false, message: "Giving record not found" });
+    }
+    if (type) record.type = type;
+    if (amount !== undefined) record.amount = amount;
+    if (currency) record.currency = currency;
+    if (method) record.method = method;
+    if (reference) record.reference = reference;
+    if (description) record.description = description;
+    if (confirmed !== undefined) record.confirmed = confirmed;
+    await user.save();
+    res.json({
+      success: true,
+      message: "Giving record updated successfully",
+      user: user.toJSON()
+    });
+  } catch (error) {
+    console.error("Update giving record error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+router.delete("/giving/:recordId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    user.givingRecords.pull({ _id: req.params.recordId });
+    await user.save();
+    res.json({
+      success: true,
+      message: "Giving record deleted successfully",
+      user: user.toJSON()
+    });
+  } catch (error) {
+    console.error("Delete giving record error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 router.post("/prayer-request", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { title, description, category, isConfidential } = req.body;
-
     if (!title || !description) {
       return res.status(400).json({ success: false, message: "Title and description required" });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     user.prayerRequests.push({
       title,
       description,
@@ -1081,55 +804,109 @@ router.post("/prayer-request", authMiddleware, async (req, res) => {
       isConfidential: isConfidential !== false,
       createdAt: new Date()
     });
-
     await user.save();
-
     res.status(201).json({
       success: true,
       message: "Prayer request submitted successfully"
     });
-
   } catch (error) {
     console.error("Submit prayer request error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   GET /api/rccg/users/prayer-requests
- * @desc    Get user prayer requests
- * @access  Private
- */
 router.get("/prayer-requests", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     res.json({
       success: true,
       prayerRequests: user.prayerRequests
     });
-
   } catch (error) {
     console.error("Get prayer requests error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// ============ ATTENDANCE ROUTES ============
+router.get("/prayer-requests/:requestId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const request = user.prayerRequests.id(req.params.requestId);
+    if (!request) {
+      return res.status(404).json({ success: false, message: "Prayer request not found" });
+    }
+    res.json({ success: true, request });
+  } catch (error) {
+    console.error("Get single prayer request error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
-/**
- * @route   POST /api/rccg/users/attendance/check-in
- * @desc    Check in for an active church service (Nigeria timezone restricted)
- * @access  Private
- */
+router.put("/prayer-requests/:requestId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const { title, description, category, isConfidential, status } = req.body;
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const request = user.prayerRequests.id(req.params.requestId);
+    if (!request) {
+      return res.status(404).json({ success: false, message: "Prayer request not found" });
+    }
+    if (title) request.title = title;
+    if (description) request.description = description;
+    if (category) request.category = category;
+    if (isConfidential !== undefined) request.isConfidential = isConfidential;
+    if (status) request.status = status;
+    await user.save();
+    res.json({
+      success: true,
+      message: "Prayer request updated successfully",
+      prayerRequests: user.prayerRequests
+    });
+  } catch (error) {
+    console.error("Update prayer request error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+router.delete("/prayer-requests/:requestId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    user.prayerRequests.pull({ _id: req.params.requestId });
+    await user.save();
+    res.json({
+      success: true,
+      message: "Prayer request deleted successfully",
+      prayerRequests: user.prayerRequests
+    });
+  } catch (error) {
+    console.error("Delete prayer request error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 router.post("/attendance/check-in", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -1138,10 +915,8 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
         message: "Unauthorized - No user found"
       });
     }
-
     const nigeriaTime = getNigeriaDateInfo();
     const attendanceWindow = getAttendanceWindow();
-
     if (!attendanceWindow.active) {
       return res.status(403).json({
         success: false,
@@ -1155,24 +930,18 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
         currentTime: `${String(nigeriaTime.hour).padStart(2, "0")}:${String(nigeriaTime.minute).padStart(2, "0")}`
       });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "RCCG user not found"
       });
     }
-
     if (!Array.isArray(user.attendanceRecords)) {
       user.attendanceRecords = [];
     }
-
-    // Prevent multiple attendance records on the same calendar day in Africa/Lagos timezone
     const alreadyCheckedIn = user.attendanceRecords.some(record => {
       if (!record.date) return false;
-
       const recordDate = new Date(record.date);
       const recordNigeriaDate = new Intl.DateTimeFormat("en-CA", {
         timeZone: "Africa/Lagos",
@@ -1180,10 +949,8 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
         month: "2-digit",
         day: "2-digit"
       }).format(recordDate);
-
       return recordNigeriaDate === nigeriaTime.date;
     });
-
     if (alreadyCheckedIn) {
       return res.status(409).json({
         success: false,
@@ -1191,7 +958,6 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
         message: "You have already marked your attendance today."
       });
     }
-
     const attendanceRecord = {
       eventName: attendanceWindow.serviceType,
       serviceType: attendanceWindow.serviceType,
@@ -1199,14 +965,10 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
       date: nigeriaTime.now,
       checkedIn: true
     };
-
     user.attendanceRecords.push(attendanceRecord);
     user.lastActivityAt = nigeriaTime.now;
-
     await user.save();
-
     const savedRecord = user.attendanceRecords[user.attendanceRecords.length - 1];
-
     return res.status(201).json({
       success: true,
       message: `Attendance recorded for ${attendanceWindow.serviceType}.`,
@@ -1219,7 +981,6 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
       },
       attendanceCount: user.attendanceRecords.length
     });
-
   } catch (error) {
     console.error("Attendance check-in error:", error);
     return res.status(500).json({
@@ -1229,11 +990,6 @@ router.post("/attendance/check-in", authMiddleware, async (req, res) => {
   }
 });
 
-/**
- * @route   GET /api/rccg/users/attendance/status
- * @desc    Get current attendance availability & user check-in status
- * @access  Private
- */
 router.get("/attendance/status", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -1242,24 +998,18 @@ router.get("/attendance/status", authMiddleware, async (req, res) => {
         message: "Unauthorized - No user found"
       });
     }
-
     const nigeriaTime = getNigeriaDateInfo();
     const window = getAttendanceWindow();
-
     const user = await RCCG_User.findById(req.user._id).select("attendanceRecords");
-
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "User not found"
       });
     }
-
     const attendanceRecords = Array.isArray(user.attendanceRecords) ? user.attendanceRecords : [];
-
     const alreadyCheckedIn = attendanceRecords.some(record => {
       if (!record.date) return false;
-
       const recordDate = new Date(record.date);
       const recordNigeriaDate = new Intl.DateTimeFormat("en-CA", {
         timeZone: "Africa/Lagos",
@@ -1267,10 +1017,8 @@ router.get("/attendance/status", authMiddleware, async (req, res) => {
         month: "2-digit",
         day: "2-digit"
       }).format(recordDate);
-
       return recordNigeriaDate === nigeriaTime.date;
     });
-
     return res.json({
       success: true,
       active: window.active && !alreadyCheckedIn,
@@ -1288,7 +1036,6 @@ router.get("/attendance/status", authMiddleware, async (req, res) => {
           ? `Attendance is currently open for ${window.serviceType}.`
           : "Attendance is currently closed."
     });
-
   } catch (error) {
     console.error("Attendance status error:", error);
     return res.status(500).json({
@@ -1298,11 +1045,6 @@ router.get("/attendance/status", authMiddleware, async (req, res) => {
   }
 });
 
-/**
- * @route   GET /api/rccg/users/attendance
- * @desc    Get user attendance history
- * @access  Private
- */
 router.get("/attendance", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -1311,24 +1053,19 @@ router.get("/attendance", authMiddleware, async (req, res) => {
         message: "Unauthorized - No user found"
       });
     }
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "User not found"
       });
     }
-
     const attendance = Array.isArray(user.attendanceRecords) ? user.attendanceRecords : [];
-
     return res.json({
       success: true,
       attendance,
       total: attendance.length
     });
-
   } catch (error) {
     console.error("Get attendance error:", error);
     return res.status(500).json({
@@ -1338,59 +1075,53 @@ router.get("/attendance", authMiddleware, async (req, res) => {
   }
 });
 
-// ============ EVENT & SERMON SAVING ROUTES ============
+router.delete("/attendance/:recordId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    const user = await RCCG_User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    user.attendanceRecords.pull({ _id: req.params.recordId });
+    await user.save();
+    res.json({ success: true, message: "Attendance record deleted successfully" });
+  } catch (error) {
+    console.error("Delete attendance record error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
-/**
- * @route   POST /api/rccg/users/register-event/:eventId
- * @desc    Register for an event
- * @access  Private
- */
 router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { eventId } = req.params;
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     if (user.registeredEvents.includes(eventId)) {
       return res.status(400).json({ success: false, message: "Already registered for this event" });
     }
-
     user.registeredEvents.push(eventId);
     user.lastActivityAt = new Date();
     await user.save();
-
-    res.json({
-      success: true,
-      message: "Event registration successful"
-    });
-
+    res.json({ success: true, message: "Event registration successful" });
   } catch (error) {
     console.error("Register event error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   DELETE /api/rccg/users/unregister-event/:eventId
- * @desc    Unregister from event
- * @access  Private
- */
 router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { eventId } = req.params;
-
     await RCCG_User.findByIdAndUpdate(
       req.user._id,
       { 
@@ -1399,69 +1130,42 @@ router.delete("/unregister-event/:eventId", authMiddleware, async (req, res) => 
       },
       { new: true }
     );
-
-    res.json({
-      success: true,
-      message: "Unregistered from event successfully"
-    });
-
+    res.json({ success: true, message: "Unregistered from event successfully" });
   } catch (error) {
     console.error("Unregister event error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   POST /api/rccg/users/save-sermon/:sermonId
- * @desc    Save a sermon
- * @access  Private
- */
 router.post("/save-sermon/:sermonId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { sermonId } = req.params;
-
     const user = await RCCG_User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
     if (user.savedSermons.includes(sermonId)) {
       return res.status(400).json({ success: false, message: "Sermon already saved" });
     }
-
     user.savedSermons.push(sermonId);
     user.lastActivityAt = new Date();
     await user.save();
-
-    res.json({
-      success: true,
-      message: "Sermon saved successfully"
-    });
-
+    res.json({ success: true, message: "Sermon saved successfully" });
   } catch (error) {
     console.error("Save sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   DELETE /api/rccg/users/unsave-sermon/:sermonId
- * @desc    Unsave a sermon
- * @access  Private
- */
 router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     const { sermonId } = req.params;
-
     await RCCG_User.findByIdAndUpdate(
       req.user._id,
       { 
@@ -1470,49 +1174,31 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
       },
       { new: true }
     );
-
-    res.json({
-      success: true,
-      message: "Sermon removed from saved"
-    });
-
+    res.json({ success: true, message: "Sermon removed from saved" });
   } catch (error) {
     console.error("Unsave sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-// ============ ADMIN ROUTES ============
-
-/**
- * @route   GET /api/rccg/users/admin/all
- * @desc    Get all users (admin only)
- * @access  Private/Admin
- */
 router.get("/admin/all", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
-
     const { page = 1, limit = 20, membershipStatus, state, userType } = req.query;
-
     const filter = { deletedAt: null };
     if (membershipStatus) filter.membershipStatus = membershipStatus;
     if (state) filter.state = state;
     if (userType) filter.userType = userType;
-
     const users = await RCCG_User.find(filter)
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .sort({ createdAt: -1 });
-
     const total = await RCCG_User.countDocuments(filter);
-
     res.json({
       success: true,
       users: users.map(u => u.toJSON()),
@@ -1522,30 +1208,71 @@ router.get("/admin/all", authMiddleware, async (req, res) => {
         currentPage: parseInt(page)
       }
     });
-
   } catch (error) {
     console.error("Get all users error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   PUT /api/rccg/users/admin/:userId/approve
- * @desc    Approve user account
- * @access  Private/Admin
- */
+router.get("/admin/:userId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    if (req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required" });
+    }
+    const user = await RCCG_User.findById(req.params.userId)
+      .populate("departments")
+      .populate("ministries")
+      .populate("primaryMinistry")
+      .populate("referredBy", "fullName email");
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    res.json({ success: true, user: user.toJSON() });
+  } catch (error) {
+    console.error("Admin get user error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+router.put("/admin/:userId", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
+    }
+    if (req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required" });
+    }
+    const user = await RCCG_User.findByIdAndUpdate(
+      req.params.userId,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    res.json({
+      success: true,
+      message: "User updated successfully by admin",
+      user: user.toJSON()
+    });
+  } catch (error) {
+    console.error("Admin update user error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 router.put("/admin/:userId/approve", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
-
     const { userId } = req.params;
-
     const user = await RCCG_User.findByIdAndUpdate(
       userId,
       {
@@ -1555,47 +1282,35 @@ router.put("/admin/:userId/approve", authMiddleware, async (req, res) => {
       },
       { new: true }
     );
-
     res.json({
       success: true,
       message: "User approved successfully",
       user: user.toJSON()
     });
-
   } catch (error) {
     console.error("Approve user error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
-/**
- * @route   DELETE /api/rccg/users/admin/:userId
- * @desc    Soft delete user
- * @access  Private/Admin
- */
 router.delete("/admin/:userId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ success: false, message: "Unauthorized - No user found" });
     }
-
     if (req.user.userType !== "admin") {
       return res.status(403).json({ success: false, message: "Admin access required" });
     }
-
     const { userId } = req.params;
-
     await RCCG_User.findByIdAndUpdate(
       userId,
       { deletedAt: new Date(), isActive: false },
       { new: true }
     );
-
     res.json({
       success: true,
       message: "User deleted successfully"
     });
-
   } catch (error) {
     console.error("Delete user error:", error);
     res.status(500).json({ success: false, message: error.message });
