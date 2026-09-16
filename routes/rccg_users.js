@@ -6,6 +6,7 @@ import { avatarUpload, mediaUpload } from "../middleware/upload.js"; // Added me
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import multer from "multer";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "please_set_a_strong_secret";
@@ -426,51 +427,105 @@ router.get("/audio-sermons/:sermonId", async (req, res) => {
 });
 
 // 5. Upload Sermon via File Upload (Admin Only)
-router.post("/sermons/upload", authMiddleware, mediaUpload.single("mediaFile"), async (req, res) => {
-  try {
-    if (!req.user || req.user.userType !== "admin") {
-      return res.status(403).json({ success: false, message: "Admin access required to upload sermons" });
+router.post(
+  "/sermons/upload",
+  authMiddleware,
+  mediaUpload.single("mediaFile"),
+  async (req, res) => {
+    try {
+      console.log("===== SERMON UPLOAD =====");
+
+      console.log("User:", req.user?._id);
+      console.log("User type:", req.user?.userType);
+
+      console.log("File:", req.file);
+
+      console.log("Body:", req.body);
+
+      if (!req.user || req.user.userType !== "admin") {
+        return res.status(403).json({
+          success: false,
+          message: "Admin access required to upload sermons"
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "No media file uploaded"
+        });
+      }
+
+      const {
+        title,
+        description,
+        pastor,
+        category,
+        eventType,
+        duration,
+        type,
+        thumbnailUrl
+      } = req.body;
+
+      if (!["video", "audio"].includes(type)) {
+        return res.status(400).json({
+          success: false,
+          message: "Type must be either 'video' or 'audio'"
+        });
+      }
+
+      const mediaUrl = req.file.publicUrl;
+
+      if (!mediaUrl) {
+        return res.status(500).json({
+          success: false,
+          message: "Media uploaded but no public URL was generated"
+        });
+      }
+
+      const newSermon = new RCCG_Sermon({
+        title,
+        description,
+        pastor,
+        category,
+        eventType,
+        duration,
+        type,
+
+        videoUrl: type === "video"
+          ? mediaUrl
+          : undefined,
+
+        audioUrl: type === "audio"
+          ? mediaUrl
+          : undefined,
+
+        thumbnailUrl,
+        createdBy: req.user._id
+      });
+
+      await newSermon.save();
+
+      console.log("Sermon saved:", newSermon._id);
+      console.log("Media URL:", mediaUrl);
+
+      return res.status(201).json({
+        success: true,
+        message: `${type === "video" ? "Video" : "Audio"} sermon uploaded successfully`,
+        sermon: newSermon
+      });
+
+    } catch (error) {
+      console.error("===== SERMON UPLOAD ERROR =====");
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: error.message || "Failed to upload sermon"
+      });
     }
-
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: "No media file uploaded" });
-    }
-
-    const { title, description, pastor, category, eventType, duration, type, thumbnailUrl } = req.body;
-
-    if (!['video', 'audio'].includes(type)) {
-      return res.status(400).json({ success: false, message: "Type must be either 'video' or 'audio'" });
-    }
-
-    // Capture the URL (depends on whether you use Cloudinary/S3 (.publicUrl/.location) or Local Disk (.path))
-    const mediaUrl = req.file.publicUrl || req.file.path || req.file.location; 
-
-    const newSermon = new RCCG_Sermon({
-      title,
-      description,
-      pastor,
-      category,
-      eventType,
-      duration,
-      type,
-      videoUrl: type === 'video' ? mediaUrl : undefined,
-      audioUrl: type === 'audio' ? mediaUrl : undefined,
-      thumbnailUrl,
-      createdBy: req.user._id
-    });
-
-    await newSermon.save();
-
-    res.status(201).json({
-      success: true,
-      message: `${type === 'video' ? 'Video' : 'Audio'} sermon uploaded successfully`,
-      sermon: newSermon
-    });
-  } catch (error) {
-    console.error("Upload sermon error:", error);
-    res.status(500).json({ success: false, message: error.message });
   }
-});
+);
 
 // 6. Add Sermon via External Link (e.g., YouTube/SoundCloud) (Admin Only)
 router.post("/sermons/link", authMiddleware, async (req, res) => {
@@ -1293,6 +1348,29 @@ router.delete("/admin/:userId", authMiddleware, async (req, res) => {
     console.error("Delete user error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
+});
+
+router.use((error, req, res, next) => {
+  console.error("===== UPLOAD MIDDLEWARE ERROR =====");
+  console.error(error);
+
+  if (error instanceof multer.MulterError) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+      code: error.code,
+      field: error.field || null
+    });
+  }
+
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message || "File upload failed"
+    });
+  }
+
+  next();
 });
 
 export default router;
