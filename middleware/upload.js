@@ -160,6 +160,17 @@ export const avatarUpload = multer({
   },
   fileFilter: imageFileFilter
 });
+export const mediaUpload = multer({
+  storage: new SupabaseStorage({
+    bucket: RESOURCES_BUCKET,
+    prefix: "media",
+    public: true
+  }),
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100 MB
+  },
+  fileFilter: fileFilterForResources
+});
 export const editorUpload = multer({
   storage: new SupabaseStorage({
     bucket: EDITOR_BUCKET,
