@@ -32,27 +32,42 @@ function makeKey(prefix, originalName) {
   return `${prefix}/${name}-${unique}${ext}`;
 }
 
-// Multer file filters (kept from original)
 function fileFilterForResources(req, file, cb) {
-  const allowed = [
+  const allowedExactTypes = [
+    // Documents
     "application/pdf",
     "application/epub+zip",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "video/mp4",
-    "audio/mpeg",
+
+    // Images
     "image/jpeg",
     "image/png",
     "image/webp"
   ];
 
-  if (allowed.includes(file.mimetype)) {
+  const isAudio = file.mimetype?.startsWith("audio/");
+  const isVideo = file.mimetype?.startsWith("video/");
+  const isAllowedDocument = allowedExactTypes.includes(file.mimetype);
+
+  console.log("Incoming upload:", {
+    fieldname: file.fieldname,
+    originalname: file.originalname,
+    mimetype: file.mimetype
+  });
+
+  if (isAudio || isVideo || isAllowedDocument) {
     return cb(null, true);
   }
 
-  cb(new Error("Unsupported resource file type"), false);
-}
+  console.error(
+    `Rejected file type: ${file.originalname} (${file.mimetype})`
+  );
 
+  return cb(
+    new Error(`Unsupported resource file type: ${file.mimetype}`)
+  );
+}
 function imageFileFilter(req, file, cb) {
   if (file.mimetype && file.mimetype.startsWith("image/")) {
     return cb(null, true);
