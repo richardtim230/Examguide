@@ -1,7 +1,8 @@
 import express from "express";
 import RCCG_User from "../models/RCCG_User.js";
+import RCCG_Sermon from "../models/RCCG_Sermon.js"; // Added Sermon model
 import authMiddleware from "../middleware/auth.js";
-import { avatarUpload } from "../middleware/upload.js";
+import { avatarUpload, mediaUpload } from "../middleware/upload.js"; // Added mediaUpload
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -118,6 +119,8 @@ function getAttendanceWindow() {
   }
   return { active: false, serviceType: null, start: null, end: null };
 }
+
+// --- AUTH ROUTES ---
 
 router.post("/register", async (req, res) => {
   try {
@@ -300,104 +303,35 @@ router.post("/verify-reset-code", async (req, res) => {
   }
 });
 
+// --- SERMONS (MEDIA) ROUTES ---
+
+// 1. Get Video Sermons (Production-ready)
 router.get("/video-sermons", async (req, res) => {
   try {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
-    const allVideoSermons = [
-      {
-        _id: "video-101",
-        title: "The Power of Unshakable Faith",
-        description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        eventType: "Sunday Service",
-        duration: "46:32",
-        views: 12400,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-102",
-        title: "Walking in Daily Divine Victory",
-        description: "Learn how to walk in divine victory daily through faith and God's word.",
-        pastor: "Ministerial Team",
-        category: "digging",
-        eventType: "Digging Deep",
-        duration: "42:15",
-        views: 8900,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1509021436471-181cf93012a3?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-103",
-        title: "Understanding God's Destiny for You",
-        description: "Discover God's purpose and destiny for your life.",
-        pastor: "Resident Pastor",
-        category: "youth",
-        eventType: "Youth Service",
-        duration: "38:47",
-        views: 15100,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-104",
-        title: "Kingdom Stewardship and Divine Covenant",
-        description: "Learn about true stewardship and God's covenant with His people.",
-        pastor: "Regional Overseer",
-        category: "special",
-        eventType: "Holy Ghost Service",
-        duration: "51:04",
-        views: 22800,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-105",
-        title: "Supernatural Breakthroughs and Grace",
-        description: "Experience supernatural breakthroughs through God's amazing grace.",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        eventType: "Sunday Service",
-        duration: "48:10",
-        views: 18300,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1499209974431-9dac3cea0047?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      },
-      {
-        _id: "video-106",
-        title: "The Weapon of Praise and Worship",
-        description: "Discover how praise and worship are weapons in spiritual warfare.",
-        pastor: "Ministerial Team",
-        category: "digging",
-        eventType: "Digging Deep",
-        duration: "35:50",
-        views: 11600,
-        videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-        thumbnailUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
-        createdAt: new Date()
-      }
-    ];
-    let filteredSermons = allVideoSermons;
+
+    const query = { type: 'video' };
+    
     if (category && category !== "all") {
-      filteredSermons = filteredSermons.filter(s => s.category === category);
+      query.category = category;
     }
+    
     if (search) {
-      const searchLower = search.toLowerCase();
-      filteredSermons = filteredSermons.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.pastor.toLowerCase().includes(searchLower) ||
-        s.description.toLowerCase().includes(searchLower)
-      );
+      const searchRegex = new RegExp(search, "i");
+      query.$or = [
+        { title: searchRegex },
+        { pastor: searchRegex },
+        { description: searchRegex }
+      ];
     }
-    const total = filteredSermons.length;
-    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
+
+    const total = await RCCG_Sermon.countDocuments(query);
+    const paginatedSermons = await RCCG_Sermon.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
     res.json({
       success: true,
       videoSermons: paginatedSermons,
@@ -414,85 +348,33 @@ router.get("/video-sermons", async (req, res) => {
   }
 });
 
+// 2. Get Audio Sermons (Production-ready)
 router.get("/audio-sermons", async (req, res) => {
   try {
     const { page = 1, limit = 10, category, search } = req.query;
     const skip = (page - 1) * limit;
-    const allAudioSermons = [
-      {
-        _id: "audio-101",
-        title: "The Power of Unshakable Faith",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        duration: "46:32",
-        durationSec: 2792,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-102",
-        title: "Walking in Daily Divine Victory",
-        pastor: "Ministerial Team",
-        category: "digging",
-        duration: "42:15",
-        durationSec: 2535,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-103",
-        title: "Understanding God's Destiny for You",
-        pastor: "Resident Pastor",
-        category: "youth",
-        duration: "38:47",
-        durationSec: 2327,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-104",
-        title: "Kingdom Stewardship and Divine Covenant",
-        pastor: "Regional Overseer",
-        category: "special",
-        duration: "51:04",
-        durationSec: 3064,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-105",
-        title: "Supernatural Breakthroughs and Grace",
-        pastor: "Pastor E.A. Adeboye",
-        category: "sunday",
-        duration: "48:10",
-        durationSec: 2890,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        createdAt: new Date()
-      },
-      {
-        _id: "audio-106",
-        title: "The Weapon of Praise and Worship",
-        pastor: "Ministerial Team",
-        category: "digging",
-        duration: "35:50",
-        durationSec: 2150,
-        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        createdAt: new Date()
-      }
-    ];
-    let filteredSermons = allAudioSermons;
+
+    const query = { type: 'audio' };
+    
     if (category && category !== "all") {
-      filteredSermons = filteredSermons.filter(s => s.category === category);
+      query.category = category;
     }
+    
     if (search) {
-      const searchLower = search.toLowerCase();
-      filteredSermons = filteredSermons.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.pastor.toLowerCase().includes(searchLower)
-      );
+      const searchRegex = new RegExp(search, "i");
+      query.$or = [
+        { title: searchRegex },
+        { pastor: searchRegex },
+        { description: searchRegex }
+      ];
     }
-    const total = filteredSermons.length;
-    const paginatedSermons = filteredSermons.slice(skip, skip + limit);
+
+    const total = await RCCG_Sermon.countDocuments(query);
+    const paginatedSermons = await RCCG_Sermon.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
     res.json({
       success: true,
       audioSermons: paginatedSermons,
@@ -509,22 +391,16 @@ router.get("/audio-sermons", async (req, res) => {
   }
 });
 
+// 3. Get Single Video Sermon
 router.get("/video-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
-    const sermon = {
-      _id: sermonId,
-      title: "The Power of Unshakable Faith",
-      description: "Experience a powerful message of empowerment, spiritual growth, and absolute trust in the Almighty.",
-      pastor: "Pastor E.A. Adeboye",
-      category: "sunday",
-      eventType: "Sunday Service",
-      duration: "46:32",
-      views: 12400,
-      videoUrl: "https://www.youtube.com/embed/live_stream?channel=RCCG",
-      thumbnailUrl: "https://images.unsplash.com/photo-1548625361-185d9560a8e1?auto=format&fit=crop&q=80&w=600",
-      createdAt: new Date()
-    };
+    const sermon = await RCCG_Sermon.findOne({ _id: sermonId, type: 'video' });
+    
+    if (!sermon) {
+       return res.status(404).json({ success: false, message: "Sermon not found" });
+    }
+
     res.json({ success: true, sermon });
   } catch (error) {
     console.error("Get video sermon error:", error);
@@ -532,25 +408,115 @@ router.get("/video-sermons/:sermonId", async (req, res) => {
   }
 });
 
+// 4. Get Single Audio Sermon
 router.get("/audio-sermons/:sermonId", async (req, res) => {
   try {
     const { sermonId } = req.params;
-    const sermon = {
-      _id: sermonId,
-      title: "The Power of Unshakable Faith",
-      pastor: "Pastor E.A. Adeboye",
-      category: "sunday",
-      duration: "46:32",
-      durationSec: 2792,
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-      createdAt: new Date()
-    };
+    const sermon = await RCCG_Sermon.findOne({ _id: sermonId, type: 'audio' });
+
+    if (!sermon) {
+       return res.status(404).json({ success: false, message: "Sermon not found" });
+    }
+
     res.json({ success: true, sermon });
   } catch (error) {
     console.error("Get audio sermon error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
+// 5. Upload Sermon via File Upload (Admin Only)
+router.post("/sermons/upload", authMiddleware, mediaUpload.single("mediaFile"), async (req, res) => {
+  try {
+    if (!req.user || req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required to upload sermons" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No media file uploaded" });
+    }
+
+    const { title, description, pastor, category, eventType, duration, type, thumbnailUrl } = req.body;
+
+    if (!['video', 'audio'].includes(type)) {
+      return res.status(400).json({ success: false, message: "Type must be either 'video' or 'audio'" });
+    }
+
+    // Capture the URL (depends on whether you use Cloudinary/S3 (.publicUrl/.location) or Local Disk (.path))
+    const mediaUrl = req.file.publicUrl || req.file.path || req.file.location; 
+
+    const newSermon = new RCCG_Sermon({
+      title,
+      description,
+      pastor,
+      category,
+      eventType,
+      duration,
+      type,
+      videoUrl: type === 'video' ? mediaUrl : undefined,
+      audioUrl: type === 'audio' ? mediaUrl : undefined,
+      thumbnailUrl,
+      createdBy: req.user._id
+    });
+
+    await newSermon.save();
+
+    res.status(201).json({
+      success: true,
+      message: `${type === 'video' ? 'Video' : 'Audio'} sermon uploaded successfully`,
+      sermon: newSermon
+    });
+  } catch (error) {
+    console.error("Upload sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// 6. Add Sermon via External Link (e.g., YouTube/SoundCloud) (Admin Only)
+router.post("/sermons/link", authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || req.user.userType !== "admin") {
+      return res.status(403).json({ success: false, message: "Admin access required to add sermons" });
+    }
+
+    const { title, description, pastor, category, eventType, duration, type, mediaUrl, thumbnailUrl } = req.body;
+
+    if (!title || !type || !mediaUrl) {
+      return res.status(400).json({ success: false, message: "Title, type, and mediaUrl are required" });
+    }
+
+    if (!['video', 'audio'].includes(type)) {
+      return res.status(400).json({ success: false, message: "Type must be either 'video' or 'audio'" });
+    }
+
+    const newSermon = new RCCG_Sermon({
+      title,
+      description,
+      pastor,
+      category,
+      eventType,
+      duration,
+      type,
+      videoUrl: type === 'video' ? mediaUrl : undefined,
+      audioUrl: type === 'audio' ? mediaUrl : undefined,
+      thumbnailUrl,
+      createdBy: req.user._id
+    });
+
+    await newSermon.save();
+
+    res.status(201).json({
+      success: true,
+      message: `${type === 'video' ? 'Video' : 'Audio'} sermon linked successfully`,
+      sermon: newSermon
+    });
+  } catch (error) {
+    console.error("Link sermon error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// --- PROFILE ROUTES ---
 
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
@@ -562,7 +528,7 @@ router.get("/profile", authMiddleware, async (req, res) => {
       .populate("ministries")
       .populate("primaryMinistry")
       .populate("referredBy", "fullName email")
-      .populate("savedSermons")
+      .populate("savedSermons") // Now fetches the real Sermons from the DB based on IDs
       .populate("savedAnnouncements");
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -653,6 +619,8 @@ router.post("/profile-image", authMiddleware, avatarUpload.single("profileImage"
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
+// --- GIVING ROUTES ---
 
 router.post("/giving", authMiddleware, async (req, res) => {
   try {
@@ -784,6 +752,8 @@ router.delete("/giving/:recordId", authMiddleware, async (req, res) => {
   }
 });
 
+// --- PRAYER REQUESTS ROUTES ---
+
 router.post("/prayer-request", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -906,6 +876,8 @@ router.delete("/prayer-requests/:requestId", authMiddleware, async (req, res) =>
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
+// --- ATTENDANCE ROUTES ---
 
 router.post("/attendance/check-in", authMiddleware, async (req, res) => {
   try {
@@ -1093,6 +1065,8 @@ router.delete("/attendance/:recordId", authMiddleware, async (req, res) => {
   }
 });
 
+// --- SAVED DATA / EVENTS ROUTES ---
+
 router.post("/register-event/:eventId", authMiddleware, async (req, res) => {
   try {
     if (!req.user || !req.user._id) {
@@ -1147,6 +1121,8 @@ router.post("/save-sermon/:sermonId", authMiddleware, async (req, res) => {
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
+    
+    // Note: Assuming savedSermons in user schema is simply storing the MongoDB ObjectIds referencing RCCG_Sermon.
     if (user.savedSermons.includes(sermonId)) {
       return res.status(400).json({ success: false, message: "Sermon already saved" });
     }
@@ -1180,6 +1156,8 @@ router.delete("/unsave-sermon/:sermonId", authMiddleware, async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
+// --- ADMIN ROUTES ---
 
 router.get("/admin/all", authMiddleware, async (req, res) => {
   try {
