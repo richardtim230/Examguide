@@ -430,17 +430,36 @@ router.get("/audio-sermons/:sermonId", async (req, res) => {
 router.post(
   "/sermons/upload",
   authMiddleware,
-  mediaUpload.single("mediaFile"),
+  (req, res, next) => {
+    mediaUpload.single("mediaFile")(req, res, (err) => {
+      if (err) {
+        console.error("===== MEDIA UPLOAD ERROR =====");
+        console.error("Error name:", err.name);
+        console.error("Error message:", err.message);
+        console.error("Error code:", err.code);
+        console.error("Full error:", err);
+        if (err instanceof multer.MulterError) {
+          return res.status(400).json({
+            success: false,
+            message: `File upload error: ${err.message}`,
+            code: err.code
+          });
+        }
+        return res.status(400).json({
+          success: false,
+          message: err.message || "File upload failed"
+        });
+      }
+      next();
+    });
+  },
   async (req, res) => {
     try {
       console.log("===== SERMON UPLOAD =====");
-
-      console.log("User:", req.user?._id);
+      console.log("User ID:", req.user?._id);
       console.log("User type:", req.user?.userType);
-
-      console.log("File:", req.file);
-
-      console.log("Body:", req.body);
+      console.log("Received file:", req.file);
+      console.log("Received body:", req.body);
 
       if (!req.user || req.user.userType !== "admin") {
         return res.status(403).json({
@@ -450,11 +469,22 @@ router.post(
       }
 
       if (!req.file) {
+        console.error("NO FILE RECEIVED");
+        console.error("Expected field name: mediaFile");
         return res.status(400).json({
           success: false,
-          message: "No media file uploaded"
+          message: "No media file was received. Make sure the selected file is attached using the field name 'mediaFile'."
         });
       }
+
+      console.log("File received successfully:");
+      console.log({
+        fieldname: req.file.fieldname,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        publicUrl: req.file.publicUrl
+      });
 
       const {
         title,
@@ -467,6 +497,13 @@ router.post(
         thumbnailUrl
       } = req.body;
 
+      if (!title || !title.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: "Sermon title is required"
+        });
+      }
+
       if (!["video", "audio"].includes(type)) {
         return res.status(400).json({
           success: false,
@@ -475,49 +512,45 @@ router.post(
       }
 
       const mediaUrl = req.file.publicUrl;
-
       if (!mediaUrl) {
+        console.error("File was uploaded but no public URL was generated.");
+        console.error("req.file:", req.file);
         return res.status(500).json({
           success: false,
-          message: "Media uploaded but no public URL was generated"
+          message: "Media was uploaded, but no public URL was generated."
         });
       }
 
       const newSermon = new RCCG_Sermon({
-        title,
-        description,
-        pastor,
-        category,
-        eventType,
-        duration,
+        title: title.trim(),
+        description: description || "",
+        pastor: pastor || "",
+        category: category || "",
+        eventType: eventType || "",
+        duration: duration || "",
         type,
-
-        videoUrl: type === "video"
-          ? mediaUrl
-          : undefined,
-
-        audioUrl: type === "audio"
-          ? mediaUrl
-          : undefined,
-
-        thumbnailUrl,
+        videoUrl: type === "video" ? mediaUrl : undefined,
+        audioUrl: type === "audio" ? mediaUrl : undefined,
+        thumbnailUrl: thumbnailUrl || "",
         createdBy: req.user._id
       });
 
       await newSermon.save();
 
-      console.log("Sermon saved:", newSermon._id);
+      console.log("===== SERMON SAVED =====");
+      console.log("Sermon ID:", newSermon._id);
       console.log("Media URL:", mediaUrl);
 
       return res.status(201).json({
         success: true,
-        message: `${type === "video" ? "Video" : "Audio"} sermon uploaded successfully`,
+        message: type === "video" ? "Video sermon uploaded successfully" : "Audio sermon uploaded successfully",
         sermon: newSermon
       });
-
     } catch (error) {
-      console.error("===== SERMON UPLOAD ERROR =====");
-      console.error(error);
+      console.error("===== SERMON UPLOAD ROUTE ERROR =====");
+      console.error("Error name:", error.name);
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
 
       return res.status(500).json({
         success: false,
