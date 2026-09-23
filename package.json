@@ -4,9 +4,9 @@
   "description": "Backend for ExamGuide CBT Platform (faculty/department organized, superadmin/admin/student roles)",
   "main": "index.js",
   "type": "module",
-  "engines": {
-    "node": "22.12.0"
-  },
+"engines": {
+  "node": "22.x"
+},
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -22,7 +22,7 @@
   "@tensorflow/tfjs-node": "^4.11.0",
   "axios": "^1.7.9",
   "bcryptjs": "^2.4.3",
-  "canvas": "^2.11.2",
+  "canvas": "^3.2.3",
   "cloudinary": "^2.3.0",
   "cookie-parser": "^1.4.7",
   "cors": "^2.8.5",
