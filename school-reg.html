@@ -1497,7 +1497,9 @@
 
 <script>
 
-  const API_BASE_URL = 'https://examguide.onrender.com';
+  const API_BASE_URL = 'https://examguard-8rxe.onrender.com';
+  const API_BASE = 'https://examguide.onrender.com';
+
 
   // ================= FORM NAVIGATION ================= 
   let currentStep = 1;
@@ -1645,7 +1647,7 @@
         logoFormData.append('image', logoFile);
 
         try {
-          const uploadRes = await fetch(`${API_BASE_URL}/api/images`, {
+          const uploadRes = await fetch(`${API_BASE}/api/images`, {
             method: 'POST',
             body: logoFormData
           });
