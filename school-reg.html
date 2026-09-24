@@ -1484,17 +1484,48 @@
     <div class="success-icon">
       <i class="fas fa-check"></i>
     </div>
+
     <h3>Registration Successful!</h3>
-    <p>Thank you for registering your school with ExamGuard. Your school information has been submitted successfully.</p>
+
+    <p>
+      Thank you for registering your school with ExamGuard.
+      Your school information has been submitted successfully.
+    </p>
+
     <div class="success-details">
-      <p><strong>School ID:</strong> <span id="successSchoolId">-</span></p>
-      <p><strong>Registered Email:</strong> <span id="successEmail">-</span></p>
-      <p>A confirmation email has been sent to your admin email address with next steps.</p>
+      <p>
+        <strong>School ID:</strong>
+        <span id="successSchoolId">-</span>
+      </p>
+
+      <p>
+        <strong>Registered Email:</strong>
+        <span id="successEmail">-</span>
+      </p>
+
+      <p>
+        <strong>Your School Portal:</strong>
+        <a
+          href="#"
+          id="successSchoolUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Loading...
+        </a>
+      </p>
+
+      <p>
+        A confirmation email has been sent to your admin email address
+        with next steps.
+      </p>
     </div>
-    <button onclick="location.href='/'">Return to Home</button>
+
+    <button onclick="location.href='/'">
+      Return to Home
+    </button>
   </div>
 </div>
-
 <script>
 
   const API_BASE_URL = 'https://examguard-8rxe.onrender.com';
@@ -1684,10 +1715,33 @@
       }
 
       // Show success message
-      document.getElementById('successSchoolId').textContent = result.data?.schoolId || 'N/A';
-      document.getElementById('successEmail').textContent = result.data?.email || data.email;
-      document.getElementById('success-msg').classList.add('show');
+      // Show success message
+document.getElementById('successSchoolId').textContent =
+  result.data?.schoolId || 'N/A';
 
+document.getElementById('successEmail').textContent =
+  result.data?.email || data.email;
+
+// Get school URL returned by backend
+const schoolUrl = result.data?.schoolUrl;
+
+const schoolUrlElement = document.getElementById('successSchoolUrl');
+
+if (schoolUrl) {
+  schoolUrlElement.href = schoolUrl;
+  schoolUrlElement.textContent = schoolUrl;
+} else if (result.data?.subdomain) {
+  const generatedUrl =
+    `https://${result.data.subdomain}.examguard.com.ng`;
+
+  schoolUrlElement.href = generatedUrl;
+  schoolUrlElement.textContent = generatedUrl;
+} else {
+  schoolUrlElement.href = '#';
+  schoolUrlElement.textContent = 'Portal URL will be available after approval';
+}
+
+document.getElementById('success-msg').classList.add('show');
       // Reset form after 3 seconds
       setTimeout(() => {
         form.reset();
