@@ -1741,25 +1741,40 @@ document.getElementById('successSchoolId').textContent =
   result.data?.schoolId || 'N/A';
 
 document.getElementById('successEmail').textContent =
-  result.data?.email || data.email;
+  result.data?.email || data.email || 'N/A';
+
+document.getElementById('successAdminEmail').textContent =
+  result.data?.adminEmail || data.adminEmail || 'N/A';
+
+document.getElementById('successPassword').textContent =
+  result.data?.temporaryPassword || 'N/A';
+
 
 // Get school URL returned by backend
 const schoolUrl = result.data?.schoolUrl;
 
-const schoolUrlElement = document.getElementById('successSchoolUrl');
+const schoolUrlElement =
+  document.getElementById('successSchoolUrl');
 
 if (schoolUrl) {
+
   schoolUrlElement.href = schoolUrl;
   schoolUrlElement.textContent = schoolUrl;
+
 } else if (result.data?.subdomain) {
+
   const generatedUrl =
-    `https://${result.data.subdomain}.examguard.com.ng`;
+    `https://${result.data.subdomain}.goldlincschools.com.ng`;
 
   schoolUrlElement.href = generatedUrl;
   schoolUrlElement.textContent = generatedUrl;
+
 } else {
+
   schoolUrlElement.href = '#';
-  schoolUrlElement.textContent = 'Portal URL will be available after approval';
+  schoolUrlElement.textContent =
+    'Portal URL will be available after approval';
+
 }
 
 document.getElementById('success-msg').classList.add('show');
