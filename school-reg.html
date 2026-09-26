@@ -1478,7 +1478,6 @@
   </div>
 </section>
 
-<!-- ================= SUCCESS MESSAGE ================= -->
 <div class="success-message" id="success-msg">
   <div class="success-box">
 
@@ -1501,15 +1500,18 @@
       </p>
 
       <p>
-        <strong>Admin Email:</strong>
+        <strong>Registered Email:</strong>
         <span id="successEmail">-</span>
       </p>
 
       <p>
+        <strong>Admin Email:</strong>
+        <span id="successAdminEmail">-</span>
+      </p>
+
+      <p>
         <strong>Temporary Password:</strong>
-        <span id="successPassword" style="font-weight: 700; color: #111;">
-          -
-        </span>
+        <span id="successPassword">-</span>
       </p>
 
       <p>
@@ -1524,41 +1526,17 @@
         </a>
       </p>
 
-      <div
-        style="
-          margin-top: 15px;
-          padding: 12px;
-          background: #fff8e1;
-          border-radius: 8px;
-          font-size: 14px;
-        "
-      >
-        <i class="fas fa-info-circle"></i>
-        <strong>Important:</strong>
-        Please save your temporary password. You can change it after
-        logging into your school portal.
+      <div class="password-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>
+          Please save your temporary password securely.
+          You can change it after logging in.
+        </span>
       </div>
 
-      <button
-        type="button"
-        id="copyCredentialsBtn"
-        style="
-          margin-top: 15px;
-          background: #111827;
-          color: white;
-          border: none;
-          padding: 10px 16px;
-          border-radius: 7px;
-          cursor: pointer;
-        "
-      >
-        <i class="fas fa-copy"></i>
-        Copy Login Credentials
-      </button>
-
-      <p style="margin-top: 15px;">
+      <p>
         A confirmation email has also been sent to your admin email address
-        with the registration details and next steps.
+        with the next steps.
       </p>
 
     </div>
@@ -1569,6 +1547,7 @@
 
   </div>
 </div>
+
 <script>
 
   const API_BASE_URL = 'https://examguard-8rxe.onrender.com';
