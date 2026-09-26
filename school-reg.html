@@ -1547,7 +1547,6 @@
 
   </div>
 </div>
-
 <script>
 
   const API_BASE_URL = 'https://examguard-8rxe.onrender.com';
@@ -1736,124 +1735,50 @@
         throw new Error(result.error || result.message || 'Registration failed. Please try again.');
       }
 
-      // ===============================
-// REGISTRATION SUCCESS DETAILS
-// ===============================
-
-const successData = result.data || {};
-
-// School ID
+      // Show success message
+      // Show success message
 document.getElementById('successSchoolId').textContent =
-  successData.schoolId || 'N/A';
+  result.data?.schoolId || 'N/A';
 
-// Admin email
 document.getElementById('successEmail').textContent =
-  successData.adminEmail ||
-  successData.email ||
-  data.adminEmail ||
-  data.email ||
-  'N/A';
-
-// Temporary password
-const passwordElement =
-  document.getElementById('successPassword');
-
-passwordElement.textContent =
-  successData.temporaryPassword || 'Not available';
+  result.data?.email || data.email;
 
 // Get school URL returned by backend
-const schoolUrl = successData.schoolUrl;
+const schoolUrl = result.data?.schoolUrl;
 
-const schoolUrlElement =
-  document.getElementById('successSchoolUrl');
+const schoolUrlElement = document.getElementById('successSchoolUrl');
 
 if (schoolUrl) {
-
   schoolUrlElement.href = schoolUrl;
   schoolUrlElement.textContent = schoolUrl;
-
-} else if (successData.subdomain) {
-
+} else if (result.data?.subdomain) {
   const generatedUrl =
-    `https://${successData.subdomain}.goldlincschools.com.ng`;
+    `https://${result.data.subdomain}.examguard.com.ng`;
 
   schoolUrlElement.href = generatedUrl;
   schoolUrlElement.textContent = generatedUrl;
-
 } else {
-
-  schoolUrlElement.removeAttribute('href');
-  schoolUrlElement.textContent =
-    'Portal URL will be available after approval';
+  schoolUrlElement.href = '#';
+  schoolUrlElement.textContent = 'Portal URL will be available after approval';
 }
 
-
-// ===============================
-// COPY LOGIN CREDENTIALS
-// ===============================
-
-const copyCredentialsBtn =
-  document.getElementById('copyCredentialsBtn');
-
-copyCredentialsBtn.onclick = async () => {
-
-  const schoolId =
-    successData.schoolId || 'N/A';
-
-  const email =
-    successData.adminEmail ||
-    successData.email ||
-    data.adminEmail ||
-    data.email ||
-    'N/A';
-
-  const password =
-    successData.temporaryPassword || 'N/A';
-
-  const portal =
-    successData.schoolUrl ||
-    (
-      successData.subdomain
-        ? `https://${successData.subdomain}.goldlincschools.com.ng`
-        : 'Portal URL pending'
-    );
-
-  const credentials = `
-ExamGuard School Registration
-
-School ID: ${schoolId}
-Admin Email: ${email}
-Temporary Password: ${password}
-School Portal: ${portal}
-
-Please change your password after your first login.
-`.trim();
-
-  try {
-
-    await navigator.clipboard.writeText(credentials);
-
-    copyCredentialsBtn.innerHTML =
-      '<i class="fas fa-check"></i> Credentials Copied!';
-
-    setTimeout(() => {
-      copyCredentialsBtn.innerHTML =
-        '<i class="fas fa-copy"></i> Copy Login Credentials';
-    }, 2500);
-
-  } catch (error) {
-
-    console.error('Copy failed:', error);
-
-    alert(
-      'Unable to copy automatically. Please copy the credentials manually.'
-    );
-  }
-};
-
-
-// Show success message
 document.getElementById('success-msg').classList.add('show');
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        form.reset();
+        currentStep = 1;
+        updateForm();
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
+      }, 3000);
+
+    } catch (error) {
+      console.error('Error:', error);
+      showError(error.message || 'An error occurred. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnContent;
+    }
+  });
 
   // Mobile menu toggle
   const navToggle = document.getElementById('nav-toggle');
