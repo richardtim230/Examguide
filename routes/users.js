@@ -113,6 +113,193 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+router.put("/profile", authenticate, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized"
+      });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+    const updates = req.body || {};
+    const allowedFields = [
+      "fullname",
+      "phone",
+      "studentId",
+      "religion",
+      "level",
+      "location",
+      "address",
+      "zip",
+      "bio"
+    ];
+    for (const field of allowedFields) {
+      if (updates[field] !== undefined) {
+        user[field] = updates[field];
+      }
+    }
+    if (updates.faculty !== undefined) {
+      const value = updates.faculty;
+      if (
+        value === "" ||
+        value === null
+      ) {
+        user.faculty = null;
+      } else {
+        const facultyId =
+          typeof value === "object"
+            ? value._id || value.id
+            : value;
+        if (
+          typeof facultyId === "string" &&
+          mongoose.Types.ObjectId.isValid(facultyId)
+        ) {
+          const faculty = await Faculty.findById(facultyId);
+          if (!faculty) {
+            return res.status(400).json({
+              success: false,
+              message: "Faculty not found"
+            });
+          }
+          user.faculty = faculty._id;
+        } else {
+          const facultyName =
+            typeof value === "object" ? value.name : value;
+          if (
+            typeof facultyName !== "string" ||
+            !facultyName.trim()
+          ) {
+            return res.status(400).json({
+              success: false,
+              message: "Invalid faculty"
+            });
+          }
+          let faculty = await Faculty.findOne({
+            name: facultyName.trim()
+          });
+          if (!faculty) {
+            return res.status(400).json({
+              success: false,
+              message: "Faculty not found"
+            });
+          }
+          user.faculty = faculty._id;
+        }
+      }
+    }
+    if (updates.department !== undefined) {
+      const value = updates.department;
+      if (
+        value === "" ||
+        value === null
+      ) {
+        user.department = null;
+      } else {
+        const departmentId =
+          typeof value === "object"
+            ? value._id || value.id
+            : value;
+        if (
+          typeof departmentId === "string" &&
+          mongoose.Types.ObjectId.isValid(departmentId)
+        ) {
+          const department = await Department.findById(departmentId);
+          if (!department) {
+            return res.status(400).json({
+              success: false,
+              message: "Department not found"
+            });
+          }
+          user.department = department._id;
+        } else {
+          const departmentName =
+            typeof value === "object" ? value.name : value;
+          if (
+            typeof departmentName !== "string" ||
+            !departmentName.trim()
+          ) {
+            return res.status(400).json({
+              success: false,
+              message: "Invalid department"
+            });
+          }
+          let department = await Department.findOne({
+            name: departmentName.trim()
+          });
+          if (!department) {
+            return res.status(400).json({
+              success: false,
+              message: "Department not found"
+            });
+          }
+          user.department = department._id;
+        }
+      }
+    }
+    if (updates.institution !== undefined) {
+      const value = updates.institution;
+      if (
+        typeof value !== "string" ||
+        !/^[0-9a-fA-F]{24}$/.test(value)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "A valid institution ID is required"
+        });
+      }
+      user.institution = new mongoose.Types.ObjectId(value);
+    }
+    if (updates.program !== undefined) {
+      if (typeof updates.program !== "string") {
+        return res.status(400).json({
+          success: false,
+          message: "Program must be a string"
+        });
+      }
+      user.set("program", updates.program.trim());
+    }
+    await user.save();
+    const updatedUser = await User.findById(user._id)
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .populate("institution", "name");
+    const result = updatedUser.toObject();
+    result.faculty =
+      updatedUser.faculty?.name ||
+      (typeof updatedUser.faculty === "string"
+        ? updatedUser.faculty
+        : "");
+    result.department =
+      updatedUser.department?.name ||
+      (typeof updatedUser.department === "string"
+        ? updatedUser.department
+        : "");
+    result.institution =
+      updatedUser.institution?.name ||
+      updatedUser.institution?._id?.toString() ||
+      "";
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      user: result
+    });
+  } catch (err) {
+    console.error("PUT /api/users/profile error:", err);
+    res.status(500).json({
+      success: false,
+      message: err.message || "Failed to update profile"
+    });
+  }
+});
+
 router.get("/:id/points-history", authenticate, async (req, res) => {
   try {
     const { id } = req.params;
