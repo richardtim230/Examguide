@@ -225,18 +225,13 @@ router.post("/register", upload.single("passport"), async (req, res) => {
   }
 });
 
-/**
- * Use 20 credit points to access an exam.
- * POST /api/student/exam-set/use-credit-v2
- *
- * Uses the User model exclusively.
- */
 router.post(
   "/exam-set/use-credit-v2",
   authenticate,
   async (req, res) => {
     try {
       const { accessCode } = req.body;
+      const cost = 20;
 
       if (!accessCode) {
         return res.status(400).json({
@@ -244,7 +239,7 @@ router.post(
         });
       }
 
-      // Fetch the authenticated student using User only.
+      // Find the authenticated student using the User model.
       const user = await User.findById(req.user.id);
 
       if (!user) {
@@ -268,28 +263,96 @@ router.post(
         });
       }
 
-      const cost = 20;
-      const currentCredits = Number(user.creditPoints || 0);
+      // Read the student's current balance.
+      const currentCredits = Number(user.creditPoints ?? 0);
 
-      if (currentCredits < cost) {
+      if (
+        !Number.isFinite(currentCredits) ||
+        currentCredits < cost
+      ) {
         return res.status(403).json({
           message: "Insufficient credit points to access this exam.",
-          creditPoints: currentCredits,
+          creditPoints: Number.isFinite(currentCredits)
+            ? currentCredits
+            : 0,
+          remainingCredits: Number.isFinite(currentCredits)
+            ? currentCredits
+            : 0,
           requiredCredits: cost
         });
       }
 
-      // Deduct credits from the student.
-      user.creditPoints = currentCredits - cost;
-      await user.save();
+      // Atomically deduct credits from MongoDB.
+      // This prevents concurrent requests from spending the
+      // same credit balance.
+      const updatedUser = await User.findOneAndUpdate(
+        {
+          _id: user._id,
+          role: "student",
+          creditPoints: { $gte: cost }
+        },
+        {
+          $inc: { creditPoints: -cost }
+        },
+        {
+          new: true,
+          runValidators: true
+        }
+      ).select("creditPoints fullname email");
 
-      // Credit the exam creator using User only.
-      const creatorId = examSet.createdBy;
-      const creditedCreator = await creditCreator(creatorId, cost);
+      if (!updatedUser) {
+        const latestUser = await User.findById(user._id)
+          .select("creditPoints");
+
+        const latestBalance = Number(
+          latestUser?.creditPoints ?? 0
+        );
+
+        return res.status(409).json({
+          message:
+            "Your credit balance changed or is insufficient. Please refresh and try again.",
+          creditPoints: latestBalance,
+          remainingCredits: latestBalance,
+          requiredCredits: cost
+        });
+      }
+
+      // Use the balance returned by MongoDB after the deduction.
+      const remainingCredits = Number(updatedUser.creditPoints);
+
+      // Credit the exam creator using the User model.
+      // Failure to credit the creator must not hide the
+      // student's actual remaining balance.
+      let creditedCreator = null;
+      let creatorCreditError = false;
+
+      try {
+        const creatorId = examSet.createdBy;
+
+        if (creatorId) {
+          creditedCreator = await creditCreator(
+            creatorId,
+            cost
+          );
+        }
+
+        if (!creditedCreator) {
+          creatorCreditError = true;
+        }
+      } catch (creatorError) {
+        creatorCreditError = true;
+
+        console.error(
+          "Exam creator crediting error:",
+          creatorError
+        );
+      }
 
       const response = {
         message: "Exam access granted. 20 credit points deducted.",
-        creditPoints: user.creditPoints,
+        deductedCredits: cost,
+        creditPoints: remainingCredits,
+        remainingCredits,
         examSet
       };
 
@@ -298,18 +361,18 @@ router.post(
           id: creditedCreator._id,
           creditPoints: creditedCreator.creditPoints
         };
-      } else {
+      } else if (creatorCreditError) {
         response.warning =
-          "Exam access was granted, but the exam creator could not be credited. Please check the creator's User record.";
+          "Exam access was granted, but the creator could not be credited. Please check the creator's User record.";
       }
 
-      return res.json(response);
+      return res.status(200).json(response);
+
     } catch (err) {
       console.error("Exam credit v2 error:", err);
 
       return res.status(500).json({
-        message: "Server error",
-        error: err.message
+        message: "Server error while processing exam credits."
       });
     }
   }
