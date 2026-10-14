@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+
 const { Schema, model } = mongoose;
+
+const DEFAULT_INSTITUTION_ID = new mongoose.Types.ObjectId(
+  "6a4ce9b3c137e30eefaa5382"
+);
 
 const socialSchema = new Schema({
   facebook: { type: String, default: "" },
@@ -17,11 +22,29 @@ const socialSchema = new Schema({
 
 const UserSchema = new Schema({
   fullname: { type: String, default: "" },
-  username: { type: String, required: true, unique: true, trim: true, index: true },
-  email: { type: String, default: "", lowercase: true, trim: true, index: true },
+
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    index: true
+  },
+
+  email: {
+    type: String,
+    default: "",
+    lowercase: true,
+    trim: true,
+    index: true
+  },
+
   phone: { type: String, default: "" },
+
+  // Academic information
   studentId: { type: String, default: "" },
   level: { type: String, default: "" },
+  program: { type: String, default: "" },
   religion: { type: String, default: "" },
 
   password: { type: String, required: true },
@@ -46,52 +69,121 @@ const UserSchema = new Schema({
   lastLoginWithFace: { type: Date },
   faceVerificationAttempts: { type: Number, default: 0 },
 
-  referralCode: { type: String, unique: true, sparse: true, index: true },
+  referralCode: {
+    type: String,
+    unique: true,
+    sparse: true,
+    index: true
+  },
+
   referredBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
     default: null,
     set: v => {
-      if (v === '' || v === null || typeof v === 'undefined') return undefined;
-      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+      if (v === "" || v === null || typeof v === "undefined") {
+        return undefined;
+      }
+
+      if (
+        typeof v === "string" &&
+        /^[0-9a-fA-F]{24}$/.test(v)
+      ) {
+        return v;
+      }
+
       return undefined;
     }
   },
+
   totalReferrals: { type: Number, default: 0 },
-  referrals: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
-  faculty: { type: Schema.Types.Mixed, ref: "Faculty", default: null },
-  department: { type: Schema.Types.Mixed, ref: "Department", default: null },
+  referrals: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
 
-  userType: { type: String, enum: ["student", "post_utme", "alumni", "staff", "guest"], default: "student", index: true },
+  faculty: {
+    type: Schema.Types.Mixed,
+    ref: "Faculty",
+    default: null
+  },
 
+  department: {
+    type: Schema.Types.Mixed,
+    ref: "Department",
+    default: null
+  },
+
+  userType: {
+    type: String,
+    enum: ["student", "post_utme", "alumni", "staff", "guest"],
+    default: "student",
+    index: true
+  },
+
+  // Institution reference
   institution: {
     type: Schema.Types.ObjectId,
     ref: "Institution",
-    default: new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382"),
+    default: DEFAULT_INSTITUTION_ID,
     index: true,
     set: v => {
-      if (v === '' || v === null || typeof v === 'undefined') return new mongoose.Types.ObjectId("6a4ce9b3c137e30eefaa5382");
-      if (typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v)) return v;
+      if (v === "" || v === null || typeof v === "undefined") {
+        return DEFAULT_INSTITUTION_ID;
+      }
+
+      if (
+        typeof v === "string" &&
+        /^[0-9a-fA-F]{24}$/.test(v)
+      ) {
+        return v;
+      }
+
       return v;
     }
   },
 
   role: {
     type: String,
-    enum: ["student","tutor","blogger", "publisher", "pending_publisher", "pending_blogger","pending_marketer","pending_both","uploader","pq-uploader","admin","superadmin","codec"],
+    enum: [
+      "student",
+      "tutor",
+      "blogger",
+      "publisher",
+      "pending_publisher",
+      "pending_blogger",
+      "pending_marketer",
+      "pending_both",
+      "uploader",
+      "pq-uploader",
+      "admin",
+      "superadmin",
+      "codec"
+    ],
     default: "student",
     index: true
   },
 
   active: { type: Boolean, default: true },
-  status: { type: String, enum: ["pending","approved","active","banned"], default: "pending" },
+
+  status: {
+    type: String,
+    enum: ["pending", "approved", "active", "banned"],
+    default: "pending"
+  },
+
   approved: { type: Boolean, default: false },
 
   specialties: { type: [String], default: [] },
   about: { type: String, default: "" },
   achievements: { type: [String], default: [] },
-  socials: { type: socialSchema, default: {} },
+
+  socials: {
+    type: socialSchema,
+    default: {}
+  },
+
   social: {
     facebook: { type: String, default: "" },
     twitter: { type: String, default: "" },
@@ -109,24 +201,47 @@ const UserSchema = new Schema({
   idType: { type: String },
 
   creditPoints: { type: Number, default: 35 },
-  completedArticles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+
+  completedArticles: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post"
+  }],
+
   isPremium: { type: Boolean, default: false },
 
   assignedActivationKey: { type: String, default: "" },
-  activationKeyStatus: { type: String, enum: ["pending","redeemed","expired"], default: "pending" },
+
+  activationKeyStatus: {
+    type: String,
+    enum: ["pending", "redeemed", "expired"],
+    default: "pending"
+  },
 
   location: { type: String, default: "" },
+
   verification: {
     idDocument: { type: String, default: "" },
     proofOfAddress: { type: String, default: "" },
     status: { type: String, default: "pending" }
   },
 
-  dailyTasks: [{ date: String, done: [String] }],
+  dailyTasks: [{
+    date: String,
+    done: [String]
+  }],
+
   verified: { type: Boolean, default: false },
 
-  offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }],
-  wishlist: [{ type: Schema.Types.ObjectId, ref: "Listing" }],
+  offers: [{
+    type: Schema.Types.ObjectId,
+    ref: "Offer"
+  }],
+
+  wishlist: [{
+    type: Schema.Types.ObjectId,
+    ref: "Listing"
+  }],
+
   points: { type: Number, default: 0 },
 
   address: { type: String, default: "" },
@@ -135,49 +250,86 @@ const UserSchema = new Schema({
 
   rewardHistory: [{
     key: String,
-    type: { type: String }, // Use { type: String } if 'type' causes reserved-word conflicts in Mongoose
+    type: { type: String },
     title: String,
     points: Number,
     date: { type: Date, default: Date.now },
     by: String,
-    referenceId: { type: mongoose.Schema.Types.Mixed, default: null }
+    referenceId: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null
+    }
   }],
 
   lastLoginAt: { type: Date },
-  meta: { type: Schema.Types.Mixed, default: {} },
 
-  students: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  meta: {
+    type: Schema.Types.Mixed,
+    default: {}
+  },
+
+  students: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
+
   courses: [{
-    _id: { type: Schema.Types.ObjectId, required: true },
+    _id: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
     title: { type: String, default: "" },
     code: { type: String, default: "" },
     description: { type: String, default: "" },
     level: { type: String, default: "" },
-    students: [{ type: Schema.Types.ObjectId, ref: "User" }],
+
+    students: [{
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }],
+
     questions: [Schema.Types.ObjectId],
+
     resources: [{
-      _id: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+      _id: {
+        type: Schema.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId()
+      },
       name: { type: String, default: "" },
       label: { type: String, default: "" },
       mimeType: { type: String, default: "" },
       size: { type: Number, default: 0 },
       url: { type: String, default: "" },
-      storageType: { type: String, enum: ["gridfs","cloudinary","local","other"], default: "gridfs" },
+
+      storageType: {
+        type: String,
+        enum: ["gridfs", "cloudinary", "local", "other"],
+        default: "gridfs"
+      },
+
       publicId: { type: String, default: null },
       fileId: { type: String, default: null },
       uploadedAt: { type: Date, default: Date.now }
     }],
+
     createdAt: { type: Date, default: Date.now }
   }],
+
   questions: [{
     _id: Schema.Types.ObjectId,
     course: Schema.Types.ObjectId,
     question: String,
     type: String,
-    options: [{ text: { type: String, default: "" }, image: { type: String, default: "" } }],
+
+    options: [{
+      text: { type: String, default: "" },
+      image: { type: String, default: "" }
+    }],
+
     answer: String,
     createdAt: { type: Date, default: Date.now }
   }],
+
   exams: [{
     _id: Schema.Types.ObjectId,
     course: Schema.Types.ObjectId,
@@ -191,6 +343,7 @@ const UserSchema = new Schema({
     status: String,
     createdAt: { type: Date, default: Date.now }
   }],
+
   results: [{
     _id: Schema.Types.ObjectId,
     student: Schema.Types.ObjectId,
@@ -204,35 +357,46 @@ const UserSchema = new Schema({
 
   dailyTaskPool: {
     date: String,
+
     tasks: [{
-        _id: String,
-        title: String,
-        description: String,
-        activityType: String,
-        status: String,
-        points: Number,
-        priority: Number,
-        createdAt: Date,
-        image: String,
-        meta: mongoose.Schema.Types.Mixed
+      _id: String,
+      title: String,
+      description: String,
+      activityType: String,
+      status: String,
+      points: Number,
+      priority: Number,
+      createdAt: Date,
+      image: String,
+      meta: mongoose.Schema.Types.Mixed
     }]
-},
+  },
+
   totalSubmissions: { type: Number, default: 0 },
   averageScore: { type: Number, default: 0 }
+
 }, { timestamps: true });
 
-UserSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
-UserSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
+UserSchema.virtual("isTutor").get(function () {
+  return this.role === "tutor";
+});
 
-UserSchema.pre("save", function(next) {
+UserSchema.virtual("isAdmin").get(function () {
+  return ["admin", "superadmin"].includes(this.role);
+});
+
+UserSchema.pre("save", function (next) {
   if (!this.referralCode) {
-    this.referralCode = `EG${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+    this.referralCode =
+      `EG${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
   }
+
   next();
 });
 
-UserSchema.methods.toJSON = function() {
+UserSchema.methods.toJSON = function () {
   const obj = this.toObject({ virtuals: true });
+
   delete obj.password;
   delete obj.emailVerificationToken;
   delete obj.resetPasswordToken;
@@ -240,10 +404,11 @@ UserSchema.methods.toJSON = function() {
   delete obj.resetPasswordCode;
   delete obj.resetPasswordCodeExpires;
   delete obj.__v;
+
   return obj;
 };
 
-UserSchema.methods.comparePassword = function(candidate) {
+UserSchema.methods.comparePassword = function (candidate) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidate, this.password, (err, isMatch) => {
       if (err) return reject(err);
@@ -252,21 +417,34 @@ UserSchema.methods.comparePassword = function(candidate) {
   });
 };
 
-UserSchema.methods.generateEmailVerificationToken = function() {
+UserSchema.methods.generateEmailVerificationToken = function () {
   const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
   return token;
 };
 
-UserSchema.virtual("socialMerged").get(function() {
-  const hasSocials = this.socials && Object.keys(this.socials || {}).length > 0;
+UserSchema.virtual("socialMerged").get(function () {
+  const hasSocials =
+    this.socials && Object.keys(this.socials || {}).length > 0;
+
   if (hasSocials) return this.socials;
+
   return this.social || {};
 });
 
-UserSchema.index({ username: 1 }, { unique: true, background: true });
-UserSchema.index({ email: 1 }, { background: true });
-UserSchema.index({ referralCode: 1 }, { unique: true, sparse: true });
+UserSchema.index(
+  { username: 1 },
+  { unique: true, background: true }
+);
 
-// With this (prevents model re-compilation issues during hot reloading):
+UserSchema.index(
+  { email: 1 },
+  { background: true }
+);
+
+UserSchema.index(
+  { referralCode: 1 },
+  { unique: true, sparse: true }
+);
+
 export default mongoose.models.User || model("User", UserSchema);
