@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import ExamSet from "../models/ExamSet.js";
 
 const router = express.Router();
