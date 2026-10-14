@@ -11,26 +11,18 @@ import CreditTransaction from "../models/CreditTransaction.js";
 import Withdrawal from "../models/Withdrawal.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
-
-// Helper to check ObjectId
 function isObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
-
 router.get("/", async (req, res) => {
   const filter = {};
-
-  // Accept role filter
   if (req.query.role) filter.role = req.query.role;
-
-  // Accept faculty as either ObjectId or name string or legacy string (allow both)
   if (req.query.faculty) {
     const facultyValue = req.query.faculty.trim();
     if (/^[0-9a-fA-F]{24}$/.test(facultyValue)) {
-      // It's an ObjectId
       filter.$or = [
         { faculty: facultyValue },
-        { faculty: facultyValue } // for legacy string, but will match only if stored as string
+        { faculty: facultyValue }
       ];
     } else if (facultyValue !== "") {
       const fac = await Faculty.findOne({ name: facultyValue });
@@ -40,13 +32,10 @@ router.get("/", async (req, res) => {
           { faculty: facultyValue }
         ];
       } else {
-        // No such faculty exists, so return no results
         return res.json([]);
       }
     }
   }
-
-  // Accept department as either ObjectId or name string or legacy string (allow both)
   if (req.query.department) {
     const departmentValue = req.query.department.trim();
     if (/^[0-9a-fA-F]{24}$/.test(departmentValue)) {
@@ -62,22 +51,17 @@ router.get("/", async (req, res) => {
       }
     }
   }
-
   try {
     const users = await User.find(filter)
       .select("-password")
       .sort({ createdAt: -1 });
-
-    // Defensive patch: ensure faculty/department fields are either ObjectId, string, or null
     for (const user of users) {
-      // Patch legacy string
       if (typeof user.faculty === "string") {
         user.faculty = { name: user.faculty };
       }
       if (typeof user.department === "string") {
         user.department = { name: user.department };
       }
-      // Patch invalid object (not ObjectId and not a populated Faculty object)
       if (
         typeof user.faculty === "object" &&
         user.faculty !== null &&
@@ -94,14 +78,12 @@ router.get("/", async (req, res) => {
       ) {
         user.department = "";
       }
-      // If faculty is a plain object (legacy patch) but not a valid ObjectId or Faculty document, convert to string or null
       if (
         typeof user.faculty === "object" &&
         user.faculty !== null &&
         !user.faculty._id &&
         typeof user.faculty.name === "string"
       ) {
-        // leave as is: { name: ... }
       }
       if (
         typeof user.department === "object" &&
@@ -109,16 +91,12 @@ router.get("/", async (req, res) => {
         !user.department._id &&
         typeof user.department.name === "string"
       ) {
-        // leave as is: { name: ... }
       }
     }
-
-    // Only populate faculty/department for users whose field is a valid ObjectId
     const usersToPopulate = users.filter(u =>
       mongoose.Types.ObjectId.isValid(u.faculty) ||
       mongoose.Types.ObjectId.isValid(u.department)
     );
-
     await User.populate(usersToPopulate, [
       {
         path: "faculty",
@@ -129,45 +107,30 @@ router.get("/", async (req, res) => {
         select: "name"
       }
     ]);
-
     const data = users.map(u => u.toObject());
     res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
-// GET /api/users/:id/points-history
-// Returns unified paginated history of point gains/spends for the user.
-// Accessible by the user themselves or admin/superadmin.
 router.get("/:id/points-history", authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const requester = req.user;
-
     if (!requester) return res.status(401).json({ ok: false, message: "Unauthorized" });
-
-    // Authorization: only the owner or admins can see this history
     if (String(requester.id) !== String(id) && !["admin", "superadmin"].includes(requester.role)) {
       return res.status(403).json({ ok: false, message: "Forbidden" });
     }
-
     const page = Math.max(1, parseInt(req.query.page || "1", 10));
     const limit = Math.max(1, Math.min(200, parseInt(req.query.limit || "50", 10)));
-    const typeFilter = req.query.type ? String(req.query.type).toLowerCase() : null; // e.g. 'practiced','reading','task','withdrawal'
+    const typeFilter = req.query.type ? String(req.query.type).toLowerCase() : null;
     const from = req.query.from ? new Date(req.query.from) : null;
     const to = req.query.to ? new Date(req.query.to) : null;
-
-    // Fetch the user reward history and points summary
     const user = await User.findById(id).select("rewardHistory points").lean();
     if (!user) return res.status(404).json({ ok: false, message: "User not found" });
-
     const rh = user.rewardHistory || {};
     const entries = [];
-
     const pushEntry = (obj) => entries.push(obj);
-
-    // Map rewardHistory arrays into unified entries
     if (Array.isArray(rh.practiced)) {
       for (const p of rh.practiced) {
         pushEntry({
@@ -181,7 +144,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
     if (Array.isArray(rh.reading)) {
       for (const r of rh.reading) {
         pushEntry({
@@ -195,7 +157,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
     if (Array.isArray(rh.bonus)) {
       for (const b of rh.bonus) {
         pushEntry({
@@ -209,7 +170,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
     if (Array.isArray(rh.admin)) {
       for (const a of rh.admin) {
         pushEntry({
@@ -223,7 +183,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
     if (Array.isArray(rh.referrals)) {
       for (const r of rh.referrals) {
         pushEntry({
@@ -237,7 +196,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
     if (Array.isArray(rh.spent)) {
       for (const s of rh.spent) {
         pushEntry({
@@ -251,9 +209,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         });
       }
     }
-
-    // --- Include Task-based rewards (new) ---
-    // Include tasks that awarded points: completed tasks or explicit rewardGranted flag
     try {
       const taskQuery = {
         user: id,
@@ -262,16 +217,13 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
           { rewardGranted: true }
         ]
       };
-      // Optionally accept activityType filter via query ?taskActivity=reading etc.
       if (req.query.taskActivity) {
         taskQuery.activityType = req.query.taskActivity;
       }
-
       const tasks = await Task.find(taskQuery)
         .select("title points completedAt updatedAt createdAt activityType _id")
         .sort({ completedAt: -1, updatedAt: -1, createdAt: -1 })
         .lean();
-
       for (const t of tasks) {
         const tsDate = t.completedAt || t.updatedAt || t.createdAt || null;
         pushEntry({
@@ -287,8 +239,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     } catch (e) {
       console.warn("points-history: Task load failed", e && e.message);
     }
-
-    // Include CreditTransaction entries (money-based transactions) as amount entries
     try {
       const ctQuery = { $or: [{ from: id }, { to: id }] };
       const creditTx = await CreditTransaction.find(ctQuery).sort({ createdAt: -1 }).lean();
@@ -313,8 +263,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     } catch (e) {
       console.warn("points-history: CreditTransaction load failed", e && e.message);
     }
-
-    // Include Withdrawals (payouts)
     try {
       const withdrawals = await Withdrawal.find({ user: id }).sort({ requestedAt: -1 }).lean();
       for (const w of withdrawals) {
@@ -331,8 +279,6 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     } catch (e) {
       console.warn("points-history: Withdrawal load failed", e && e.message);
     }
-
-    // Normalize & filter entries (date range and type)
     const normalized = entries
       .map(e => ({
         id: e.id || `${e.type}_${Math.random().toString(36).slice(2,9)}`,
@@ -349,20 +295,16 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
         if (typeFilter && e.type !== typeFilter) return false;
         return true;
       });
-
-    // Sort newest first; items without date go to the end
     normalized.sort((a, b) => {
       if (!a.date && !b.date) return 0;
       if (!a.date) return 1;
       if (!b.date) return -1;
       return b.date - a.date;
     });
-
     const total = normalized.length;
     const pages = Math.ceil(total / limit) || 1;
     const start = (page - 1) * limit;
     const pageItems = normalized.slice(start, start + limit);
-
     res.json({
       ok: true,
       meta: { total, page, limit, pages },
@@ -374,14 +316,11 @@ router.get("/:id/points-history", authenticate, async (req, res) => {
     res.status(500).json({ ok: false, message: err.message || "Server error" });
   }
 });
-
-// POST /api/users/:studentId/activation-key (admin)
 router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const studentId = req.params.studentId;
     const user = await User.findOne({ studentId });
     if (!user) return res.status(404).json({ message: "Student not found" });
-
     const key = crypto.randomBytes(8).toString("hex").toUpperCase();
     user.assignedActivationKey = key;
     user.activationKeyStatus = "pending";
@@ -391,16 +330,12 @@ router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "
     res.status(500).json({ message: err.message || "Could not assign key" });
   }
 });
-
-// POST /api/users/redeem-activation (student)
 router.post("/redeem-activation", authenticate, async (req, res) => {
   try {
     const { activationKey } = req.body;
     if (!activationKey) return res.status(400).json({ message: "Activation key required." });
-
     const user = await User.findOne({ assignedActivationKey: activationKey, activationKeyStatus: "pending", _id: req.user.id });
     if (!user) return res.status(404).json({ message: "Invalid or expired key." });
-
     user.isPremium = true;
     user.activationKeyStatus = "redeemed";
     await user.save();
@@ -409,7 +344,6 @@ router.post("/redeem-activation", authenticate, async (req, res) => {
     res.status(500).json({ message: err.message || "Could not redeem key." });
   }
 });
-
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -421,8 +355,6 @@ router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
-// GET /api/users/:id/daily-tasks?date=YYYY-MM-DD
 router.get("/:id/daily-tasks", authenticate, async (req, res) => {
   const { id } = req.params;
   const { date } = req.query;
@@ -432,35 +364,26 @@ router.get("/:id/daily-tasks", authenticate, async (req, res) => {
   const daily = (user.dailyTasks || []).find(d => d.date === date);
   res.json({ done: daily ? daily.done : [] });
 });
-
-// POST /api/users/:id/daily-tasks
 router.post("/:id/daily-tasks", authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const { date, taskId } = req.body;
-
     if (!date || !taskId) {
       return res.status(400).json({ error: "Missing date or taskId" });
     }
-
-    // Daily login is handled by /api/task-actions/complete
     if (taskId === "daily_login") {
       return res.status(400).json({
         error: "Use /api/task-actions/complete for the daily login reward."
       });
     }
-
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
     if (!Array.isArray(user.dailyTasks)) {
       user.dailyTasks = [];
     }
-
     let daily = user.dailyTasks.find(d => d.date === date);
-
     if (!daily) {
       daily = {
         date,
@@ -468,12 +391,10 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
       };
       user.dailyTasks.push(daily);
     }
-
     if (!daily.done.includes(taskId)) {
       daily.done.push(taskId);
       await user.save();
     }
-
     res.json({
       success: true,
       done: daily.done
@@ -484,7 +405,6 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
     });
   }
 });
-
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -496,7 +416,6 @@ router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), asy
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
 router.get("/count", async (req, res) => {
   try {
     const count = await User.countDocuments({});
@@ -505,16 +424,12 @@ router.get("/count", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
 router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
-
     user.approved = approved;
-
-    // Promote pending roles upon approval
     if (approved === true) {
       if (user.role === "pending_blogger") {
         user.role = "blogger";
@@ -522,24 +437,20 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
         user.role = "publisher";
       }
     }
-
     await user.save();
     res.json(user);
   } catch (e) {
     res.status(500).json({ error: 'Could not update user approval.' });
   }
 });
-
 router.get("/me", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
-
     if (!user)
       return res.status(404).json({ message: "User not found" });
-
     res.json({
       user: {
         ...user.toObject(),
@@ -551,8 +462,6 @@ router.get("/me", authenticate, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// GET user by id (for author lookup, with account/payment/contact details)
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
@@ -560,12 +469,10 @@ router.get("/:id", async (req, res) => {
       .populate("department", "name")
       .select("fullname username profilePic faculty department bio phone bank accountName accountNumber location email");
     if (!user) return res.status(404).json({ error: "User not found" });
-
     let faculty = user.faculty;
     let department = user.department;
     if (typeof faculty === "string") faculty = { name: faculty };
     if (typeof department === "string") department = { name: department };
-
     res.json({
       user: {
         fullname: user.fullname,
@@ -586,9 +493,6 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Could not fetch user" });
   }
 });
-
-// POST /api/users/batch-assign-keys
-// { studentIds: [array of studentId strings] }
 router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const { studentIds } = req.body;
   if (!studentIds || !Array.isArray(studentIds)) return res.status(400).json({ message: "studentIds array required" });
@@ -599,7 +503,6 @@ router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadm
       results.push({ studentId, error: "Not found" });
       continue;
     }
-    // Only assign if not already premium or has pending key
     if (user.isPremium || (user.activationKeyStatus === "pending" && user.assignedActivationKey)) {
       results.push({ studentId, status: "Already premium or has pending key" });
       continue;
@@ -612,9 +515,6 @@ router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadm
   }
   res.json({ results });
 });
-
-// PATCH /api/users/:studentId/expire-key (admin)
-// Expires/revokes a key, disables premium if already active
 router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const user = await User.findOne({ studentId: req.params.studentId });
   if (!user) return res.status(404).json({ message: "Student not found" });
@@ -624,9 +524,6 @@ router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "sup
   await user.save();
   res.json({ message: "Activation key expired/revoked", studentId: user.studentId });
 });
-
-// GET /api/users/activation-keys?status=&studentId= (admin only)
-// Returns all users with activation key info, or filtered by status or studentId
 router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const { status, studentId } = req.query;
   let filter = { assignedActivationKey: { $ne: "" } };
@@ -635,17 +532,12 @@ router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"
   const users = await User.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium");
   res.json({ data: users });
 });
-
-// GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name");
-
     if (!user) return res.status(404).json({ error: "User not found" });
-
-    // If no logged-in user OR role not admin/superadmin → return public info only
     if (!req.user || !["admin", "superadmin"].includes(req.user.role)) {
       let faculty = user.faculty;
       let department = user.department;
@@ -662,34 +554,24 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
         },
       });
     }
-
-    // Admin/superadmin → return full details (excluding password)
     const { password, ...safeUser } = user.toObject();
     res.json(safeUser);
-
   } catch (err) {
     res.status(500).json({ error: err.message || "Server error" });
   }
 });
-
-// PATCH /api/auth/me
 router.patch('/api/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ error: "User not found" });
-
-  // Only allow these keys to be updated
   const allowed = [
     "fullname", "institution", "country", "location", "phone",
     "level", "department", "faculty", "role", "religion",
     "address", "zip", "bio"
   ];
-
   allowed.forEach(key => {
     if (updates[key] !== undefined) user[key] = updates[key];
   });
-
-  // Handle nested social object
   if (typeof updates.social === "object" && updates.social !== null) {
     user.social = user.social || {};
     for (const [k, v] of Object.entries(updates.social)) {
@@ -699,7 +581,6 @@ router.patch('/api/auth/me', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
-
 router.patch('/:id', authenticate, async (req, res) => {
   if (req.user.id !== req.params.id) return res.status(403).json({ error: "Forbidden" });
   const user = await User.findById(req.params.id);
@@ -708,64 +589,49 @@ router.patch('/:id', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
-
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const {
       fullname, username, email, password,
       role = "student", faculty, department, profilePic, active = true
     } = req.body;
-
     if (!username || !email || !password || !fullname)
       return res.status(400).json({ message: "fullname, username, email, and password are required." });
-
     const allowedRoles = ["student", "admin", "superadmin", "uploader"];
     if (!allowedRoles.includes(role)) return res.status(400).json({ message: "Invalid role." });
-
     let facultyId = null;
     let departmentId = null;
-
-    // Handle faculty string or ObjectId (allow both)
     if (faculty && faculty !== "") {
       if (isObjectId(faculty)) {
         const fac = await Faculty.findById(faculty);
         if (!fac) return res.status(400).json({ message: "Faculty not found." });
         facultyId = faculty;
       } else {
-        // Try to find by name, else create
         let fac = await Faculty.findOne({ name: faculty });
         if (!fac) fac = await Faculty.create({ name: faculty });
         facultyId = fac._id;
       }
     }
-
-    // Handle department string or ObjectId (allow both)
     if (department && department !== "") {
       if (isObjectId(department)) {
         const dept = await Department.findById(department);
         if (!dept) return res.status(400).json({ message: "Department not found." });
         departmentId = department;
       } else {
-        // Try to find by name, else create
         let dept = await Department.findOne({ name: department });
         if (!dept) {
-          // Try to attach faculty reference if possible
           dept = await Department.create({ name: department, faculty: facultyId });
         }
         departmentId = dept._id;
       }
     }
-
-    // Check duplicate username/email
     const exists = await User.findOne({ $or: [{ username }, { email }] });
     if (exists) return res.status(400).json({ message: "Username or email already exists." });
-
     const hashed = await bcrypt.hash(password, 12);
-
     const user = new User({
       fullname, username, email, password: hashed, role,
-      faculty: facultyId || faculty, // fallback to string if not resolved
-      department: departmentId || department, // fallback to string if not resolved
+      faculty: facultyId || faculty,
+      department: departmentId || department,
       profilePic, active
     });
     await user.save();
@@ -778,18 +644,13 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
-// UPDATE user profile (admin or superadmin, allow both string/ObjectId & allow legacy)
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-
     for (const field of ["fullname", "username", "email", "level", "phone", "profilePic", "active", "religion", "role"]) {
       if (req.body[field] !== undefined) user[field] = req.body[field];
     }
-
-    // Patch: Accept faculty/department name and auto-create if needed, allow legacy string
     if (req.body.faculty !== undefined) {
       let facultyId = null;
       if (req.body.faculty === "") facultyId = null;
@@ -814,14 +675,12 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
       } else {
         let dept = await Department.findOne({ name: req.body.department });
         if (!dept) {
-          // Try to attach faculty reference if possible
           dept = await Department.create({ name: req.body.department, faculty: user.faculty });
         }
         departmentId = dept._id;
       }
       user.department = departmentId || req.body.department;
     }
-
     if (req.body.password) {
       user.password = await bcrypt.hash(req.body.password, 12);
     }
@@ -835,8 +694,6 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
-// Activate/deactivate user (shortcut)
 router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -848,8 +705,6 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
-// DELETE user (admin/superadmin)
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
@@ -859,5 +714,4 @@ router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
 export default router;
