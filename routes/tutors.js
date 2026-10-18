@@ -60,11 +60,9 @@ router.post("/register", async (req, res) => {
             socials = {},
 
             // Optional Settings
+            // Moderation and verification flags are controlled by the server.
             active = true,
-            approved = true,
-            verified = true,
-            emailVerified = true,
-            status = "active"
+            status = "pending"
         } = req.body;
 
         // ===========================
@@ -201,10 +199,10 @@ router.post("/register", async (req, res) => {
             role: "tutor",
             userType: "staff",
 
-            active,
-            approved,
-            verified,
-            emailVerified,
+            active: true,
+            approved: false,
+            verified: false,
+            emailVerified: false,
 
             status,
 
@@ -221,8 +219,16 @@ router.post("/register", async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: "Tutor created successfully.",
-            tutor
+            message: "Tutor registration received. Your profile is pending approval.",
+            tutor: {
+                _id: tutor._id,
+                fullname: tutor.fullname,
+                username: tutor.username,
+                email: tutor.email,
+                role: tutor.role,
+                approved: tutor.approved,
+                status: tutor.status
+            }
         });
 
     } catch (error) {
@@ -243,14 +249,89 @@ router.post("/register", async (req, res) => {
     }
 });
 
+// Public tutor directory: returns only approved, active tutors and safe profile fields.
+router.get("/directory", async (req, res) => {
+  try {
+    const { search = "", subject = "", institution = "", department = "", level = "", page = "1", limit = "12" } = req.query;
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const pageSize = Math.min(50, Math.max(1, parseInt(limit, 10) || 12));
+    const filter = { role: "tutor", approved: true, active: true, status: "active" };
+    const escapeRegex = value => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    if (subject.trim()) filter.specialties = { $regex: escapeRegex(subject.trim()), $options: "i" };
+    if (institution.trim()) filter.institution = { $regex: escapeRegex(institution.trim()), $options: "i" };
+    if (department.trim()) filter.department = { $regex: escapeRegex(department.trim()), $options: "i" };
+    if (level.trim()) filter.level = { $regex: escapeRegex(level.trim()), $options: "i" };
+
+    if (search.trim()) {
+      const term = { $regex: escapeRegex(search.trim()), $options: "i" };
+      filter.$or = [
+        { fullname: term }, { username: term }, { department: term },
+        { institution: term }, { specialties: term }, { bio: term }, { about: term }
+      ];
+    }
+
+    const [tutors, total] = await Promise.all([
+      User.find(filter)
+        .select("fullname username bio about institution faculty department level specialties achievements profilePic location verified")
+        .sort({ verified: -1, fullname: 1 })
+        .skip((pageNum - 1) * pageSize)
+        .limit(pageSize)
+        .lean(),
+      User.countDocuments(filter)
+    ]);
+
+    res.json({ success: true, tutors, pagination: { page: pageNum, limit: pageSize, total, pages: Math.ceil(total / pageSize) } });
+  } catch (error) {
+    console.error("Tutor directory error:", error);
+    res.status(500).json({ success: false, message: "Unable to load tutors." });
+  }
+});
+
+router.get("/directory/:id", async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: "Invalid tutor ID." });
+    }
+    const tutor = await User.findOne({
+      _id: req.params.id, role: "tutor", approved: true, active: true, status: "active"
+    }).select("fullname username bio about institution faculty department level specialties achievements profilePic location verified").lean();
+
+    if (!tutor) return res.status(404).json({ success: false, message: "Tutor not found." });
+    res.json({ success: true, tutor });
+  } catch (error) {
+    console.error("Tutor profile error:", error);
+    res.status(500).json({ success: false, message: "Unable to load tutor profile." });
+  }
+});
+
 // Tutor updates their profile
 router.patch("/me", authenticate, authorizeRole("tutor"), async (req, res) => {
-  const allowed = ["fullname","about","specialties","achievements","phone","profilePic","socials"];
-  const user = await User.findById(req.user.id);
-  if (!user || user.role !== "tutor") return res.status(404).json({ message: "Tutor not found" });
-  allowed.forEach(key => { if (req.body[key] !== undefined) user[key]=req.body[key]; });
-  await user.save();
-  res.json({ success: true, user });
+  try {
+    const allowed = ["fullname", "about", "specialties", "achievements", "phone", "profilePic", "socials"];
+    const user = await User.findById(req.user.id);
+    if (!user || user.role !== "tutor") return res.status(404).json({ success: false, message: "Tutor not found." });
+
+    for (const key of allowed) {
+      if (req.body?.[key] === undefined) continue;
+      if (["fullname", "about", "phone", "profilePic"].includes(key) && typeof req.body[key] !== "string") {
+        return res.status(400).json({ success: false, message: key + " must be text." });
+      }
+      if (["specialties", "achievements"].includes(key) && !Array.isArray(req.body[key])) {
+        return res.status(400).json({ success: false, message: key + " must be an array." });
+      }
+      if (key === "socials" && (!req.body[key] || typeof req.body[key] !== "object" || Array.isArray(req.body[key]))) {
+        return res.status(400).json({ success: false, message: "socials must be an object." });
+      }
+      user[key] = req.body[key];
+    }
+    await user.save();
+    const safeUser = await User.findById(user._id).select("-password -emailVerificationToken -ninSlip -bank -accountName -accountNumber");
+    res.json({ success: true, user: safeUser });
+  } catch (error) {
+    console.error("Tutor profile update error:", error);
+    res.status(500).json({ success: false, message: "Unable to update tutor profile." });
+  }
 });
 
 // Get my tutor profile (dashboard)
@@ -264,33 +345,53 @@ router.get("/me", authenticate, authorizeRole("tutor"), async (req, res) => {
 // Student requests a tutor
 router.post("/request", authenticate, async (req, res) => {
   try {
-    const { tutorId, message } = req.body;
-    if (!tutorId) return res.status(400).json({ message: "Tutor ID required." });
+    const { tutorId, message } = req.body || {};
+    const studentId = req.user?.id;
 
-    const tutor = await User.findOne({ _id: tutorId, role: "tutor", approved: true });
-    if (!tutor) return res.status(404).json({ message: "Tutor not found" });
+    if (!studentId) return res.status(401).json({ success: false, message: "Authentication required." });
+    if (!tutorId || !mongoose.Types.ObjectId.isValid(tutorId)) {
+      return res.status(400).json({ success: false, message: "A valid tutor ID is required." });
+    }
+    if (String(tutorId) === String(studentId)) {
+      return res.status(400).json({ success: false, message: "You cannot request yourself as a tutor." });
+    }
+    if (message !== undefined && (typeof message !== "string" || message.trim().length > 1500)) {
+      return res.status(400).json({ success: false, message: "Message must be text and no longer than 1500 characters." });
+    }
 
-    let studentDisplay = "A student";
-    try {
-      const student = await User.findById(req.user.id).select("fullname username");
-      if (student) studentDisplay = student.fullname || student.username || studentDisplay;
-    } catch (e) {}
+    const tutor = await User.findOne({
+      _id: tutorId, role: "tutor", approved: true, active: true, status: "active"
+    }).select("_id fullname");
+    if (!tutor) return res.status(404).json({ success: false, message: "Tutor not found or not available." });
 
+    const existingRequest = await Notification.findOne({
+      to: tutorId, from: studentId, type: "tutor-request", read: false
+    }).select("_id");
+    if (existingRequest) {
+      return res.status(409).json({
+        success: false,
+        message: "You already have a pending request for this tutor.",
+        requestId: existingRequest._id
+      });
+    }
+
+    const student = await User.findById(studentId).select("fullname username");
+    const studentDisplay = student?.fullname || student?.username || "A student";
     const title = `Tutor request from ${studentDisplay}`;
-
-    await Notification.create({
-      title,
-      to: tutorId,
-      from: req.user.id,
-      type: "tutor-request",
-      message: message || `${title}: Please check the request.`,
-      data: { type: "tutor_request", student: req.user.id },
-      read: false,
-      createdAt: new Date(),
+    const notification = await Notification.create({
+      title, to: tutorId, from: studentId, type: "tutor-request",
+      message: message?.trim() || `${title}: Please check the request.`,
+      data: { type: "tutor_request", student: studentId },
+      read: false, createdAt: new Date()
     });
-    res.json({ message: "Tutor request sent successfully." });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+
+    return res.status(201).json({
+      success: true, message: "Tutor request sent successfully.",
+      requestId: notification._id, status: "pending"
+    });
+  } catch (error) {
+    console.error("Tutor request error:", error);
+    return res.status(500).json({ success: false, message: "Unable to send tutor request." });
   }
 });
 
@@ -352,14 +453,16 @@ router.get("/students", authenticate, authorizeRole("tutor"), async (req, res) =
 
 // Accept student request: marks notification as read, optionally creates "welcome" session, message, and notifies student
 router.post("/accept-student", authenticate, authorizeRole("tutor"), async (req, res) => {
-  const { studentId, note } = req.body;
-  if (!studentId) return res.status(400).json({ message: "studentId required" });
+  const { studentId, note } = req.body || {};
+  if (!studentId || !mongoose.Types.ObjectId.isValid(studentId)) return res.status(400).json({ success: false, message: "A valid studentId is required." });
+  if (note !== undefined && (typeof note !== "string" || note.trim().length > 1500)) return res.status(400).json({ success: false, message: "Note must be text and no longer than 1500 characters." });
 
   // Find and mark notification as read
   const notif = await Notification.findOneAndUpdate(
     { to: req.user.id, from: studentId, type: "tutor-request", read: false },
     { $set: { read: true, accepted: true } }
   );
+  if (!notif) return res.status(404).json({ success: false, message: "Pending tutor request not found." });
 
   // Upsert a session if one doesn't exist
   let latestSession = await Session.findOne({ tutor: req.user.id, student: studentId });
@@ -407,14 +510,16 @@ router.post("/accept-student", authenticate, authorizeRole("tutor"), async (req,
 
 // Reject student request: marks notification as read, notifies student with reason
 router.post("/reject-student", authenticate, authorizeRole("tutor"), async (req, res) => {
-  const { studentId, note } = req.body;
-  if (!studentId) return res.status(400).json({ message: "studentId required" });
+  const { studentId, note } = req.body || {};
+  if (!studentId || !mongoose.Types.ObjectId.isValid(studentId)) return res.status(400).json({ success: false, message: "A valid studentId is required." });
+  if (note !== undefined && (typeof note !== "string" || note.trim().length > 1500)) return res.status(400).json({ success: false, message: "Note must be text and no longer than 1500 characters." });
 
   // Find and mark notification as read & rejected
-  await Notification.findOneAndUpdate(
+  const notif = await Notification.findOneAndUpdate(
     { to: req.user.id, from: studentId, type: "tutor-request", read: false },
     { $set: { read: true, accepted: false } }
   );
+  if (!notif) return res.status(404).json({ success: false, message: "Pending tutor request not found." });
 
   // Notify student with feedback
   await Notification.create({
