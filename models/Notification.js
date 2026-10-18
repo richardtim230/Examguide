@@ -13,7 +13,7 @@ const NotificationSchema = new mongoose.Schema({
         'assignment_due',
         'grade_posted',
         'course_announcement',
-        'tutor_request'
+        'tutor-request'
     ],
     default: 'course_announcement'
 },
