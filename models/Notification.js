@@ -7,10 +7,16 @@ const NotificationSchema = new mongoose.Schema({
         required: true
     },
     type: {
-        type: String,
-        enum: ['live_session_reminder', 'assignment_due', 'grade_posted', 'course_announcement'],
-        default: 'course_announcement'
-    },
+    type: String,
+    enum: [
+        'live_session_reminder',
+        'assignment_due',
+        'grade_posted',
+        'course_announcement',
+        'tutor_request'
+    ],
+    default: 'course_announcement'
+},
     title: {
         type: String,
         required: true
