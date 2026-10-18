@@ -7,16 +7,17 @@ const NotificationSchema = new mongoose.Schema({
         required: true
     },
     type: {
-    type: String,
-    enum: [
-        'live_session_reminder',
-        'assignment_due',
-        'grade_posted',
-        'course_announcement',
-        'tutor-request'
-    ],
-    default: 'course_announcement'
-},
+        type: String,
+        enum: [
+            'live_session_reminder',
+            'assignment_due',
+            'grade_posted',
+            'course_announcement',
+            'tutor_request',
+            'tutor_request_response'
+        ],
+        default: 'course_announcement'
+    },
     title: {
         type: String,
         required: true
@@ -43,7 +44,7 @@ const NotificationSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// Index for quick lookup of unread notifications
 NotificationSchema.index({ recipient: 1, read: 1 });
+NotificationSchema.index({ recipient: 1, type: 1, 'data.student': 1, read: 1 });
 
 export default mongoose.models.Notification || mongoose.model('Notification', NotificationSchema);
