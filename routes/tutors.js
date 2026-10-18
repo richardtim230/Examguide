@@ -365,7 +365,7 @@ router.post("/request", authenticate, async (req, res) => {
     if (!tutor) return res.status(404).json({ success: false, message: "Tutor not found or not available." });
 
     const existingRequest = await Notification.findOne({
-      to: tutorId, from: studentId, type: "tutor-request", read: false
+      recipient: tutorId, type: "tutor_request", "data.student": studentId, read: false
     }).select("_id");
     if (existingRequest) {
       return res.status(409).json({
@@ -379,9 +379,9 @@ router.post("/request", authenticate, async (req, res) => {
     const studentDisplay = student?.fullname || student?.username || "A student";
     const title = `Tutor request from ${studentDisplay}`;
     const notification = await Notification.create({
-      title, to: tutorId, from: studentId, type: "tutor-request",
+      recipient: tutorId, title, type: "tutor_request",
       message: message?.trim() || `${title}: Please check the request.`,
-      data: { type: "tutor_request", student: studentId },
+      data: { type: "tutor_request", student: studentId, status: "pending" },
       read: false, createdAt: new Date()
     });
 
@@ -404,8 +404,8 @@ router.get("/students", authenticate, authorizeRole("tutor"), async (req, res) =
   // Get sessions (active students)
   const sessionStudentIds = (await Session.find({ tutor: req.user.id }).distinct("student")).map(String);
   // Get all unread tutor-requests (pending requests)
-  const pendingRequests = await Notification.find({ to: req.user.id, type: "tutor-request", read: false });
-  const requestedStudentIds = pendingRequests.map(n => String(n.from));
+  const pendingRequests = await Notification.find({ recipient: req.user.id, type: "tutor_request", read: false });
+  const requestedStudentIds = pendingRequests.map(n => String(n.data?.student)).filter(id => mongoose.Types.ObjectId.isValid(id));
   const allIdsSet = new Set([...sessionStudentIds, ...requestedStudentIds]);
   const allIds = Array.from(allIdsSet);
 
@@ -437,7 +437,7 @@ router.get("/students", authenticate, authorizeRole("tutor"), async (req, res) =
         } : {},
       };
     } else {
-      const note = pendingRequests.find(n => String(n.from) === sid);
+      const note = pendingRequests.find(n => String(n.data?.student) === sid);
       return {
         ...stud.toObject(),
         status: "pending",
@@ -459,8 +459,8 @@ router.post("/accept-student", authenticate, authorizeRole("tutor"), async (req,
 
   // Find and mark notification as read
   const notif = await Notification.findOneAndUpdate(
-    { to: req.user.id, from: studentId, type: "tutor-request", read: false },
-    { $set: { read: true, accepted: true } }
+    { recipient: req.user.id, "data.student": studentId, type: "tutor_request", read: false },
+    { $set: { read: true, "data.accepted": true, "data.status": "accepted" } }
   );
   if (!notif) return res.status(404).json({ success: false, message: "Pending tutor request not found." });
 
@@ -480,10 +480,9 @@ router.post("/accept-student", authenticate, authorizeRole("tutor"), async (req,
   // Send notification and/or message to student
   if (notif) {
     await Notification.create({
+      recipient: studentId,
       title: "Tutor request accepted",
-      to: studentId,
-      from: req.user.id,
-      type: "tutor-request-response",
+      type: "tutor_request_response",
       message: note ? `Tutor's message: "${note}"` : "You have been accepted by the tutor!",
       data: { accepted: true, tutor: req.user.id, session: latestSession._id },
       read: false,
@@ -516,17 +515,16 @@ router.post("/reject-student", authenticate, authorizeRole("tutor"), async (req,
 
   // Find and mark notification as read & rejected
   const notif = await Notification.findOneAndUpdate(
-    { to: req.user.id, from: studentId, type: "tutor-request", read: false },
-    { $set: { read: true, accepted: false } }
+    { recipient: req.user.id, "data.student": studentId, type: "tutor_request", read: false },
+    { $set: { read: true, "data.accepted": false, "data.status": "rejected" } }
   );
   if (!notif) return res.status(404).json({ success: false, message: "Pending tutor request not found." });
 
   // Notify student with feedback
   await Notification.create({
+    recipient: studentId,
     title: "Tutor request rejected",
-    to: studentId,
-    from: req.user.id,
-    type: "tutor-request-response",
+    type: "tutor_request_response",
     message: note ? `Tutor's message: "${note}"` : "Your tutor request was rejected.",
     data: { accepted: false, tutor: req.user.id },
     read: false,
@@ -683,11 +681,11 @@ router.get("/reviews", authenticate, authorizeRole("tutor"), async (req, res) =>
 
 /* ============ NOTIFICATIONS =============== */
 router.get("/notifications", authenticate, authorizeRole("tutor"), async (req, res) => {
-  const notes = await Notification.find({ to: req.user.id }).sort({ createdAt: -1 }).limit(50);
+  const notes = await Notification.find({ recipient: req.user.id }).sort({ createdAt: -1 }).limit(50);
   res.json(notes);
 });
 router.patch("/notifications/:id/read", authenticate, authorizeRole("tutor"), async (req, res) => {
-  await Notification.updateOne({ _id: req.params.id, to: req.user.id }, { read: true });
+  await Notification.updateOne({ _id: req.params.id, recipient: req.user.id }, { $set: { read: true, readAt: new Date() } });
   res.json({ message: "Marked as read."});
 });
 
