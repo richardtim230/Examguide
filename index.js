@@ -398,7 +398,9 @@ app.use(cors({
   credentials: true,
 }));
 app.use(cookieParser());
-app.set("trust proxy", true);
+// Render runs behind one trusted reverse proxy. Avoid trust-proxy=true, which
+// lets clients spoof forwarded IP headers and breaks express-rate-limit validation.
+app.set("trust proxy", 1);
 // Set device_id cookie if not present
 app.use((req, res, next) => {
   if (!req.cookies.device_id) {
