@@ -5,7 +5,7 @@ import { authenticate } from "../middleware/authenticate.js";
 import AiPracticeAttempt from "../models/AiPracticeAttempt.js";
 
 const router = express.Router();
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
 const FALLBACK_MODEL = process.env.GEMINI_FALLBACK_MODEL || "gemini-3.5-flash-lite";
 const MAX_MATERIAL_CHARS = 80000;
 const ALLOWED_FORMATS = new Set(["mcq", "theory", "hybrid"]);
@@ -45,7 +45,7 @@ async function requestGeminiModel(model, prompt) {
             generationConfig: {
               responseMimeType: "application/json",
               temperature: 0.45,
-              maxOutputTokens: 12000
+              maxOutputTokens: 16000
             }
           }),
           signal: controller.signal
@@ -87,44 +87,41 @@ function parseGeminiJson(raw) {
 function validateQuestions(payload, expectedCount, format) {
   const source = Array.isArray(payload) ? payload : payload?.questions;
   if (!Array.isArray(source) || source.length !== expectedCount) {
-    throw new Error("Gemini did not return the requested number of questions.");
+    throw new Error(`Gemini returned ${Array.isArray(source) ? source.length : 0} of ${expectedCount} requested questions.`);
   }
 
   return source.map((item, index) => {
-    const type = item.type === "theory" ? "theory" : "mcq";
-    if (format === "mcq" && type !== "mcq") throw new Error("Gemini returned an invalid question type.");
-    if (format === "theory" && type !== "theory") throw new Error("Gemini returned an invalid question type.");
-    if (format === "hybrid" && type !== (index % 2 ? "theory" : "mcq")) {
-      throw new Error("Gemini returned an invalid hybrid question sequence.");
-    }
+    if (!item || typeof item !== "object") throw new Error(`Question ${index + 1} is invalid.`);
 
-    const q = String(item.q || item.question || "").trim();
+    // The requested format is authoritative. Models occasionally omit or vary
+    // the `type` label even when the content itself follows the requested format.
+    const type = format === "mcq" ? "mcq"
+      : format === "theory" ? "theory"
+      : (index % 2 === 0 ? "mcq" : "theory");
+
+    const q = String(item.q || item.question || item.prompt || "").trim();
     if (q.length < 8 || q.length > 2000) throw new Error(`Question ${index + 1} is invalid.`);
+
+    const explanation = String(item.explanation || item.rationale || "").slice(0, 2000);
     if (type === "theory") {
-      return {
-        type, q,
-        options: [],
-        correct: null,
-        explanation: String(item.explanation || "").slice(0, 2000),
-        modelAnswer: String(item.modelAnswer || item.model_answer || "").slice(0, 5000)
-      };
+      const modelAnswer = String(item.modelAnswer || item.model_answer || item.answer || item.expectedAnswer || "").trim();
+      if (!modelAnswer) throw new Error(`Theory question ${index + 1} is missing its model answer.`);
+      return { type, q, options: [], correct: null, explanation, modelAnswer: modelAnswer.slice(0, 5000) };
     }
 
     const options = Array.isArray(item.options)
-      ? item.options.map(o => String(typeof o === "string" ? o : o?.text || "").trim()).filter(Boolean)
+      ? item.options.map(o => String(typeof o === "string" ? o : o?.text || o?.option || "").trim()).filter(Boolean)
       : [];
     if (options.length !== 4) throw new Error(`Question ${index + 1} must have exactly four options.`);
+
     let correct = Number.isInteger(item.correct) ? item.correct : -1;
     if (correct < 0 || correct > 3) {
-      const answer = String(item.answer || item.correctAnswer || "").trim().toLowerCase();
-      correct = options.findIndex(o => o.toLowerCase() === answer);
+      const answer = String(item.answer || item.correctAnswer || item.correct_answer || "").trim().toLowerCase();
+      const letter = answer.match(/^[a-d]$/i);
+      correct = letter ? answer.toLowerCase().charCodeAt(0) - 97 : options.findIndex(o => o.toLowerCase() === answer);
     }
     if (correct < 0 || correct > 3) throw new Error(`Question ${index + 1} has no valid correct answer.`);
-    return {
-      type, q, options, correct,
-      explanation: String(item.explanation || "").slice(0, 2000),
-      modelAnswer: ""
-    };
+    return { type, q, options, correct, explanation, modelAnswer: "" };
   });
 }
 
@@ -195,7 +192,27 @@ ${cleanMaterial}
       return res.status(502).json({ error: "The AI response could not be read. Please try generating the questions again." });
     }
 
-    const questions = validateQuestions(parsed, questionCount, format);
+    let questions;
+    try {
+      questions = validateQuestions(parsed, questionCount, format);
+    } catch (validationError) {
+      console.warn(`Gemini ${usedModel} output did not match the requested format: ${validationError.message}. Requesting one corrected response.`);
+      const repairPrompt = `${prompt}
+
+IMPORTANT CORRECTION: Your previous response did not satisfy the requirements: ${validationError.message}
+Return a completely corrected JSON object with EXACTLY ${questionCount} questions. Follow the requested format strictly. Do not explain the correction and do not omit any question.`;
+      const repaired = await requestGeminiModel(usedModel, repairPrompt);
+      if (!repaired.ok) {
+        return res.status(502).json({ error: "The AI returned an incomplete practice test. Please try again; your study material is still available." });
+      }
+      const repairedRaw = repaired.result.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
+      try {
+        questions = validateQuestions(parseGeminiJson(repairedRaw), questionCount, format);
+      } catch (secondError) {
+        console.error("Gemini corrected response still failed validation:", secondError.message);
+        return res.status(502).json({ error: "The AI could not produce a complete practice test in the requested format. Please try again or reduce the number of questions." });
+      }
+    }
     return res.json({ success: true, model: usedModel, questions });
   } catch (error) {
     if (error.name === "AbortError") return res.status(504).json({ error: "Question generation timed out. Please try again." });
